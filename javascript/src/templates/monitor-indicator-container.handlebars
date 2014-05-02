@@ -1,0 +1,22 @@
+<table>
+    <tbody>
+    <tr>
+        <td class="monitor-indicator-title">
+            <h2 class="heading">{{ name }}</h2>
+        </td>
+        <td class="indicator-description" colspan="2">
+            {{{ description }}}
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3">
+            <table class="monitor-subindicator-table">
+                <thead>
+                    <tr data-subview="headerRow"></tr>
+                </thead>
+                <tbody data-subview="subindicatorRows"></tbody>
+            </table>
+        </td>
+    </tr>
+    </tbody>
+</table>

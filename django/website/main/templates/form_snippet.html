@@ -1,0 +1,13 @@
+        {% for hidden in form.hidden_fields %}
+            {{ hidden }}
+        {% endfor %}
+        {% for field in form.visible_fields %}
+            <div class="pure-control-group">
+                <label>
+                    <span {{ field.row_attrs }}>{{field.label}}</span>
+                    {% if field.help_text %}<span class="help-text">{{ field.help_text|safe }}</span>{% endif %}
+                </label>
+                {{ field }}
+                {% if field.errors %}<span class="field-errors clearfix">{{ field.errors }}</span>{% endif %}
+            </div>
+        {% endfor %}

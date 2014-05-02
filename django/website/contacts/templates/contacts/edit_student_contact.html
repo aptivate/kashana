@@ -1,0 +1,154 @@
+{% extends "main_aside.html" %}
+{% load i18n %}
+{% load assets %}
+
+{% block title %}{% trans "Student information" %}{% endblock %}
+
+{% block main_content %}
+    <form action="." method="post" class="pure-form pure-form-stacked">
+        {% csrf_token %}
+        <h3>{% trans "Student information" %}</h3>
+        <fieldset class="report-question-group">
+        {% with fieldset=form.fieldsets.part_one %}
+            {% for field in fieldset %}
+                <div class="pure-control-group">
+                    {% if field.is_hidden %}
+                        {{ field }}
+                    {% else %}
+                        <label>
+                            <span {{ field.row_attrs }}>{{field.label}}</span>
+                            {% if field.help_text %}<span class="help-text">{{ field.help_text|safe }}</span>{% endif %}
+                        </label>
+                        {{ field }}
+                        {% if field.errors %}<span class="field-errors clearfix">{{ field.errors }}</span>{% endif %}
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% endwith %}
+        </fieldset>
+        <fieldset class="report-question-group flexible-table">
+            {{ funding_inlines.management_form }}
+            <table class="pure-table">
+                <thead>
+                    <tr>
+                        <th>Name of Funder</th>
+                        <th>Items Funded</th>
+                        <th>Amount of Funding</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+            {% for form in funding_inlines %}
+                    <tr>
+                {% for field in form.visible_fields %}
+                        <td>
+                            {{ field }}
+                            {{ field.errors }}
+                            {% if forloop.last %}
+                {% for hidden in form.hidden_fields %} {{ hidden }} {% endfor %}
+                            {% endif %}
+                        </td>
+                {% endfor %}
+                    </tr>
+            {% endfor %}
+                </tbody>
+            </table>
+        </fieldset>
+
+        <fieldset class="report-question-group">
+        {% with fieldset=form.fieldsets.part_two %}
+            {% for field in fieldset %}
+                <div class="pure-control-group">
+                    {% if field.is_hidden %}
+                        {{ field }}
+                    {% else %}
+                        <label>
+                            <span {{ field.row_attrs }}>{{field.label}}</span>
+                            {% if field.help_text %}<span class="help-text">{{ field.help_text|safe }}</span>{% endif %}
+                        </label>
+                        {{ field }}
+                        {% if field.errors %}<span class="field-errors clearfix">{{ field.errors }}</span>{% endif %}
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% endwith %}
+        </fieldset>
+        <fieldset>
+            {% with fieldset=form.fieldsets.hidden %}
+                {% for field in fieldset %}
+                            {{ field }}
+                {% endfor %}
+            {% endwith %}
+        </fieldset>
+        <fieldset>
+            <div class="pure-control-group">
+                <button type="submit" class="pure-button pure-button-primary">{% trans "Save student information" %}</button>
+                <a href="{{ go_back }}" class="pure-button">{% trans "Go back" %}</a>
+            </div>
+        </fieldset>
+    </form>
+{% endblock %}
+
+
+{% block page_bottom %}
+{% assets "widget_js_all" %}
+    <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+{% endassets %}
+    <script>
+(function ($) {
+    function cancelEvent(e) {
+        if (e.stopPropagation) {
+            e.stopPropagation(); e.preventDefault();
+        } else { // <IE8
+            e = window.event;
+            e.cancelBubble = true;
+            e.returnValue = false;
+        }
+    }
+
+    function addRow() {
+        var old_id = "-" + (forms_count - 1) + "-",
+            new_id = "-" + forms_count + "-",
+            last_row = $("tr", ctx[0])[forms_count]
+            new_row = last_row.cloneNode(true);
+        // Clean values and fix IDs/names
+        $(["input", "select", "textarea"]).each(function (j, inp_type) {
+            $(inp_type, new_row).each(function (i, inp) {
+                inp.value = "";
+                if (inp.checked) {
+                    inp.checked = false;
+                }
+                if (inp.id) {
+                    inp.id = inp.id.replace(old_id, new_id);
+                }
+                if (inp.name) {
+                    inp.name = inp.name.replace(old_id, new_id);
+                }
+            });
+        });
+        last_row.parentNode.appendChild(new_row);
+        // Fix also counters
+        total_forms[0].value = forms_count + 1;
+        forms_count += 1;
+    }
+
+    function createAddButton() {
+        var btn = $('<p><button class="move-right pure-button" id="add-row">' +
+                    'Add a funder</button></p>');
+        btn.on("click", function (e) {
+            addRow();
+            cancelEvent(e || window.event);
+        });
+
+        return btn[0];
+    }
+
+    var ctx = $(".flexible-table"),
+        total_forms = $("input[name$=TOTAL_FORMS]", ctx[0]),
+        forms_count = total_forms.length ? parseInt(total_forms[0].value, 10) : 0;
+    if (ctx.length) {
+        ctx[0].appendChild(createAddButton());
+    }
+})(_$);
+    </script>
+{% endblock %}

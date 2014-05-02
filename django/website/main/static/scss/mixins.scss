@@ -1,0 +1,56 @@
+@mixin transition($args) {
+    -webkit-transition: $args;
+       -moz-transition: $args;
+        -ms-transition: $args;
+         -o-transition: $args;
+            transition: $args;
+}
+@mixin transition-property($args) {
+    @if $args == transform {
+    -webkit-transition-property: -webkit-transform;
+    } @else {
+    -webkit-transition-property: $args;
+    }
+       -moz-transition-property: $args;
+        -ms-transition-property: $args;
+         -o-transition-property: $args;
+            transition-property: $args;
+}
+@mixin transition-duration($args) {
+    -webkit-transition-duration: $args;
+       -moz-transition-duration: $args;
+        -ms-transition-duration: $args;
+         -o-transition-duration: $args;
+            transition-duration: $args;
+}
+@mixin rotate($deg) {
+    -webkit-transform: rotate($deg);
+       -moz-transform: rotate($deg);
+        -ms-transform: rotate($deg);
+         -o-transform: rotate($deg);
+            transform: rotate($deg);
+}
+
+@mixin border-radius($args) {
+    -webkit-border-radius: $args;
+       -moz-border-radius: $args;
+        -ms-border-radius: $args;
+         -o-border-radius: $args;
+            border-radius: $args;
+}
+
+@mixin box-shadow($args) {
+    -webkit-box-shadow: $args;
+       -moz-box-shadow: $args;
+        -ms-box-shadow: $args;
+         -o-box-shadow: $args;
+            box-shadow: $args;
+}
+
+@mixin text-shadow($args) {
+    -webkit-text-shadow: $args;
+       -moz-text-shadow: $args;
+        -ms-text-shadow: $args;
+         -o-text-shadow: $args;
+            text-shadow: $args;
+}

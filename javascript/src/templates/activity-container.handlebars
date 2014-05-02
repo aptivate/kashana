@@ -1,0 +1,97 @@
+<table data-lead="{{ lead }}" data-start="{{ start_date }}" data-end="{{ end_date }}"
+    class="result-overview-table level-5{{#if id }} show-full-ui{{/if}}">
+    <tbody>
+    <tr>
+        <td class="overview-minmax unselectable">{{#if id }}<span class="toggle-triangle">▶</span>{{/if}}</td>
+        <td class="overview-title">
+        <div data-subview="activityName"></div>
+        </td>
+        <td class="overview-description status-background">
+            <div data-subview="activityDescription"></div>
+        </td>
+        <td class="overview-rating"></td>
+    </tr>
+    <tr class="activity-details-row">
+        <td colspan="4" class="activity-details">
+            <ul>
+                <li>
+                    <h3 class="list-label">Timing</h3>
+                    <div class="list-content">
+                        <div class="half-wide centered-content">
+                            <h4>Start</h4>
+                            <span class="activity-timing activity-start">
+                                <div data-subview="activityStartDate"></div>
+                            </span>
+                        </div>
+                        <div class="half-wide centered-content">
+                            <h4>End</h4>
+                            <span class="activity-timing activity-end">
+                                <div data-subview="activityEndDate"></div>
+                            </span>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <h3 class="list-label">Deliverables</h3>
+                    <div class="list-content">
+                            <div data-subview="activityDeliverables"></div>
+                    </div>
+                </li>
+                <li>
+                    <h3 class="list-label">Lead</h3>
+                    <div class="list-content">
+                            <div data-subview="activityLead"></div>
+                    </div>
+                </li>
+                <li class="hide-status-history">
+                    <h3 class="list-label">
+                        <span class="status-minmax unselectable">
+                            <span class="toggle-triangle">▶</span>
+                        </span> Status
+                    </h3>
+                    <div class="list-content">
+                            <div data-subview="activityStatusUpdates"></div>
+                    </div>
+                </li>
+                <li>
+                    <h3 class="list-label">TA</h3>
+                    <div class="list-content">
+                        <h4>Total budget</h4>
+                        <p class="ta-lines-total move-right prominent"></p>
+                        <table class="ta-lines-table">
+                            <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Name</th>
+                                    <th>Band</th>
+                                    <th>Start</th>
+                                    <th>End</th>
+                                    <th>Days</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <div data-subview="activityTALines"></div>
+                    </div>
+                </li>
+                <li>
+                    <h3 class="list-label">Other</h3>
+                    <div class="list-content">
+                        <h4>Total budget</h4>
+                        <p class="budget-lines-total move-right prominent"></p>
+                        <table class="budget-lines-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <div data-subview="activityBudgetLines"></div>
+                    </div>
+                </li>
+            </ul>
+        </td>
+    </tr>
+    </tbody>
+</table>

@@ -1,0 +1,27 @@
+{
+    "curly": true,
+    "eqeqeq": true,
+    "expr": true,
+    "immed": true,
+    "noarg": true,
+    "onevar": false,
+    //"quotmark": "double",
+    "smarttabs": true,
+    "trailing": true,
+    "undef": true,
+    "unused": true,
+    "strict": false,
+
+    "node": true,
+    "globals": {
+        "jQuery": true,
+        "$": true,
+        "Backbone": true,
+        "Aptivate": true,
+        "Handlebars": true,
+        "_": true,
+        "window": true,
+        "require": true,
+        "define": true
+    }
+}

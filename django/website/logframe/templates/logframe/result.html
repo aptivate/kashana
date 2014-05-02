@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load jstemplate %}
+
+{% block content %}
+{% include "logframe/spa_root_with_templates.html" %}
+{% endblock content %}
+
+{% block post_footer %}
+<script type="text/javascript">
+Aptivate.data = {{ data|safe }};
+</script>
+{% endblock post_footer %}

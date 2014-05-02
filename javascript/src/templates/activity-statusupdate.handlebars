@@ -1,0 +1,22 @@
+<div class="status-input">
+    <div class="status-row clearfix">
+        <span class="status-code">
+            <select name="code">
+            {{#each codes}}
+                <option value="{{ this.id }}">{{ this.name }}</option>
+            {{/each }}
+            </select>
+        </span>
+        <div class="status-description">
+            <div data-field="description" placeholder="Add description" class="description rte addeditor"></div>
+        </div>
+        <span class="status-date">
+            <input type="text" name="date" value="{{ today }}" class="addpicker" />
+        </span>
+
+    </div>
+    <div class="status-row move-right clearfix">
+        <input type="submit" class="add" value="Update" />
+        <input type="submit" class="cancel" value="Cancel" />
+    </div>
+</div>

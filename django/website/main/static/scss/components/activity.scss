@@ -1,0 +1,248 @@
+.activity-details {
+    display: none;
+    background-color: $text-background;
+    padding: 0;
+
+    /********************
+     * Layout
+     ********************/
+    > ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+    li {
+        position: relative;
+        border: solid 0 $level-5-blue;
+        border-width: 1px;
+        border-right-width: 2px;
+    }
+    .list-label {
+        text-align: right;
+        display: block;
+        position: absolute;
+        top: 0;
+        width: 10em;
+        height: 100%;
+        padding-left: 40px;
+    }
+    .list-content {
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+        min-height: 3em;
+        padding-left: 16em;
+    }
+    &.show {
+        display: table-cell;
+    }
+    /********************
+     * Look'n'feel
+     ********************/
+    h3 {
+        margin: 0;
+        padding: 0.25em 1em;
+        background-color: $level-5-blue;
+    }
+    h4 {
+        margin: 0;
+        text-align:  left;
+        padding: 1em 0 0 0;
+    }
+    .activity-timing {
+        font-size: 1.2em;
+    }
+    .status-minmax {
+        position: absolute;
+        left: 5px;
+        top: .15em;
+    }
+}
+.activity-container {
+    > div {
+        /* We push contained table 3px left to compensate for the border and need
+           overflow to hide part of it that would stick out */
+        overflow: hidden;
+        margin: .25em 0 .25em 1%;
+    }
+
+    .result-overview-table {
+        width: unquote("calc(100% + 12px)");
+    }
+
+    .overview-minmax {
+        color: transparent;
+    }
+    .show-full-ui .overview-minmax,
+    .overview-title,
+    .overview-title .heading {
+        color: $dusk-blue;
+    }
+}
+.empty .activity-container {
+    display: none;
+}
+.selected-activity [data-name="lead"] {
+    background-color: $light-green;
+}
+.show-full-ui .overview-minmax {
+    color: white;
+}
+
+/********************
+ * TA
+ ********************/
+.ta-lines-table {
+    th:nth-child(1),
+    td:nth-child(1) {
+        width: 5em;
+    }
+    th:nth-child(4),
+    td:nth-child(4),
+    th:nth-child(5),
+    td:nth-child(5) {
+        width: 8em;
+    }
+    th:nth-child(3),
+    td:nth-child(3) {
+        width: 5.5em;
+    }
+    th:nth-child(6),
+    td:nth-child(6) {
+        width: 6em;
+    }
+    th:nth-child(7),
+    td:nth-child(7) {
+        width: 8em;
+    }
+    th:nth-child(4),
+    th:nth-child(5),
+    th:nth-child(6),
+    th:nth-child(7) {
+        text-align: center;
+    }
+    td:nth-child(6),
+    td:nth-child(7) {
+        text-align: right;
+    }
+    th {
+        border-bottom: 1px solid $dusk-blue;
+    }
+    input {
+        width: 100%;
+    }
+}
+
+/********************
+ * Other (Non TA)
+ ********************/
+.budget-lines-table {
+    margin: 0;
+
+    th {
+        border-bottom: 1px solid $dusk-blue;
+    }
+    th:nth-child(2),
+    td:nth-child(2) {
+        width: 12em;
+    }
+    th:nth-child(2) {
+        text-align: center;
+    }
+    td:nth-child(2) {
+        text-align: right;
+    }
+}
+
+.budget-lines-total,
+.ta-lines-total {
+    position: relative;
+    top: -1em;
+    right: 1em;
+}
+
+/********************
+ * Status
+ ********************/
+.status-updates-table {
+    margin-bottom: 1em;
+
+    td:nth-child(1) {  /* status code */
+        width: 9em;
+        font-weight: bold;
+    }
+    td:nth-child(3) {  /* status user */
+        width: 14em;
+    }
+    td:nth-child(4) {  /* status date */
+        width: 8em;
+    }
+}
+.status-input {
+    width: 100%;
+    overflow: hidden;
+    padding: .5em 0;
+    background-color: $row-stripe;
+
+    .status-code,
+    .status-description,
+    .status-date, {
+        display: inline-block;
+    }
+    .status-code {
+        position: absolute;
+        width: 9em;
+    }
+    .status-code > select {
+        width: 100%;
+    }
+    .status-description {
+        width: 99%;
+        padding: 0 11em 0 10em;
+    }
+    .status-description .rte {
+        position: relative;
+        width: 100%;
+        min-height: 3em;
+        background-color: $text-background;
+        border: 1px solid $light-gray;
+        @include border-radius(3px);
+    }
+    .status-date {
+        position: absolute;
+        right: 0;
+        top: .5em;
+        width: 10em;
+    }
+    .status-date > input {
+        width: 100%;
+        text-align: center;
+    }
+}
+.status-row {
+    margin-bottom: .5em;
+    clear: both;
+}
+.hide-status-history {
+    .status-updates-table>tr:not(:last-child),
+    .status-input {
+        display: none;
+    }
+}
+.activity-details-row {
+    border-top: 2px solid $level-5-blue;
+}
+.activity-details .toggle-triangle {
+    padding-left: 7px;
+    @include rotate(90deg);
+    @include transition-property(transform);
+    @include transition-duration(.25s);
+}
+.activity-details .status-minmax .toggle-triangle {
+    left: 5px;
+}
+.hide-status-history .toggle-triangle {
+    @include rotate(0);
+    @include transition-property(transform);
+    @include transition-duration(.25s);
+}

@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test Lead Filter</title>
+    <link rel="stylesheet" href="lib/qunit-1.14.0.css" />
+</head>
+<body>
+    <div id="qunit"></div>
+    <div id="qunit-fixture">
+        <div id="node1" class="result-tree">
+            <div id="node2" class="result-overview">
+                <div id="node3" class="result-overview">
+                    <div id="node4" class="activity-item">
+                        <span id="act1" data-lead=""></span>
+                    </div>
+                </div>
+                <div id="node5" class="result-overview">
+                    <div id="node6" class="activity-item">
+                        <span id="act2" data-lead="1"></span>
+                    </div>
+                </div>
+                <div id="node7" class="result-overview">
+                    <div id="node8" class="activity-container">
+                        <div id="node9" class="activity-item">
+                            <span id="act3" data-lead="2"></span>
+                        </div>
+                        <div id="node10" class="activity-item">
+                            <span id="act4" data-lead="3"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="lib/qunit-1.14.0.js"></script>
+    <script>
+    Aptivate = {
+        data: {}
+    };
+    QUnit.config.autostart = false;
+    </script>
+    <script type="text/javascript" src="../node_modules/requirejs/require.js"></script>
+    <script type="text/javascript" src="../src/require.config.js"></script>
+    <script type="text/javascript">
+    requirejs.config({
+        baseUrl: "../src"
+    });
+    requirejs(['../tests/js/filter-lead-tests'], function (runtests) {
+        QUnit.start();
+        runtests();
+    });
+    </script>
+</body>
+</html>

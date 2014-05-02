@@ -1,0 +1,109 @@
+/**********************************************************************
+ *
+ * GENERIC STYLES
+ *
+ *********************************************************************/
+* {
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+}
+html {
+    font-size:1em;
+    background-color: $page-background;
+}
+body {
+    color: $dusk-blue;
+    font-family: sans-serif;
+    font-size:85%;
+}
+.body {
+    color:$text-color;
+    background-color: $text-background;
+    @include box-shadow(0 0 1em rgba(0, 0, 0, 0.5));
+    margin: 0 auto;
+    min-width:18em;
+    position: relative;
+    border-top:15px solid $dusk-blue;
+}
+a,
+a:link,
+a:active {
+    color:$link-dark-blue;
+    text-decoration:none;
+    outline:none;
+    outline-style:none;
+}
+a:hover {
+    color: $link-hover-green;
+    text-decoration:none;
+}
+h2,
+h3 {
+    color: $text-color;
+    font-weight: normal;
+    margin: 0.8em 0 0.5em;
+}
+h2 {
+    font-size: 1.75em;
+}
+
+h3 {
+    color: $heading-green;
+    font-size: 1.5em;
+    font-weight: normal;
+    margin: 1em 0;
+}
+dt {
+    font-weight: bold;
+}
+dd {
+    margin-left: 0;
+    margin-bottom: .5em;
+}
+table {
+	border-collapse: collapse;
+	width: 100%;
+}
+td,
+th {
+	vertical-align: top;
+	padding: 0.2em;
+}
+th {
+	text-align: left;
+}
+p {
+	margin: 0 0 1em;
+}
+small {
+    padding: 0 1em;
+}
+.centered {
+    margin-left: auto;
+    margin-right: auto;
+}
+.centered-content {
+    text-align: center;
+}
+.prominent {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: $dusk-blue;
+}
+.hide {
+    display: none;
+}
+.clearfix {
+    *zoom: 1;
+
+    &:before,
+    &:after {
+        content: " ";
+        display: table;
+    }
+
+    &:after {
+        clear: both;
+    }
+}

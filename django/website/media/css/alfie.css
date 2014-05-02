@@ -1,0 +1,331 @@
+/* General */
+table {
+	border-collapse: collapse;
+	width: 100%;
+}
+table.subindicator-table {
+	table-layout: fixed;
+}
+.tall {
+	position:relative;
+}
+td, th {
+	vertical-align: top;
+	border: 1px solid #eee;
+	padding: 0.2em;
+}
+th {
+	text-align: left;
+}
+.content h3.heading {
+	font-size: 2em;
+	font-weight: bold;
+	margin-bottom: 0;
+}
+input[type=text] {
+	padding: 2px 4px;
+	border: 1px solid #dedede;
+}
+p {
+	margin: 0 0 1em;
+}
+.padded-bottom, #id_description {
+	padding-bottom: 2em;
+}
+.at-bottom {
+	position: absolute;
+	bottom: 0;
+}
+.heading {
+	padding: 0.2em;
+}
+.errorlist .errorlist {
+	border: none;
+	background: none;
+	padding: 0;
+}
+.text-ok {
+	color: green;
+}
+.text-warning {
+	color: orange;
+}
+.text-danger {
+	color: red;
+}
+.unselectable {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+/* output page */
+.output.heading {
+	color: white;
+	background: #007;
+}
+.indicator-cell {
+	width: 25%;
+}
+.indicator {
+	background: #eea;
+}
+.milestone-heading-row {
+	line-height: 1.6em;
+}
+.milestone-heading {
+	white-space: pre-wrap;
+}
+th.milestones-edit {
+	width: 5%;
+}
+.milestone-heading, .milestones-edit {
+	font-size: 1em;
+	text-align: center;
+	background: #9c9;
+}
+.source > td, .milestone-column.source {
+	background: #d0e1f4;
+	font-weight: bold;
+}
+.assumptions {
+	color: white;
+	background: #d88;
+	padding-top: 0.25em;
+	padding-bottom: 0.25em;
+}
+.subindicator-del {
+	text-align: center;
+}
+.subindicator-add, .subindicator-del {
+	padding: 0.2em;
+}
+.indicator-cell {
+	position: relative;
+}
+.indicator-del {
+	position: absolute;
+	bottom: 0.2em;
+	right: 0.2em;
+}
+.indicator-add-button,
+.indicator-del
+{
+	padding: 0.2em;
+	background: #eea;
+}
+.indicator-add {
+	margin: 0.2em;
+}
+.table-button {
+	display: inline-block;
+	cursor: pointer;
+	background-color: #f5f5f5;
+}
+.indicator-del-button,
+.subindicator-del-button {
+	color: red;
+}
+.milestones-edit {
+	vertical-align: middle;
+}
+.milestone-heading.source span,
+.milestones-edit a:link,
+.milestones-edit a:visited {
+	display: block;
+	-moz-transform: rotate(-90deg);
+	-webkit-transform: rotate(-90deg);
+	text-decoration: none;
+	color: black;
+}
+.milestone-heading.source span {
+	width: 1.4em;
+	overflow: hidden;
+	display: none;
+}
+.milestones-edit a:hover {
+	text-decoration: underline;
+}
+.milestone-heading.source {
+	width: 0;
+}
+.milestone-column input[type='text'],
+.milestone-column textarea {
+	width: 100%;
+}
+input[type='text'], textarea, .textarea-replacement {
+	margin: 0;
+	border: 0;
+	padding: 1px;
+	border: 0;
+	font: inherit;
+	display: block;
+}
+.leave-space-bottom {
+	margin-bottom: 2em;
+}
+input:focus[type='text'],
+textarea:focus,
+.textarea-replacement:focus {
+	padding: 0;
+	border: 1px solid #ddd;
+	background: #ffd;
+}
+/* placeholder stuff from http://stackoverflow.com/a/14531126/3189 */
+div[data-placeholder]:not(:focus):not([data-div-placeholder-content]):before {
+    content: attr(data-placeholder);
+    float: left;
+    margin-left: 5px;
+    color: #aaa;
+}
+input:hover[type='text'],
+textarea:hover,
+.textarea-replacement:hover {
+	padding: 0;
+	border: 1px solid #eee;
+	background: #ffd;
+}
+input[type='number'], #id_impact_weighting {
+	width: 4em;
+}
+.indicator.heading input,
+.output.heading input {
+	width: 100%;
+	background: inherit;
+	color: inherit;
+}
+.output.table td {
+	padding: 0;
+}
+
+/* overview page */
+.impact-overview {
+	padding-bottom: 2em;
+}
+.outcome-overview {
+	padding-top: 2em;
+	padding-bottom: 3em;
+}
+.output-overview {
+	padding-top: 1em;
+	padding-bottom: 0.5em;
+}
+.overview-minmax,
+.overview-title,
+.overview-manage {
+	color: white;
+	background-color: darkblue;
+	text-align: center;
+	vertical-align: middle;
+}
+.indicator-title,
+.indicator-manage {
+	color: black;
+	background-color: #eea;
+	text-align: center;
+	vertical-align: middle;
+}
+.budget-title,
+.budget-manage,
+.activities-title,
+.activities-manage {
+	color: black;
+	background-color: white;
+	text-align: center;
+	vertical-align: middle;
+}
+.overview-minmax {
+	font-size: 1.5em;
+	padding: 0.3em;
+	width: 4%;
+	cursor: pointer;
+}
+.overview-title {
+	width: 16%;
+}
+.overview-title > h2,
+.budget-title > h2,
+.activities-title > h2,
+.indicator-title > h2 {
+	margin-bottom: 0px;
+}
+.overview-multiple-targets {
+	padding: 0px;
+	width: 10%;
+}
+.barchart-third {
+	height: 33%;
+}
+.overview-target {
+	width: 10%;
+}
+.barchart-background {
+	font-size: 1.2em;
+	vertical-align: middle;
+	text-align: center;
+}
+.overview-description {
+	font-size: 1.1em;
+	padding: 0.5em;
+}
+.overview-manage {
+	width: 10%;
+}
+.overview-manage a {
+	padding: 3px;
+	border-width: 2px;
+	border-color: white;
+	border-style: solid;
+	margin: 5px;
+}
+.overview-manage a:link ,
+.overview-manage a:visited {
+	display: block;
+	text-decoration: none;
+	color: white;
+}
+.output-child {
+	/* we start hidden, and can then toggle */
+	display: none;
+}
+.indicator-manage a,
+.budget-manage a,
+.activities-manage a {
+	padding: 3px;
+	border-width: 2px;
+	border-color: black;
+	border-style: solid;
+	margin: 5px;
+}
+.indicator-manage a:link ,
+.indicator-manage a:visited,
+.budget-manage a:link ,
+.budget-manage a:visited,
+.activities-manage a:link ,
+.activities-manage a:visited {
+	display: block;
+	text-decoration: none;
+	color: black;
+}
+.budget-planned,
+.budget-spent,
+.activities-planned,
+.activities-spent {
+	text-align: center;
+	vertical-align: middle;
+}
+.budget-label,
+.activities-label {
+	float: left;
+}
+.budget-amount,
+.activities-amount {
+	font-size: 2em;
+}
+.two-amount {
+	display: inline-block;
+	width: 49%;
+}

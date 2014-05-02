@@ -1,0 +1,29 @@
+<div class="impact-overview result-overview indent-{{ indent }}">
+    <table>
+        <tbody>
+        <tr>
+            <td class="overview-minmax unselectable">▶</td>
+            <td class="overview-title"><h2>{{ result.name }}</h2></td>
+            <td class="overview-description status-background">
+                {{ result.description }}
+            </td>
+            <td class="overview-manage">
+                <a href="{% url "logframe-result" logframe.id result.id %}">Edit</a>
+                <a href="#">Monitor</a>
+            </td>
+        </tr>
+        <tr class="output-child">
+            <td></td>
+            <td class="indicator-title"><h2>To be done</h2></td>
+            <td class="indicator-description"></td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+{% for child in result.children.all %}
+    {% with result=child indent=1 %}
+        {% include snippet %}
+    {% endwith %}
+{% endfor %}

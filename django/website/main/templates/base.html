@@ -1,0 +1,71 @@
+{% load assets %}
+{% load settings_value %}
+
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+    <title>{% settings_value "SITE_NAME" %} MIS {% block title %}{% endblock %}</title>
+    {% assets "css_all" %}
+    <link rel="stylesheet" href="{{ ASSET_URL }}">
+    {% endassets %}
+    
+    <script>window.Aptivate = {};</script>
+</head>
+<body{% block body_attrs %}{% endblock %}>
+    <div class="body"> {# Created because ui.jquery really doesn't like sized <body> #}
+
+    <header class="page-header">
+        <h1><a href="/" class="logo">{% settings_value "SITE_NAME" %} <span> MIS</span></a></h1>
+        <div class="account-links">
+            {% if request.user and request.user.is_authenticated %}
+            <p class="account-links-profile"><a href="{% url "personal_edit" %}">{{ user.get_full_name|default:user.business_email }}</a></p>
+            <p class="account-links-auth"><a href="{% url "logout" %}">Log out</a></p>
+            {% else %}
+            <p class="account-links-auth"><a href="{% url "login" %}">Log in</a></p>
+            {% endif %}
+        </div>
+    </header>
+    <div class="content-box">
+        {% block main_menu %}
+        {% if request.user and request.user.is_authenticated %}
+        <div class="section-navigation pure-menu pure-menu-open pure-menu-horizontal">
+            <ul>
+                <li><a href="/" id="nav-dashboard">Dashboard</a></li>
+                {# <li><a href="/logframe/1/">Log Frame</a></li> #}
+                {% if perms.contacts.add_user %}
+                <li><a href="{% url "contact_list" %}" id="nav-people">People</a></li>
+                {% endif %}
+            </ul>
+        </div>
+        {% endif %}
+        {% endblock main_menu %} 
+
+        {% if messages %}
+        <div class="messagelist">
+            {% for message in messages %}
+            <div class="no-select message message-{{ message.tags }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="content" id="wrapper">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+
+    <footer>
+        <div class="siteinfo"><p>Built by <a href="http://aptivate.org">Aptivate</a></p></div>
+    </footer>
+    </div> {# div.body #}
+    {% block post_footer %}{% endblock %}
+    {% if deploy_env == "staging" or deploy_env == "production" %}
+    <script data-main="{{ STATIC_URL }}dist/logframe.min.js" src="{{ STATIC_URL }}js/lib/require.js"></script>
+    {% else %}
+    <script data-main="{{ STATIC_URL }}js/main.js" src="{{ STATIC_URL }}js/lib/require.js"></script>
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load settings_value %}
+
+{% block content %}
+    <form action="" method="post" class="login-form pure-form pure-form-aligned solo-box centered clearfix">
+        <h3>Log in to {% settings_value "SITE_NAME" %}</h3>
+        {{ form.non_field_errors }}
+        <fieldset class="move-right">
+            {% include "form_snippet.html" %}
+            {% csrf_token %}
+            <div class="pure-control-group move-right">
+                <a href="{% url "password_reset" %}"><small>Forgot password?</small></a>
+                <button type="submit" class="pure-button pure-button-primary">Log in</button>
+            </div>
+        </fieldset>
+    </form>
+{% endblock %}

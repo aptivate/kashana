@@ -1,0 +1,21 @@
+<table data-parent="{{ parent }}" class="result-overview-table level-{{ level }}">
+    <tbody>
+    <tr>
+        <td class="overview-minmax unselectable">{{#if id }}<span class="toggle-triangle{{ open_toggle }}">▶</span>{{/if}}</td>
+        <td class="overview-title">
+            <div data-subview="resultName"></div>
+        </td>
+        <td class="overview-manage">
+            {{#if id }}<a href="/design/{{ log_frame }}/result/{{ id }}/" class="edit-result">{{#if editable}}Edit{{else}}View{{/if}}</a>{{/if}}
+            {{#if id }}<a href="/monitor/{{ log_frame }}/result/{{ id }}/" class="monitor-result">Monitor</a>{{/if}}
+        </td>
+        <td class="overview-description status-background">
+            <div data-subview="resultDescription"></div>
+        </td>
+        <td class="overview-rating">
+            <div data-subview="resultRating"></div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+{{#if id }}<div data-subview="overviewItems"></div>{{/if}}

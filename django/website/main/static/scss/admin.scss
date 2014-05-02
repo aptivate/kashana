@@ -1,0 +1,46 @@
+@import "colors";
+
+/*
+ * Rating color classes
+ */
+.green {
+    background-color: $ok-green;
+}
+.yellow {
+    background-color: $header-yellow;
+}
+.red {
+    background-color: $error-dark-red;
+}
+.lightest-grey {
+    background-color: $lightest-gray;
+}
+.light-grey {
+    background-color: $light-gray;
+}
+.grey {
+    background-color: $grey;
+}
+
+/*
+ * Color labels
+ */
+ul#id_color > li {
+    list-style-type: none;
+    display: inline-block;
+}
+
+.aligned ul label.color-tag { // Stupid selector to override Django
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    overflow: hidden;
+    color: transparent;
+}
+
+.rating-list-item {
+    display: inline-block;
+    width: 100%;
+    padding: 3px;
+}

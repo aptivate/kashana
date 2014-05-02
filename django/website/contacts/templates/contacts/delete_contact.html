@@ -1,0 +1,18 @@
+{% extends "main_aside.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Delete a contact" %}{% endblock %}
+
+{% block main_content %}
+<h2>{% blocktrans with first_name=object.first_name last_name=object.last_name %}Do you want to delete <span>{{ first_name }} {{ last_name }}</span>?{% endblocktrans %}</h2>
+    <form action="" method="post" class="pure-form pure-form-stacked">
+        {% csrf_token %}
+        <fieldset>
+            {% include "form_snippet.html" %}
+            <div class="pure-control-group">
+                <button type="submit" class="pure-button pure-button-error">{% trans "Delete contact" %}</button>
+                <a href="{% url "contact_update" object.id %}" class="pure-button">{% trans "Go back" %}</a>
+            </div>
+        </fieldset>
+    </form>
+{% endblock %}

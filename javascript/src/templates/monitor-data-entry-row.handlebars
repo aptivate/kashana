@@ -1,0 +1,13 @@
+<th class="subindicator">{{name}}</th>
+<td class="target">{{baseline}}</td>
+<td class="target">{{milestone}}</td>
+{{#each items}}
+<td>
+    {{#if this.col}}
+    <div data-subview="itemView" data-row="{{this.row}}" data-col="{{this.col}}"></div>
+    {{/if}}
+</td>
+{{/each}}
+<td class="subindicator-rating">
+    <div data-subview="resultRating"></div>
+</td>

@@ -1,0 +1,61 @@
+/**********************************************************************
+ *
+ * GRID
+ *
+ *********************************************************************/
+.pure-menu + .content {
+    padding: 0 2em 2em;
+}
+.content {
+    position: relative;
+    clear: both;
+    overflow: hidden;
+    z-index: 1;
+
+    margin: 0 auto;
+    padding: 4em 2em 2em;
+}
+
+.section-navigation {
+    float: right;
+    right: 0;
+    text-align: right;
+}
+/* Used to create block around hanging logo so that tabs jump to next
+   line when they hit it */
+.section-navigation:before {
+    content: " ";
+    display: inline-block;
+    width: 300px;
+    height: 2.4em;
+}
+
+[role="main"] {
+    float: left;
+    width: 66.5%;
+
+    padding-right: 2.5%;
+}
+[role="main"]:only-child {
+    width: 100%;
+    border-right: 0;
+}
+.sidebar {
+    float: left;
+    width: 32%;
+}
+.half-wide {
+    float: left;
+    width: 49%;
+    padding-right: 2%;
+}
+.half-wide:last-child {
+    padding-right: 0;
+}
+.move-right {
+    float: right;
+    margin-left: 1em;
+}
+.tall {
+    padding-bottom: 5em;
+}

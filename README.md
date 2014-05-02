@@ -1,0 +1,2 @@
+Aptivate logframe django project
+================================

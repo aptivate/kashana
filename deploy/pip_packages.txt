@@ -1,0 +1,47 @@
+# deploy
+-e git+git://github.com/aptivate/dye.git@6bd5feb404acb4f9e313732c7e97a531d2e0f8c8#egg=dye
+
+# core django (using django 1.6)
+Django>=1.6.4, <1.7
+south==0.8.4
+MySQL-python==1.2.4
+PIL==1.1.7
+
+# Django REST framework
+django-filter==0.7
+djangorestframework==2.3.12
+markdown==2.3.1
+PyYAML==3.10
+
+# other
+django_tables2==0.14.0
+django-extensions==1.2.2
+django-jstemplate
+lxml
+django-waffle==0.9.1
+beautifulsoup4==4.3.2
+
+# Views
+django-braces==1.2.2
+django-floppyforms==1.1
+django-form-utils==1.0.1
+django-spreadsheetresponsemixin==0.1.8
+
+# Assets
+webassets==0.8
+django_assets==0.8
+pyscss==1.2.0.post3
+cssmin==0.2.0
+
+# development and testing
+django-debug-toolbar==1.0.1
+pytest==2.5.1
+pytest-django==2.6.0
+mock==1.0.1
+factory_boy==2.1.1
+django-dynamic-fixture==1.6.5
+ipython==1.2.1
+ipdb==0.8
+
+# Nested Routers from github
+-e git+git://github.com/alanjds/drf-nested-routers.git#egg=drf-nested-routers

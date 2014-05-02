@@ -1,0 +1,128 @@
+/**********************************************************************
+ *
+ * FORMS
+ *
+ *********************************************************************/
+.pure-control-block {
+    display: inline-block;
+    vertical-align: top;
+}
+.pure-form-aligned .pure-control-group {
+    position:relative;
+    clear: both;
+}
+    .pure-form-aligned .pure-control-group label {
+        padding-top:0.3em;
+        width:15em;
+        vertical-align: top;
+    }
+
+.pure-control-group-value {
+    display: inline-block;
+    line-height: 2.5;
+}
+.align-right {
+    text-align: right;
+}
+
+.pure-form .pure-form-fieldset-group {
+    position: relative;
+    margin-top: 2em;
+    padding: 1em;
+    border: 2px solid $text-color;
+    @include border-radius(5px);
+}
+
+.pure-form-fieldset-group > h2,
+.pure-form-fieldset-group > h3 {
+    position: absolute;
+    display: inline-block;
+    margin: 0;
+    padding: 0 .5em;
+    top: -.57em;
+    background-color: $text-background;
+}
+
+.pure-form-fieldset-group > .pure-control-group.shaded {
+    margin-top: .5em;
+    margin-bottom: 0;
+    padding: .5em;
+    background-color: $row-stripe;
+}
+
+.pure-control-group {
+    margin-bottom: 1em;
+}
+
+.pure-form > fieldset {
+    clear: both;
+}
+
+.pure-form-aligned .pure-control-group label {
+    width: 13em;
+}
+
+.display-only.form-label {
+    padding: 0;
+    font-weight: bold; 
+}
+
+.display-only.form-field {
+    padding: 0;
+    margin-left: 15em;
+    margin-top: -1.2em;   
+}
+
+.pure-form-stacked .display-only.form-field {
+    margin: 0;
+}
+
+.display-only.form-field > span {
+    font-size: 90%
+}
+
+.no-data {
+    color: $light-gray;
+}
+
+.errorlist {
+    float: left;
+    margin: .2em 0;
+    padding: 0;
+    font-size: .9em;
+}
+    .errorlist > li {
+        list-style-type: none;
+        padding: 0.2em 1em;
+        font-size: .8em;
+        background-color: $error-dark-red;
+        color: $text-background;
+    }
+
+.help-text {
+    display: inline-block;
+    text-align: justify;
+    font-size: .8em;
+    color: $text-color;
+}
+
+.pure-form-stacked .help-text {
+    text-align: left;
+    width: 100%;
+}
+
+
+.submission-required,
+.required {
+    &:after {
+        content: "*";
+    }
+}
+
+/* Django comments provides a honeypot field to help trick spammers but 
+we dont' want to show it to users */
+#id_honeypot {
+    display: none;
+}
+
+

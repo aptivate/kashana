@@ -1,0 +1,80 @@
+form.solo-box {
+    border: 5px solid $row-stripe;
+    display: block;
+    width: 34em;
+    padding: 20px;
+}
+.solo-box.pure-form label {
+    display: block;
+    float: left;
+    padding-right: 1em;
+    position: relative;
+    text-align: right;
+    width: 12em;
+}
+.field-clear {
+    display: inline-block;
+    line-height: 1.5;
+}
+.pure-form-aligned .pure-control-group .field-clear-check {
+    text-align: left;
+}
+
+/*
+* File input
+*/
+a.deleted {
+	color: $error-dark-red;
+	text-decoration: line-through;
+}
+
+.browse-box {
+    display: inline;
+    font-size: 85%;
+}
+/* Image input */
+.field-clear img.deleted {
+    opacity: .4;
+    @include transition(opacity .3s);
+}
+.field-clear img {
+    @include transition(opacity .3s);
+}
+
+/*
+ * Labels
+ */
+.label {
+    display: inline-block;
+    min-width: 8em;
+    margin: .5em 1em;
+    padding: 0.2em 1em;
+    text-align: center;
+}
+.label-info {
+    background-color: $light-gray;
+}
+.label-ok {
+    background-color: $ok-green;
+}
+.label-warning {
+    color: $text-background;
+    background-color: $warning-orange;
+    @include text-shadow(0 1px 1px rgba(0, 0, 0, .2));
+}
+.label-error {
+    color: $text-background;
+    background-color: $error-dark-red;
+    @include text-shadow(0 1px 1px rgba(0, 0, 0, .2));
+}
+
+/* 
+ * Year Month Date Selector
+ */
+.pure-form .year-month-date-selector {
+    display: inline-block;
+}
+
+textarea.editable-textarea {
+    width: 100%;
+}

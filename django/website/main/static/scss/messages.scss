@@ -1,0 +1,34 @@
+/**********************************************************************
+ *
+ * MESSAGES
+ *
+ *********************************************************************/
+.messagelist {
+    list-style-type: none;
+    margin: 1em 0;
+    padding: 0;
+}
+
+.message {
+    display: inline-block;
+    width: 100%;
+    padding: .5em 1.5em;
+    text-align: center;
+    text-decoration: none;
+}
+
+.message-success {
+    background-color: $secondary-green;
+    color: $black;
+}
+
+.message-warning {
+    background-color: $warning-orange;
+    color: $text-background;
+}
+
+.message-error {
+    background-color: $error-dark-red;
+    color: $text-background;
+    @include text-shadow(0 1px 1px rgba(0, 0, 0, .2));
+}

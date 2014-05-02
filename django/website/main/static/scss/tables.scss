@@ -1,0 +1,56 @@
+.pure-table {
+    width: 100%;
+    borders-collapse:inherit;
+}
+
+.pure-table th {
+    font-size:0.9em;
+}
+
+@mixin table-links {
+    color:$text-color;
+}
+
+.pure-table th > a {
+    @include table-links;
+}
+
+.dashboard-table {
+    > thead th > a > span {
+        @include table-links;
+    }
+    > tbody tr > td {
+        padding: 0;
+        > a {
+        @include table-links;
+        display: block;
+        min-height: 3em;
+        padding: 6px 12px;
+        }
+    }
+}
+
+.dashboard-table > tbody > tr:hover > td > a {
+    text-decoration: underline;
+    > span {
+        font-weight: bold;
+    }
+}
+
+.pure-table {
+    border: 1px solid #cbcbcb;
+
+    thead {
+        background: none repeat scroll 0% 0% #e0e0e0;
+    }
+    th {
+        font-size: .9em;
+    }
+    th:first-child {
+        border-left-width: 0;
+    }
+    th, td {
+        padding: 6px 12px;
+        border-left: 1px solid #cbcbcb;
+    }
+}

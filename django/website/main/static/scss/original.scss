@@ -1,0 +1,312 @@
+/**********************************************************************
+ *
+ * PURE FIXES
+ *
+ *********************************************************************/
+.pure-menu.pure-menu-open,
+.pure-menu.pure-menu-horizontal li .pure-menu-children {
+    border-top:7px solid $text-background;
+    clear:both;
+    background-color:inherit;
+}
+    .pure-menu.pure-menu-horizontal > ul {
+        height:auto;
+    }
+        .pure-menu li a {
+            background-color: $tabs-background;
+            margin: 8px 5px;
+            color: $text-background;
+        }
+        .pure-menu li a:hover {
+            background-color: $link-hover-green;
+            color:$text-background;
+        }
+
+@media screen and (max-width: 680px) {
+    .pure-menu-horizontal li {
+        width: 32%;
+        text-align: center;
+        font-size: .9em;
+    }
+    .pure-menu li a {
+        margin: 8px 0;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .pure-menu-horizontal li {
+        width: 49%;
+    }
+}
+
+
+/* Buttons */
+.pure-form .pure-button-small,
+.pure-button-small {
+    font-size: 85%;
+}
+.pure-form .pure-button-xsmall,
+.pure-button-xsmall {
+    position: relative;
+    top: -.3em;
+    font-size: 70%;
+}
+.pure-button-error {
+    background-color: $error-dark-red;
+    color: $text-background;
+    @include text-shadow(0 1px 1px rgba(0, 0, 0, .2));
+}
+
+a.pure-button {
+    color: $black;
+}
+
+.no-select.pure-button {
+    cursor: default;
+}
+
+
+/**********************************************************************
+ *
+ * HEADER
+ *
+ *********************************************************************/
+.body > header {
+    width:100%;
+    float:left;
+    padding:0;
+}
+.page-header {
+    color: $dark-grey;
+    background-color:$row-stripe;
+    font-size: 0.9em;
+    border-top:3px solid $text-background;
+}
+    .logo {
+        display: block;
+        position: absolute;
+        height: 64px;
+        width: 6em;
+        font-size:1.3em;
+        top: 0;
+        left: 1.5em;
+        z-index: 2;
+        padding: 10px;
+        background-color: $text-background;
+        @include border-radius(0 0 15px 15px);
+        @include box-shadow(0 0 10px rgba(0, 0, 0, 0.3));
+        text-align:center;
+    }
+    
+      .logo > span {
+          font-size: 1em;
+          font-weight: normal;
+      }
+.account-links {
+    float: right;
+    position: relative;
+    top: -0.5em;
+    padding-right:1.5em;
+    padding-left: 300px;
+}
+.account-links-profile,
+.account-links-auth {
+    display: inline-block;
+    margin-right: 1em;
+}
+    .account-links-profile,
+    .account-links-auth {
+        margin: 0em 1em 0 0;
+        font-size:0.9em;
+    }
+    .account-links-profile > a,
+    .account-links-auth > a {
+        font-size:1.2em;
+    }
+    
+.section-navigation {
+    display: block;
+    padding-right: 1.8em;
+    padding-top: 1em;
+    text-align: right;
+}
+
+.section-navigation:before {
+    height: 1em;
+}
+.sec-nav {
+    float: left;
+    margin: 0;
+    padding-left: 17.5em;
+    position: relative;
+    top: -0.5em;
+    font-size:1.2em;
+}
+.sec-nav > ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.sec-nav-item {
+    float: left;
+    padding: 0 .5em;
+    border-right: 1px solid $grey;
+
+    &:last-child {
+        border-right: 0 none;
+    }
+
+}
+
+.content-box {
+    background-color: $text-background;
+}
+
+
+/**********************************************************************
+ *
+ * PAGINATION
+ *
+ *********************************************************************/
+.pagination {
+    list-style-type: none;
+    text-align: center;
+}
+.previous,
+.current,
+.next {
+    display: inline-block;
+    padding: 0 2em 1em;
+}
+
+
+
+/**********************************************************************
+ *
+ * COMPONENTS
+ *
+ *********************************************************************/
+/*
+ * Hideable sections
+ */
+.hideable {
+    position: relative;
+    -webkit-transition: all .2s;
+       -moz-transition: all .2s;
+            transition: all .2s;
+}
+.hideable > .collapsed {
+    height: 0;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    opacity: 0;
+    -webkit-transition: all .2s;
+       -moz-transition: all .2s;
+            transition: all .2s;
+}
+.toggle {
+    @extend .pure-button;
+    @extend .pure-button-xsmall;
+    position: absolute;
+    right: .5em;
+    top: -1.5em;
+    cursor: pointer;
+}
+
+
+/*
+ * Dialogs
+ */
+.dialog {
+    position: relative;
+    width: 100%;
+    margin: 0 1em;
+    padding: 1em;
+    border: 2px solid $text-color;
+    @include border-radius(5px);
+}
+.dialog > h4 {
+    margin: 0;
+}
+.dialog-fixed {
+    position: fixed;
+}
+
+.dialog-info {
+    margin-bottom: 1em;
+    padding: 1em;
+    background-color: $light-gray;
+    @include border-radius(5px);
+}
+.dialog-info h4,
+.dialog-info p {
+    margin: 0;
+}
+.dialog-info a {
+    color: $text-color;
+}
+
+
+/**********************************************************************
+ *
+ * MISC
+ *
+ *********************************************************************/
+.plain-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0 0 .5em 0;
+}
+
+.main-column {
+    border-right: 1px dashed $dusk-blue;
+    margin-right: 1em;
+}
+
+.clearfix {
+    *zoom: 1;
+
+    &:before,
+    &:after {
+        content: " ";
+        display: table;
+    }
+
+    &:after {
+        clear: both;
+    }
+}
+
+.spaced {
+    margin-bottom: 1em;
+}
+
+.squeezed {
+    margin: 0;
+    padding: 0;
+}
+
+.sidebar-button-group {
+    margin-bottom: .5em;
+    > form {
+        display: inline-block;
+    }
+    > p {
+        margin: 0;
+    }
+}
+.table-title {
+    clear: both;
+    margin-bottom: 0;
+}
+
+/**********************************************************************
+ *
+ * FOOTER
+ *
+ *********************************************************************/
+
+.siteinfo {
+    padding: 0 2em 2em;
+}

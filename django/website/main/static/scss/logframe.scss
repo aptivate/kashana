@@ -1,0 +1,661 @@
+/****************************
+ * LAYOUT
+ ****************************/
+
+#wrapper,
+footer {
+	min-width:780px;
+	margin:0 auto;
+	clear:both;
+}
+.page-title{
+	font-size:2em;
+	font-weight:normal;
+}
+.page-title > span{
+	font-size:1em;
+	font-weight:bold;
+}
+
+.monitor-result .overview-description,
+.monitor-result .monitor-rating {
+    background-color: $pale-blue;
+}
+
+.monitor-result,
+.logframe-result {
+    border: 3px solid $dusk-blue;
+    margin-bottom: 1em;
+    position:relative;
+    display:table;
+}
+
+.logframe-result td:first-child {
+    width: 20%;
+}
+.logframe-result td:last-child {
+    width: 20%;
+}
+.logframe-result td {
+    vertical-align: top;
+}
+
+.tall {
+    position: relative;
+}
+
+.at-bottom {
+	position:absolute;
+	bottom:1em;
+	padding:1em;
+	font-size:1em;
+
+  > span,
+  input {
+    font-size:2em;
+    width:3em;
+  }
+
+  &.negative {
+    color:#fff;
+  }
+}
+
+.result-children {
+    margin-left: 1%;
+}
+
+
+/****************************
+ * COMPONENTS
+ ****************************/
+#result-table > h2 {
+  margin-top:0;
+}
+
+.editable {
+    padding:5px;
+    @include transition(background-color .5s);
+}
+.editable.success,
+.editable.error,
+.editable.in-progress {
+    @include transition(background-color 0s);
+}
+.editable:hover {
+    position: relative;
+    color: #333;
+    background-color: #ffb;
+    @include transition(background-color 0s);
+}
+.editable:hover:after {
+    content:"EDIT";
+    cursor:pointer;
+    background-color:rgba(0,0,0,0.5);
+    color:#fff;
+    position: absolute;
+    display:block;
+    right: 0;
+    z-index: 2;
+    top:0px;
+    font-size: 5pt;
+    line-height:1.5em;
+    text-align:center;
+    font-weight: bold;
+    width:3.5em;
+}
+.editable-input {
+    max-width: 100%;
+}
+.editable-textarea {
+    min-height: 1.5em;
+}
+
+.ribbon {
+    font-weight: bold;
+    position:relative;
+    padding:5px;
+}
+  .ribbon input {
+  	background-color:#fff;
+  }
+  .ribbon-result {
+      color: #fff;
+      background-color: $dusk-blue;
+  }
+  .ribbon .heading {
+      padding: 0.2em;
+      margin:0;
+      color:#fff;
+  }
+
+.ribbon .heading, 
+.ribbon input {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 0;
+    padding:5px 5px 5px 12px;
+}
+
+.ribbon-indicator .heading {
+  color:#333;
+}
+
+.editable.missing {
+  color:#ccc;
+  font-style:italic;
+  font-weight:normal;
+  text-align: left;
+}
+
+.ribbon,
+.ribbon input,
+.result-input,
+.indicator-detail,
+.indicator-data,
+.indicator-data-table .result-input,
+#result-assumptions .result-input {
+	width:100%;
+} 
+
+
+
+#result-detail {
+    background-color: $dusk-blue;
+}
+
+#result-detail > div {
+    color: #fff;
+    font-size: 1em;
+    font-weight: bold;
+    padding: 1em;
+}
+.ribbon .editable.heading:hover,
+#result-detail > div > div.editable:hover {
+  color:#555;
+}
+.ribbon-indicator {
+    background-color: #FFF47F;
+    display:block;
+}
+#indicator-column {
+    padding:7px;
+}
+#indicator-column > div > div {
+    clear: both;
+}
+
+.indicator-detail {
+	display:block;
+	float:left;
+	width:30%;
+	padding-right:2px;
+	clear:both;
+	margin-bottom:1em;
+}
+.indicator-detail .inner {
+	padding-top:0.5em;
+}
+.indicator-data {
+    background-color: #F8f8f8;
+    display: block;
+    float: left;
+    margin-bottom: 1.5em;
+    width: 70%;
+    top: -1px;
+}
+.indicator-data-table > table {
+	width:100%;
+  table-layout:fixed;
+}
+.indicator-data-table th,
+.indicator-data-table td {
+    background-color: #FFFFFF;
+    color: #555555;
+}
+.indicator-data-table .missing {
+    text-align:center;
+    margin:1em 0;
+    font-size:0.7em;
+}
+
+.indicator-data-table td > div {
+	padding-top:1em;
+	text-align:right;
+	overflow:hidden;
+}
+.indicator-data-table .result-input {
+	margin:0.5em 0px;
+	text-align:right;
+	float:right;
+}
+
+.indicator-data-table td .editable:after {
+  left:0;
+  right:inherit;
+}
+
+.indicator-data-table .heading {
+    display: block;
+    font-size: 0.8em;
+    margin-top:0.5em;
+}
+.indicator-data-table .result-input {
+    text-align:left;
+    font-size:0.8em;
+}
+
+.indicator-source {
+    background-color: #fff;
+    border:2px solid #eee;
+    border-top:none;
+    font-size:0.8em;
+    color:#666;
+}
+.indicator-source > h3 {
+    background-color: #D0E1F4;
+    font-size: 1em;
+    margin: 0.5em 0;
+    padding: 2px 5px;
+}
+.indicator-source .result-input {
+  width:100%;
+}
+
+.milestone-heading-row {
+  background-color: $dark-green;
+  border:none;
+}
+.milestone-heading-row th {
+    background-color: $dark-green;
+    font-size: 0.8em;
+    padding: 0.25em 0.5em;
+    text-align:center;
+    vertical-align: top;
+}
+.ribbon-assumptions {
+    background-color: #FFCC99;
+    margin-top: 1px; 
+    display:block;
+}
+.heading.assumptions {
+  color:#333;
+}
+#result-assumptions {
+    margin-top: 0;
+    padding: 6px 7px 7px 0;
+}
+  #result-assumptions ul {
+      list-style: none outside none;
+      margin: 0;
+      padding: 5px;
+  }
+    #result-assumptionsul ul > li {
+      padding:7px;
+      padding-right:15px
+    }
+
+.risk-rating-value {
+    display: inline-block;
+    font-size: 2em;
+}
+
+
+/* overview page */
+#filter-result {
+    margin-bottom: .5em;
+    padding: 5px;
+    background: $row-stripe;
+}
+#filter-time {
+    margin-left: 6.5em;
+}
+#filter-reset {
+    float: right;
+}
+.result-tree {
+    border: 3px solid $dusk-blue;
+
+    > .result-overview {
+        margin: 0;
+    }
+}
+.overview-minmax {
+    position: relative;
+}
+.toggle-triangle {
+    display: block;
+    position: relative;
+    width: 26px;
+    height: 26px;
+    @include border-radius(50%);
+    font-size: 20px;
+    cursor: pointer;
+    @include transition-property(transform);
+    @include transition-duration(.25s);
+}
+.show.toggle-triangle {
+    @include rotate(90deg);
+    @include transition-property(transform);
+    @include transition-duration(.25s);
+}
+.level-1 {
+    &.result-overview {
+        background-color: $level-1-blue;
+    }
+    .overview-description {
+        background-color: $pale-blue;
+    }
+    .overview-manage {
+        width: 4em;
+    }
+    .overview-rating {
+        width: 45px;
+        background-color: $pale-blue;
+    }
+}
+.level-2 {
+    &.result-overview,
+    .overview-minmax,
+    .overview-title,
+    .ribbon-result,
+    .overview-manage {
+        background-color: $level-2-blue;
+    }
+    .overview-description {
+        background-color: $pale-blue;
+    }
+
+    .overview-minmax {
+        width: 53px;
+    }
+    .toggle-triangle {
+        left: 3px;
+    }
+    .overview-title {
+        width: 15%;
+    }
+}
+.level-3 {
+    &.result-overview,
+    .overview-minmax,
+    .overview-title,
+    .ribbon-result,
+    .overview-manage {
+        background-color: $level-3-blue;
+    }
+    .overview-description {
+        background-color: $pale-blue;
+    }
+    .overview-minmax {
+        width: 56px;
+    }
+    .toggle-triangle {
+        left: 6px;
+    }
+    .overview-title {
+        width: 14%;
+    }
+}
+.level-4 {
+    &.result-overview,
+    .overview-minmax,
+    .overview-title,
+    .ribbon-result,
+    .overview-manage {
+        background-color: $level-4-blue;
+    }
+    .overview-description {
+        background-color: $pale-blue;
+    }
+    .overview-minmax {
+        width: 59px;
+    }
+    .toggle-triangle {
+        left: 9px;
+    }
+    .overview-title {
+        width: 13%;
+    }
+}
+.level-5 {
+    &.result-overview,
+    .overview-minmax,
+    .overview-title,
+    .ribbon-result,
+    .overview-manage {
+        background-color: $level-5-blue;
+    }
+    .overview-description {
+        background-color: $pale-blue;
+    }
+    .overview-minmax {
+        width: 62px;
+    }
+    .toggle-triangle {
+        left: 12px;
+    }
+    .overview-title {
+        width: 11.8%;
+    }
+}
+.result-overview {
+    /* We push contained table 3px left to compensate for the border and need
+       overflow to hide part of it that would stick out */
+    overflow: hidden;
+    margin: .25em 0;
+    padding: 0;
+    /*border: 3px solid $dusk-blue;*/
+    border-right: none;
+}
+.result-overview > div {
+    display: none;
+}
+.result-overview.show > div {
+    display: inherit;
+}
+
+.overview-minmax,
+.overview-title,
+.overview-manage {
+	color: white;
+	text-align: center;
+	vertical-align: middle;
+}
+.overview-minmax {
+	font-size: 1.5em;
+	padding: 0.3em;
+	width: 50px;
+}
+.overview-title {
+	width: 16%;
+}
+.overview-title .heading {
+    font-weight: normal;
+}
+.overview-multiple-targets {
+	padding: 0px;
+	width: 10%;
+}
+.overview-target {
+	width: 10%;
+}
+.overview-description {
+	font-size: 1.1em;
+	padding: 0.5em;
+}
+.overview-manage {
+	width: 10%;
+}
+.overview-manage a {
+	padding: 3px;
+	border-width: 1px;
+	border-color: $text-background;
+	border-style: solid;
+	margin: 5px;
+    @include border-radius(4px);
+    opacity: .7;
+}
+.overview-manage a:link ,
+.overview-manage a:visited {
+	display: block;
+	text-decoration: none;
+	color: $text-background;
+}
+.overview-manage a:hover {
+    color: $background-white;
+    border-color: $background-white;
+    opacity: 1;
+}
+.output-child.show {
+	display: table-row;
+}
+.result-overview-table > tbody > tr { /* Ugly, but limits scope */
+}
+
+.overview-manage, 
+.overview-minmax, 
+.overview-title, 
+.overview-title > h2 {
+  background-color:$dusk-blue;
+}
+.overview-title > h2 {
+    margin: 0;
+    padding-left: 0.5em;
+    text-align: left;
+}
+.overview-description {
+    vertical-align: middle;
+}
+
+/* General */
+.unselectable {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+.empty {
+    opacity: .3;
+}
+.empty .empty {
+    opacity: 1;
+}
+.in-progress:hover,
+.in-progress {
+    @extend %angled;
+    @extend %smallStripe;
+    background-color: $grey;
+    opacity: .6;
+}
+.success:hover,
+.success {
+    background-color: $ok-green;
+}
+.error:hover,
+.error {
+    background-color: $error-dark-red;
+}
+
+.export-data-select {
+    margin-top: 2em;
+
+    option {
+        text-align: right;
+    }
+}
+
+/****************************
+ * RATING
+ ****************************/
+.result-rating {
+    position: relative;
+    width: 40px;
+}
+.editable-rag {
+    position: absolute;
+    top: 0;
+    margin-left: -80px;
+    width: 120px;
+    padding: 0 6px;
+    z-index: 2;
+    background-color:$level-4-blue;
+}
+.rating-item {
+    margin: 3px 0;
+    cursor: pointer;
+}
+.rating-item:hover {
+    background-color: $level-5-blue;
+}
+.display-rating-value,
+.rating-value {
+    position: relative;
+    width: 25px;
+    height: 25px;
+    margin: 3px;
+    @include border-radius(50%);
+}
+.rating-value.selected:before {
+    position: absolute;
+    display: block;
+    left: .3em;
+    top: .1em;
+    content: "✓";
+    font-size: 1.3em;
+    color: black;
+}
+.rating-value {
+    float: left;
+}
+.rating-label {
+    padding: .5em 0 0 .5em;
+    font-size: .9em;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.success .display-rating-value,
+.error .display-rating-value,
+.in-progress .display-rating-value {
+    border: 2px solid #fff;
+}
+/* Rating color classes */
+.green {
+    background-color: $ok-green;
+}
+.yellow {
+    background-color: $header-yellow;
+}
+.red {
+    background-color: $error-dark-red;
+}
+.lightest-grey {
+    background-color: $lightest-gray;
+}
+.light-grey {
+    background-color: $light-gray;
+}
+.grey {
+    background-color: $grey;
+}
+.notrated {
+    border: 2px solid $text-color;
+}
+.editable:hover .notrated {
+    border: 2px solid #333;
+}
+
+/****************************
+ * LOADING INDICATOR
+ ****************************/
+.loading-indicator {
+    width: 10em;
+    margin: auto;
+    padding: 1em;
+    text-align: center;
+    border: 3px solid $dusk-blue;
+    color: $dusk-blue;
+}

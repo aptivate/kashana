@@ -1,0 +1,11 @@
+{% extends "admin/base.html" %}
+{% load i18n %}
+{% load settings_value %}
+
+{% block title %}{{ title }} | {% settings_value "SITE_NAME" %} {% trans 'MIS site admin' %}{% endblock %}
+
+{% block branding %}
+<h1 id="site-name">{% settings_value "SITE_NAME" %} {% trans 'MIS administration' %}</h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
