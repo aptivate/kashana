@@ -3,6 +3,7 @@
 *~
 .ropeproject
 javascript/node_modules
+javascript/npm-debug.log
 django/website/local_settings.py
 django/website/private_settings.py
 django/website/.ve
