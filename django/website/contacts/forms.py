@@ -195,6 +195,8 @@ class ContactPasswordResetForm(PasswordResetForm):
                 'user': user,
                 'token': token_generator.make_token(user),
                 'protocol': use_https and 'https' or 'http',
+                'site_name': settings.SITE_NAME,
+                'support_email': settings.SUPPORT_EMAIL
             }
             options = {
                 'subject': subject,

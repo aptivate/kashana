@@ -9,11 +9,13 @@ PROJECT_PATH = abspath(dirname(__file__))
 # These email addresses will get all the error email for the production server
 # (and any other servers with DEBUG = False )
 ADMINS = (
-    #('Aptivate Intranet team', '-team@aptivate.org'),
+    # ('Aptivate Intranet team', '-team@aptivate.org'),
     ('Marko Samastur', 'markos@aptivate.org'),  # this is in case the above email doesn't work
 )
 
 MANAGERS = ADMINS
+
+SUPPORT_EMAIL = 'support@aptivate.org'
 
 # DATABASES are configured in local_settings.py.*
 
@@ -78,7 +80,7 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    #'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    # 'django.contrib.staticfiles.finders.DefaultStorageFinder',
     'django_assets.finders.AssetsFinder',
 )
 
@@ -89,7 +91,7 @@ SECRET_KEY = private_settings.SECRET_KEY
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-    #'django.template.loaders.eggs.Loader',
+    # 'django.template.loaders.eggs.Loader',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -100,7 +102,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    #'waffle.middleware.WaffleMiddleware',
+    # 'waffle.middleware.WaffleMiddleware',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -145,7 +147,7 @@ INSTALLED_APPS = (
     'django_assets',
     'floppyforms',
     'rest_framework_nested',
-    #'waffle',
+    # 'waffle',
 
     # our apps
     'main',
@@ -157,9 +159,9 @@ INSTALLED_APPS = (
 )
 
 AUTH_USER_MODEL = 'contacts.User'
-EMAIL_BOT_ADDRESS = 'blackhole@aptivate.org'
+EMAIL_BOT_ADDRESS = 'Alfie (Aptivate) <alfie@aptivate.org>'
 SITE_HOSTNAME = 'localhost:8000'
-SITE_NAME = 'ACME'
+SITE_NAME = 'Alfie'
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
@@ -207,7 +209,7 @@ JSTEMPLATE_DIRS = [
 # tasks.py expects to find local_settings.py so the database stuff is there
 #--------------------------------
 # local settings import
-#from http://djangosnippets.org/snippets/1873/
+# from http://djangosnippets.org/snippets/1873/
 #--------------------------------
 try:
     import local_settings
