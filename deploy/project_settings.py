@@ -16,7 +16,7 @@ django_apps = ['logframe']
 
 # repository type can be "cvs", "svn" or "git"
 repo_type = "git"
-repository = 'git@github.com:' + project_name + '.git'
+repository = 'git://github.com/aptivate/' + project_name + '.git'
 
 ##################################################################
 # THESE SETTINGS MAY WELL BE CORRECT FOR A STANDARD DJANGO PROJECT
@@ -54,8 +54,8 @@ requirements_per_env = False
 local_requirements_file = path.join(local_deploy_dir, 'pip_packages.txt')
 
 # the requirements directory
-#requirements_per_env = True
-#local_requirements_dir = path.join(local_deploy_dir, 'requirements')
+# requirements_per_env = True
+# local_requirements_dir = path.join(local_deploy_dir, 'requirements')
 # and the files should be path.join(requirements_dir, '%s.txt' % environment)
 
 test_cmd = ' manage.py test -v0 ' + ' '.join(django_apps)
@@ -64,7 +64,7 @@ test_cmd = ' manage.py test -v0 ' + ' '.join(django_apps)
 
 # production server - if commented out then the production task will abort
 host_list = {
-    'production':   ['lin-' + project_name + '.aptivate.org:48001'],
+    'production':   ['lin-one.aptivate.org:48001'],
     'staging':      ['fen-vz-' + project_name + '-stage.fen.aptivate.org'],
     'staging_test': ['fen-vz-' + project_name + '-stage.fen.aptivate.org'],
     'dev_server':   ['fen-vz-' + project_name + '-dev.fen.aptivate.org'],
@@ -95,5 +95,5 @@ webserver = 'apache'
 
 # if you have an ssh key and particular user you need to use
 # then uncomment the next 2 lines
-#user = "root"
-#key_filename = ["/home/shared/keypair.rsa"]
+# user = "root"
+# key_filename = ["/home/shared/keypair.rsa"]
