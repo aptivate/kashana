@@ -5,7 +5,7 @@
 Django>=1.6.4, <1.7
 south==0.8.4
 MySQL-python==1.2.4
-PIL==1.1.7
+pillow==2.4.0
 
 # Django REST framework
 django-filter==0.7
