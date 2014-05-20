@@ -5,6 +5,8 @@ from fabric.api import env, require
 import fablib
 from dye.fabfile import _server_setup
 
+import project_settings
+
 
 def deploy(revision=None, keep=None, full_rebuild=True):
     """ update remote host environment (virtualenv, deploy, update)
@@ -81,6 +83,15 @@ def ensure_webassets_cache_writeable_by_apache():
     webassets_cache = path.join(fablib.env.django_dir, 'static')
     fablib.sudo_or_run('chown -R apache %s' % webassets_cache)
 
+
 def alfie_demo():
     """Run alfie demo on shared host"""
     _server_setup('alfie_demo')
+
+
+def mande():
+    """Run aptivate m&e """
+    # put it in /var/django/alfie_mande/
+    env.server_project_home = path.join(
+        project_settings.server_home, project_settings.project_name + '_mande')
+    _server_setup('mande')
