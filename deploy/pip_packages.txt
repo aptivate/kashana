@@ -1,5 +1,5 @@
 # deploy
--e git+git://github.com/aptivate/dye.git@6bd5feb404acb4f9e313732c7e97a531d2e0f8c8#egg=dye
+-e git+git://github.com/aptivate/dye.git@a0d9a27371ed4d94f29dcce4fd62acc930af5eaa#egg=dye
 
 # core django (using django 1.6)
 Django>=1.6.4, <1.7
