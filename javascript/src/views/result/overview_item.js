@@ -32,11 +32,29 @@ define([
                 this.$(e.target).attr("href"), {trigger: true});
         },
 
+        setShow: function (target, show) {
+            var action = show ? "addClass" : "removeClass";
+            this.$(target).parents("table")
+                          .parent()
+                          .add(target) // Change also on toggle
+                          [action]("show");
+        },
+
         toggleDetails: function (e) {
-            this.$(e.target).parents("table")
-                            .parent()
-                            .add(e.target) // Change also on toggle
-                            .toggleClass("show");
+            var level = this.model.get('level'),
+                seen = $(e.target).hasClass("show");
+
+            this.show = !seen;
+            this.setShow(e.target, this.show);
+            if (!this.rerendered && level === Aptivate.data.conf.max_result_level) {
+                this.render();
+                this.rerendered = true;
+                // e.target here points to the wrong element (the one already
+                // removed from DOM)
+                if (this.show) {
+                    this.$(".toggle-triangle:first").addClass("show");
+                }
+            }
             e.stopPropagation();
         },
 
@@ -87,7 +105,7 @@ define([
                 if (level < Aptivate.data.conf.max_result_level) {
                     return this.resultOverviewView(logframe, resultId, level);
                 } else {
-                    return this.activityOverviewView(logframe, resultId);
+                    return this.show ? this.activityOverviewView(logframe, resultId): null;
                 }
             }
         },
