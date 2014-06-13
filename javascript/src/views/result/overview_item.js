@@ -16,6 +16,9 @@ define([
             // Automatically open results on levels up to open_result_level
             if (this.model.get("level") <= Aptivate.data.conf.open_result_level) {
                 cls += " show";
+                this.show = true;
+            } else {
+                this.show = false;
             }
             return cls;
         },
@@ -41,18 +44,19 @@ define([
         },
 
         toggleDetails: function (e) {
-            var level = this.model.get('level'),
-                seen = $(e.target).hasClass("show");
+            var seen = $(e.target).hasClass("show");
 
             this.show = !seen;
             this.setShow(e.target, this.show);
-            if (!this.rerendered && level === Aptivate.data.conf.max_result_level) {
+            if (!this.rerendered) {
                 this.render();
                 this.rerendered = true;
                 // e.target here points to the wrong element (the one already
                 // removed from DOM)
                 if (this.show) {
                     this.$(".toggle-triangle:first").addClass("show");
+                } else {
+                    this.$(".toggle-triangle:first").removeClass("show");
                 }
             }
             e.stopPropagation();
@@ -99,14 +103,18 @@ define([
                 });
             },
             overviewItems: function () {
-                var level = this.model.get('level'),
-                    logframe = this.model.get('log_frame'),
-                    resultId = this.model.get('id');
-                if (level < Aptivate.data.conf.max_result_level) {
-                    return this.resultOverviewView(logframe, resultId, level);
-                } else {
-                    return this.show ? this.activityOverviewView(logframe, resultId): null;
-                }
+                return this.show ? this.renderSubItems() : null;
+            }
+        },
+
+        renderSubItems: function () {
+            var level = this.model.get('level'),
+                logframe = this.model.get('log_frame'),
+                resultId = this.model.get('id');
+            if (level < Aptivate.data.conf.max_result_level) {
+                return this.resultOverviewView(logframe, resultId, level);
+            } else {
+                return this.show ? this.activityOverviewView(logframe, resultId): null;
             }
         },
 
