@@ -3,8 +3,11 @@ define([
     'underscore',
     'views/base_view',
     'views/editable/feedback-mixin',
-], function ($, _, BaseView, FeedbackMixin) {
-    var InputView = BaseView.extend(FeedbackMixin).extend({
+    'views/editable/cleaninput-mixin',
+], function ($, _, BaseView, FeedbackMixin, CleanInputMixin) {
+    var InputView = BaseView.extend(FeedbackMixin)
+                            .extend(CleanInputMixin)
+                            .extend({
 
         events: {
             "click .editable": "changeElement",
@@ -65,7 +68,7 @@ define([
             var element = e.target,
                 name = element.getAttribute("name"),
                 old_value = this.model.get(name) || "",  // Cast undefined to ""
-                value = this.getElementValue(element);
+                value = this.cleanInput(this.getElementValue(element));
 
             // Save only if value is different
             if (old_value !== value) {
