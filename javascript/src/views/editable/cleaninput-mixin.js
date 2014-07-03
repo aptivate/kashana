@@ -13,7 +13,7 @@ define([
         keep_tags: ["b", "i", "a", "p", "br", "strong", "em"],
 
         processNode: function(node, keep, wrapper) {
-            var nodes, clean_node,
+            var nodes, clean_node, processed_node,
                 node_name;
 
             switch (node.nodeType) {
@@ -31,7 +31,10 @@ define([
                     }
                     nodes = node.childNodes;
                     while(nodes.length) {
-                        clean_node.appendChild(this.processNode(nodes[0], keep));
+                        processed_node = this.processNode(nodes[0], keep);
+                        if (processed_node) {
+                            clean_node.appendChild(processed_node);
+                        }
                     }
                     // Remove old one to prevent infinite loop
                     if (node.parentNode) {
