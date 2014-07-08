@@ -3,24 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <title>Test Views</title>
-    <link rel="stylesheet" href="lib/qunit-1.14.0.css" />
+    <link rel="stylesheet" href="../lib/qunit-1.14.0.css" />
 </head>
 <body>
     <script id="handle-template" type="text/x-handlebars-template">{{ name }}!</script>
     <div id="qunit"></div>
     <div id="qunit-fixture"></div>
-    <script type="text/javascript" src="lib/qunit-1.14.0.js"></script>
+    <script type="text/javascript" src="../lib/qunit-1.14.0.js"></script>
     <script>
     QUnit.config.autostart = false;
     </script>
-    <script type="text/javascript" src="../node_modules/requirejs/require.js"></script>
-    <script type="text/javascript" src="../src/require.config.js"></script>
+    <script type="text/javascript" src="../../node_modules/requirejs/require.js"></script>
+    <script type="text/javascript" src="../../src/require.config.js"></script>
     <script type="text/javascript">
     Aptivate = { data: {} };
     requirejs.config({
-        baseUrl: "../src"
+        baseUrl: "../../src"
     });
-    requirejs(['../tests/tests', 'handlebars'], function (runtests) {
+    requirejs(['../tests/js/components/base-view-tests', 'handlebars'], function (runtests) {
         QUnit.start();
         runtests();
     });
