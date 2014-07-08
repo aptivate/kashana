@@ -20,7 +20,9 @@ var gulp = require('gulp'),
     defineModule = require('gulp-define-module'),
     declare = require('gulp-declare'),
 
-    requirejs_config = require('./src/require.config.json');
+    requirejs_config = require('./src/require.config.json'),
+
+    errorCode = 0;
 
 /*****************************
  * HELPERS
@@ -34,7 +36,11 @@ function skipLibDir(file) {
  *****************************/
 gulp.task('test', function () {
     gulp.src('./tests/test_runner.html')
-        .pipe(qunit());
+        .pipe(qunit())
+        .on('error', function(err) {
+            errorCode = 1;
+            process.emit('exit');
+        });;
 });
 
 gulp.task('jshint', function (){
@@ -74,4 +80,12 @@ gulp.task('default', ['templates', 'jshint'], function(t){
 gulp.task('watch', function () {
     gulp.watch('src/templates/**/*.handlebars', ['templates']);
     gulp.watch('src/**/*.js', ['jshint']);
+});
+
+
+/*
+ * Report error codes for tests
+ */
+process.on('exit', function () {
+      process.exit(errorCode);
 });
