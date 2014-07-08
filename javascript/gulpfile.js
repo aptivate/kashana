@@ -33,7 +33,7 @@ function skipLibDir(file) {
  * TASKS
  *****************************/
 gulp.task('test', function () {
-    gulp.src('./tests/**/*.html')
+    gulp.src('./tests/test_runner.html')
         .pipe(qunit());
 });
 
