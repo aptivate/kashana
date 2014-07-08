@@ -20,7 +20,7 @@
     requirejs.config({
         baseUrl: "../src"
     });
-    requirejs(['../tests/tests'], function (runtests) {
+    requirejs(['../tests/tests', 'handlebars'], function (runtests) {
         QUnit.start();
         runtests();
     });

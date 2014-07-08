@@ -2,27 +2,22 @@ define(['views/base_view'], function (baseView) {
 
     var run = function () {
 
-        module("Test infrastructure");
+        module("BaseView");
 
-        test("hello test", function () {
+        test("Test BaseView rendering of compiled template", function () {
             var test_model = new Backbone.Model({name: "Test"}),
                 TestView = baseView.extend({
-                    template_selector: "#handle-template",
+                    template_selector: "#milestone-table-heading",
                     el: "#qunit-fixture"
                 }), tv;
 
-            ok( 1 == "1", "Passed!");
-
             tv = new TestView({model: test_model});
-            equal(tv.template_selector, "#handle-template", "Correct selector");
-            equal(tv.render().el.innerHTML, "Test!");
+            equal(tv.template_selector, "#milestone-table-heading", "Correct selector");
+
+            tv.render();
+            equal(tv.el.firstChild.innerHTML, "Test");
         });
 
-        module("Other tests");
-
-        test("Other test", function() {
-            ok(true, "ok");
-        });
     };
 
     return run;
