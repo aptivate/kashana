@@ -13627,7 +13627,7 @@ this["Aptivate"]["data"]["templates"] = this["Aptivate"]["data"]["templates"] ||
 this["Aptivate"]["data"]["templates"]["activity-container"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, self=this;
+  var buffer = "", stack1, helper, functionType="function", escapeExpression=this.escapeExpression, self=this;
 
 function program1(depth0,data) {
   
@@ -13642,16 +13642,16 @@ function program3(depth0,data) {
   }
 
   buffer += "<table data-lead=\"";
-  if (stack1 = helpers.lead) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = (depth0 && depth0.lead); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
+  if (helper = helpers.lead) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.lead); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "\" data-start=\"";
-  if (stack1 = helpers.start_date) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = (depth0 && depth0.start_date); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
+  if (helper = helpers.start_date) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.start_date); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "\" data-end=\"";
-  if (stack1 = helpers.end_date) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = (depth0 && depth0.end_date); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
+  if (helper = helpers.end_date) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.end_date); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "\"\n    class=\"result-overview-table level-5";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.id), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
@@ -13687,24 +13687,24 @@ this["Aptivate"]["data"]["templates"] = this["Aptivate"]["data"]["templates"] ||
 this["Aptivate"]["data"]["templates"]["activity-statushistory"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;
+  var buffer = "", stack1, helper, functionType="function", escapeExpression=this.escapeExpression;
 
 
   buffer += "<td>";
-  if (stack1 = helpers.code_name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = (depth0 && depth0.code_name); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
+  if (helper = helpers.code_name) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.code_name); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "</td>\n<td>";
-  if (stack1 = helpers.description) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = (depth0 && depth0.description); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
+  if (helper = helpers.description) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.description); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "</td>\n<td>";
-  if (stack1 = helpers.user_name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = (depth0 && depth0.user_name); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
+  if (helper = helpers.user_name) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.user_name); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "</td>\n<td>";
-  if (stack1 = helpers.date) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = (depth0 && depth0.date); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
+  if (helper = helpers.date) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.date); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "</td>\n";
   return buffer;
@@ -13715,7 +13715,7 @@ this["Aptivate"]["data"]["templates"] = this["Aptivate"]["data"]["templates"] ||
 this["Aptivate"]["data"]["templates"]["activity-statusupdate"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, self=this;
+  var buffer = "", stack1, helper, functionType="function", escapeExpression=this.escapeExpression, self=this;
 
 function program1(depth0,data) {
   
@@ -13732,8 +13732,8 @@ function program1(depth0,data) {
   stack1 = helpers.each.call(depth0, (depth0 && depth0.codes), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n            </select>\n        </span>\n        <div class=\"status-description\">\n            <div data-field=\"description\" placeholder=\"Add description\" class=\"description rte addeditor\"></div>\n        </div>\n        <span class=\"status-date\">\n            <input type=\"text\" name=\"date\" value=\"";
-  if (stack1 = helpers.today) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = (depth0 && depth0.today); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
+  if (helper = helpers.today) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.today); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "\" class=\"addpicker\" />\n        </span>\n\n    </div>\n    <div class=\"status-row move-right clearfix\">\n        <input type=\"submit\" class=\"add\" value=\"Update\" />\n        <input type=\"submit\" class=\"cancel\" value=\"Cancel\" />\n    </div>\n</div>\n";
   return buffer;
@@ -13793,9 +13793,9 @@ function program3(depth0,data) {
 
 function program5(depth0,data) {
   
-  var stack1;
-  if (stack1 = helpers.description) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = (depth0 && depth0.description); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
+  var stack1, helper;
+  if (helper = helpers.description) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.description); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   if(stack1 || stack1 === 0) { return stack1; }
   else { return ''; }
   }
@@ -13836,7 +13836,7 @@ this["Aptivate"]["data"]["templates"] = this["Aptivate"]["data"]["templates"] ||
 this["Aptivate"]["data"]["templates"]["editable-date"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, self=this;
+  var buffer = "", stack1, helper, functionType="function", escapeExpression=this.escapeExpression, self=this;
 
 function program1(depth0,data) {
   
@@ -13852,9 +13852,9 @@ function program3(depth0,data) {
 
 function program5(depth0,data) {
   
-  var stack1;
-  if (stack1 = helpers.value) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = (depth0 && depth0.value); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
+  var stack1, helper;
+  if (helper = helpers.value) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.value); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   return escapeExpression(stack1);
   }
 
@@ -13878,8 +13878,8 @@ function program10(depth0,data) {
   }
 
   buffer += "<span data-name=\"";
-  if (stack1 = helpers.name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = (depth0 && depth0.name); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
+  if (helper = helpers.name) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.name); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "\"\n     class=\"";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.editable), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
@@ -13914,9 +13914,9 @@ function program3(depth0,data) {
 
 function program5(depth0,data) {
   
-  var stack1;
-  if (stack1 = helpers.deliverables) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = (depth0 && depth0.deliverables); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
+  var stack1, helper;
+  if (helper = helpers.deliverables) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.deliverables); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   if(stack1 || stack1 === 0) { return stack1; }
   else { return ''; }
   }
@@ -13973,9 +13973,9 @@ function program3(depth0,data) {
 
 function program5(depth0,data) {
   
-  var stack1;
-  if (stack1 = helpers.description) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = (depth0 && depth0.description); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
+  var stack1, helper;
+  if (helper = helpers.description) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.description); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   if(stack1 || stack1 === 0) { return stack1; }
   else { return ''; }
   }
@@ -14016,7 +14016,7 @@ this["Aptivate"]["data"]["templates"] = this["Aptivate"]["data"]["templates"] ||
 this["Aptivate"]["data"]["templates"]["editable-field"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, self=this;
+  var buffer = "", stack1, helper, functionType="function", escapeExpression=this.escapeExpression, self=this;
 
 function program1(depth0,data) {
   
@@ -14032,9 +14032,9 @@ function program3(depth0,data) {
 
 function program5(depth0,data) {
   
-  var stack1;
-  if (stack1 = helpers.value) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = (depth0 && depth0.value); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
+  var stack1, helper;
+  if (helper = helpers.value) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.value); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   return escapeExpression(stack1);
   }
 
@@ -14047,10 +14047,10 @@ function program7(depth0,data) {
   }
 function program8(depth0,data) {
   
-  var buffer = "", stack1;
+  var buffer = "", stack1, helper;
   buffer += "Click to add ";
-  if (stack1 = helpers.name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = (depth0 && depth0.name); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
+  if (helper = helpers.name) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.name); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1);
   return buffer;
   }
@@ -14062,8 +14062,8 @@ function program10(depth0,data) {
   }
 
   buffer += "<div data-name=\"";
-  if (stack1 = helpers.field_name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = (depth0 && depth0.field_name); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
+  if (helper = helpers.field_name) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.field_name); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "\" \n    class=\"heading ";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.editable), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
@@ -14098,9 +14098,9 @@ function program3(depth0,data) {
 
 function program5(depth0,data) {
   
-  var stack1;
-  if (stack1 = helpers.name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = (depth0 && depth0.name); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
+  var stack1, helper;
+  if (helper = helpers.name) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.name); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   return escapeExpression(stack1);
   }
 
@@ -14156,9 +14156,9 @@ function program3(depth0,data) {
 
 function program5(depth0,data) {
   
-  var stack1;
-  if (stack1 = helpers.color) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = (depth0 && depth0.color); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
+  var stack1, helper;
+  if (helper = helpers.color) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.color); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   return escapeExpression(stack1);
   }
 
@@ -14170,9 +14170,9 @@ function program7(depth0,data) {
 
 function program9(depth0,data) {
   
-  var stack1;
-  if (stack1 = helpers.name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = (depth0 && depth0.name); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
+  var stack1, helper;
+  if (helper = helpers.name) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.name); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   return escapeExpression(stack1);
   }
 
@@ -14218,9 +14218,9 @@ function program3(depth0,data) {
 
 function program5(depth0,data) {
   
-  var stack1;
-  if (stack1 = helpers.name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = (depth0 && depth0.name); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
+  var stack1, helper;
+  if (helper = helpers.name) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.name); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   return escapeExpression(stack1);
   }
 
@@ -14264,14 +14264,14 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 
 function program1(depth0,data) {
   
-  var buffer = "", stack1;
+  var buffer = "", stack1, helper;
   buffer += "\n<option value=\"";
-  if (stack1 = helpers.start) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = (depth0 && depth0.start); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
+  if (helper = helpers.start) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.start); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "\">";
-  if (stack1 = helpers.name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = (depth0 && depth0.name); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
+  if (helper = helpers.name) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.name); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "</option>\n";
   return buffer;
@@ -14316,9 +14316,9 @@ function program3(depth0,data) {
 
 function program5(depth0,data) {
   
-  var stack1;
-  if (stack1 = helpers.source) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = (depth0 && depth0.source); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
+  var stack1, helper;
+  if (helper = helpers.source) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.source); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   if(stack1 || stack1 === 0) { return stack1; }
   else { return ''; }
   }
@@ -14429,12 +14429,12 @@ this["Aptivate"]["data"]["templates"] = this["Aptivate"]["data"]["templates"] ||
 this["Aptivate"]["data"]["templates"]["milestone-table-heading"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;
+  var buffer = "", stack1, helper, functionType="function", escapeExpression=this.escapeExpression;
 
 
   buffer += "<div data-name=\"name\">";
-  if (stack1 = helpers.name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = (depth0 && depth0.name); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
+  if (helper = helpers.name) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.name); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "</div>\n";
   return buffer;
@@ -14483,9 +14483,9 @@ function program3(depth0,data) {
 
 function program5(depth0,data) {
   
-  var stack1;
-  if (stack1 = helpers.evidence) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = (depth0 && depth0.evidence); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
+  var stack1, helper;
+  if (helper = helpers.evidence) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.evidence); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   if(stack1 || stack1 === 0) { return stack1; }
   else { return ''; }
   }
@@ -14526,7 +14526,7 @@ this["Aptivate"]["data"]["templates"] = this["Aptivate"]["data"]["templates"] ||
 this["Aptivate"]["data"]["templates"]["monitor-data-entry-row"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, self=this;
+  var buffer = "", stack1, helper, functionType="function", escapeExpression=this.escapeExpression, self=this;
 
 function program1(depth0,data) {
   
@@ -14549,16 +14549,16 @@ function program2(depth0,data) {
   }
 
   buffer += "<th class=\"subindicator\">";
-  if (stack1 = helpers.name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = (depth0 && depth0.name); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
+  if (helper = helpers.name) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.name); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "</th>\n<td class=\"target\">";
-  if (stack1 = helpers.baseline) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = (depth0 && depth0.baseline); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
+  if (helper = helpers.baseline) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.baseline); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "</td>\n<td class=\"target\">";
-  if (stack1 = helpers.milestone) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = (depth0 && depth0.milestone); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
+  if (helper = helpers.milestone) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.milestone); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "</td>\n";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.items), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
@@ -14572,7 +14572,7 @@ this["Aptivate"]["data"]["templates"] = this["Aptivate"]["data"]["templates"] ||
 this["Aptivate"]["data"]["templates"]["monitor-header-row"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, self=this;
+  var buffer = "", stack1, helper, functionType="function", escapeExpression=this.escapeExpression, self=this;
 
 function program1(depth0,data) {
   
@@ -14584,12 +14584,12 @@ function program1(depth0,data) {
   }
 
   buffer += "<th ></th>\n<th class=\"target\">\n    ";
-  if (stack1 = helpers.baseline) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = (depth0 && depth0.baseline); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
+  if (helper = helpers.baseline) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.baseline); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "\n</th>\n<th class=\"target\">\n    ";
-  if (stack1 = helpers.milestone) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = (depth0 && depth0.milestone); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
+  if (helper = helpers.milestone) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.milestone); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "\n</th>\n";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.items), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
@@ -14614,16 +14614,16 @@ this["Aptivate"]["data"]["templates"] = this["Aptivate"]["data"]["templates"] ||
 this["Aptivate"]["data"]["templates"]["monitor-indicator-container"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;
+  var buffer = "", stack1, helper, functionType="function", escapeExpression=this.escapeExpression;
 
 
   buffer += "<table>\n    <tbody>\n    <tr>\n        <td class=\"monitor-indicator-title\">\n            <h2 class=\"heading\">";
-  if (stack1 = helpers.name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = (depth0 && depth0.name); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
+  if (helper = helpers.name) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.name); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "</h2>\n        </td>\n        <td class=\"indicator-description\" colspan=\"2\">\n            ";
-  if (stack1 = helpers.description) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = (depth0 && depth0.description); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
+  if (helper = helpers.description) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.description); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n        </td>\n    </tr>\n    <tr>\n        <td colspan=\"3\">\n            <table class=\"monitor-subindicator-table\">\n                <thead>\n                    <tr data-subview=\"headerRow\"></tr>\n                </thead>\n                <tbody data-subview=\"subindicatorRows\"></tbody>\n            </table>\n        </td>\n    </tr>\n    </tbody>\n</table>\n";
   return buffer;
@@ -14634,16 +14634,16 @@ this["Aptivate"]["data"]["templates"] = this["Aptivate"]["data"]["templates"] ||
 this["Aptivate"]["data"]["templates"]["monitor-result-container"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;
+  var buffer = "", stack1, helper, functionType="function", escapeExpression=this.escapeExpression;
 
 
   buffer += "<table class=\"monitor-result\">\n    <tbody>\n    <tr>\n        <td class=\"overview-title ribbon\">\n            <h2 class=\"heading\">";
-  if (stack1 = helpers.name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = (depth0 && depth0.name); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
+  if (helper = helpers.name) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.name); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "</h2>\n        </td>\n        <td class=\"overview-description\">\n            ";
-  if (stack1 = helpers.description) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = (depth0 && depth0.description); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
+  if (helper = helpers.description) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.description); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n        </td>\n        <td class=\"monitor-rating\">\n            <div data-subview=\"resultRating\"></div>\n        </td>\n    </tr>\n    <tr class=\"monitor-indicator-list\">\n        <td colspan=\"3\">\n            <div data-subview=\"indicatorList\"></div>\n        </td>\n    </tr>\n</table>\n";
   return buffer;
@@ -14703,9 +14703,9 @@ function program3(depth0,data) {
 
 function program5(depth0,data) {
   
-  var stack1;
-  if (stack1 = helpers.contribution_weighting) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = (depth0 && depth0.contribution_weighting); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
+  var stack1, helper;
+  if (helper = helpers.contribution_weighting) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.contribution_weighting); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   return escapeExpression(stack1);
   }
 
@@ -14732,14 +14732,14 @@ this["Aptivate"]["data"]["templates"] = this["Aptivate"]["data"]["templates"] ||
 this["Aptivate"]["data"]["templates"]["result-overview-container"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, self=this;
+  var buffer = "", stack1, helper, functionType="function", escapeExpression=this.escapeExpression, self=this;
 
 function program1(depth0,data) {
   
-  var buffer = "", stack1;
+  var buffer = "", stack1, helper;
   buffer += "<span class=\"toggle-triangle";
-  if (stack1 = helpers.open_toggle) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = (depth0 && depth0.open_toggle); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
+  if (helper = helpers.open_toggle) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.open_toggle); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "\">▶</span>";
   return buffer;
@@ -14747,14 +14747,14 @@ function program1(depth0,data) {
 
 function program3(depth0,data) {
   
-  var buffer = "", stack1;
+  var buffer = "", stack1, helper;
   buffer += "<a href=\"/design/";
-  if (stack1 = helpers.log_frame) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = (depth0 && depth0.log_frame); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
+  if (helper = helpers.log_frame) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.log_frame); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "/result/";
-  if (stack1 = helpers.id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = (depth0 && depth0.id); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
+  if (helper = helpers.id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "/\" class=\"edit-result\">";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.editable), {hash:{},inverse:self.program(6, program6, data),fn:self.program(4, program4, data),data:data});
@@ -14776,14 +14776,14 @@ function program6(depth0,data) {
 
 function program8(depth0,data) {
   
-  var buffer = "", stack1;
+  var buffer = "", stack1, helper;
   buffer += "<a href=\"/monitor/";
-  if (stack1 = helpers.log_frame) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = (depth0 && depth0.log_frame); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
+  if (helper = helpers.log_frame) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.log_frame); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "/result/";
-  if (stack1 = helpers.id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = (depth0 && depth0.id); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
+  if (helper = helpers.id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "/\" class=\"monitor-result\">Monitor</a>";
   return buffer;
@@ -14796,12 +14796,12 @@ function program10(depth0,data) {
   }
 
   buffer += "<table data-parent=\"";
-  if (stack1 = helpers.parent) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = (depth0 && depth0.parent); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
+  if (helper = helpers.parent) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.parent); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "\" class=\"result-overview-table level-";
-  if (stack1 = helpers.level) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = (depth0 && depth0.level); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
+  if (helper = helpers.level) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.level); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "\">\n    <tbody>\n    <tr>\n        <td class=\"overview-minmax unselectable\">";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.id), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
@@ -14840,9 +14840,9 @@ function program3(depth0,data) {
 
 function program5(depth0,data) {
   
-  var stack1;
-  if (stack1 = helpers.value) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = (depth0 && depth0.value); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
+  var stack1, helper;
+  if (helper = helpers.value) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.value); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   return escapeExpression(stack1);
   }
 
@@ -15384,13 +15384,78 @@ define('views/editable/feedback-mixin',[],function () {
     };
 });
 
+define('views/editable/cleaninput-mixin',[
+    'jquery',
+], function ($) {
+    function createSet(list) {
+        var set = {};
+        $.each(list, function (i, el) {
+            set[el] = true;
+        });
+        return set;
+    }
+
+    var CleanInputMixin = {
+        keep_tags: ["b", "i", "a", "p", "br", "strong", "em"],
+
+        processNode: function(node, keep, wrapper) {
+            var nodes, clean_node, processed_node,
+                node_name;
+
+            switch (node.nodeType) {
+                case 3: // Text node
+                    return node.parentNode ? node.parentNode.removeChild(node) : node;
+                case 1:
+                    node_name = node.nodeName.toLowerCase();
+                    if (keep[node_name] || wrapper) {
+                        clean_node = document.createElement(node_name);
+                        if (node_name === "a") { // Special case
+                            $(clean_node).attr("href", $(node).attr("href"));
+                        }
+                    } else {
+                        clean_node = document.createDocumentFragment();
+                    }
+                    nodes = node.childNodes;
+                    while(nodes.length) {
+                        processed_node = this.processNode(nodes[0], keep);
+                        if (processed_node) {
+                            clean_node.appendChild(processed_node);
+                        }
+                    }
+                    // Remove old one to prevent infinite loop
+                    if (node.parentNode) {
+                        node.parentNode.removeChild(node);
+                    }
+                    return clean_node;
+                default:
+                    // Drop other elements (comments...)
+                    node.parentNode.removeChild(node);
+            }
+        },
+
+        cleanInput: function (dirty) {
+            var $el = $("<div>"),
+                keep = createSet(this.keep_tags),
+                el;
+            $el.html(dirty);  // If there was Javascript, it will get executed here!!
+            el = this.processNode($el[0], keep, true);
+            return el.innerHTML;
+        }
+    };
+
+    return CleanInputMixin;
+});
+
 define('views/input_view',[
     'jquery',
     'underscore',
     'views/base_view',
     'views/editable/feedback-mixin',
-], function ($, _, BaseView, FeedbackMixin) {
-    var InputView = BaseView.extend(FeedbackMixin).extend({
+    'views/editable/cleaninput-mixin',
+], function ($, _, BaseView, FeedbackMixin, CleanInputMixin) {
+    var InputView = BaseView.extend(FeedbackMixin)
+                            .extend(CleanInputMixin)
+                            .extend({
 
         events: {
             "click .editable": "changeElement",
@@ -15451,7 +15516,7 @@ define('views/input_view',[
             var element = e.target,
                 name = element.getAttribute("name"),
                 old_value = this.model.get(name) || "",  // Cast undefined to ""
-                value = this.getElementValue(element);
+                value = this.cleanInput(this.getElementValue(element));
 
             // Save only if value is different
             if (old_value !== value) {
@@ -16329,6 +16394,9 @@ define('views/result/overview_item',[
             // Automatically open results on levels up to open_result_level
             if (this.model.get("level") <= Aptivate.data.conf.open_result_level) {
                 cls += " show";
+                this.show = true;
+            } else {
+                this.show = false;
             }
             return cls;
         },
@@ -16345,11 +16413,30 @@ define('views/result/overview_item',[
                 this.$(e.target).attr("href"), {trigger: true});
         },
 
+        setShow: function (target, show) {
+            var action = show ? "addClass" : "removeClass";
+            this.$(target).parents("table")
+                          .parent()
+                          .add(target) // Change also on toggle
+                          [action]("show");
+        },
+
         toggleDetails: function (e) {
-            this.$(e.target).parents("table")
-                            .parent()
-                            .add(e.target) // Change also on toggle
-                            .toggleClass("show");
+            var seen = $(e.target).hasClass("show");
+
+            this.show = !seen;
+            this.setShow(e.target, this.show);
+            if (!this.rerendered) {
+                this.render();
+                this.rerendered = true;
+                // e.target here points to the wrong element (the one already
+                // removed from DOM)
+                if (this.show) {
+                    this.$(".toggle-triangle:first").addClass("show");
+                } else {
+                    this.$(".toggle-triangle:first").removeClass("show");
+                }
+            }
             e.stopPropagation();
         },
 
@@ -16394,14 +16481,18 @@ define('views/result/overview_item',[
                 });
             },
             overviewItems: function () {
-                var level = this.model.get('level'),
-                    logframe = this.model.get('log_frame'),
-                    resultId = this.model.get('id');
-                if (level < Aptivate.data.conf.max_result_level) {
-                    return this.resultOverviewView(logframe, resultId, level);
-                } else {
-                    return this.activityOverviewView(logframe, resultId);
-                }
+                return this.show ? this.renderSubItems() : null;
+            }
+        },
+
+        renderSubItems: function () {
+            var level = this.model.get('level'),
+                logframe = this.model.get('log_frame'),
+                resultId = this.model.get('id');
+            if (level < Aptivate.data.conf.max_result_level) {
+                return this.resultOverviewView(logframe, resultId, level);
+            } else {
+                return this.show ? this.activityOverviewView(logframe, resultId): null;
             }
         },
 
