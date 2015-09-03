@@ -36,9 +36,22 @@ Setting up from empty database
 
 .. _admin interface: `http://127.0.0.1:8000/admin/`
 
-4. Add the top level Result ("Impact/Goal") with level = 1 and no parent
+Now you can add Results via the dashboard_. The first couple of levels of the
+results hierarchy have only one entry. These are usually:
 
-   Now you can add Outcomes via previously crashing interface
+  1. Impact/Goal
+  2. Outcome
+
+The next two levels can have many items:
+
+  3. Output
+  4. Sub-output level 
+
+.. _dashboard: http://127.0.0.1:8000/dashboard/
+
+If you expand the tree beyond this level you're adding Activities.
+
+
 
 5. Add Risk Ratings
 

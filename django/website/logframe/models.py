@@ -106,7 +106,7 @@ class Result(models.Model):
     rating = models.ForeignKey("Rating", null=True, blank=True)
 
     # Meta
-    level = models.SmallIntegerField()  # Used to know how deep in hiearchy we are
+    level = models.SmallIntegerField(default=0)  # Used to know how deep in hiearchy we are
     order = models.IntegerField()
 
     def __str__(self):
