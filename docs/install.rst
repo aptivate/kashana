@@ -28,8 +28,8 @@ Setting up from empty database
 
 2. Run local Alfie server with `./manage.py runserver`
 
-Now you can add Results via the dashboard_. The first couple of levels of the
-results hierarchy have only one entry. These are usually:
+Now you can add Results via the dashboard.  (e.g.  http://127.0.0.1:8000/dashboard/) 
+The first couple of levels of the results hierarchy have only one entry. These are usually:
 
   1. Impact/Goal
   2. Outcome
@@ -39,23 +39,24 @@ The next two levels can have many items:
   3. Output
   4. Sub-output level 
 
-.. _dashboard: http://127.0.0.1:8000/dashboard/
-
-If you expand the tree beyond this level you're adding Activities.
+If you expand the tree beyond this level, you're adding Activities.
 
 
 
-3. Add Risk Ratings
+3. Add Risk Ratings (e.g. http://127.0.0.1:8000/admin/logframe/riskrating/add/)
 
-   You can pick them on edit (plan) page of result objects.
+   You can pick them on planning page (click edit from Dashboard) for Result objects.
 
-4. Add milestones
+4. Add milestones for your LogFrame (e.g.  http://127.0.0.1:8000/admin/logframe/milestone/add/)
+   These have a name and a date like "Baseline": 01/01/2014, "Quarter 2": 01/04/2014
 
-   Now you can add targets for indicators
+   Now you can add targets for Indicators
 
-5. Add (RAG) Ratings
+5. Add (RAG) Ratings (e.g. http://127.0.0.1:8000/admin/logframe/rating/add/)
+   These are something like:  ("On plan", Green), ("Behind plan", Orange), ("Seriously behind", Red), ("Unrated", Grey)
 
    You can rate results and indicators
 
-6. Add TA Types and Status code
+6. Add TA (Technical Assistance) Types (e.g.  http://127.0.0.1:8000/admin/logframe/tatype/add/)
+   and Activity Status codes (e.g. http://127.0.0.1:8000/admin/logframe/statuscode/add/)
 
