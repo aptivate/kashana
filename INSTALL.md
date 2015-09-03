@@ -5,22 +5,27 @@ Alfie install
 Setting up new instance
 -----------------------
 
-1. Bootstrap environment by running `./bootstrap.py` in `deploy` directory
+1. Bootstrap environment by running `deploy/bootstrap.py` 
 
-2. Deploy locally with `./tasks.py deploy:dev` in the same directory
+2. Deploy locally with `deploy/tasks.py deploy:dev` 
 
-
+   This script wants to create a MySql database.
+   [DYE](https://github.com/aptivate/dye)'s
+   [MySql database manager](https://github.com/aptivate/dye/blob/develop/dye/tasklib/database.py#L157)
+   assumes your MySQL root password is in `/root/mysql_root_password`; this
+   task will ask for a sudo password in order to access this file.
 
 Setting up from empty database
 ------------------------------
 
-1. Create superuser account with `./manage.py createsuperuser`
-
-   You can now log in but the app crashes saying no logframe is present.
+1. Create superuser account with `./manage.py createsuperuser` in `django/website`
 
 2. Run local Alfie server with `./manage.py runserver`
 
-3. Add a logframe with the admin interface http://127.0.0.1:8000/admin/
+   You can now log in but the app crashes saying no logframe is present.
+
+3. Add a logframe with the [admin interface](`http://127.0.0.1:8000/admin/`)
+   http://127.0.0.1:8000/admin/logframe/logframe/add/
 
 4. Add the top level Result ("Impact/Goal") with level = 1 and no parent
 
