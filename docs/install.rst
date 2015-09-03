@@ -28,14 +28,6 @@ Setting up from empty database
 
 2. Run local Alfie server with `./manage.py runserver`
 
-   You can now log in but the app crashes saying no logframe is present.
-
-3. Add a logframe with the `admin interface`_:
-   
-   http://127.0.0.1:8000/admin/logframe/logframe/add/
-
-.. _admin interface: `http://127.0.0.1:8000/admin/`
-
 Now you can add Results via the dashboard_. The first couple of levels of the
 results hierarchy have only one entry. These are usually:
 
@@ -53,17 +45,17 @@ If you expand the tree beyond this level you're adding Activities.
 
 
 
-5. Add Risk Ratings
+3. Add Risk Ratings
 
    You can pick them on edit (plan) page of result objects.
 
-6. Add milestones
+4. Add milestones
 
    Now you can add targets for indicators
 
-7. Add (RAG) Ratings
+5. Add (RAG) Ratings
 
    You can rate results and indicators
 
-8. Add TA Types and Status code
+6. Add TA Types and Status code
 

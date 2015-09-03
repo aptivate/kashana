@@ -16,9 +16,7 @@ from logframe.mixins import AptivateDataBaseMixin
 
 class OverviewMixin(object):
     def get_logframe(self):
-        if LogFrame.objects.exists():
-            return LogFrame.objects.all()[0]
-        raise LogFrame.DoesNotExist("Logframe is missing. Add at least one.")
+        return LogFrame.objects.get_or_create()[0]
 
     def get_activities(self, logframe):
         return self.get_related_model_data(
