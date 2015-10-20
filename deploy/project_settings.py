@@ -8,7 +8,8 @@ from os import path
 
 # This is the directory inside the project dev dir that contains the django
 # application
-project_name = "alfie"
+project_name = "kashana"
+user = "daniell"
 
 # The django apps that are part of this project - used for running tests
 # and migrations
@@ -16,7 +17,7 @@ django_apps = ['logframe']
 
 # repository type can be "cvs", "svn" or "git"
 repo_type = "git"
-repository = 'git@github.com:' + project_name + '.git'
+repository = 'git@github.com:' + user + '/' + project_name + '.git'
 
 ##################################################################
 # THESE SETTINGS MAY WELL BE CORRECT FOR A STANDARD DJANGO PROJECT
@@ -54,8 +55,8 @@ requirements_per_env = False
 local_requirements_file = path.join(local_deploy_dir, 'pip_packages.txt')
 
 # the requirements directory
-#requirements_per_env = True
-#local_requirements_dir = path.join(local_deploy_dir, 'requirements')
+# requirements_per_env = True
+# local_requirements_dir = path.join(local_deploy_dir, 'requirements')
 # and the files should be path.join(requirements_dir, '%s.txt' % environment)
 
 test_cmd = ' manage.py test -v0 ' + ' '.join(django_apps)
@@ -95,5 +96,5 @@ webserver = 'apache'
 
 # if you have an ssh key and particular user you need to use
 # then uncomment the next 2 lines
-#user = "root"
-#key_filename = ["/home/shared/keypair.rsa"]
+# user = "root"
+# key_filename = ["/home/shared/keypair.rsa"]
