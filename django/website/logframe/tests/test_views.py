@@ -44,7 +44,7 @@ class ResultEditorTests(TestCase):
 
     @pytest.mark.django_db
     def test_get_data_has_assumptions(self):
-        lf = G(LogFrame)
+        lf = self.view.object.log_frame
         r1 = G(Result, name="Outcome", log_frame=lf, ignore_fields=['parent', 'rating'])
         self.view.object = r1
         G(Assumption, description='one', result=r1)
