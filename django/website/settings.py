@@ -204,6 +204,9 @@ JSTEMPLATE_DIRS = [
     join(PROJECT_PATH, '..', '..', 'javascript', 'src', 'templates'),
 ]
 
+# Project Specific Settings
+DEFAULT_LOGFRAME_NAME = "Log Frame"
+
 # tasks.py expects to find local_settings.py so the database stuff is there
 #--------------------------------
 # local settings import
