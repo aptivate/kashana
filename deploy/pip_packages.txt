@@ -24,7 +24,7 @@ beautifulsoup4==4.3.2
 # Views
 django-braces==1.2.2
 django-floppyforms==1.1
-django-form-utils==1.0.1
+django-form-utils==1.0.3
 django-spreadsheetresponsemixin==0.1.8
 
 # Assets
