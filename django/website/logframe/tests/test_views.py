@@ -40,7 +40,7 @@ class ResultEditorTests(TestCase):
         results = self.view._json_object_list(lf.results, ResultSerializer)
         self.assertEqual(len(results), 2)
         results_names = set([r['name'] for r in results])
-        self.assertSetEqual(set(["Impact", "Outcome"]), results_names)
+        self.assertEqual(set(["Impact", "Outcome"]), results_names)
 
     @pytest.mark.django_db
     def test_get_data_has_assumptions(self):
