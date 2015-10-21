@@ -42,6 +42,7 @@ factory_boy==2.1.1
 django-dynamic-fixture==1.6.5
 ipython==1.2.1
 ipdb==0.8
+django-jenkins==0.17.0
 
 # Nested Routers from github
 -e git+git://github.com/alanjds/drf-nested-routers.git#egg=drf-nested-routers
