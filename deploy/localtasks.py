@@ -7,6 +7,18 @@ def build_webassets():
     _manage_py(['assets', 'clean'])
     _manage_py(['assets', 'build'])
 
+def run_jenkins():
+    """ make sure the local settings is correct and the database exists """
+    env['verbose'] = True
+    # don't want any stray pyc files causing trouble
+    _rm_all_pyc()
+    _install_django_jenkins()
+    create_private_settings()
+    link_local_settings('jenkins')
+    clean_db()
+    update_db()
+    build_webassets()
+    _manage_py_jenkins()
 
 def collect_static_files():
     """ Collect static files """
