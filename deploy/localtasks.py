@@ -1,6 +1,7 @@
 from dye import tasklib
-from dye.tasklib.django import _manage_py
+from dye.tasklib.django import _manage_py, _install_django_jenkins, create_private_settings, link_local_settings, clean_db, update_db, _manage_py_jenkins
 from dye.tasklib.environment import env
+from dye.tasklib.util import _rm_all_pyc
 
 def build_webassets():
     print "### Build assets"
