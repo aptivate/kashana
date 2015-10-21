@@ -19,6 +19,7 @@ def run_jenkins():
     clean_db()
     update_db()
     build_webassets()
+    collect_static_files()
     _manage_py_jenkins()
 
 def collect_static_files():
