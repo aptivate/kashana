@@ -1,6 +1,6 @@
 from dye import tasklib
 from dye.tasklib.django import _manage_py
-
+from dye.tasklib.environment import env
 
 def build_webassets():
     print "### Build assets"
