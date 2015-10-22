@@ -1,4 +1,5 @@
 define([
+    'jquery',
     'backbone',
     'views/base_view',
     'views/generic/list',
@@ -6,8 +7,9 @@ define([
     'views/editable-text',
     'views/editable/select',
     'views/indicator/container',
-], function (Backbone, BaseView, ListView,
-        Editable, EditableText, Selectable, IndicatorView) {
+    'views/result/delete-result',
+], function ($, Backbone, BaseView, ListView,
+        Editable, EditableText, Selectable, IndicatorView, DeleteResult) {
     var ResultView = BaseView.extend({
         // View
         tagName: 'div',
@@ -72,6 +74,13 @@ define([
                     model: this.model,
                     field_name: 'risk_rating',
                     options: Aptivate.data.riskratings
+                });
+            },
+            deleteResult: function () {
+                var object_name = this.model.get('name') || "object";
+
+                return new DeleteResult({
+                    object_name: object_name
                 });
             }
         }
