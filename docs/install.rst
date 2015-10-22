@@ -28,29 +28,35 @@ Setting up from empty database
 
 2. Run local Alfie server with `./manage.py runserver`
 
-   You can now log in but the app crashes saying no logframe is present.
+Now you can add Results via the dashboard.  (e.g.  http://127.0.0.1:8000/dashboard/) 
+The first couple of levels of the results hierarchy have only one entry. These are usually:
 
-3. Add a logframe with the `admin interface`_:
-   
-   http://127.0.0.1:8000/admin/logframe/logframe/add/
+  1. Impact/Goal
+  2. Outcome
 
-.. _admin interface: `http://127.0.0.1:8000/admin/`
+The next two levels can have many items:
 
-4. Add the top level Result ("Impact/Goal") with level = 1 and no parent
+  3. Output
+  4. Sub-output level 
 
-   Now you can add Outcomes via previously crashing interface
+If you expand the tree beyond this level, you're adding Activities.
 
-5. Add Risk Ratings
 
-   You can pick them on edit (plan) page of result objects.
 
-6. Add milestones
+3. Add Risk Ratings (e.g. http://127.0.0.1:8000/admin/logframe/riskrating/add/)
 
-   Now you can add targets for indicators
+   You can pick them on planning page (click edit from Dashboard) for Result objects.
 
-7. Add (RAG) Ratings
+4. Add milestones for your LogFrame (e.g.  http://127.0.0.1:8000/admin/logframe/milestone/add/)
+   These have a name and a date like "Baseline": 01/01/2014, "Quarter 2": 01/04/2014
+
+   Now you can add targets for Indicators
+
+5. Add (RAG) Ratings (e.g. http://127.0.0.1:8000/admin/logframe/rating/add/)
+   These are something like:  ("On plan", Green), ("Behind plan", Orange), ("Seriously behind", Red), ("Unrated", Grey)
 
    You can rate results and indicators
 
-8. Add TA Types and Status code
+6. Add TA (Technical Assistance) Types (e.g.  http://127.0.0.1:8000/admin/logframe/tatype/add/)
+   and Activity Status codes (e.g. http://127.0.0.1:8000/admin/logframe/statuscode/add/)
 
