@@ -1,5 +1,6 @@
+from os import path
 from dye import tasklib
-from dye.tasklib.django import _manage_py, _install_django_jenkins, create_private_settings, link_local_settings, clean_db, update_db, _manage_py_jenkins
+from dye.tasklib.django import _manage_py, _install_django_jenkins, create_private_settings, link_local_settings, clean_db, update_db
 from dye.tasklib.environment import env
 from dye.tasklib.util import _rm_all_pyc
 
@@ -7,6 +8,18 @@ def build_webassets():
     print "### Build assets"
     _manage_py(['assets', 'clean'])
     _manage_py(['assets', 'build'])
+
+def _manage_py_jenkins():
+    """ run the jenkins command """
+    args = ['jenkins', ]
+    args += ['--pylint-rcfile', path.join(env['vcs_root_dir'], 'jenkins', 'pylint.rc'), '--enable-coverage']
+    coveragerc_filepath = path.join(env['vcs_root_dir'], 'jenkins', 'coverage.rc')
+    if path.exists(coveragerc_filepath):
+        args += ['--coverage-rcfile', coveragerc_filepath]
+    args += env['django_apps']
+    if not env['quiet']:
+        print "### Running django-jenkins, with args; %s" % args
+    _manage_py(args, cwd=env['vcs_root_dir'])
 
 def run_jenkins():
     """ make sure the local settings is correct and the database exists """
