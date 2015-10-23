@@ -1,12 +1,27 @@
+from os import path
 from dye import tasklib
-from dye.tasklib.django import _manage_py
-
+from dye.tasklib.django import _manage_py, _install_django_jenkins, create_private_settings, link_local_settings, clean_db, update_db, _manage_py_jenkins
+from dye.tasklib.environment import env
+from dye.tasklib.util import _rm_all_pyc
 
 def build_webassets():
     print "### Build assets"
     _manage_py(['assets', 'clean'])
     _manage_py(['assets', 'build'])
 
+def run_jenkins():
+    """ make sure the local settings is correct and the database exists """
+    env['verbose'] = True
+    # don't want any stray pyc files causing trouble
+    _rm_all_pyc()
+    _install_django_jenkins()
+    create_private_settings()
+    link_local_settings('jenkins')
+    clean_db()
+    update_db()
+    build_webassets()
+    collect_static_files()
+    _manage_py_jenkins()
 
 def collect_static_files():
     """ Collect static files """

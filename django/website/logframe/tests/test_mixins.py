@@ -49,8 +49,8 @@ def test_get_logframe_data_contains_logframe():
 @pytest.mark.django_db
 def test_get_logframe_data_contains_results():
     lf = G(LogFrame)
-    r = G(Result, log_frame=lf)
-    r2 = G(Result, log_frame=lf)
+    r = G(Result, log_frame=lf, ignore_fields=['rating', 'parent'])
+    r2 = G(Result, log_frame=lf, ignore_fields=['rating', 'parent'])
     mixin = AptivateDataBaseMixin()
     data = mixin.get_logframe_data(lf)
     result_ids = set([r.id, r2.id])

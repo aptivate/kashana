@@ -6,7 +6,7 @@ from django.test.client import Client, RequestFactory
 from django_dynamic_fixture import G
 
 from contacts.tests.factories import UserFactory
-from logframe.models import LogFrame, Result
+from logframe.models import LogFrame, Result, Rating
 from dashboard.views import Home
 
 
@@ -15,8 +15,16 @@ class FrontpageTests(TestCase):
     def setUp(self):
         self.user = UserFactory()
         self.view = Home.as_view()
-        lf = G(LogFrame)
-        G(Result, log_frame=lf, parent=None)
+
+        # Logframe is now created automatically, don't create it if it exists
+
+        try:
+            lf = LogFrame.objects.get()
+        except LogFrame.DoesNotExist:
+            lf = G(LogFrame)
+
+        rating = G(Rating, log_frame=lf)
+        G(Result, log_frame=lf, parent=None, rating=rating)
 
     @pytest.mark.integration
     def test_homepage_logged_out(self):

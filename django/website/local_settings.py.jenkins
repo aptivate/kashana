@@ -1,0 +1,35 @@
+import private_settings
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',  # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'kashana',  # Or path to database file if using sqlite3.
+        'USER': 'kashana',  # Not used with sqlite3.
+        'PASSWORD': private_settings.DB_PASSWORD,  # Not used with sqlite3.
+        'HOST': '',  # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '',  # Set to empty string for default. Not used with sqlite3.
+        'TEST_COLLATION': 'utf8_general_ci',
+        'OPTIONS': {
+               "init_command": "SET storage_engine=INNODB",
+        }
+    }
+}
+
+from settings import INSTALLED_APPS
+# add the jenkins app here
+INSTALLED_APPS = (
+      'django_jenkins',
+    )  + INSTALLED_APPS
+
+DEBUG = True
+TEMPLATE_DEBUG = DEBUG
+SOUTH_TESTS_MIGRATE = True
+
+JENKINS_TASKS = (
+    'django_jenkins.tasks.run_pylint',
+    'django_jenkins.tasks.with_coverage',
+)
+
+JENKINS_TEST_RUNNER = 'jenkins_test_runner.JenkinsPytestRunner'
+
+PROJECT_APPS = ['appconf', 'contacts', 'dashboard', 'logframe']

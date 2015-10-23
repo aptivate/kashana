@@ -2,6 +2,8 @@ from django.test import TestCase
 from django_dynamic_fixture import G
 from ..models import (
     Indicator,
+    LogFrame,
+    Result,
     SubIndicator,
 )
 
@@ -13,9 +15,11 @@ class SubindicatorTests (TestCase):
         Indicator has a subindicators method that returns
         only the subindicators for the given Indicator
         """
-        indicator = G(Indicator)
-        subindicator = G(SubIndicator, indicator=indicator)
-        G(SubIndicator)
+        logframe = G(LogFrame)
+        result = G(Result, log_frame=logframe, ignore_fields=['parent', 'rating'])
+        indicator = G(Indicator, result=result)
+        subindicator = G(SubIndicator, indicator=indicator, ignore_fields=['rating'])
+        G(SubIndicator, indicator=G(Indicator, result=result), ignore_fields=['rating'])
 
         subindicators = indicator.get_subindicators()
 
@@ -27,7 +31,9 @@ class SubindicatorTests (TestCase):
         exist, we shoiuld get a newly created fresh one with
         some appropriate default name.
         """
-        indicator = G(Indicator)
+        logframe = G(LogFrame)
+        result = G(Result, log_frame=logframe, ignore_fields=['parent', 'rating'])
+        indicator = G(Indicator, result=result)
         assert not SubIndicator.objects.filter(indicator=indicator).exists()
 
         subindicators = indicator.get_subindicators()

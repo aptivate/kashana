@@ -69,7 +69,7 @@ class TestAverageTargetPercentMixin(TestCase):
 def test_get_absolute_url_returns_correct_path():
     from django.core.urlresolvers import reverse
     logframe = G(LogFrame)
-    result = G(Result, log_frame=logframe)
+    result = G(Result, log_frame=logframe, ignore_fields=['parent', 'rating'])
     expected_url = reverse("design-result", args=[logframe.id, result.id])
 
     assert result.get_absolute_url() == expected_url
@@ -78,7 +78,7 @@ def test_get_absolute_url_returns_correct_path():
 @pytest.mark.django_db
 def test_level_set_to_one_for_root_result():
     logframe = G(LogFrame)
-    result = G(Result, log_frame=logframe, ignore_fields=['parent', 'level'])
+    result = G(Result, log_frame=logframe, ignore_fields=['parent', 'level', 'rating'])
 
     assert result.level == 1
 
@@ -87,9 +87,9 @@ def test_level_set_to_one_for_root_result():
 def test_level_set_to_one_more_than_parent():
     logframe = G(LogFrame)
     result = G(Result, log_frame=logframe,
-               ignore_fields=['parent', 'level'])
+               ignore_fields=['parent', 'level', 'rating'])
     result2 = G(Result, log_frame=logframe, parent=result,
-                ignore_fields=['level'])
+                ignore_fields=['level', 'rating'])
 
     assert result2.level == 2
 
@@ -98,22 +98,22 @@ def test_level_set_to_one_more_than_parent():
 def test_order_set_automatically_when_missing():
     logframe = G(LogFrame)
     result = G(Result, log_frame=logframe,
-               ignore_fields=['parent', 'level', 'order'])
+               ignore_fields=['parent', 'level', 'order', 'rating'])
     assert result.order == 1
 
     result2 = G(Result, log_frame=logframe, parent=result, order=3,
-                ignore_fields=['level', 'order'])
+                ignore_fields=['level', 'order', 'rating'])
     assert result2.order == 1
 
 
 @pytest.mark.django_db
 def test_order_set_to_max_plus_one_of_siblings():
     logframe = G(LogFrame)
-    G(Result, log_frame=logframe, order=1, level=2, ignore_fields=['parent'])
-    G(Result, log_frame=logframe, order=2, level=2, ignore_fields=['parent'])
-    G(Result, log_frame=logframe, order=3, level=1, ignore_fields=['parent'])
+    G(Result, log_frame=logframe, order=1, level=2, ignore_fields=['parent', 'rating'])
+    G(Result, log_frame=logframe, order=2, level=2, ignore_fields=['parent', 'rating'])
+    G(Result, log_frame=logframe, order=3, level=1, ignore_fields=['parent', 'rating'])
     result = G(Result, log_frame=logframe, level=2,
-               ignore_fields=['parent', 'order'])
+               ignore_fields=['parent', 'order', 'rating'])
     assert result.order == 3
 
 
