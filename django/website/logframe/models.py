@@ -48,7 +48,11 @@ class AverageTargetPercentMixin(object):
 
 @python_2_unicode_compatible
 class LogFrame(AverageTargetPercentMixin, models.Model):
-    name = models.CharField(max_length=255, unique=True)
+    name = models.CharField(
+        default=settings.DEFAULT_LOGFRAME_NAME,
+        max_length=255,
+        unique=True
+    )
 
     def average_target_percent(self):
         return self._calculate_weighted_target_percent(self.output_set.all())
@@ -106,7 +110,7 @@ class Result(models.Model):
     rating = models.ForeignKey("Rating", null=True, blank=True)
 
     # Meta
-    level = models.SmallIntegerField()  # Used to know how deep in hiearchy we are
+    level = models.SmallIntegerField(default=0)  # Used to know how deep in hiearchy we are
     order = models.IntegerField()
 
     def __str__(self):
