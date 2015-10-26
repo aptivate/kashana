@@ -85,6 +85,7 @@ class TestExportViews(TestCase):
 
             Gives a flat list in hiearchy order.
         """
+        self.result.delete()
         impact = self.add_result("Impact")  # top of hierarchy
         outcome = self.add_result("Outcome", impact)
 
