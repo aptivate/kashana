@@ -15,7 +15,7 @@ from logframe.models import (
 )
 from logframe.period_utils import get_periods, get_period, periods_intersect
 from bs4 import BeautifulSoup
-from openpyxl.styles import Style, PatternFill, fills, Color, Alignment, Font
+from openpyxl.styles import Style, PatternFill, fills, Color, Font
 from openpyxl.workbook.workbook import Workbook
 
 
@@ -56,6 +56,7 @@ RATING_STYLES = {
     'light-grey': {'fill': solid_fill('D6D6D6')},
     'grey': {'font': Font(color=Color('FFFFFF')), 'fill': solid_fill('666666')},
 }
+
 
 def html2txt(html):
     value = html if html else u""
