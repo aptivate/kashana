@@ -83,7 +83,7 @@ class RatingForm(forms.ModelForm):
 
     class Media:
         css = {
-            "all": ("alfie/admin.css",)
+            "all": ("kashana/admin.css",)
         }
 
 
@@ -106,7 +106,7 @@ class RatingAdmin(admin.ModelAdmin):
 
     class Media:
         css = {
-            "all": ("alfie/admin.css",)
+            "all": ("kashana/admin.css",)
         }
 
 
