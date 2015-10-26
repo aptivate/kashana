@@ -41,13 +41,16 @@ function program3(depth0,data) {
   if (stack1 = helpers.end_date) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = (depth0 && depth0.end_date); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
   buffer += escapeExpression(stack1)
-    + "\"\n    class=\"result-overview-table level-5";
+    + "\"\n    class=\"result-overview-table level-";
+  if (stack1 = helpers.level) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = (depth0 && depth0.level); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
+  buffer += escapeExpression(stack1);
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.id), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\">\n    <tbody>\n    <tr>\n        <td class=\"overview-minmax unselectable\">";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.id), {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "</td>\n        <td class=\"overview-title\">\n        <div data-subview=\"activityName\"></div>\n        </td>\n        <td class=\"overview-description status-background\">\n            <div data-subview=\"activityDescription\"></div>\n        </td>\n        <td class=\"overview-rating\"></td>\n    </tr>\n    <tr class=\"activity-details-row\">\n        <td colspan=\"4\" class=\"activity-details\">\n            <ul>\n                <li>\n                    <h3 class=\"list-label\">Timing</h3>\n                    <div class=\"list-content\">\n                        <div class=\"half-wide centered-content\">\n                            <h4>Start</h4>\n                            <span class=\"activity-timing activity-start\">\n                                <div data-subview=\"activityStartDate\"></div>\n                            </span>\n                        </div>\n                        <div class=\"half-wide centered-content\">\n                            <h4>End</h4>\n                            <span class=\"activity-timing activity-end\">\n                                <div data-subview=\"activityEndDate\"></div>\n                            </span>\n                        </div>\n                    </div>\n                </li>\n                <li>\n                    <h3 class=\"list-label\">Deliverables</h3>\n                    <div class=\"list-content\">\n                            <div data-subview=\"activityDeliverables\"></div>\n                    </div>\n                </li>\n                <li>\n                    <h3 class=\"list-label\">Lead</h3>\n                    <div class=\"list-content\">\n                            <div data-subview=\"activityLead\"></div>\n                    </div>\n                </li>\n                <li class=\"hide-status-history\">\n                    <h3 class=\"list-label\">\n                        <span class=\"status-minmax unselectable\">\n                            <span class=\"toggle-triangle\">▶</span>\n                        </span> Status\n                    </h3>\n                    <div class=\"list-content\">\n                            <div data-subview=\"activityStatusUpdates\"></div>\n                    </div>\n                </li>\n                <li>\n                    <h3 class=\"list-label\">TA</h3>\n                    <div class=\"list-content\">\n                        <h4>Total budget</h4>\n                        <p class=\"ta-lines-total move-right prominent\"></p>\n                        <table class=\"ta-lines-table\">\n                            <thead>\n                                <tr>\n                                    <th>Type</th>\n                                    <th>Name</th>\n                                    <th>Band</th>\n                                    <th>Start</th>\n                                    <th>End</th>\n                                    <th>Days</th>\n                                    <th>Amount</th>\n                                </tr>\n                            </thead>\n                        </table>\n                        <div data-subview=\"activityTALines\"></div>\n                    </div>\n                </li>\n                <li>\n                    <h3 class=\"list-label\">Other</h3>\n                    <div class=\"list-content\">\n                        <h4>Total budget</h4>\n                        <p class=\"budget-lines-total move-right prominent\"></p>\n                        <table class=\"budget-lines-table\">\n                            <thead>\n                                <tr>\n                                    <th>Name</th>\n                                    <th>Amount</th>\n                                </tr>\n                            </thead>\n                        </table>\n                        <div data-subview=\"activityBudgetLines\"></div>\n                    </div>\n                </li>\n            </ul>\n        </td>\n    </tr>\n    </tbody>\n</table>\n";
+  buffer += "</td>\n        <td class=\"overview-title\">\n        <div data-subview=\"activityName\"></div>\n	</td>\n        <td class=\"overview-manage\"></td>\n        <td class=\"overview-description status-background\">\n            <div data-subview=\"activityDescription\"></div>\n        </td>\n        <td class=\"overview-rating\"></td>\n    </tr>\n    <tr class=\"activity-details-row\">\n        <td colspan=\"5\" class=\"activity-details\">\n            <ul>\n                <li>\n                    <h3 class=\"list-label\">Timing</h3>\n                    <div class=\"list-content\">\n                        <div class=\"half-wide centered-content\">\n                            <h4>Start</h4>\n                            <span class=\"activity-timing activity-start\">\n                                <div data-subview=\"activityStartDate\"></div>\n                            </span>\n                        </div>\n                        <div class=\"half-wide centered-content\">\n                            <h4>End</h4>\n                            <span class=\"activity-timing activity-end\">\n                                <div data-subview=\"activityEndDate\"></div>\n                            </span>\n                        </div>\n                    </div>\n                </li>\n                <li>\n                    <h3 class=\"list-label\">Deliverables</h3>\n                    <div class=\"list-content\">\n                            <div data-subview=\"activityDeliverables\"></div>\n                    </div>\n                </li>\n                <li>\n                    <h3 class=\"list-label\">Lead</h3>\n                    <div class=\"list-content\">\n                            <div data-subview=\"activityLead\"></div>\n                    </div>\n                </li>\n                <li class=\"hide-status-history\">\n                    <h3 class=\"list-label\">\n                        <span class=\"status-minmax unselectable\">\n                            <span class=\"toggle-triangle\">▶</span>\n                        </span> Status\n                    </h3>\n                    <div class=\"list-content\">\n                            <div data-subview=\"activityStatusUpdates\"></div>\n                    </div>\n                </li>\n                <li>\n                    <h3 class=\"list-label\">TA</h3>\n                    <div class=\"list-content\">\n                        <h4>Total budget</h4>\n                        <p class=\"ta-lines-total move-right prominent\"></p>\n                        <table class=\"ta-lines-table\">\n                            <thead>\n                                <tr>\n                                    <th>Type</th>\n                                    <th>Name</th>\n                                    <th>Band</th>\n                                    <th>Start</th>\n                                    <th>End</th>\n                                    <th>Days</th>\n                                    <th>Amount</th>\n                                </tr>\n                            </thead>\n                        </table>\n                        <div data-subview=\"activityTALines\"></div>\n                    </div>\n                </li>\n                <li>\n                    <h3 class=\"list-label\">Other</h3>\n                    <div class=\"list-content\">\n                        <h4>Total budget</h4>\n                        <p class=\"budget-lines-total move-right prominent\"></p>\n                        <table class=\"budget-lines-table\">\n                            <thead>\n                                <tr>\n                                    <th>Name</th>\n                                    <th>Amount</th>\n                                </tr>\n                            </thead>\n                        </table>\n                        <div data-subview=\"activityBudgetLines\"></div>\n                    </div>\n                </li>\n            </ul>\n        </td>\n    </tr>\n    </tbody>\n</table>\n";
   return buffer;
   });;
 this["Aptivate"] = this["Aptivate"] || {};
@@ -656,6 +659,31 @@ function program10(depth0,data) {
 this["Aptivate"] = this["Aptivate"] || {};
 this["Aptivate"]["data"] = this["Aptivate"]["data"] || {};
 this["Aptivate"]["data"]["templates"] = this["Aptivate"]["data"]["templates"] || {};
+this["Aptivate"]["data"]["templates"]["export-annual-plan"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, self=this;
+
+function program1(depth0,data) {
+  
+  var buffer = "";
+  buffer += "\n<option value=\""
+    + escapeExpression((typeof depth0 === functionType ? depth0.apply(depth0) : depth0))
+    + "\">"
+    + escapeExpression((typeof depth0 === functionType ? depth0.apply(depth0) : depth0))
+    + "</option>\n";
+  return buffer;
+  }
+
+  buffer += "<label for=\"annual-plan\">Export Annual plan for year:</label>\n<select id=\"annual-plan\">\n<option value=\"\">----</option>\n";
+  stack1 = helpers.each.call(depth0, (depth0 && depth0.years), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n</select>\n";
+  return buffer;
+  });;
+this["Aptivate"] = this["Aptivate"] || {};
+this["Aptivate"]["data"] = this["Aptivate"]["data"] || {};
+this["Aptivate"]["data"]["templates"] = this["Aptivate"]["data"]["templates"] || {};
 this["Aptivate"]["data"]["templates"]["export-data"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
@@ -676,7 +704,45 @@ function program1(depth0,data) {
   return buffer;
   }
 
-  buffer += "Export logframe data for period:\n<select id=\"export-data\">\n<option value=\"\">----</option>\n";
+  buffer += "Export quarterly progress report:\n<select id=\"export-data\">\n<option value=\"\">----</option>\n";
+  stack1 = helpers.each.call(depth0, (depth0 && depth0.periods), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n</select>\n";
+  return buffer;
+  });;
+this["Aptivate"] = this["Aptivate"] || {};
+this["Aptivate"]["data"] = this["Aptivate"]["data"] || {};
+this["Aptivate"]["data"]["templates"] = this["Aptivate"]["data"]["templates"] || {};
+this["Aptivate"]["data"]["templates"]["export-quarter-plan"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, self=this;
+
+function program1(depth0,data) {
+  
+  var buffer = "", stack1;
+  buffer += "\n";
+  stack1 = helpers['if'].call(depth0, (depth0 && depth0.start), {hash:{},inverse:self.noop,fn:self.program(2, program2, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n";
+  return buffer;
+  }
+function program2(depth0,data) {
+  
+  var buffer = "", stack1;
+  buffer += "<option value=\"";
+  if (stack1 = helpers.start) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = (depth0 && depth0.start); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\">";
+  if (stack1 = helpers.name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = (depth0 && depth0.name); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "</option>";
+  return buffer;
+  }
+
+  buffer += "<label for=\"quarter-plan\">Or plan for Quarter:</label>\n<select id=\"quarter-plan\">\n<option value=\"\">----</option>\n";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.periods), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n</select>\n";
@@ -691,7 +757,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<div class=\"indicator-detail\">\n    <div data-subview=\"indicatorName\"></div>\n    <div data-subview=\"indicatorDescription\"></div>\n</div>\n<div class=\"indicator-data\">\n    <div class=\"indicator-data-table\">\n    <div data-subview=\"targetsTable\"></div>\n    </div>\n    <div class=\"indicator-source\">\n        <h3>Source</h3>\n        <div data-subview=\"indicatorSource\"></div>\n    </div>\n</div>\n";
+  return "<div class=\"indicator-detail\">\n    <div data-subview=\"indicatorName\"></div>\n    <div data-subview=\"indicatorDescription\"></div>\n</div>\n<div class=\"indicator-data\">\n    <div class=\"scrolling-container\">\n        <div class=\"indicator-data-table scrolling-table\">\n            <div data-subview=\"targetsTable\"></div>\n        </div>\n    </div>\n    <div class=\"indicator-source\">\n        <h3>Source</h3>\n        <div data-subview=\"indicatorSource\"></div>\n    </div>\n</div>\n";
   });;
 this["Aptivate"] = this["Aptivate"] || {};
 this["Aptivate"]["data"] = this["Aptivate"]["data"] || {};
@@ -816,7 +882,7 @@ function program1(depth0,data) {
   return buffer;
   }
 
-  buffer += "<th></th>\n";
+  buffer += "<th class=\"fixed-column\">&nbsp;</th>\n";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.items), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n";
@@ -1067,7 +1133,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<div id=\"filter-result\">\n    Lead:\n    <div data-subview=\"leadSelect\"></div>\n    <span id=\"filter-time\">\n        Start:\n        <span>\n            <input id=\"filter-time-start\" type=\"text\" placeholder=\"YYYY-MM-DD\" class=\"date addpicker\" />\n        </span>\n\n        End:\n        <span>\n            <input id=\"filter-time-end\" type=\"text\" placeholder=\"YYYY-MM-DD\" class=\"date addpicker\" />\n        </span>\n    </span>\n    <span id=\"filter-reset\">\n        <button id=\"filter-clear\" title=\"Clear filter selection\">X</button>\n    </span>\n</div>\n<div data-subview=\"resultList\"></div>\n<div data-subview=\"exportData\"></div>\n";
+  return "<div class=\"overview-main\">\n    <div id=\"filter-result\">\n        Lead:\n        <div data-subview=\"leadSelect\"></div>\n        <span id=\"filter-time\">\n            Start:\n            <span>\n                <input id=\"filter-time-start\" type=\"text\" placeholder=\"YYYY-MM-DD\" class=\"date addpicker\" />\n            </span>\n\n            End:\n            <span>\n                <input id=\"filter-time-end\" type=\"text\" placeholder=\"YYYY-MM-DD\" class=\"date addpicker\" />\n            </span>\n        </span>\n        <span id=\"filter-reset\">\n            <button id=\"filter-clear\" title=\"Clear filter selection\">X</button>\n        </span>\n    </div>\n    <div data-subview=\"resultList\"></div>\n</div>\n<div data-subview=\"exportData\"></div>\n<p>\n<span data-subview=\"exportAnnualPlan\"></span>\n<span data-subview=\"exportQuarterPlan\"></span>\n</p>\n";
   });;
 this["Aptivate"] = this["Aptivate"] || {};
 this["Aptivate"]["data"] = this["Aptivate"]["data"] || {};

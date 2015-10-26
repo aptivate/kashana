@@ -154,6 +154,25 @@ define([
             return new_data;
         },
 
+        // Process Rating values as Integers (so values match those returned by API).
+        commitEdit: function (e) {
+            var element = e.target,
+                name = element.getAttribute("name"),
+                old_value = this.model.get(name) || "",  // Cast undefined to ""
+                value = parseInt(this.getElementValue(element), 10);
+
+            // Save only if value is different
+            if (old_value !== value) {
+                this.model.set(name, value);
+                this.saveFlag = true;
+                this.model.save();
+                // Avoid duplicate saves
+                this.$(e.target).removeClass('savable');
+            }
+            this.preRender(e);
+            this.render();
+        },
+
         initialize: function () {
             this.attachFeedback(); // Comes from FeedbackMixin
         }
