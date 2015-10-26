@@ -8,8 +8,8 @@ from os import path
 
 # This is the directory inside the project dev dir that contains the django
 # application
-project_name = "kashana"
-user = "daniell"
+project_name = "alfie"
+user = "aptivate"
 
 # The django apps that are part of this project - used for running tests
 # and migrations
