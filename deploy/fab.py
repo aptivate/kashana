@@ -38,7 +38,8 @@ fabfile = path.join(dye_pkg_dir, 'dye', 'fabfile.py')
 # tell fabric that this directory is where it can find project_settings and
 # localfab (if it exists)
 osenv = os.environ
-osenv['DEPLOYDIR'] = path.dirname(__file__)
+if 'DEPLOYDIR' not in osenv:
+    osenv['DEPLOYDIR'] = path.dirname(__file__)
 
 # call the fabric in the virtual env
 fab_call = [fab_bin]
