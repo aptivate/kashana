@@ -26,7 +26,7 @@ html5lib==0.9999999
 django-braces==1.2.2
 django-floppyforms==1.1
 django-form-utils==1.0.3
-openpyxl==2.2.6
+openpyxl==2.1.0
 
 # Assets
 webassets==0.9

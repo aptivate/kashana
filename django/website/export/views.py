@@ -200,45 +200,7 @@ class LogframeDataMixin(object):
 
         return cells_with_style
 
-
-class ExcelStyledWorkbookGenerator(object):
-    # Overrides the one from SpreadsheetResponseMixin
-    def generate_xlsx(self, data, headers=None, file=None):
-        wb = Workbook()
-        ws = wb.get_active_sheet()
-
-        # Put in headers
-        rowoffset = 0
-        if headers:
-            rowoffset = 1
-            for c, headerval in enumerate(headers, 1):
-                ws.cell(row=1, column=c).value = headerval
-
-        # Put in data
-        for r, row in enumerate(data, 1):
-            for c, cellval in enumerate(row, 1):
-                cell_style = None
-
-                if isinstance(cellval, dict):
-                    if 'styles' in cellval:
-                        styles = cellval['styles']
-                    else:
-                        styles = None
-                    cellval = cellval['value']
-                    if styles:
-                        cell_style = Style(**styles)
-
-                cell = ws.cell(row=r + rowoffset, column=c)
-                cell.value = cellval
-
-                if cell_style:
-                    cell.style = cell_style
-        if file:
-            wb.save(file)
-        return wb
-
-
-class ExportLogframeData(LoginRequiredMixin, LogframeDataMixin, ExcelStyledWorkbookGenerator, SpreadsheetResponseMixin, DetailView):
+class ExportLogframeData(LoginRequiredMixin, LogframeDataMixin, SpreadsheetResponseMixin, DetailView):
     model = LogFrame
 
     def get_milestone(self, logframe, end_date):
@@ -331,7 +293,7 @@ MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep',
           'Oct', 'Nov', 'Dec']
 
 
-class ExportPlanMixin(ExcelStyledWorkbookGenerator):
+class ExportPlanMixin(object):
     model = LogFrame
 
     @staticmethod
