@@ -19,15 +19,19 @@ footer {
 
 .monitor-result .overview-description,
 .monitor-result .monitor-rating {
-    background-color: $pale-blue;
+    background-color: $page-background;
+    color:$white;
 }
 
 .monitor-result,
 .logframe-result {
-    border: 3px solid $dusk-blue;
+    border: 1em solid $page-background;
     margin-bottom: 1em;
     position:relative;
     display:table;
+}
+.monitor-result{
+  border-top:0;
 }
 
 .logframe-result td:first-child {
@@ -62,7 +66,7 @@ footer {
 }
 
 .result-children {
-    margin-left: 1%;
+    margin-left: 1em;
 }
 
 
@@ -206,7 +210,7 @@ footer {
 }
 .indicator-data-table > table {
 	width:100%;
-  table-layout:fixed;
+    margin-bottom: 4em;
 }
 .indicator-data-table th,
 .indicator-data-table td {
@@ -215,8 +219,8 @@ footer {
 }
 .indicator-data-table .missing {
     text-align:center;
-    margin:1em 0;
-    font-size:0.7em;
+      margin:0;
+  font-size:0.7em;
 }
 
 .indicator-data-table td > div {
@@ -283,7 +287,7 @@ footer {
 }
 #result-assumptions {
     margin-top: 0;
-    padding: 6px 7px 7px 0;
+    padding: 6px 7px 7em 0;
 }
   #result-assumptions ul {
       list-style: none outside none;
@@ -304,8 +308,10 @@ footer {
 /* overview page */
 #filter-result {
     margin-bottom: .5em;
+    margin-left: 10px;
     padding: 5px;
-    background: $row-stripe;
+    background: $level-1-blue;
+    color: white;
 }
 #filter-time {
     margin-left: 6.5em;
@@ -347,7 +353,7 @@ footer {
         background-color: $pale-blue;
     }
     .overview-manage {
-        width: 4em;
+        width: 6em;
     }
     .overview-rating {
         width: 45px;
@@ -367,13 +373,13 @@ footer {
     }
 
     .overview-minmax {
-        width: 53px;
+        width: 2em;
     }
     .toggle-triangle {
         left: 3px;
     }
     .overview-title {
-        width: 15%;
+        width: 14em;
     }
 }
 .level-3 {
@@ -388,13 +394,13 @@ footer {
         background-color: $pale-blue;
     }
     .overview-minmax {
-        width: 56px;
+        width:2em;
     }
     .toggle-triangle {
         left: 6px;
     }
     .overview-title {
-        width: 14%;
+        width: 13em;
     }
 }
 .level-4 {
@@ -409,13 +415,13 @@ footer {
         background-color: $pale-blue;
     }
     .overview-minmax {
-        width: 59px;
+        width: 2em;
     }
     .toggle-triangle {
         left: 9px;
     }
     .overview-title {
-        width: 13%;
+        width: 15em;
     }
 }
 .level-5 {
@@ -430,13 +436,34 @@ footer {
         background-color: $pale-blue;
     }
     .overview-minmax {
-        width: 62px;
+        width: 2em;
     }
     .toggle-triangle {
         left: 12px;
     }
     .overview-title {
-        width: 11.8%;
+       width: 15em;
+    }
+}
+.level-6 {
+    &.result-overview,
+    .overview-minmax,
+    .overview-title,
+    .ribbon-result,
+    .overview-manage {
+        background-color: $level-6-blue;
+    }
+    .overview-description {
+        background-color: $pale-blue;
+    }
+    .overview-minmax {
+        width: 2em;
+    }
+    .toggle-triangle {
+        left: 15px;
+    }
+    .overview-title {
+        width: 15em;
     }
 }
 .result-overview {
@@ -465,10 +492,10 @@ footer {
 .overview-minmax {
 	font-size: 1.5em;
 	padding: 0.3em;
-	width: 50px;
+	width: 2em;
 }
 .overview-title {
-	width: 16%;
+	width: 15em;
 }
 .overview-title .heading {
     font-weight: normal;
@@ -485,7 +512,7 @@ footer {
 	padding: 0.5em;
 }
 .overview-manage {
-	width: 10%;
+	width: 6em;
 }
 .overview-manage a {
 	padding: 3px;
