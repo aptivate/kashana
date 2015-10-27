@@ -9,7 +9,7 @@ from os import path
 # This is the directory inside the project dev dir that contains the django
 # application
 project_name = "kashana"
-user = "aptivate"
+github_user = "aptivate"
 
 # The django apps that are part of this project - used for running tests
 # and migrations
@@ -17,7 +17,7 @@ django_apps = ['appconf', 'contacts', 'dashboard', 'logframe']
 
 # repository type can be "cvs", "svn" or "git"
 repo_type = "git"
-repository = 'git@github.com:' + user + '/' + project_name + '.git'
+repository = 'git@github.com:' + github_user + '/' + project_name + '.git'
 
 ##################################################################
 # THESE SETTINGS MAY WELL BE CORRECT FOR A STANDARD DJANGO PROJECT
@@ -65,10 +65,14 @@ test_cmd = ' manage.py test -v0 ' + ' '.join(django_apps)
 
 # production server - if commented out then the production task will abort
 host_list = {
+    'production':   ['lin-' + project_name + '.aptivate.org:48001'],
+    'staging':      ['fen-vz-' + project_name + '-stage.fen.aptivate.org']
 }
 
 # this is the default git branch to use on each server
 default_branch = {
+    'production': 'master',
+    'staging': 'staging'
 }
 
 # where on the server the django apps are deployed
