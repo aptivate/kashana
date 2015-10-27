@@ -1,8 +1,9 @@
 define([
     'jquery',
     'views/base_view',
+    'utils/clean-date',
     'pen',
-], function ($, BaseView, Pen){
+], function ($, BaseView, cleanDate, Pen){
 
     var StatusUpdateView = BaseView.extend({
         template_selector: '#activity-statusupdate',
@@ -27,7 +28,7 @@ define([
         addPicker: function (e) {
             // Add date picker on first focus
             $(e.target).datepicker({
-                dateFormat: "yy-mm-dd",
+                dateFormat: "dd/mm/yy",
             }).removeClass("addpicker");
         },
 
@@ -37,6 +38,9 @@ define([
                 var $el = $(el);
                 attrs[$el.attr("name")] = $el.val();
             });
+            if (attrs.date) {
+                attrs.date = cleanDate(attrs.date);
+            }
             if (attrs.code) {
                 attrs.code = parseInt(attrs.code, 10);
             }
@@ -56,9 +60,11 @@ define([
                 year = today.getFullYear(),
                 month = today.getMonth() + 1,
                 date = today.getDate();
-            data.today = year + '-' +
-                         (month < 10 ? "0" + month : month) + '-' +
-                         (date < 10 ? "0" + date : date);
+            data.today = [
+                (date < 10 ? "0" + date : date),
+                (month < 10 ? "0" + month : month),
+                year
+            ].join("/");
             data.codes = Aptivate.data.statuscodes;
             return data;
         }

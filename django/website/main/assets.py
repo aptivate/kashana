@@ -2,22 +2,22 @@ from django_assets import Bundle, register
 
 # Main CSS
 
-alfie_scss = Bundle('scss/alfie.scss',
+kashana_scss = Bundle('scss/kashana.scss',
                   filters='pyscss',
-                  output='alfie/alfie.css',
+                  output='kashana/kashana.css',
                   depends='scss/**/*.scss')
 
 pure_css = Bundle('css/pure.min.css')
 pen_css = Bundle('css/pen.css')
 ui_jq_css = Bundle('css/redmond/jquery-ui-1.11.4.custom.min.css')
 
-css_all = Bundle(pure_css, pen_css, ui_jq_css, alfie_scss,
+css_all = Bundle(pure_css, pen_css, ui_jq_css, kashana_scss,
     filters=['cssmin', 'cssrewrite'],
-    output='alfie/all.css')
+    output='kashana/all.css')
 
 admin_css = Bundle('scss/admin.scss',
                    filters=['pyscss', 'cssmin'],
-                   output='alfie/admin.css',
+                   output='kashana/admin.css',
                    depends='scss/**/*.scss')
 
 register('css_all', css_all)

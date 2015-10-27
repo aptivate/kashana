@@ -12,14 +12,18 @@ define([
     var OverviewItem = BaseView.extend({
         tagName: "div",
         className: function () {
-            var cls = "result-overview";
+            var cls = "result-overview",
+		level = this.model.get("level");
             // Automatically open results on levels up to open_result_level
-            if (this.model.get("level") <= Aptivate.data.conf.open_result_level) {
+            if (level <= Aptivate.data.conf.open_result_level) {
                 cls += " show";
                 this.show = true;
             } else {
                 this.show = false;
             }
+	    if (level) {
+                cls += " level-" + level;
+	    }
             return cls;
         },
         template_selector: "#result-overview-container",
@@ -108,14 +112,14 @@ define([
         },
 
         renderSubItems: function () {
-            var level = this.model.get('level'),
-                logframe = this.model.get('log_frame'),
-                resultId = this.model.get('id');
-            if (level < Aptivate.data.conf.max_result_level) {
-                return this.resultOverviewView(logframe, resultId, level);
-            } else {
-                return this.show ? this.activityOverviewView(logframe, resultId): null;
-            }
+                var level = this.model.get('level'),
+                    logframe = this.model.get('log_frame'),
+                    resultId = this.model.get('id');
+                if (level < Aptivate.data.conf.max_result_level) {
+                    return this.resultOverviewView(logframe, resultId, level);
+                } else {
+                    return this.activityOverviewView(logframe, resultId, level);
+                }
         },
 
         resultOverviewView: function (logframe, result, level){
@@ -141,11 +145,14 @@ define([
             return listView;
         },
 
-        activityOverviewView: function (logframe, result) {
+        activityOverviewView: function (logframe, result, level) {
             return new ListView({
                 className: "activity-container",
                 itemView: ActivityContainer,
                 collection: this.model.activities,
+                itemViewOptions: {
+		    level: level + 1
+		},
                 newModelOptions: {
                     log_frame: logframe,
                     result: result

@@ -80,3 +80,7 @@ def deploy(revision=None, keep=None, full_rebuild=True):
 def ensure_webassets_cache_writeable_by_apache():
     webassets_cache = path.join(fablib.env.django_dir, 'static')
     fablib.sudo_or_run('chown -R apache %s' % webassets_cache)
+
+def {{instance}}():
+    """Run {{instance}} kashana on shared host"""
+    _server_setup('{{instance}}')

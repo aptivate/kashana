@@ -1,0 +1,35 @@
+.scrolling-container {
+    position: relative;
+}
+
+.indicator-data .scrolling-container {
+    background-color: $white;
+} 
+
+.scrolling-table {
+    margin-left: 6em;
+    overflow-x: scroll;
+
+    .scrollable {
+        table-layout: auto;
+        box-sizing: border-box;
+    }
+
+    .scrollable th,
+    .scrollable td {
+        min-width: 6em;
+    }
+
+    th:first-child {
+    
+        position: absolute;
+        left: 0;
+        top: auto;
+        width: 6em;
+    }
+}
+
+.milestone-heading-row th:first-child {
+    width: 7.5em;
+    background-color: #fff;
+}

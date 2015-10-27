@@ -7,8 +7,11 @@ define([
         'views/overview/utils/container-mixin',
         'views/result/overview_item',
         'views/overview/export-data',
+        'views/overview/annual-plan',
+        'views/overview/quarter-plan',
 ], function (Backbone, $, BaseView, ListView, LeadView, ContainerMixin,
-             OverviewItem, ExportView) {
+             OverviewItem, ExportView, ExportAnnualPlanView,
+             ExportQuarterPlanView) {
     var OverviewContainer = BaseView.extend(ContainerMixin).extend({
         template_selector: "#overview-container",
 
@@ -85,6 +88,18 @@ define([
             },
             "exportData": function () {
                 return new ExportView({
+                    // Required by BaseView, but not used
+                    model: new Backbone.Model()
+                });
+            },
+            "exportAnnualPlan": function () {
+                return new ExportAnnualPlanView({
+                    // Required by BaseView, but not used
+                    model: new Backbone.Model()
+                });
+            },
+            "exportQuarterPlan": function () {
+                return new ExportQuarterPlanView({
                     // Required by BaseView, but not used
                     model: new Backbone.Model()
                 });

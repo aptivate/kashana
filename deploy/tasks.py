@@ -3,9 +3,11 @@
 
 import os
 from os import path
+import re
 import sys
 import subprocess
 from ve_mgr import check_python_version, UpdateVE
+from project_settings import server_home
 
 # check python version is high enough
 check_python_version(2, 6, __file__)
@@ -35,9 +37,25 @@ current_dir = path.dirname(__file__)
 
 # call the tasks.py in the virtual env
 tasks_call = [tasks]
-# tell tasks.py that this directory is where it can find project_settings and
-# localtasks (if it exists)
-tasks_call += ['--deploydir=' + current_dir]
+
+# Find the deployment directory depending on the deployment target. Failing that,
+# use the current path to determine if we are using a custom deployment directory.
+# Otherwise use the current folder.
+alt_settings_dir = None
+for arg in sys.argv:
+    matches = re.match('deploy:(.+)$', arg)
+    if matches:
+        alt_settings_dir = os.path.join(current_dir, matches.group(1))
+if alt_settings_dir is None:
+    matches = re.match(re.escape(server_home) + '/?([^/]+)\.kashana', current_dir)
+    if matches:
+        alt_settings_dir = os.path.join(current_dir, matches.group(1))
+if alt_settings_dir is not None and os.path.isdir(alt_settings_dir):
+    deploy_dir = alt_settings_dir
+else:
+    deploy_dir = current_dir
+tasks_call += ['--deploydir=' + deploy_dir]
+
 # add any arguments passed to this script
 tasks_call += sys.argv[1:]
 
