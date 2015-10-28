@@ -430,7 +430,7 @@ footer {
     .overview-title,
     .ribbon-result,
     .overview-manage {
-        background-color: $activity-bg;
+        background-color: $level-5-blue;;
     }
     .overview-description {
         background-color: $pale-blue;
@@ -452,6 +452,28 @@ footer {
     .ribbon-result,
     .overview-manage {
         background-color: $level-6-blue;
+    }
+    .overview-description {
+        background-color: $pale-blue;
+    }
+    .overview-minmax {
+        width: 2em;
+    }
+    .toggle-triangle {
+        left: 15px;
+    }
+    .overview-title {
+        width: 15em;
+    }
+}
+
+div.activity-item {
+    &.result-overview,
+    .overview-minmax,
+    .overview-title,
+    .ribbon-result,
+    .overview-manage {
+        background-color: $activity-bg;
     }
     .overview-description {
         background-color: $pale-blue;
