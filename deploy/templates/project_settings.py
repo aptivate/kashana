@@ -38,7 +38,7 @@ use_virtualenv = True
 # set the deploy directory to be the one containing this file
 local_deploy_dir = path.dirname(__file__)
 
-local_vcs_root = path.abspath(path.join(local_deploy_dir, os.pardir))
+local_vcs_root = path.abspath(path.join(local_deploy_dir, os.pardir, os.pardir))
 
 # the path from the VCS root to the django root dir
 relative_django_dir = path.join('django', 'website')
@@ -55,8 +55,8 @@ requirements_per_env = False
 local_requirements_file = path.join(local_deploy_dir, 'pip_packages.txt')
 
 # the requirements directory
-# requirements_per_env = True
-# local_requirements_dir = path.join(local_deploy_dir, 'requirements')
+#requirements_per_env = True
+#local_requirements_dir = path.join(local_deploy_dir, 'requirements')
 # and the files should be path.join(requirements_dir, '%s.txt' % environment)
 
 test_cmd = ' manage.py test -v0 ' + ' '.join(django_apps)
@@ -66,13 +66,15 @@ test_cmd = ' manage.py test -v0 ' + ' '.join(django_apps)
 # production server - if commented out then the production task will abort
 host_list = {
     'production':   ['lin-' + project_name + '.aptivate.org:48001'],
-    'staging':      ['fen-vz-' + project_name + '-stage.fen.aptivate.org']
+    'staging':      ['fen-vz-' + project_name + '-stage.fen.aptivate.org'],
+    '{{instance}}':['{{host}}']
 }
 
 # this is the default git branch to use on each server
 default_branch = {
     'production': 'master',
-    'staging': 'staging'
+    'staging': 'staging',
+    '{{instance}}':'{{branch}}'
 }
 
 # where on the server the django apps are deployed
@@ -81,7 +83,7 @@ server_home = '/var/django'
 # the top level directory on the server
 # underneath it there will be dev/ containing the live instance
 # and previous/ containing old copies for rollback
-server_project_home = path.join(server_home, project_name)
+server_project_home = path.join(server_home, '{{instance}}.kashana')
 
 # which web server to use (or None)
 webserver = 'apache'
@@ -92,5 +94,5 @@ webserver = 'apache'
 
 # if you have an ssh key and particular user you need to use
 # then uncomment the next 2 lines
-# user = "root"
-# key_filename = ["/home/shared/keypair.rsa"]
+#user = "root"
+#key_filename = ["/home/shared/keypair.rsa"]

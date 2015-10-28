@@ -1,0 +1,26 @@
+import private_settings
+
+DEBUG = False
+TEMPLATE_DEBUG = DEBUG
+
+ALLOWED_HOSTS = ['{{instance}}.kashana.org']
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',  # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': '{{instance}}',                      # Or path to database file if using sqlite3.
+        'USER': '{{instance}}',                      # Not used with sqlite3.
+        'PASSWORD': private_settings.DB_PASSWORD,                  # Not used with sqlite3.
+        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+        'OPTIONS': {
+            "init_command": "SET storage_engine=INNODB",
+        }
+    }
+}
+
+EMAIL_HOST = 'localhost'
+EMAIL_BOT_ADDRESS = 'Kashana (Aptivate) <kashana@aptivate.org>'
+SITE_HOSTNAME = '{{instance}}.kashana.org'
+
+# vi: ft=python
