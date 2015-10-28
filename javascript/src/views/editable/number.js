@@ -1,7 +1,7 @@
 define([
     'views/base_view',
     'views/editable/input',
-    'views/display-number',
+    'utils/display-number',
 ], function (BaseView, EditableInput, displayNumber) {
     var EditableNumber = EditableInput.extend({
         displayValue: displayNumber,

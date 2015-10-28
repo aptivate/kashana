@@ -1,0 +1,7 @@
+<label for="quarter-plan">Or plan for Quarter:</label>
+<select id="quarter-plan">
+<option value="">----</option>
+{{#each periods}}
+{{#if start }}<option value="{{ start }}">{{ name }}</option>{{/if }}
+{{/each}}
+</select>

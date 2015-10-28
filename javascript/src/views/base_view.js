@@ -33,6 +33,9 @@ define([
             data.editable = this.is_editable;
 
             this.$el.html(template(data));
+            if (this.postRender) {
+                this.postRender();
+            }
             return this;
         }
     });

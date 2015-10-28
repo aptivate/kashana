@@ -13653,13 +13653,16 @@ function program3(depth0,data) {
   if (stack1 = helpers.end_date) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = (depth0 && depth0.end_date); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
   buffer += escapeExpression(stack1)
-    + "\"\n    class=\"result-overview-table level-5";
+    + "\"\n    class=\"result-overview-table level-";
+  if (stack1 = helpers.level) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = (depth0 && depth0.level); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
+  buffer += escapeExpression(stack1);
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.id), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\">\n    <tbody>\n    <tr>\n        <td class=\"overview-minmax unselectable\">";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.id), {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "</td>\n        <td class=\"overview-title\">\n        <div data-subview=\"activityName\"></div>\n        </td>\n        <td class=\"overview-description status-background\">\n            <div data-subview=\"activityDescription\"></div>\n        </td>\n        <td class=\"overview-rating\"></td>\n    </tr>\n    <tr class=\"activity-details-row\">\n        <td colspan=\"4\" class=\"activity-details\">\n            <ul>\n                <li>\n                    <h3 class=\"list-label\">Timing</h3>\n                    <div class=\"list-content\">\n                        <div class=\"half-wide centered-content\">\n                            <h4>Start</h4>\n                            <span class=\"activity-timing activity-start\">\n                                <div data-subview=\"activityStartDate\"></div>\n                            </span>\n                        </div>\n                        <div class=\"half-wide centered-content\">\n                            <h4>End</h4>\n                            <span class=\"activity-timing activity-end\">\n                                <div data-subview=\"activityEndDate\"></div>\n                            </span>\n                        </div>\n                    </div>\n                </li>\n                <li>\n                    <h3 class=\"list-label\">Deliverables</h3>\n                    <div class=\"list-content\">\n                            <div data-subview=\"activityDeliverables\"></div>\n                    </div>\n                </li>\n                <li>\n                    <h3 class=\"list-label\">Lead</h3>\n                    <div class=\"list-content\">\n                            <div data-subview=\"activityLead\"></div>\n                    </div>\n                </li>\n                <li class=\"hide-status-history\">\n                    <h3 class=\"list-label\">\n                        <span class=\"status-minmax unselectable\">\n                            <span class=\"toggle-triangle\">▶</span>\n                        </span> Status\n                    </h3>\n                    <div class=\"list-content\">\n                            <div data-subview=\"activityStatusUpdates\"></div>\n                    </div>\n                </li>\n                <li>\n                    <h3 class=\"list-label\">TA</h3>\n                    <div class=\"list-content\">\n                        <h4>Total budget</h4>\n                        <p class=\"ta-lines-total move-right prominent\"></p>\n                        <table class=\"ta-lines-table\">\n                            <thead>\n                                <tr>\n                                    <th>Type</th>\n                                    <th>Name</th>\n                                    <th>Band</th>\n                                    <th>Start</th>\n                                    <th>End</th>\n                                    <th>Days</th>\n                                    <th>Amount</th>\n                                </tr>\n                            </thead>\n                        </table>\n                        <div data-subview=\"activityTALines\"></div>\n                    </div>\n                </li>\n                <li>\n                    <h3 class=\"list-label\">Other</h3>\n                    <div class=\"list-content\">\n                        <h4>Total budget</h4>\n                        <p class=\"budget-lines-total move-right prominent\"></p>\n                        <table class=\"budget-lines-table\">\n                            <thead>\n                                <tr>\n                                    <th>Name</th>\n                                    <th>Amount</th>\n                                </tr>\n                            </thead>\n                        </table>\n                        <div data-subview=\"activityBudgetLines\"></div>\n                    </div>\n                </li>\n            </ul>\n        </td>\n    </tr>\n    </tbody>\n</table>\n";
+  buffer += "</td>\n        <td class=\"overview-title\">\n        <div data-subview=\"activityName\"></div>\n	</td>\n        <td class=\"overview-manage\"></td>\n        <td class=\"overview-description status-background\">\n            <div data-subview=\"activityDescription\"></div>\n        </td>\n        <td class=\"overview-rating\"></td>\n    </tr>\n    <tr class=\"activity-details-row\">\n        <td colspan=\"5\" class=\"activity-details\">\n            <ul>\n                <li>\n                    <h3 class=\"list-label\">Timing</h3>\n                    <div class=\"list-content\">\n                        <div class=\"half-wide centered-content\">\n                            <h4>Start</h4>\n                            <span class=\"activity-timing activity-start\">\n                                <div data-subview=\"activityStartDate\"></div>\n                            </span>\n                        </div>\n                        <div class=\"half-wide centered-content\">\n                            <h4>End</h4>\n                            <span class=\"activity-timing activity-end\">\n                                <div data-subview=\"activityEndDate\"></div>\n                            </span>\n                        </div>\n                    </div>\n                </li>\n                <li>\n                    <h3 class=\"list-label\">Deliverables</h3>\n                    <div class=\"list-content\">\n                            <div data-subview=\"activityDeliverables\"></div>\n                    </div>\n                </li>\n                <li>\n                    <h3 class=\"list-label\">Lead</h3>\n                    <div class=\"list-content\">\n                            <div data-subview=\"activityLead\"></div>\n                    </div>\n                </li>\n                <li class=\"hide-status-history\">\n                    <h3 class=\"list-label\">\n                        <span class=\"status-minmax unselectable\">\n                            <span class=\"toggle-triangle\">▶</span>\n                        </span> Status\n                    </h3>\n                    <div class=\"list-content\">\n                            <div data-subview=\"activityStatusUpdates\"></div>\n                    </div>\n                </li>\n                <li>\n                    <h3 class=\"list-label\">TA</h3>\n                    <div class=\"list-content\">\n                        <h4>Total budget</h4>\n                        <p class=\"ta-lines-total move-right prominent\"></p>\n                        <table class=\"ta-lines-table\">\n                            <thead>\n                                <tr>\n                                    <th>Type</th>\n                                    <th>Name</th>\n                                    <th>Band</th>\n                                    <th>Start</th>\n                                    <th>End</th>\n                                    <th>Days</th>\n                                    <th>Amount</th>\n                                </tr>\n                            </thead>\n                        </table>\n                        <div data-subview=\"activityTALines\"></div>\n                    </div>\n                </li>\n                <li>\n                    <h3 class=\"list-label\">Other</h3>\n                    <div class=\"list-content\">\n                        <h4>Total budget</h4>\n                        <p class=\"budget-lines-total move-right prominent\"></p>\n                        <table class=\"budget-lines-table\">\n                            <thead>\n                                <tr>\n                                    <th>Name</th>\n                                    <th>Amount</th>\n                                </tr>\n                            </thead>\n                        </table>\n                        <div data-subview=\"activityBudgetLines\"></div>\n                    </div>\n                </li>\n            </ul>\n        </td>\n    </tr>\n    </tbody>\n</table>\n";
   return buffer;
   });;
 this["Aptivate"] = this["Aptivate"] || {};
@@ -14268,6 +14271,31 @@ function program10(depth0,data) {
 this["Aptivate"] = this["Aptivate"] || {};
 this["Aptivate"]["data"] = this["Aptivate"]["data"] || {};
 this["Aptivate"]["data"]["templates"] = this["Aptivate"]["data"]["templates"] || {};
+this["Aptivate"]["data"]["templates"]["export-annual-plan"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, self=this;
+
+function program1(depth0,data) {
+  
+  var buffer = "";
+  buffer += "\n<option value=\""
+    + escapeExpression((typeof depth0 === functionType ? depth0.apply(depth0) : depth0))
+    + "\">"
+    + escapeExpression((typeof depth0 === functionType ? depth0.apply(depth0) : depth0))
+    + "</option>\n";
+  return buffer;
+  }
+
+  buffer += "<label for=\"annual-plan\">Export Annual plan for year:</label>\n<select id=\"annual-plan\">\n<option value=\"\">----</option>\n";
+  stack1 = helpers.each.call(depth0, (depth0 && depth0.years), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n</select>\n";
+  return buffer;
+  });;
+this["Aptivate"] = this["Aptivate"] || {};
+this["Aptivate"]["data"] = this["Aptivate"]["data"] || {};
+this["Aptivate"]["data"]["templates"] = this["Aptivate"]["data"]["templates"] || {};
 this["Aptivate"]["data"]["templates"]["export-data"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
@@ -14288,7 +14316,45 @@ function program1(depth0,data) {
   return buffer;
   }
 
-  buffer += "Export logframe data for period:\n<select id=\"export-data\">\n<option value=\"\">----</option>\n";
+  buffer += "Export quarterly progress report:\n<select id=\"export-data\">\n<option value=\"\">----</option>\n";
+  stack1 = helpers.each.call(depth0, (depth0 && depth0.periods), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n</select>\n";
+  return buffer;
+  });;
+this["Aptivate"] = this["Aptivate"] || {};
+this["Aptivate"]["data"] = this["Aptivate"]["data"] || {};
+this["Aptivate"]["data"]["templates"] = this["Aptivate"]["data"]["templates"] || {};
+this["Aptivate"]["data"]["templates"]["export-quarter-plan"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, self=this;
+
+function program1(depth0,data) {
+  
+  var buffer = "", stack1;
+  buffer += "\n";
+  stack1 = helpers['if'].call(depth0, (depth0 && depth0.start), {hash:{},inverse:self.noop,fn:self.program(2, program2, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n";
+  return buffer;
+  }
+function program2(depth0,data) {
+  
+  var buffer = "", stack1;
+  buffer += "<option value=\"";
+  if (stack1 = helpers.start) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = (depth0 && depth0.start); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\">";
+  if (stack1 = helpers.name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = (depth0 && depth0.name); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "</option>";
+  return buffer;
+  }
+
+  buffer += "<label for=\"quarter-plan\">Or plan for Quarter:</label>\n<select id=\"quarter-plan\">\n<option value=\"\">----</option>\n";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.periods), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n</select>\n";
@@ -14303,7 +14369,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<div class=\"indicator-detail\">\n    <div data-subview=\"indicatorName\"></div>\n    <div data-subview=\"indicatorDescription\"></div>\n</div>\n<div class=\"indicator-data\">\n    <div class=\"indicator-data-table\">\n    <div data-subview=\"targetsTable\"></div>\n    </div>\n    <div class=\"indicator-source\">\n        <h3>Source</h3>\n        <div data-subview=\"indicatorSource\"></div>\n    </div>\n</div>\n";
+  return "<div class=\"indicator-detail\">\n    <div data-subview=\"indicatorName\"></div>\n    <div data-subview=\"indicatorDescription\"></div>\n</div>\n<div class=\"indicator-data\">\n    <div class=\"scrolling-container\">\n        <div class=\"indicator-data-table scrolling-table\">\n            <div data-subview=\"targetsTable\"></div>\n        </div>\n    </div>\n    <div class=\"indicator-source\">\n        <h3>Source</h3>\n        <div data-subview=\"indicatorSource\"></div>\n    </div>\n</div>\n";
   });;
 this["Aptivate"] = this["Aptivate"] || {};
 this["Aptivate"]["data"] = this["Aptivate"]["data"] || {};
@@ -14428,7 +14494,7 @@ function program1(depth0,data) {
   return buffer;
   }
 
-  buffer += "<th></th>\n";
+  buffer += "<th class=\"fixed-column\">&nbsp;</th>\n";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.items), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n";
@@ -14679,7 +14745,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<div id=\"filter-result\">\n    Lead:\n    <div data-subview=\"leadSelect\"></div>\n    <span id=\"filter-time\">\n        Start:\n        <span>\n            <input id=\"filter-time-start\" type=\"text\" placeholder=\"YYYY-MM-DD\" class=\"date addpicker\" />\n        </span>\n\n        End:\n        <span>\n            <input id=\"filter-time-end\" type=\"text\" placeholder=\"YYYY-MM-DD\" class=\"date addpicker\" />\n        </span>\n    </span>\n    <span id=\"filter-reset\">\n        <button id=\"filter-clear\" title=\"Clear filter selection\">X</button>\n    </span>\n</div>\n<div data-subview=\"resultList\"></div>\n<div data-subview=\"exportData\"></div>\n";
+  return "<div class=\"overview-main\">\n    <div id=\"filter-result\">\n        Lead:\n        <div data-subview=\"leadSelect\"></div>\n        <span id=\"filter-time\">\n            Start:\n            <span>\n                <input id=\"filter-time-start\" type=\"text\" placeholder=\"YYYY-MM-DD\" class=\"date addpicker\" />\n            </span>\n\n            End:\n            <span>\n                <input id=\"filter-time-end\" type=\"text\" placeholder=\"YYYY-MM-DD\" class=\"date addpicker\" />\n            </span>\n        </span>\n        <span id=\"filter-reset\">\n            <button id=\"filter-clear\" title=\"Clear filter selection\">X</button>\n        </span>\n    </div>\n    <div data-subview=\"resultList\"></div>\n</div>\n<div data-subview=\"exportData\"></div>\n<p>\n<span data-subview=\"exportAnnualPlan\"></span>\n<span data-subview=\"exportQuarterPlan\"></span>\n</p>\n";
   });;
 this["Aptivate"] = this["Aptivate"] || {};
 this["Aptivate"]["data"] = this["Aptivate"]["data"] || {};
@@ -15047,6 +15113,9 @@ define('views/base_view',[
             data.editable = this.is_editable;
 
             this.$el.html(template(data));
+            if (this.postRender) {
+                this.postRender();
+            }
             return this;
         }
     });
@@ -15556,12 +15625,10 @@ define('views/editable-text',[
 ], function (_, $, Editable, Pen) {
     var EditableText = Editable.extend({
 
-        //TODO: There is almost certainly a better way to arrange
-        //the hierarchy of Editabletext and Inputview so I don't have
-        //to remove events here. But its home time on Friday.
         events: {
-            "click .editable": "changeElement",
+            "click .editable": "openEditor",
             "change .savable":  "commitEdit",
+            "click .savable.close-now":  "commitEdit",
             "blur .savable": "conditionalCommit",
             "keyup .savable": "cancelOnEscape",
         },
@@ -15584,7 +15651,8 @@ define('views/editable-text',[
         inputElement: function (name, value) {
             var $el = $('<div>', {
                 name: name,
-                class: "editable-textarea"
+                // cid used for distinguishing instances
+                class: "editable-textarea " + this.cid
             }).html(value);
             this.editor = new Pen({
                 editor: $el[0],
@@ -15596,20 +15664,34 @@ define('views/editable-text',[
             return $el;
         },
 
+        openEditor: function (e) {
+            // First close any open editor before opening this one
+            $(".savable").addClass("close-now").each(function (i, el) {
+                el.click();
+            });
+            // Remove old handlers, if there are any
+            $(document).off("click.editableText", ".body");
+
+            this.changeElement(e);
+        },
+
         postChangeElement: function () {
-            var self = this;
-            $(document).on("click", ".pen-menu, .pen-editor", function (e) {
-                e.stopPropagation();
-            }).on("click", ".body", function (e) {
+            function bodyHandler(e) {
                 // Need to fix target first to point at editor
                 // (if editor wasn't handled by blur listener)
-                var $el = $(".editable-textarea");
+                // Make sure you select the right one if more are opened
+                var $el = $(".editable-textarea." + self.cid);
                 if ($el.length) {
                     e.target = $el[0];
                     self.commitEdit.call(self, e);
                 }
                 e.stopPropagation();
-            });
+            }
+
+            var self = this;
+            $(document).on("click", ".pen-menu, .pen-editor", function (e) {
+                e.stopPropagation();
+            }).on("click.editableText", ".body", bodyHandler);
         },
 
         getElementValue: function (el) {
@@ -15782,6 +15864,25 @@ define('views/editable/rating',[
             return new_data;
         },
 
+        // Process Rating values as Integers (so values match those returned by API).
+        commitEdit: function (e) {
+            var element = e.target,
+                name = element.getAttribute("name"),
+                old_value = this.model.get(name) || "",  // Cast undefined to ""
+                value = parseInt(this.getElementValue(element), 10);
+
+            // Save only if value is different
+            if (old_value !== value) {
+                this.model.set(name, value);
+                this.saveFlag = true;
+                this.model.save();
+                // Avoid duplicate saves
+                this.$(e.target).removeClass('savable');
+            }
+            this.preRender(e);
+            this.render();
+        },
+
         initialize: function () {
             this.attachFeedback(); // Comes from FeedbackMixin
         }
@@ -15790,17 +15891,56 @@ define('views/editable/rating',[
     return Rating;
 });
 
-define('views/editable/date',[
-    'views/input_view',
-], function (Editable) {
-    function formatDate(date) {
+define('utils/display-date',[],function () {
+    // Function for nicely displaying dates passed as either ISO date
+    // strings (YYYY-MM-DD) or Date objects
+    //
+    // Returns original value otherwise (NEVER return error)
+    function displayDate(value) {
+        var bits;
+        if (value && value.toISOString) { // Date object
+            value = value.toISOString();
+        }
+        if (typeof(value) === "string") {
+            bits = value.split("T")[0].split("-");
+            if (bits.length === 3) {
+                value = [bits[2], bits[1], bits[0]].join("/");
+            }
+        }
+        return value;
+    }
+
+    return displayDate;
+});
+
+define('utils/clean-date',[],function () {
+    // Function cleaning dates from dd/mm/yyyy to ISO representation.
+    //
+    // Returns original value otherwise (NEVER return error)
+    function cleanDate(d) {
+        var bits,
+            date = d;
+        if (typeof(d) === "string") {
+            bits = d.split("/");
+            if (bits.length === 3) {
+                date = [bits[2], bits[1], bits[0]].join("-");
+            }
+        }
         return date;
     }
 
+    return cleanDate;
+});
+
+define('views/editable/date',[
+    'views/input_view',
+    'utils/display-date',
+    'utils/clean-date',
+], function (Editable, displayDate, cleanDate) {
     var EditableDate = Editable.extend({
 
         template_selector: "#editable-date",
-    
+
         events: {
             "click .editable": "changeElement",
             "change .savable":  "commitEdit",
@@ -15809,23 +15949,45 @@ define('views/editable/date',[
         },
 
         inputElement: function (name, value) {
-            var inp = $('<input>', {
-                value: formatDate(value),
-                name: name,
-                placeholder: "YYYY-MM-DD",
-                class: "editable-input"
-            })
-            .datepicker({
-                dateFormat: "yy-mm-dd",
-            });
+            var options = this.getOptions(),
+                inp = $('<input>', {
+                    value: displayDate(value),
+                    name: name,
+                    placeholder: "DD/MM/YYYY",
+                    class: "editable-input"
+                });
+            inp.datepicker(options);
             return inp;
         },
+
+        getOptions: function () {
+            var related,
+                options = {
+                    dateFormat: "dd/mm/yy"
+                };
+
+            if (_.has(this.options, 'related')) {
+                related = _.pairs(this.options.related);
+            }
+
+            _.each(related, function (e) {
+                var value = this.get(e[1]),
+                    opt = e[0];
+                if (value) {
+                    options[opt] = displayDate(value);
+                }
+            }, this.model);
+
+            return options;
+        },
+
+        cleanInput: cleanDate,
 
         getTemplateData: function (data) {
             var name = this.options.field_name,
                 new_data = {
                     name: name,
-                    value: formatDate(data[name]) || ""
+                    value: displayDate(data[name]) || ""
                 };
             return new_data;
         },
@@ -15932,8 +16094,12 @@ define('views/editable/input',[
     return EditableInput;
 });
 
-define('views/display-number',[],function () {
-    function displayValue(value) {
+define('utils/display-number',[],function () {
+    // Function for nicely displaying numbers with thousand and decimal
+    // separators.
+    //
+    // TODO: Does not handle e+ notation or rounding of decimals
+    function displayNumber(value) {
         var parts;
         if (value) {
             parts = value.toString().split(".");
@@ -15944,6 +16110,8 @@ define('views/display-number',[],function () {
                 if (parts[1].length === 1) {
                     parts[1] += "0";
                 }
+            } else {
+                parts.push("00");
             }
             return parts.join(".");
         } else {
@@ -15951,13 +16119,13 @@ define('views/display-number',[],function () {
         }
     }
 
-    return displayValue;
+    return displayNumber;
 });
 
 define('views/editable/number',[
     'views/base_view',
     'views/editable/input',
-    'views/display-number',
+    'utils/display-number',
 ], function (BaseView, EditableInput, displayNumber) {
     var EditableNumber = EditableInput.extend({
         displayValue: displayNumber,
@@ -16084,8 +16252,9 @@ define('views/activity/taline',[
 define('views/activity/statusupdate',[
     'jquery',
     'views/base_view',
+    'utils/clean-date',
     'pen',
-], function ($, BaseView, Pen){
+], function ($, BaseView, cleanDate, Pen){
 
     var StatusUpdateView = BaseView.extend({
         template_selector: '#activity-statusupdate',
@@ -16110,7 +16279,7 @@ define('views/activity/statusupdate',[
         addPicker: function (e) {
             // Add date picker on first focus
             $(e.target).datepicker({
-                dateFormat: "yy-mm-dd",
+                dateFormat: "dd/mm/yy",
             }).removeClass("addpicker");
         },
 
@@ -16120,6 +16289,9 @@ define('views/activity/statusupdate',[
                 var $el = $(el);
                 attrs[$el.attr("name")] = $el.val();
             });
+            if (attrs.date) {
+                attrs.date = cleanDate(attrs.date);
+            }
             if (attrs.code) {
                 attrs.code = parseInt(attrs.code, 10);
             }
@@ -16139,9 +16311,11 @@ define('views/activity/statusupdate',[
                 year = today.getFullYear(),
                 month = today.getMonth() + 1,
                 date = today.getDate();
-            data.today = year + '-' +
-                         (month < 10 ? "0" + month : month) + '-' +
-                         (date < 10 ? "0" + date : date);
+            data.today = [
+                (date < 10 ? "0" + date : date),
+                (month < 10 ? "0" + month : month),
+                year
+            ].join("/");
             data.codes = Aptivate.data.statuscodes;
             return data;
         }
@@ -16152,7 +16326,8 @@ define('views/activity/statusupdate',[
 
 define('views/activity/statushistory',[
     'views/base_view',
-], function (BaseView){
+    'utils/display-date',
+], function (BaseView, displayDate){
 
     var StatusHistoryView = BaseView.extend({
         tagName: 'tr',
@@ -16164,9 +16339,10 @@ define('views/activity/statushistory',[
                 code = _.where(Aptivate.data.statuscodes, {id: data.code});
                 data.code_name = code.length ? code[0].name : "";
             }
-            if (data.user_id) {
+            data.date = displayDate(data.date);
+            if (data.user) {
                 user = _.where(Aptivate.data.users,
-                               {id: data.user_id});
+                               {id: data.user});
                 data.user_name = user.length ? user[0].name : "";
             }
             return data;
@@ -16223,7 +16399,7 @@ define('views/activity/container',[
     'views/generic/list',
     'views/activity/budgetline',
     'views/activity/taline',
-    'views/display-number',
+    'utils/display-number',
     'views/activity/statuscontainer',
 ], function (
     Backbone, BaseView, Editable, EditableText, EditableDate,
@@ -16278,8 +16454,9 @@ define('views/activity/container',[
         },
 
         // Init
-        initialize: function () {
+        initialize: function (options) {
             var model_id = this.model.get("id");
+            this.level = options.level;
             this.model.talines = Aptivate.logframe.talines.subcollection({
                 filter: function (taline) {
                     return taline.get("activity") === model_id;
@@ -16302,6 +16479,12 @@ define('views/activity/container',[
 
             // Re-render on lead change
             this.listenTo(this.model, "change:lead", this.renderOpenDetails);
+            this.$el.addClass("level-" + this.level);
+        },
+
+        getTemplateData: function (data) {
+            data.level = this.level;
+            return data;
         },
 
         onSubviewsRendered: function () {
@@ -16322,16 +16505,23 @@ define('views/activity/container',[
                     attributes: { class: "ribbon ribbon-result" },
                 });
             },
+
             activityStartDate: function () {
                 return new EditableDate({
                     model: this.model,
                     field_name: 'start_date',
+                    related: {
+                        maxDate: 'end_date',
+                    }
                 });
             },
             activityEndDate: function () {
                 return new EditableDate({
                     model: this.model,
                     field_name: 'end_date',
+                    related: {
+                        minDate: 'start_date',
+                    }
                 });
             },
             activityDescription: function () {
@@ -16401,14 +16591,18 @@ define('views/result/overview_item',[
     var OverviewItem = BaseView.extend({
         tagName: "div",
         className: function () {
-            var cls = "result-overview";
+            var cls = "result-overview",
+		level = this.model.get("level");
             // Automatically open results on levels up to open_result_level
-            if (this.model.get("level") <= Aptivate.data.conf.open_result_level) {
+            if (level <= Aptivate.data.conf.open_result_level) {
                 cls += " show";
                 this.show = true;
             } else {
                 this.show = false;
             }
+	    if (level) {
+                cls += " level-" + level;
+	    }
             return cls;
         },
         template_selector: "#result-overview-container",
@@ -16497,14 +16691,14 @@ define('views/result/overview_item',[
         },
 
         renderSubItems: function () {
-            var level = this.model.get('level'),
-                logframe = this.model.get('log_frame'),
-                resultId = this.model.get('id');
-            if (level < Aptivate.data.conf.max_result_level) {
-                return this.resultOverviewView(logframe, resultId, level);
-            } else {
-                return this.show ? this.activityOverviewView(logframe, resultId): null;
-            }
+                var level = this.model.get('level'),
+                    logframe = this.model.get('log_frame'),
+                    resultId = this.model.get('id');
+                if (level < Aptivate.data.conf.max_result_level) {
+                    return this.resultOverviewView(logframe, resultId, level);
+                } else {
+                    return this.activityOverviewView(logframe, resultId, level);
+                }
         },
 
         resultOverviewView: function (logframe, result, level){
@@ -16530,11 +16724,14 @@ define('views/result/overview_item',[
             return listView;
         },
 
-        activityOverviewView: function (logframe, result) {
+        activityOverviewView: function (logframe, result, level) {
             return new ListView({
                 className: "activity-container",
                 itemView: ActivityContainer,
                 collection: this.model.activities,
+                itemViewOptions: {
+		    level: level + 1
+		},
                 newModelOptions: {
                     log_frame: logframe,
                     result: result
@@ -16581,6 +16778,90 @@ define('views/overview/export-data',[
     return ExportView;
 });
 
+define('views/overview/annual-plan',[
+        'backbone',
+        'jquery',
+        'views/base_view',
+], function (Backbone, $, BaseView) {
+    var ExportAnnualPlanView = BaseView.extend({
+        tagName: "span",
+        className: "export-annual-plan",
+        template_selector: "#export-annual-plan",
+
+        events: {
+            "change select": "exportAnnualPlan"
+        },
+
+        exportAnnualPlan: function (e) {
+            var value = $(e.target).val() || "",
+                url;
+            if (value) {
+                url = Aptivate.data.export_annual_plan_url.replace("1900", value);
+                window.open(url, 'export');
+            }
+            return false;
+        },
+
+        getTemplateData: function () {
+            var periods = Aptivate.data.periods;
+
+            var years = $(periods).map(function () {
+                return this.start.split("-")[0];
+            });
+
+            return {
+                years: $.unique(years).toArray(),
+            };
+        }
+    });
+
+    return ExportAnnualPlanView;
+});
+
+define('views/overview/quarter-plan',[
+        'backbone',
+        'jquery',
+        'views/base_view',
+], function (Backbone, $, BaseView) {
+    var ExportQuarterPlanView = BaseView.extend({
+        tagName: "span",
+        className: "export-quarter-plan",
+        template_selector: "#export-quarter-plan",
+
+        events: {
+            "change select": "exportQuarterPlan"
+        },
+
+        exportQuarterPlan: function (e) {
+            var value = $(e.target).val() || "",
+                url;
+            if (value) {
+                url = Aptivate.data.export_quarter_plan_url.replace("01-1900", value);
+                window.open(url, 'export');
+            }
+            return false;
+        },
+
+        getTemplateData: function () {
+            var data_periods = Aptivate.data.periods;
+
+            var periods = $(data_periods).map(function () {
+                var bits = this.start.split("-");
+                return {
+                    name: this.name,
+                    start: bits[1] + "-" + bits[0]
+                };
+            });
+
+            return {
+                periods: periods
+            };
+        }
+    });
+
+    return ExportQuarterPlanView;
+});
+
 define('views/overview/container',[
         'backbone',
         'jquery',
@@ -16590,8 +16871,11 @@ define('views/overview/container',[
         'views/overview/utils/container-mixin',
         'views/result/overview_item',
         'views/overview/export-data',
+        'views/overview/annual-plan',
+        'views/overview/quarter-plan',
 ], function (Backbone, $, BaseView, ListView, LeadView, ContainerMixin,
-             OverviewItem, ExportView) {
+             OverviewItem, ExportView, ExportAnnualPlanView,
+             ExportQuarterPlanView) {
     var OverviewContainer = BaseView.extend(ContainerMixin).extend({
         template_selector: "#overview-container",
 
@@ -16668,6 +16952,18 @@ define('views/overview/container',[
             },
             "exportData": function () {
                 return new ExportView({
+                    // Required by BaseView, but not used
+                    model: new Backbone.Model()
+                });
+            },
+            "exportAnnualPlan": function () {
+                return new ExportAnnualPlanView({
+                    // Required by BaseView, but not used
+                    model: new Backbone.Model()
+                });
+            },
+            "exportQuarterPlan": function () {
+                return new ExportQuarterPlanView({
                     // Required by BaseView, but not used
                     model: new Backbone.Model()
                 });
@@ -16817,6 +17113,7 @@ define('views/indicator/target-row',[
 
         subIndicatorView: Editable.extend({
             tagName: 'th',
+            className: 'fixed-column',
             template_selector: "#editable-name",
         }),
 
@@ -16868,6 +17165,7 @@ define('views/indicator/milestone-table',[
 
         tagName: 'table',
         template_selector: "#milestone-table",
+        className: 'scrollable',
 
         initialize: function () {
             Backbone.Subviews.add(this);
@@ -16898,6 +17196,10 @@ define('views/indicator/milestone-table',[
                         }
                     });
                 }
+                // Next line is required because next-to-be-added indicator does
+                // not have an ID yet so its related subcollections need to be
+                // recreated correctly once it does (once it has been added)
+                indicator.on("change:id", indicator.initialize);
 
                 return new ListView({
                     itemView: TargetRowView.extend({

@@ -30,6 +30,10 @@ class OverviewMixin(object):
         data.update({
             'export_url': reverse("export-logframe-data-period",
                                   args=[logframe.id, "1900-01-01"]),
+            'export_annual_plan_url': reverse(
+                "export-annual-plan", args=[logframe.id, "1900"]),
+            'export_quarter_plan_url': reverse(
+                "export-quarter-plan", args=[logframe.id, "01", "1900"]),
             'activities': self.get_activities(logframe),
             'tatypes': [{"id": t.id, "name": t.name}
                         for t in TAType.objects.filter(log_frame=logframe)],
@@ -43,7 +47,7 @@ class OverviewMixin(object):
         return data
 
 
-class Home(TemplateView):
+class Home(OverviewMixin, TemplateView):
     template_name = 'dashboard/dashboard_base.html'
 
     def get(self, request, *args, **kwargs):
