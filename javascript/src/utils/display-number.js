@@ -1,5 +1,9 @@
 define(function () {
-    function displayValue(value) {
+    // Function for nicely displaying numbers with thousand and decimal
+    // separators.
+    //
+    // TODO: Does not handle e+ notation or rounding of decimals
+    function displayNumber(value) {
         var parts;
         if (value) {
             parts = value.toString().split(".");
@@ -10,6 +14,8 @@ define(function () {
                 if (parts[1].length === 1) {
                     parts[1] += "0";
                 }
+            } else {
+                parts.push("00");
             }
             return parts.join(".");
         } else {
@@ -17,5 +23,5 @@ define(function () {
         }
     }
 
-    return displayValue;
+    return displayNumber;
 });

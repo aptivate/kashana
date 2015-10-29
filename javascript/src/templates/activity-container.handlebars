@@ -1,18 +1,19 @@
 <table data-lead="{{ lead }}" data-start="{{ start_date }}" data-end="{{ end_date }}"
-    class="result-overview-table level-5{{#if id }} show-full-ui{{/if}}">
+    class="result-overview-table level-{{ level }}{{#if id }} show-full-ui{{/if}}">
     <tbody>
     <tr>
         <td class="overview-minmax unselectable">{{#if id }}<span class="toggle-triangle">▶</span>{{/if}}</td>
         <td class="overview-title">
         <div data-subview="activityName"></div>
-        </td>
+	</td>
+        <td class="overview-manage"></td>
         <td class="overview-description status-background">
             <div data-subview="activityDescription"></div>
         </td>
         <td class="overview-rating"></td>
     </tr>
     <tr class="activity-details-row">
-        <td colspan="4" class="activity-details">
+        <td colspan="5" class="activity-details">
             <ul>
                 <li>
                     <h3 class="list-label">Timing</h3>

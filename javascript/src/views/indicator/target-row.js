@@ -39,6 +39,7 @@ define([
 
         subIndicatorView: Editable.extend({
             tagName: 'th',
+            className: 'fixed-column',
             template_selector: "#editable-name",
         }),
 
