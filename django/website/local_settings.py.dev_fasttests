@@ -2,7 +2,6 @@ from settings import INSTALLED_APPS, MIDDLEWARE_CLASSES
 import private_settings
 
 DEBUG = True
-TEMPLATE_DEBUG = DEBUG
 ASSETS_DEBUG = DEBUG
 ASSETS_AUTO_BUILD = DEBUG
 

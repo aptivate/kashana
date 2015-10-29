@@ -24,7 +24,7 @@ urlpatterns = [
     # The apache conf is set up to do this for you, but you will need to do it on
     # dev
     url(r'favicon.ico', RedirectView.as_view(
-        url='{0}images/favicon.ico'.format(settings.STATIC_URL))),
+        url='{0}images/favicon.ico'.format(settings.STATIC_URL), permanent=True)),
 
     # LAST - redirect from root URL to the logframe app
     # url(r'^$', RedirectView.as_view(url=reverse_lazy('logframe-overview', args=(1,)))),

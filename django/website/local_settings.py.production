@@ -1,7 +1,6 @@
 import private_settings
 
 DEBUG = False
-TEMPLATE_DEBUG = DEBUG
 
 ALLOWED_HOSTS = ['lin-alfie.aptivate.org', 'alfie.aptivate.org']
 

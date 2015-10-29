@@ -1,7 +1,6 @@
 import private_settings
 
 DEBUG = True
-TEMPLATE_DEBUG = DEBUG
 
 DATABASES = {
     'default': {

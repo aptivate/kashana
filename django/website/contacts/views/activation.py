@@ -51,6 +51,7 @@ def change_password(request):
 class ActivationEmailsView(RedirectView):
     from_address = settings.EMAIL_BOT_ADDRESS
     email_template = 'contacts/email/activation_body.email'
+    permanent = False
 
     def get_subject(self):
         raise NotImplementedError

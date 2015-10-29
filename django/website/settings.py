@@ -232,6 +232,8 @@ except ImportError:
     import sys
     sys.exit(1)
 else:
+    # OVERRIDE THE TEMPLATE DEBUG SETTING, now that it's been absorbed into TEMPLATES
+    TEMPLATES[0]['OPTIONS']['debug'] = DEBUG
     # Import any symbols that begin with A-Z. Append to lists any symbols that
     # begin with "EXTRA_".
     import re

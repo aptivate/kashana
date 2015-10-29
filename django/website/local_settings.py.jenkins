@@ -24,8 +24,6 @@ INSTALLED_APPS = (
     )  + INSTALLED_APPS
 
 DEBUG = True
-TEMPLATE_DEBUG = DEBUG
-SOUTH_TESTS_MIGRATE = True
 
 JENKINS_TASKS = (
     'django_jenkins.tasks.run_pylint',
