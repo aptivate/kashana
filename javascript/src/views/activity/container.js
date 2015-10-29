@@ -8,7 +8,7 @@ define([
     'views/generic/list',
     'views/activity/budgetline',
     'views/activity/taline',
-    'views/display-number',
+    'utils/display-number',
     'views/activity/statuscontainer',
 ], function (
     Backbone, BaseView, Editable, EditableText, EditableDate,
@@ -63,8 +63,9 @@ define([
         },
 
         // Init
-        initialize: function () {
+        initialize: function (options) {
             var model_id = this.model.get("id");
+            this.level = options.level;
             this.model.talines = Aptivate.logframe.talines.subcollection({
                 filter: function (taline) {
                     return taline.get("activity") === model_id;
@@ -87,6 +88,12 @@ define([
 
             // Re-render on lead change
             this.listenTo(this.model, "change:lead", this.renderOpenDetails);
+            this.$el.addClass("level-" + this.level);
+        },
+
+        getTemplateData: function (data) {
+            data.level = this.level;
+            return data;
         },
 
         onSubviewsRendered: function () {
@@ -107,16 +114,23 @@ define([
                     attributes: { class: "ribbon ribbon-result" },
                 });
             },
+
             activityStartDate: function () {
                 return new EditableDate({
                     model: this.model,
                     field_name: 'start_date',
+                    related: {
+                        maxDate: 'end_date',
+                    }
                 });
             },
             activityEndDate: function () {
                 return new EditableDate({
                     model: this.model,
                     field_name: 'end_date',
+                    related: {
+                        minDate: 'start_date',
+                    }
                 });
             },
             activityDescription: function () {

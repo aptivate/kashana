@@ -6,12 +6,10 @@ define([
 ], function (_, $, Editable, Pen) {
     var EditableText = Editable.extend({
 
-        //TODO: There is almost certainly a better way to arrange
-        //the hierarchy of Editabletext and Inputview so I don't have
-        //to remove events here. But its home time on Friday.
         events: {
-            "click .editable": "changeElement",
+            "click .editable": "openEditor",
             "change .savable":  "commitEdit",
+            "click .savable.close-now":  "commitEdit",
             "blur .savable": "conditionalCommit",
             "keyup .savable": "cancelOnEscape",
         },
@@ -34,7 +32,8 @@ define([
         inputElement: function (name, value) {
             var $el = $('<div>', {
                 name: name,
-                class: "editable-textarea"
+                // cid used for distinguishing instances
+                class: "editable-textarea " + this.cid
             }).html(value);
             this.editor = new Pen({
                 editor: $el[0],
@@ -46,20 +45,34 @@ define([
             return $el;
         },
 
+        openEditor: function (e) {
+            // First close any open editor before opening this one
+            $(".savable").addClass("close-now").each(function (i, el) {
+                el.click();
+            });
+            // Remove old handlers, if there are any
+            $(document).off("click.editableText", ".body");
+
+            this.changeElement(e);
+        },
+
         postChangeElement: function () {
-            var self = this;
-            $(document).on("click", ".pen-menu, .pen-editor", function (e) {
-                e.stopPropagation();
-            }).on("click", ".body", function (e) {
+            function bodyHandler(e) {
                 // Need to fix target first to point at editor
                 // (if editor wasn't handled by blur listener)
-                var $el = $(".editable-textarea");
+                // Make sure you select the right one if more are opened
+                var $el = $(".editable-textarea." + self.cid);
                 if ($el.length) {
                     e.target = $el[0];
                     self.commitEdit.call(self, e);
                 }
                 e.stopPropagation();
-            });
+            }
+
+            var self = this;
+            $(document).on("click", ".pen-menu, .pen-editor", function (e) {
+                e.stopPropagation();
+            }).on("click.editableText", ".body", bodyHandler);
         },
 
         getElementValue: function (el) {

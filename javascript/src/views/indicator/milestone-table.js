@@ -10,6 +10,7 @@ define([
 
         tagName: 'table',
         template_selector: "#milestone-table",
+        className: 'scrollable',
 
         initialize: function () {
             Backbone.Subviews.add(this);
@@ -40,6 +41,10 @@ define([
                         }
                     });
                 }
+                // Next line is required because next-to-be-added indicator does
+                // not have an ID yet so its related subcollections need to be
+                // recreated correctly once it does (once it has been added)
+                indicator.on("change:id", indicator.initialize);
 
                 return new ListView({
                     itemView: TargetRowView.extend({

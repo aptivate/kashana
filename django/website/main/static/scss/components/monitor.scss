@@ -1,14 +1,25 @@
 .monitor-indicator-table {
     margin: 0;
-    border-top: 1px solid $dusk-blue;
+    padding:1em;
+    border-bottom:0.25em solid $page-background;
 }
 .monitor-indicator-title {
-    width: 16%;
-    color: $dusk-blue;
+    width: 15.2em;
     font-size: 0.857142857em;
+    margin:0 0 0 0.2em;
+}
+.monitor-indicator-title > h2 {
+  padding:0.5em 0.75em;
+  margin:0;
+  background-color:$light-yellow;
+}
+.monitor-indicator-title > h2 {
+  background-color:$light-yellow;
 }
 .monitor-indicator-table .indicator-description {
-    background-color: $pale-yellow;
+    padding-left: 1em;
+    padding-top: 0;
+    vertical-align: middle;
 }
 .monitor-indicator-table .indicator-rating {
     width: 42px;
@@ -18,17 +29,30 @@
 }
 .monitor-indicator-table th,
 .monitor-indicator-table td.target {
-    max-width: 12em;
+    width:15em;
+    border-right: 1px solid white;
+    text-align:center;
+    vertical-align:middle;
 }
+
 .monitor-rating {
     width: 42px;
 }
-.monitor-indicator-list th.subindicator,
-.monitor-indicator-list td {
-    background-color: $very-light-yellow;
+.monitor-indicator-list th.subindicator {
+    background-color: $white;
+    color: $page-background;
+}
+
+.monitor-indicator-list th.subindicator{
+  text-align:left;
+  padding-left:1em;
 }
 .monitor-subindicator-table tr {
     border-bottom: solid 1px $light-gray;
+}
+.monitor-subindicator-table {
+  border-top:0.25em solid #738199;
+  margin-top:0.5em;
 }
 
 .monitor-subindicator-table td {
