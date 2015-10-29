@@ -1133,7 +1133,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<div class=\"overview-main\">\n    <div id=\"filter-result\">\n        Lead:\n        <div data-subview=\"leadSelect\"></div>\n        <span id=\"filter-time\">\n            Start:\n            <span>\n                <input id=\"filter-time-start\" type=\"text\" placeholder=\"YYYY-MM-DD\" class=\"date addpicker\" />\n            </span>\n\n            End:\n            <span>\n                <input id=\"filter-time-end\" type=\"text\" placeholder=\"YYYY-MM-DD\" class=\"date addpicker\" />\n            </span>\n        </span>\n        <span id=\"filter-reset\">\n            <button id=\"filter-clear\" title=\"Clear filter selection\">X</button>\n        </span>\n    </div>\n    <div data-subview=\"resultList\"></div>\n</div>\n<div data-subview=\"exportData\"></div>\n<p>\n<span data-subview=\"exportAnnualPlan\"></span>\n<span data-subview=\"exportQuarterPlan\"></span>\n</p>\n";
+  return "<div class=\"overview-main\">\n    <div data-subview=\"resultList\"></div>\n</div>\n<div data-subview=\"exportData\"></div>\n<p>\n<span data-subview=\"exportAnnualPlan\"></span>\n<span data-subview=\"exportQuarterPlan\"></span>\n</p>\n";
   });;
 this["Aptivate"] = this["Aptivate"] || {};
 this["Aptivate"]["data"] = this["Aptivate"]["data"] || {};
