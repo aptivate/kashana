@@ -5,6 +5,7 @@ import os
 import pytest
 import mock
 from django.test.utils import override_settings
+from django.conf import settings
 from django.core import mail as django_mail
 from django.core.mail import EmailMessage
 from mail import notify, DEFAULT_FROM
@@ -18,7 +19,9 @@ options = {
     'subject': 'Hello',
     'body': 'Very short message'
 }
-TEST_TEMPLATE_DIRS = (os.path.abspath(os.path.dirname(__file__)),)
+
+TEST_TEMPLATES = settings.TEMPLATES[:]
+TEST_TEMPLATES[0]['DIRS'] = (os.path.abspath(os.path.dirname(__file__)),)
 
 
 def test_notify_sends_all_parameters():
@@ -51,7 +54,7 @@ def test_notify_uses_default_from_when_missing_from_address():
     assert msg.from_email == DEFAULT_FROM
 
 
-@override_settings(TEMPLATE_DIRS=TEST_TEMPLATE_DIRS)
+@override_settings(TEMPLATES=TEST_TEMPLATES)
 def test_notify_renders_template_referenced_by_name():
     template_name = 'test_email_template.html'
     params = options.copy()
@@ -81,7 +84,7 @@ def params():
     return params
 
 # TODO wish it worked!
-#def test_fail_silently(params):
+# def test_fail_silently(params):
 #    fail_silently = True
 #    email = notify(params, fail_silently=fail_silently)
 #    with mock.patch('mail.EmailMessage') as email:

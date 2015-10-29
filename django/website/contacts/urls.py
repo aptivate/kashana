@@ -1,4 +1,4 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 from contacts.views import (
     AddContact, UpdateContact, DeleteContact, ListContacts,
     SendActivationEmailView,
@@ -6,7 +6,7 @@ from contacts.views import (
 )
 
 
-urlpatterns = patterns('',
+urlpatterns = [
     url(r'edit/$', AddContact.as_view(), name='contact_add'),
     url(r'edit/(?P<pk>\d+)/$', UpdateContact.as_view(),
         name='contact_update'),
@@ -20,5 +20,4 @@ urlpatterns = patterns('',
     url(r'export_as_excel/$', ListContactsExport.as_view(), {'format': 'excel'},
         name='contact_list_excel'),
     url(r'$', ListContacts.as_view(), name='contact_list'),
-
-)
+]

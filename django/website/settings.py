@@ -1,9 +1,10 @@
 # Django settings for  project.
+from os import path
+from os.path import abspath, dirname, join
+import private_settings
 
 DEBUG = True
-TEMPLATE_DEBUG = DEBUG
 
-from os.path import abspath, dirname, join
 PROJECT_PATH = abspath(dirname(__file__))
 
 # These email addresses will get all the error email for the production server
@@ -43,15 +44,17 @@ USE_THOUSAND_SEPARATOR = True
 # If you set this to False, Django will not use timezone-aware datetimes.
 USE_TZ = True
 
+
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-from os import path
 MEDIA_ROOT = path.join(path.dirname(__file__), 'uploads')
+
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
 MEDIA_URL = '/uploads/'
+
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
@@ -59,9 +62,11 @@ MEDIA_URL = '/uploads/'
 # Example: "/home/media/media.lawrence.com/static/"
 STATIC_ROOT = path.join(path.dirname(__file__), 'static')
 
+
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
 STATIC_URL = '/static/'
+
 
 # Additional locations of static files
 STATICFILES_DIRS = (
@@ -73,6 +78,7 @@ STATICFILES_DIRS = (
     join(PROJECT_PATH, 'media'),
 )
 
+
 # List of finder classes that know how to find static files in
 # various locations.
 STATICFILES_FINDERS = (
@@ -82,15 +88,9 @@ STATICFILES_FINDERS = (
     'django_assets.finders.AssetsFinder',
 )
 
-import private_settings
+
 SECRET_KEY = private_settings.SECRET_KEY
 
-# List of callables that know how to import templates from various sources.
-TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader',
-    # 'django.template.loaders.eggs.Loader',
-)
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
@@ -103,28 +103,36 @@ MIDDLEWARE_CLASSES = (
     # 'waffle.middleware.WaffleMiddleware',
 )
 
-TEMPLATE_CONTEXT_PROCESSORS = (
-    'django.contrib.auth.context_processors.auth',
-    'django.core.context_processors.i18n',
-    'django.core.context_processors.request',
-    'django.core.context_processors.media',
-    'django.core.context_processors.static',
-    'django.contrib.messages.context_processors.messages',
-    'main.context_processors.deploy_env',
-)
+
+TEMPLATES = [{
+    'BACKEND': 'django.template.backends.django.DjangoTemplates',
+    'DIRS': [
+        path.join(path.dirname(__file__), 'templates'),
+        path.join(path.dirname(__file__), '..', '..', 'javascript', 'src', 'templates'),
+    ],
+    'OPTIONS': {
+        'context_processors': [
+            'django.contrib.auth.context_processors.auth',
+            'django.template.context_processors.i18n',
+            'django.template.context_processors.request',
+            'django.template.context_processors.media',
+            'django.template.context_processors.static',
+            'django.contrib.messages.context_processors.messages',
+            'main.context_processors.deploy_env',
+        ],
+        'debug': DEBUG,
+        'loaders': [
+            'django.template.loaders.filesystem.Loader',
+            'django.template.loaders.app_directories.Loader',
+        ]
+    }
+}]
+
 
 ROOT_URLCONF = 'urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
 # WSGI_APPLICATION = 'wsgi.application'
-
-TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-    path.join(path.dirname(__file__), 'templates'),
-    path.join(path.dirname(__file__), '..', '..', 'javascript', 'src', 'templates'),
-)
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -137,7 +145,6 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
-    'south',
     'rest_framework',
     'django_tables2',  # TODO: don't need this?
     'jstemplate',

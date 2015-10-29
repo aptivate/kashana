@@ -14,7 +14,9 @@ DATABASES = {
         'PASSWORD': private_settings.DB_PASSWORD,                  # Not used with sqlite3.
         'HOST': '127.0.0.1',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '3307',                      # Set to empty string for default. Not used with sqlite3.
-        'TEST_COLLATION': 'utf8_general_ci',
+        'TEST': {
+            'COLLATION': 'utf8_general_ci',
+        },
         'OPTIONS': {
                "init_command": "SET storage_engine=INNODB",
         }

@@ -42,6 +42,21 @@ class UpdatePersonalInfoForm(BetterModelForm):
 
     class Meta:
         model = User
+        fields = [
+            'business_email', 'title', 'first_name',
+            'last_name', 'personal_email',
+            # Address
+            'home_address', 'business_address', 'country', 'nationality',
+            # Personal info
+            'gender', 'contact_type',
+            # Work
+            'job_title', 'area_of_specialisation',
+            # Phones & fax
+            'home_tel', 'business_tel', 'mobile', 'fax',
+            # IM
+            'skype_id', 'yahoo_messenger', 'msn_id',
+            'notes', 'picture', 'cv'
+        ]
         fieldsets = [('all', {'fields': [
             'business_email', 'title', 'first_name',
             'last_name', 'personal_email',
@@ -68,6 +83,19 @@ class AddContactForm(BetterModelForm):
 
     class Meta:
         model = User
+        fields = ['business_email', 'title', 'first_name',
+                  'last_name', 'personal_email', 'is_active',
+                  # Address
+                  'home_address', 'business_address', 'country', 'nationality',
+                  # Personal info
+                  'gender',
+                  # Work
+                  'job_title', 'area_of_specialisation',
+                  # Phones & fax
+                  'home_tel', 'business_tel', 'mobile', 'fax',
+                  # IM
+                  'skype_id', 'yahoo_messenger', 'msn_id',
+                  'notes', 'picture', 'cv']
         fieldsets = [('all', {'fields':
                  ['business_email', 'title', 'first_name',
                   'last_name', 'personal_email', 'is_active',
@@ -137,10 +165,6 @@ class AdminUserCreationForm(UserCreationForm):
     password.
     """
 
-    def __init__(self, *args, **kargs):
-        super(AdminUserCreationForm, self).__init__(*args, **kargs)
-        del self.fields['username']
-
     class Meta:
         model = User
         fields = ("business_email",)
@@ -152,12 +176,9 @@ class AdminUserChangeForm(UserChangeForm):
     password hash display field.
     """
 
-    def __init__(self, *args, **kargs):
-        super(UserChangeForm, self).__init__(*args, **kargs)
-        del self.fields['username']
-
     class Meta:
         model = User
+        fields = '__all__'
 
 
 #######################################################################
