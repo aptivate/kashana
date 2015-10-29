@@ -1,34 +1,24 @@
 # -*- coding: utf-8 -*-
-from south.utils import datetime_utils as datetime
-from south.db import db
-from south.v2 import SchemaMigration
-from django.db import models
+from __future__ import unicode_literals
+
+from django.db import migrations, models
 
 
-class Migration(SchemaMigration):
+class Migration(migrations.Migration):
 
-    def forwards(self, orm):
-        # Adding model 'Settings'
-        db.create_table(u'appconf_settings', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('max_result_level', self.gf('django.db.models.fields.PositiveSmallIntegerField')(default=4)),
-            ('open_result_level', self.gf('django.db.models.fields.PositiveSmallIntegerField')(default=2)),
-        ))
-        db.send_create_signal(u'appconf', ['Settings'])
+    dependencies = [
+    ]
 
-
-    def backwards(self, orm):
-        # Deleting model 'Settings'
-        db.delete_table(u'appconf_settings')
-
-
-    models = {
-        u'appconf.settings': {
-            'Meta': {'object_name': 'Settings'},
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'max_result_level': ('django.db.models.fields.PositiveSmallIntegerField', [], {'default': '4'}),
-            'open_result_level': ('django.db.models.fields.PositiveSmallIntegerField', [], {'default': '2'})
-        }
-    }
-
-    complete_apps = ['appconf']
+    operations = [
+        migrations.CreateModel(
+            name='Settings',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('max_result_level', models.PositiveSmallIntegerField(default=4, help_text=b'Defines the depth of the result tree on MIS dashboard.', verbose_name=b'Result depth')),
+                ('open_result_level', models.PositiveSmallIntegerField(default=2, help_text=b'Depth to which result elements are automatically expanded on MIS dashboard.', verbose_name=b'Expanded level')),
+            ],
+            options={
+                'verbose_name_plural': 'Settings',
+            },
+        ),
+    ]
