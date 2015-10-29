@@ -14,7 +14,9 @@ DATABASES = {
         'OPTIONS': {
             "init_command": "SET storage_engine=INNODB",
         },
-        'TEST_CHARSET': "utf8",
+        'TEST': {
+            'CHARSET': "utf8",
+        }
     }
 }
 
