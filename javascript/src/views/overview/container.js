@@ -68,12 +68,6 @@ define([
             });
         },
         subviewCreators: {
-            "leadSelect": function () {
-                return new LeadView({
-                    // Required by BaseView, but not used
-                    model: new Backbone.Model()
-                });
-            },
             "resultList": function () {
                 return new ListView({
                     className: "result-tree",
