@@ -1,6 +1,6 @@
 import private_settings
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 DATABASES = {
@@ -22,6 +22,6 @@ DEPLOY_ENV = "staging"
 DEPLOY_ENV_COLOR = '#33ccff'  # bright blue
 
 EMAIL_HOST = 'localhost'
-SITE_HOSTNAME = 'alfie.stage.aptivate.org'
+SITE_HOSTNAME = 'kashana.stage.aptivate.org'
 
 # vi: ft=python
