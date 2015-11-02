@@ -5,7 +5,7 @@ from django.contrib.auth.views import (
 from .views import ResetPassword, change_password
 
 
-urlpatterns = patterns('',
+urlpatterns = [
     url(r'login/$', login, name='login'),
     url(r'logout/$', logout_then_login, name='logout'),
 
@@ -14,4 +14,4 @@ urlpatterns = patterns('',
     url(r'password_reset_confirm/(?P<uidb64>[0-9A-Za-z]{1,13})-(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         password_reset_confirm, {'post_reset_redirect': '/'}, name='password_reset_confirm'),
     url(r'password_change/$', change_password, name='password_change'),
-)
+]
