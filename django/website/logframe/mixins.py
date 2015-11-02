@@ -1,5 +1,5 @@
-from rest_framework.settings import api_settings
 from rest_framework.renderers import JSONRenderer
+from rest_framework.serializers import ModelSerializer
 from .api import (
     LogFrameSerializer,
     ResultSerializer,
@@ -14,8 +14,7 @@ class QuerysetSerializer(object):
     def create_serializer(model_class):
         assert model_class is not None
 
-        class DefaultSerializer(
-                api_settings.DEFAULT_MODEL_SERIALIZER_CLASS):
+        class DefaultSerializer(ModelSerializer):
             class Meta:
                 model = model_class
         return DefaultSerializer

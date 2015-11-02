@@ -1,8 +1,15 @@
 from django.db.models import Q
+
+import django_filters
+
 from rest_framework import viewsets, serializers, filters, permissions
 from rest_framework_nested import routers
-import django_filters
-from logframe import models
+
+from .models import (
+    Activity, Actual, Assumption, BudgetLine, Column, Indicator, LogFrame,
+    Milestone, Rating, Result, RiskRating, StatusCode, StatusUpdate,
+    SubIndicator, TALine, TAType, Target
+)
 
 
 #
@@ -106,19 +113,19 @@ class FilterRelationship(object):
 # Logframe
 class LogFrameSerializer(serializers.ModelSerializer):
     class Meta:
-        model = models.LogFrame
+        model = LogFrame
         fields = ('id', 'name', 'results')
 
 
 class LogFrameViewSet(viewsets.ModelViewSet):
-    model = models.LogFrame
+    queryset = LogFrame.objects.all()
     serializer_class = LogFrameSerializer
 
 
 # Results
 class ResultSerializer(serializers.ModelSerializer):
     class Meta:
-        model = models.Result
+        model = Result
         fields = (
             'id',
             'name',
@@ -137,7 +144,7 @@ class ResultSerializer(serializers.ModelSerializer):
 
 
 class ResultViewSet(FilterRelationship, viewsets.ModelViewSet):
-    model = models.Result
+    queryset = Result.objects.all()
     serializer_class = ResultSerializer
     lookup_rel = 'log_frame_id'
 
@@ -145,7 +152,7 @@ class ResultViewSet(FilterRelationship, viewsets.ModelViewSet):
 # Indicators & subindicators
 class IndicatorSerializer(serializers.ModelSerializer):
     class Meta:
-        model = models.Indicator
+        model = Indicator
         fields = (
             'id',
             'name',
@@ -157,19 +164,19 @@ class IndicatorSerializer(serializers.ModelSerializer):
 
 
 class IndicatorViewSet(FilterRelationship, viewsets.ModelViewSet):
-    model = models.Indicator
+    queryset = Indicator.objects.all()
     serializer_class = IndicatorSerializer
     lookup_rel = 'result__log_frame_id'
 
 
 class SubIndicatorViewSet(viewsets.ModelViewSet):
-    model = models.SubIndicator
+    queryset = SubIndicator.objects.all()
     lookup_rel = 'indicator__result__log_frame_id'
 
 
 # Milestones
 class MilestoneViewSet(FilterRelationship, viewsets.ModelViewSet):
-    model = models.Milestone
+    queryset = Milestone.objects.all()
     lookup_rel = 'log_frame_id'
 
 
@@ -178,24 +185,24 @@ class TargetFilter(django_filters.FilterSet):
     result = django_filters.NumberFilter(name='subindicator__indicator__result_id')
 
     class Meta:
-        model = models.Target
+        model = Target
         fields = ['result']
 
 
 class TargetViewSet(FilterRelationship, viewsets.ModelViewSet):
-    model = models.Target
+    queryset = Target.objects.all()
     lookup_rel = 'milestone__log_frame_id'
     filter_backends = (filters.DjangoFilterBackend, IDFilterBackend)
     filter_class = TargetFilter
 
 
 class ActualViewSet(FilterRelationship, viewsets.ModelViewSet):
-    model = models.Actual
+    queryset = Actual.objects.all()
     lookup_rel = 'indicator__result__log_frame_id'
 
 
 class ColumnViewSet(FilterRelationship, viewsets.ModelViewSet):
-    model = models.Column
+    queryset = Column.objects.all()
     lookup_rel = 'indicator__result__log_frame_id'
 
     def get_queryset(self):
@@ -205,19 +212,19 @@ class ColumnViewSet(FilterRelationship, viewsets.ModelViewSet):
 
 # RiskRatings
 class RiskRatingViewSet(FilterRelationship, viewsets.ModelViewSet):
-    model = models.RiskRating
+    queryset = RiskRating.objects.all()
     lookup_rel = 'result__log_frame_id'
 
 
 # Assumptions
 class AssumptionViewSet(FilterRelationship, viewsets.ModelViewSet):
-    model = models.Assumption
+    queryset = Assumption.objects.all()
     lookup_rel = 'result__log_frame_id'
 
 
 # Activities
 class ActivityViewSet(FilterRelationship, viewsets.ModelViewSet):
-    model = models.Activity
+    queryset = Activity.objects.all()
     lookup_rel = 'log_frame_id'
     lookup_period_start = 'start_date'
     lookup_period_end = 'end_date'
@@ -226,7 +233,7 @@ class ActivityViewSet(FilterRelationship, viewsets.ModelViewSet):
 
 # Budgetlines
 class BudgetLineViewSet(FilterRelationship, viewsets.ModelViewSet):
-    model = models.BudgetLine
+    queryset = BudgetLine.objects.all()
     lookup_rel = 'activity__log_frame_id'
     lookup_period_start = 'activity__start_date'
     lookup_period_end = 'activity__end_date'
@@ -235,7 +242,7 @@ class BudgetLineViewSet(FilterRelationship, viewsets.ModelViewSet):
 
 # TAs
 class TALinesViewSet(FilterRelationship, viewsets.ModelViewSet):
-    model = models.TALine
+    queryset = TALine.objects.all()
     lookup_rel = 'activity__log_frame_id'
     lookup_period_start = 'activity__start_date'
     lookup_period_end = 'activity__end_date'
@@ -243,13 +250,13 @@ class TALinesViewSet(FilterRelationship, viewsets.ModelViewSet):
 
 
 class TATypeViewSet(FilterRelationship, viewsets.ModelViewSet):
-    model = models.TAType
+    queryset = TAType.objects.all()
     lookup_rel = 'log_frame_id'
 
 
 # Statuses
 class StatusCodeViewSet(FilterRelationship, viewsets.ModelViewSet):
-    model = models.StatusCode
+    queryset = StatusCode.objects.all()
     lookup_rel = 'log_frame_id'
 
 
@@ -262,13 +269,13 @@ class StatusUpdateSerializer(serializers.ModelSerializer):
         return attrs
 
     class Meta:
-        model = models.StatusUpdate
+        model = StatusUpdate
 
 
 class StatusUpdateViewSet(FilterRelationship, viewsets.ModelViewSet):
     lookup_rel = 'activity__log_frame_id'
     serializer_class = StatusUpdateSerializer
-    model = models.StatusUpdate
+    queryset = StatusUpdate.objects.all()
     lookup_period_start = 'activity__start_date'
     lookup_period_end = 'activity__end_date'
     filter_backends = (PeriodOverlapFilterBackend, IDFilterBackend)
@@ -283,7 +290,7 @@ class StatusUpdateViewSet(FilterRelationship, viewsets.ModelViewSet):
 
 # Ratings
 class RatingViewSet(FilterRelationship, viewsets.ModelViewSet):
-    model = models.Rating
+    queryset = Rating.objects.all()
     lookup_rel = 'log_frame_id'
 
 
