@@ -110,8 +110,6 @@ class UpdateContactForm(AddContactForm):
         mail.notify(options)
 
     def save(self, *args, **kwargs):
-        import rpdb2
-        rpdb2.start_embedded_debugger("abc")
         if self.instance and self.instance.has_usable_password():
             old = self._meta.model.objects.get(pk=self.instance.pk)
             old_email = old.business_email
