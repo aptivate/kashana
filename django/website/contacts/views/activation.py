@@ -30,6 +30,7 @@ class ResetPassword(FormView):
             'subject': self.get_subject(),
             'request': self.request,
         }
+
         form.save(**opts)
         messages.success(
             self.request, ('Reset password email was sent to this '
