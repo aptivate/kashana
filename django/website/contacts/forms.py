@@ -97,7 +97,9 @@ class UpdateContactForm(AddContactForm):
         ctx = {
             'user': self.instance,
             'old_email': old_address,
-            'new_email': new_address
+            'new_email': new_address,
+            'site_name': settings.SITE_NAME,
+            'contact_address': settings.CONTACT_ADDRESS
         }
         options = {
             'subject': subject,
@@ -108,6 +110,8 @@ class UpdateContactForm(AddContactForm):
         mail.notify(options)
 
     def save(self, *args, **kwargs):
+        import rpdb2
+        rpdb2.start_embedded_debugger("abc")
         if self.instance and self.instance.has_usable_password():
             old = self._meta.model.objects.get(pk=self.instance.pk)
             old_email = old.business_email
@@ -195,6 +199,8 @@ class ContactPasswordResetForm(PasswordResetForm):
                 'user': user,
                 'token': token_generator.make_token(user),
                 'protocol': use_https and 'https' or 'http',
+                'site_name': settings.SITE_NAME,
+                'contact_address': settings.CONTACT_ADDRESS,
             }
             options = {
                 'subject': subject,
