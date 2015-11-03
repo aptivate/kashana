@@ -125,7 +125,9 @@ class UpdateContactForm(AddContactForm):
         ctx = {
             'user': self.instance,
             'old_email': old_address,
-            'new_email': new_address
+            'new_email': new_address,
+            'site_name': settings.SITE_NAME,
+            'contact_address': settings.CONTACT_ADDRESS
         }
         options = {
             'subject': subject,
@@ -216,6 +218,8 @@ class ContactPasswordResetForm(PasswordResetForm):
                 'user': user,
                 'token': token_generator.make_token(user),
                 'protocol': use_https and 'https' or 'http',
+                'site_name': settings.SITE_NAME,
+                'contact_address': settings.CONTACT_ADDRESS,
             }
             options = {
                 'subject': subject,
