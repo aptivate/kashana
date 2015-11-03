@@ -1,4 +1,4 @@
-This email is to confirm that you have changed the primary email address you have registered with MIS
+This email is to confirm that you have changed the primary email address you have registered with {{ site_name }}
 
 Your old email was: {{ old_email }}
 Your new email is: {{ new_email }}
@@ -7,8 +7,8 @@ You will need to use the new email address to log in.
 
 If you did not initiate this change, please either:
 
-    log in using the new email address and change your email and password; or contact ...
+    log in using the new email address and change your email and password; or contact {{ contact_address }}
 
 Kind regards,
 
-    MIS Team
+The {{ site_name }} Team

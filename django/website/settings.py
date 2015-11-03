@@ -111,6 +111,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.static',
     'django.contrib.messages.context_processors.messages',
     'main.context_processors.deploy_env',
+    # 'contacts.context_processors.contact_details'
 )
 
 ROOT_URLCONF = 'urls'
@@ -158,6 +159,7 @@ INSTALLED_APPS = (
 
 AUTH_USER_MODEL = 'contacts.User'
 EMAIL_BOT_ADDRESS = 'blackhole@aptivate.org'
+CONTACT_ADDRESS = 'kashana@aptivate.org'
 SITE_HOSTNAME = 'localhost:8000'
 SITE_NAME = 'Kashana'
 

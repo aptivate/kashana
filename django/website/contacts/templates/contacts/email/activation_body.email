@@ -1,14 +1,14 @@
-Welcome and thank you for registering with the MIS
+Welcome and thank you for registering with {{ site_name }}
 
 Please activate your account by clicking on this link: {{ protocol }}://{{ site }}{{ link }}{% url "password_reset_confirm" uidb36=uid token=token %}
 
 You will be asked to set a password.
 
-If you experience any problems, please contact ...
+If you experience any problems, please contact {{ contact_address }}
 
 Kind regards,
 
-    MIS Team
+The {{ site_name }} Team
 
 
 
