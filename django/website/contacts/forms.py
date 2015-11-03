@@ -8,6 +8,7 @@ from django.forms import (
     ModelForm, HiddenInput, ValidationError, ImageField
 )
 from django.utils.http import int_to_base36
+from django.utils.translation import ugettext as _
 
 import mail
 import floppyforms as forms
@@ -166,6 +167,17 @@ class AdminUserChangeForm(UserChangeForm):
 # Password reset forms
 #######################################################################
 class ContactPasswordResetForm(PasswordResetForm):
+    email = forms.EmailField(
+        label=_("Email"),
+        max_length=254,
+        error_messages={
+            'unknown': _(
+                "We couldn't find a user for that email address. Please "
+                "check that you typed the address correctly."
+            )
+        }
+    )
+
     def clean_email(self):
         """
         Validates that an active user exists with the given email address.
@@ -175,10 +187,10 @@ class ContactPasswordResetForm(PasswordResetForm):
         self.users_cache = UserModel._default_manager.filter(
             business_email__iexact=email)
         if not len(self.users_cache):
-            raise ValidationError(self.error_messages['unknown'])
+            raise ValidationError(self.fields['email'].error_messages['unknown'])
         if not any(user.is_active for user in self.users_cache):
             # none of the filtered users are active
-            raise ValidationError(self.error_messages['unknown'])
+            raise ValidationError(self.fields['email'].error_messages['unknown'])
         return email
 
     def save(self, subject,

@@ -1,6 +1,9 @@
+import pytest
+
 from contacts.forms import (
     AddContactForm,
     UpdatePersonalInfoForm,
+    ContactPasswordResetForm
 )
 
 
@@ -21,3 +24,12 @@ def test_is_active_is_only_difference_on_add_contact_form():
     update_personal_flds = update_personal_info.Meta.fieldsets[0][1]['fields']
     difference = list(set(add_contact_flds) - set(update_personal_flds))
     assert difference == ['is_active']
+
+
+@pytest.mark.django_db
+def test_contact_password_reset_form_can_handle_invalid_user():
+    form = ContactPasswordResetForm(data={'email': 'test@example.org'})
+    try:
+        form.is_valid()
+    except AttributeError:
+        assert False, "An attribute error shouldn't be raised here"
