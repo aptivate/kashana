@@ -133,3 +133,11 @@ def test_has_permission_returns_false_when_user_doesnt_have_permission():
     get_expected_permissions(User, codenames)[0]
 
     assert not GroupPermissions.has_perm(user, codenames[0])
+
+
+@pytest.mark.django_db
+def test_perm_name_returns_permission_name():
+    codenames = [permission_attribute[0] for permission_attribute in GroupPermissions.custom_permissions]
+    permission = get_expected_permissions(User, codenames)[0]
+
+    assert 'contacts.{0}'.format(permission.codename) == GroupPermissions.perm_name(permission)
