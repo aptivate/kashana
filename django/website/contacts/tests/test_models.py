@@ -1,7 +1,11 @@
-from django.test import TestCase
-from contacts.group_permissions import GroupPermissions
 from django.contrib.auth.models import Group
-from contacts.models import User, create_picture_upload_handler
+from django.test import TestCase
+
+import pytest
+
+from ..group_permissions import GroupPermissions
+from ..models import User, create_picture_upload_handler, get_user_fields, \
+    UserManager
 from .factories import UserFactory
 
 
@@ -72,3 +76,16 @@ def test_create_picture_upload_handler_with_missing_names():
     u = User(business_email='fake@aptivate.org')
     handler = create_picture_upload_handler('pictures')
     assert handler(u, 'me.jpg') == 'pictures/fake@aptivate.org_me.jpg'
+
+
+def test_get_user_fields_returns_business_email_last_name_first_name():
+    u = User(business_email='fake@aptivate.org', first_name='User', last_name='Test')
+    assert ('fake@aptivate.org', 'Test', 'User') == get_user_fields(u)
+
+
+def test_create_user_raises_value_error_when_no_business_email_supplied():
+    try:
+        UserManager().create_user()
+        pytest.fail('A value error should have been raised.')
+    except ValueError:
+        pass
