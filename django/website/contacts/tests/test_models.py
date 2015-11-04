@@ -94,3 +94,8 @@ def test_create_user_raises_value_error_when_no_business_email_supplied():
 def test_user_represented_as_full_name_in_unicode():
     u = User(business_email='fake@aptivate.org', first_name='User', last_name='Test')
     assert unicode(u) == u.get_full_name().decode()
+
+
+def test_user_email_returns_business_email():
+    u = User(business_email='fake@aptivate.org')
+    assert 'fake@aptivate.org' == u.email
