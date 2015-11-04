@@ -8,6 +8,7 @@ from ..forms import (
     UpdatePersonalInfoForm,
     UpdateContactForm
 )
+from contacts.forms import AdminUserCreationForm, AdminUserChangeForm
 
 
 def test_is_active_is_only_difference_on_add_contact_form():
@@ -55,3 +56,13 @@ def test_update_contact_form_only_sends_email_change_notifications_when_email_ch
     form._meta.model.objects.get = old_get_method
 
     assert not form.notify_email_change.called
+
+
+def test_username_not_in_admin_user_creation_form():
+    form = AdminUserCreationForm()
+    assert 'username' not in form.fields
+
+
+def test_username_not_in_admin_user_change_form():
+    form = AdminUserChangeForm()
+    assert 'username' not in form.fields
