@@ -1,5 +1,6 @@
 import pytest
 
+from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Permission, Group, ContentType
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -92,3 +93,17 @@ def test_deleting_all_group_permissions():
 
     assert list(g1.permissions.all()) == []
     assert list(g2.permissions.all()) == []
+
+
+@pytest.mark.django_db
+def test_retrieving_permissions():
+    any_model = get_user_model()
+
+    group_permission_codenames = [permission_attribute[0] for permission_attribute in GroupPermissions.custom_permissions]
+
+    expected_permission = get_expected_permissions(any_model, group_permission_codenames)[0]
+    permission_name = GroupPermissions.custom_permissions[0][0]
+
+    permission = GroupPermissions.get_perm(permission_name)
+
+    assert expected_permission == permission
