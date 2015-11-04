@@ -7,6 +7,9 @@ from django.core.exceptions import ObjectDoesNotExist
 from contacts.group_permissions import GroupPermissions
 
 
+User = get_user_model()
+
+
 def get_expected_permissions(model, codenames):
     content_type = ContentType.objects.get_for_model(model)
     expected_permissions = []
@@ -97,7 +100,7 @@ def test_deleting_all_group_permissions():
 
 @pytest.mark.django_db
 def test_retrieving_permissions():
-    any_model = get_user_model()
+    any_model = User
 
     group_permission_codenames = [permission_attribute[0] for permission_attribute in GroupPermissions.custom_permissions]
 
@@ -107,3 +110,26 @@ def test_retrieving_permissions():
     permission = GroupPermissions.get_perm(permission_name)
 
     assert expected_permission == permission
+
+
+@pytest.mark.django_db
+def test_has_permission_returns_true_when_user_has_permission():
+    user = User.objects.create(business_email="test@example.com")
+    users_group = Group.objects.create(name='test_group')
+    user.groups.add(users_group)
+
+    codenames = [permission_attribute[0] for permission_attribute in GroupPermissions.custom_permissions]
+    permission = get_expected_permissions(User, codenames)[0]
+    users_group.permissions.add(permission)
+
+    assert GroupPermissions.has_perm(user, codenames[0])
+
+
+@pytest.mark.django_db
+def test_has_permission_returns_false_when_user_doesnt_have_permission():
+    user = User.objects.create(business_email="test@example.com")
+
+    codenames = [permission_attribute[0] for permission_attribute in GroupPermissions.custom_permissions]
+    get_expected_permissions(User, codenames)[0]
+
+    assert not GroupPermissions.has_perm(user, codenames[0])
