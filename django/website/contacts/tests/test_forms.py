@@ -1,10 +1,14 @@
 import pytest
 
-from contacts.forms import (
+from mock import patch, Mock
+
+from ..forms import (
     AddContactForm,
     UpdatePersonalInfoForm,
-    ContactPasswordResetForm
+    ContactPasswordResetForm,
+    UpdateContactForm
 )
+from django_dynamic_fixture import N
 
 
 def test_is_active_is_only_difference_on_add_contact_form():
@@ -33,3 +37,22 @@ def test_contact_password_reset_form_can_handle_invalid_user():
         form.is_valid()
     except AttributeError:
         assert False, "An attribute error shouldn't be raised here"
+
+
+def test_update_contact_form_only_sends_email_change_notifications_when_email_changed():
+    form = UpdateContactForm()
+    form.notify_email_change = Mock()
+    form.instance = Mock(
+            has_usable_password=lambda: True,
+            business_email='test1@example.org'
+    )
+    form.cleaned_data = {'business_email': 'test@example.com'}
+
+    old_get_method = form._meta.model.objects.get
+    form._meta.model.objects.get = lambda pk: Mock(business_email='test@example.com')
+
+    form.send_notification_if_email_changed()
+
+    form._meta.model.objects.get = old_get_method
+
+    assert not form.notify_email_change.called

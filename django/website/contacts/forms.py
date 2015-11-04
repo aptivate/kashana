@@ -110,7 +110,7 @@ class UpdateContactForm(AddContactForm):
         }
         mail.notify(options)
 
-    def save(self, *args, **kwargs):
+    def send_notification_if_email_changed(self):
         if self.instance and self.instance.has_usable_password():
             old = self._meta.model.objects.get(pk=self.instance.pk)
             old_email = old.business_email
@@ -118,6 +118,9 @@ class UpdateContactForm(AddContactForm):
                 self.notify_email_change(
                     old_email,
                     self.cleaned_data['business_email'])
+
+    def save(self, *args, **kwargs):
+        self.send_notification_if_email_changed()
         return super(UpdateContactForm, self).save(*args, **kwargs)
 
 
