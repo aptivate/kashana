@@ -11,7 +11,7 @@ from mock import Mock, patch
 import pytest
 
 from ..forms import ContactPasswordResetForm
-from ..views.activation import ResetPassword
+from ..views.activation import ResetPassword, change_password
 
 User = get_user_model()
 
@@ -86,3 +86,25 @@ def test_reset_password_view_displays_error_message_when_form_invalid():
 
     assert 'error' == request._messages._queued_messages[0].tags
     assert 'Email could not be sent. Check if provided email is correct.' == request._messages._queued_messages[0].message
+
+
+@pytest.mark.django_db
+def test_password_change_view_redirects_to_personal_edit_on_success():
+    user = User.objects.create(business_email='test@example.com')
+    user.set_password('password')
+    user.save()
+
+    request = RequestFactory().post(
+        '/',
+        data={
+            'old_password': 'password',
+            'new_password1': 'new_pass',
+            'new_password2': 'new_pass',
+    })
+    request.user = user
+    request.csrf_processing_done = True
+
+    response = change_password(request)
+
+    assert isinstance(response, HttpResponseRedirect)
+    assert reverse('personal_edit') == response.url
