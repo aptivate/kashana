@@ -41,3 +41,25 @@ def test_add_nonexistent_perms():
             pytest.fail("This should raise an ObjectDoesNotExist exception", False)
         except ObjectDoesNotExist:
             pass
+
+
+def test_logging_happens_when_verbose_is_true(capsys):
+    gp = GroupPermissions()
+    gp.verbose = True
+
+    gp.log('Hello World')
+
+    output, _ = capsys.readouterr()
+
+    assert 'Hello World\n' == output
+
+
+def test_logging_doesnt_happen_when_verbose_is_false(capsys):
+    gp = GroupPermissions()
+    gp.verbose = False
+
+    gp.log('Hello World')
+
+    output, _ = capsys.readouterr()
+
+    assert '' == output
