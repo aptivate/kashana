@@ -1,14 +1,13 @@
 import pytest
 
-from mock import patch, Mock
+from mock import Mock
 
 from ..forms import (
     AddContactForm,
-    UpdatePersonalInfoForm,
     ContactPasswordResetForm,
+    UpdatePersonalInfoForm,
     UpdateContactForm
 )
-from django_dynamic_fixture import N
 
 
 def test_is_active_is_only_difference_on_add_contact_form():

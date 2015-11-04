@@ -5,7 +5,7 @@ from django.contrib.auth.forms import (
     UserCreationForm, UserChangeForm, PasswordResetForm
 )
 from django.forms import (
-    ModelForm, HiddenInput, ValidationError, ImageField
+    ModelForm, ValidationError, ImageField
 )
 from django.utils.http import int_to_base36
 from django.utils.translation import ugettext as _
@@ -125,13 +125,10 @@ class UpdateContactForm(AddContactForm):
 
 
 class DeleteContactForm(ModelForm):
-    def __init__(self, user, *args, **kwargs):
-        super(DeleteContactForm, self).__init__(*args, **kwargs)
-        self.fields['id'].widget = HiddenInput()
 
     class Meta:
         model = User
-        fields = ('id',)
+        fields = ()
 
 
 #######################################################################
