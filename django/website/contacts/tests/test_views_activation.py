@@ -11,7 +11,9 @@ from mock import Mock, patch
 import pytest
 
 from ..forms import ContactPasswordResetForm
-from ..views.activation import ResetPassword, change_password
+from ..views.activation import (
+    change_password, ActivationEmailsView, ResetPassword
+)
 
 User = get_user_model()
 
@@ -108,3 +110,8 @@ def test_password_change_view_redirects_to_personal_edit_on_success():
 
     assert isinstance(response, HttpResponseRedirect)
     assert reverse('personal_edit') == response.url
+
+
+def test_activation_emails_view_throws_not_implemented_error_on_get_subject():
+    with pytest.raises(NotImplementedError):
+        ActivationEmailsView().get_subject()
