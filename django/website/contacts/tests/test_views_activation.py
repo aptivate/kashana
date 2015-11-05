@@ -12,7 +12,10 @@ import pytest
 
 from ..forms import ContactPasswordResetForm
 from ..views.activation import (
-    change_password, ActivationEmailsView, ResetPassword
+    change_password,
+    ActivationEmailsView,
+    ResetPassword,
+    SendActivationEmailView
 )
 
 User = get_user_model()
@@ -110,6 +113,23 @@ def test_password_change_view_redirects_to_personal_edit_on_success():
 
     assert isinstance(response, HttpResponseRedirect)
     assert reverse('personal_edit') == response.url
+
+
+@pytest.mark.django_db
+def test_email_acitvation_view_shows_error_on_invalid_form():
+    user = User.objects.create(business_email='test@example.com')
+    user.is_active = False
+    user.save()
+
+    request = RequestFactory().get('/')
+    SessionMiddleware().process_request(request)
+    MessageMiddleware().process_request(request)
+
+    view = SendActivationEmailView()
+    view.send_email(request, user.pk)
+
+    assert 'error' == request._messages._queued_messages[0].tags
+    assert 'Email could not be sent. Check if business email is correct.' == request._messages._queued_messages[0].message
 
 
 def test_activation_emails_view_throws_not_implemented_error_on_get_subject():
