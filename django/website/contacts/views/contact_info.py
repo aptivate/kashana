@@ -98,6 +98,7 @@ class UpdateContactBase(LoginRequiredMixin, UpdateView):
             url = reverse('contact_update', args=(self.object.id,))
         return url
 
+
 class UpdateContact(PermissionRequiredMixin, UpdateContactBase):
     form_class = UpdateContactForm
     permission_required = 'contacts.add_user'

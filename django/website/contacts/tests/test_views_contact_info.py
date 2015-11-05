@@ -1,4 +1,6 @@
 # coding=utf-8
+from random import randint
+
 from django.core.files.base import ContentFile
 from django.core.urlresolvers import reverse
 from django.test import TestCase
@@ -194,6 +196,7 @@ class UpdatePersonalInfoTests(TestCase):
         view.request = request
         self.assertEqual(view.get_object(), request.user)
 
+
 ###############################
 # pytest style starts here
 ###############################
@@ -295,3 +298,19 @@ def test_contacts_list_excel_export():
 
     assert expected_text == actual_text
 
+
+def test_update_contact_view_with_valid_form_saves_object():
+    view = UpdateContact()
+    view.object = mock.Mock(save=mock.Mock())
+    view.form_valid(mock.Mock(save=lambda: mock.Mock(id=randint(1, 100))))
+
+    assert view.object.save.called
+
+
+def test_update_contact_view_with_valid_form_redirects_to_self():
+    CONTACT_ID = 1
+    view = UpdateContact()
+    view.object = mock.Mock(save=mock.Mock())
+    response = view.form_valid(mock.Mock(save=lambda: mock.Mock(id=CONTACT_ID)))
+
+    assert reverse('contact_update', args=[CONTACT_ID]) == response['Location']
