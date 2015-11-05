@@ -4,11 +4,13 @@ from mock import Mock
 
 from ..forms import (
     AddContactForm,
+    AdminUserCreationForm,
+    AdminUserChangeForm,
     ContactPasswordResetForm,
     UpdatePersonalInfoForm,
     UpdateContactForm
 )
-from contacts.forms import AdminUserCreationForm, AdminUserChangeForm
+from .context_managers import doesnt_raise
 
 
 def test_is_active_is_only_difference_on_add_contact_form():
@@ -33,10 +35,8 @@ def test_is_active_is_only_difference_on_add_contact_form():
 @pytest.mark.django_db
 def test_contact_password_reset_form_can_handle_invalid_user():
     form = ContactPasswordResetForm(data={'email': 'test@example.org'})
-    try:
+    with doesnt_raise(AttributeError, "An attribute error shouldn't be raised here"):
         form.is_valid()
-    except AttributeError:
-        assert False, "An attribute error shouldn't be raised here"
 
 
 def test_update_contact_form_only_sends_email_change_notifications_when_email_changed():

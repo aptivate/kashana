@@ -52,12 +52,8 @@ def test_add_nonexistent_perms():
     codenames = ['a_do_stuff', 'b_do_more_stuff']
 
     gp = GroupPermissions()
-    with gp.groups(g1, g2):
-        try:
-            gp.add_permissions(any_model, *codenames)
-            pytest.fail("This should raise an ObjectDoesNotExist exception", False)
-        except ObjectDoesNotExist:
-            pass
+    with gp.groups(g1, g2), pytest.raises(ObjectDoesNotExist):
+        gp.add_permissions(any_model, *codenames)
 
 
 def test_logging_happens_when_verbose_is_true(capsys):

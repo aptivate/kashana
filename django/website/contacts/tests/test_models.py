@@ -84,11 +84,8 @@ def test_get_user_fields_returns_business_email_last_name_first_name():
 
 
 def test_create_user_raises_value_error_when_no_business_email_supplied():
-    try:
+    with pytest.raises(ValueError):
         UserManager().create_user()
-        pytest.fail('A value error should have been raised.')
-    except ValueError:
-        pass
 
 
 def test_user_represented_as_full_name_in_unicode():
