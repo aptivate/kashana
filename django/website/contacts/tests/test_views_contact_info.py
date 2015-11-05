@@ -1,22 +1,26 @@
-import pytest
-import mock
+# coding=utf-8
+from django.core.files.base import ContentFile
+from django.core.urlresolvers import reverse
 from django.test import TestCase
 from django.test.client import RequestFactory
-from django.core.urlresolvers import reverse
-from braces.views import LoginRequiredMixin, PermissionRequiredMixin
 from django_tables2 import SingleTableMixin
 
-from contacts.views import (
-    ListContacts,
+from braces.views import LoginRequiredMixin, PermissionRequiredMixin
+import mock
+import openpyxl
+import pytest
+
+from ..views import (
     AddContact,
+    DeleteContact,
+    ListContacts,
+    ListContactsExport,
     UpdateContactBase,
     UpdateContact,
     UpdatePersonalInfo,
-    DeleteContact
 )
-from contacts.forms import (
+from ..forms import (
     AddContactForm,
-    UpdateContactForm,
     UpdatePersonalInfoForm,
 )
 from .factories import UserFactory, ContactsManagerFactory
@@ -191,7 +195,7 @@ class UpdatePersonalInfoTests(TestCase):
         self.assertEqual(view.get_object(), request.user)
 
 ###############################
-#pytest style starts here
+# pytest style starts here
 ###############################
 def test_update_contact_form_invalid_adds_a_message_to_messages(rf):
     view = UpdateContact()
@@ -223,4 +227,71 @@ def test_no_search_term_results_in_empty_query_in_context(rf):
     view.object_list = []
     ctx = view.get_context_data(object_list=[])
     assert ctx['query'] == ''
+
+
+def create_contact_list():
+    return [ContactsManagerFactory() for _ in range(3)]
+
+
+@pytest.mark.django_db
+def test_contacts_list_csv_export():
+    contacts = create_contact_list()
+
+    request = RequestFactory().get('/')
+
+    view = ListContactsExport()
+    view.request = request
+
+    expected_text_lines = [
+        u'Business Email,First Name,Last Name,Title,Personal Email,Active,Type Of Contact,Home Address\r\n',
+    ]
+
+    for user in contacts:
+        user_number = user.first_name.split(' ')[1]
+        expected_text_lines.append(
+            u'email{0}@test.com,ｆíｒѕｔ {0},ｌåｓｔɭａｓｔ {0},ｔïｔｌë,,True,ｃòлｔáｃｔ ｔｙｐé,\r\n'.format(user_number)
+        )
+
+    expected_text = u"".join(expected_text_lines)
+
+    response = view.get(request, format='csv')
+
+    assert expected_text == response.content.decode('UTF-8')
+
+
+@pytest.mark.django_db
+def test_contacts_list_excel_export():
+    contacts = create_contact_list()
+
+    request = RequestFactory().get('/')
+
+    view = ListContactsExport()
+    view.request = request
+
+    expected_text_lines = [
+        u'Business Email,First Name,Last Name,Title,Personal Email,Active,Type Of Contact,Home Address\r\n',
+    ]
+
+    for user in contacts:
+        user_number = user.first_name.split(' ')[1]
+        expected_text_lines.append(
+            u'email{0}@test.com,ｆíｒѕｔ {0},ｌåｓｔɭａｓｔ {0},ｔïｔｌë,,True,ｃòлｔáｃｔ ｔｙｐé,\r\n'.format(user_number)
+        )
+
+    expected_text = u"".join(expected_text_lines)
+
+    response = view.get(request, format='excel')
+
+    workbook = openpyxl.load_workbook(ContentFile(response.content))
+
+    worksheet = workbook.worksheets[0]
+
+    actual_text_lines = []
+    for row in worksheet.rows:
+        row_contents = u",".join([unicode(cell.value) for cell in row])
+        actual_text_lines.append(row_contents + u"\r\n")
+
+    actual_text = u"".join(actual_text_lines)
+
+    assert expected_text == actual_text
 
