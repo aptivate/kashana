@@ -20,6 +20,7 @@ from ..api import (
     PeriodOverlapFilterBackend,
     get_period_filter
 )
+from logframe.api import StatusUpdateViewSet
 
 
 @pytest.mark.django_db
@@ -126,10 +127,21 @@ def test_filter_relationship_backend_queryset_filters_on_relationship():
     filter_relationship.model.objects.filter.assert_called_with(**{'foreign_key_id': '1'})
 
 
+def get_queryset_ordering_for_view_set(viewset_klass):
+    instance = viewset_klass()
+    instance.kwargs = {'logframe_pk': '1'}
+
+    queryset = instance.get_queryset()
+    return queryset.query.order_by
+
+
 def test_column_view_set_get_queryset_orders_by_date_and_id():
-    column_view_set = ColumnViewSet()
-    column_view_set.kwargs = {'logframe_pk': '1'}
+    queryset_ordering = get_queryset_ordering_for_view_set(ColumnViewSet)
 
-    queryset = column_view_set.get_queryset()
+    assert ['date', 'id'] == queryset_ordering
 
-    assert ['date', 'id'] == queryset.query.order_by
+
+def test_status_update_view_set_orders_by_date_and_id():
+    queryset_ordering = get_queryset_ordering_for_view_set(StatusUpdateViewSet)
+
+    assert ['date', 'id'] == queryset_ordering
