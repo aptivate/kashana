@@ -1,14 +1,16 @@
 from __future__ import absolute_import, unicode_literals
 
-from datetime import date
 from collections import namedtuple
+from datetime import date
 from unittest import TestCase
-import pytest
-from django_dynamic_fixture import G
 
-from ..models import AverageTargetPercentMixin, LogFrame, Result, Period
+from django_dynamic_fixture import G
 from mock import Mock
-from rest_framework.tests.test_renderers import expected_results
+import pytest
+
+from ..models import (
+    AverageTargetPercentMixin, LogFrame, Result, Period, RiskRating
+)
 
 
 class TestAverageTargetPercentMixin(TestCase):
@@ -304,3 +306,24 @@ def test_logframe_summary_status_when_warning():
     )
 
     assert LogFrame.WARNING == LogFrame.summary_status(log_frame)
+
+
+def test_logframe_representation_as_string_is_logframe_name():
+    log_frame = LogFrame()
+    log_frame.name = "Test Logframe"
+
+    assert log_frame.name == str(log_frame)
+
+
+def test_risk_rating_representation_as_string_is_risk_rating_name():
+    risk_rating = RiskRating()
+    risk_rating.name = "Test Risk Rating"
+
+    assert risk_rating.name == str(risk_rating)
+
+
+def test_result_representation_as_string_is_result_name():
+    result = Result()
+    result.name = "Test Result"
+
+    assert result.name == str(result)
