@@ -1,6 +1,8 @@
 from datetime import date, timedelta
+from inspect import isfunction
 
 from django.contrib.auth.models import Permission
+from django.db.models.query_utils import Q
 from django.test.client import RequestFactory
 
 from django_dynamic_fixture import G
@@ -11,7 +13,6 @@ from rest_framework.request import Request
 from contacts.models import User
 from contacts.group_permissions import GroupPermissions
 from ..api import CanEditOrReadOnly, IDFilterBackend, get_period_filter
-from inspect import isfunction
 
 
 @pytest.mark.django_db
@@ -64,3 +65,24 @@ def test_get_period_filter_returns_function():
     today = date.today()
     ret_val = get_period_filter(yesterday, today, 'start_date', 'end_date')
     assert isfunction(ret_val)
+
+
+def test_get_period_filter_function_filters_queryset():
+    start_date = date.today() - timedelta(days=1)
+    end_date = date.today()
+
+    rel_1 = Q(**{'start_date__gte': start_date}) & Q(**{'start_date__lte': end_date})
+    rel_2 = Q(**{'start_date__lte': start_date}) & Q(**{'end_date__gte': start_date})
+    rel_3 = Q(**{'start_date__lte': end_date}) & Q(**{'end_date': None})
+    rel_4 = Q(**{'end_date__gte': start_date}) & Q(**{'start_date': None})
+    rel_5 = Q(**{'start_date': None}) & Q(**{'end_date': None})
+
+    expected_query = rel_1 | rel_2 | rel_3 | rel_4 | rel_5
+
+    mock_queryset = mock.Mock(filter=mock.Mock())
+    filter_func = get_period_filter(start_date, end_date, 'start_date', 'end_date')
+    filter_func(mock_queryset)
+
+    actual_query = mock_queryset.filter.call_args[0][0]
+
+    assert unicode(expected_query) == unicode(actual_query)
