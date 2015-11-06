@@ -7,6 +7,8 @@ import pytest
 from django_dynamic_fixture import G
 
 from ..models import AverageTargetPercentMixin, LogFrame, Result, Period
+from mock import Mock
+from rest_framework.tests.test_renderers import expected_results
 
 
 class TestAverageTargetPercentMixin(TestCase):
@@ -194,3 +196,30 @@ def test_get_period_correctly_crosses_end_of_year():
     p = period.get_period("2014-11-01")
 
     assert p == (date(2014, 11, 1), date(2015, 1, 31))
+
+
+def test_logframe_average_target_percent_for_list_of_values():
+    log_frame = LogFrame()
+    output_set_list = []
+    log_frame.output_set = Mock(all=lambda: output_set_list)
+
+    for i in range(1, 10):
+        output_item = Mock(impact_weighting=i, target_percent=float(i) / 10)
+        output_set_list.append(output_item)
+
+    expected_result = 28.5 / 45
+
+    actual_result = log_frame.average_target_percent()
+
+    assert expected_result == actual_result
+
+
+def test_logframe_average_target_percent_for_no_values():
+    log_frame = LogFrame()
+    log_frame.output_set = Mock(all=lambda: [])
+
+    expected_result = 0
+
+    actual_result = log_frame.average_target_percent()
+
+    assert expected_result == actual_result
