@@ -265,3 +265,42 @@ def test_logframe_average_activities_percent_for_list_of_values():
     actual_result = log_frame.average_activities_percent()
 
     assert expected_result == actual_result
+
+
+def test_logframe_summary_status_when_ok():
+    # The status is OK when the average budget percent >= the average target
+    # percent
+    log_frame = Mock(
+        spec=LogFrame,
+        average_target_percent=lambda : 10,
+        average_budget_percent=lambda : 10,
+        _calculate_summary_status=LogFrame()._calculate_summary_status
+    )
+
+    assert LogFrame.OK == LogFrame.summary_status(log_frame)
+
+
+def test_logframe_summary_status_when_danger():
+    # The status is danger when the average budget percent is more than 10
+    # points below the average target percent
+    log_frame = Mock(
+        spec=LogFrame,
+        average_target_percent=lambda : 0,
+        average_budget_percent=lambda : 11,
+        _calculate_summary_status=LogFrame()._calculate_summary_status
+    )
+
+    assert LogFrame.DANGER == LogFrame.summary_status(log_frame)
+
+
+def test_logframe_summary_status_when_warning():
+    # The status is warning when the average budget percent up to 10 points
+    # below the average target percent
+    log_frame = Mock(
+        spec=LogFrame,
+        average_target_percent=lambda : 9,
+        average_budget_percent=lambda : 10,
+        _calculate_summary_status=LogFrame()._calculate_summary_status
+    )
+
+    assert LogFrame.WARNING == LogFrame.summary_status(log_frame)
