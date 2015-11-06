@@ -14,6 +14,7 @@ from contacts.models import User
 from contacts.group_permissions import GroupPermissions
 from ..api import (
     CanEditOrReadOnly,
+    FilterRelationship,
     IDFilterBackend,
     PeriodOverlapFilterBackend,
     get_period_filter
@@ -111,3 +112,14 @@ def test_period_overlap_filter_backend_filter_queryset_filters_queryset(get_peri
 
     get_period_filter_func.assert_called_with('20151105', '20151104', 'start_date', 'end_date')
     get_period_filter_func.return_value.assert_called_with(mock_queryset)
+
+
+def test_filter_relationship_backend_queryset_filters_on_relationship():
+    filter_relationship = FilterRelationship()
+    filter_relationship.lookup_rel = 'foreign_key_id'
+    filter_relationship.kwargs = {'logframe_pk': '1'}
+    filter_relationship.model = mock.Mock(objects=mock.Mock(filter=mock.Mock()))
+
+    filter_relationship.get_queryset()
+
+    filter_relationship.model.objects.filter.assert_called_with(**{'foreign_key_id': '1'})
