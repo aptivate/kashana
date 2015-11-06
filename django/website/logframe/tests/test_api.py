@@ -12,7 +12,12 @@ from rest_framework.request import Request
 
 from contacts.models import User
 from contacts.group_permissions import GroupPermissions
-from ..api import CanEditOrReadOnly, IDFilterBackend, get_period_filter
+from ..api import (
+    CanEditOrReadOnly,
+    IDFilterBackend,
+    PeriodOverlapFilterBackend,
+    get_period_filter
+)
 
 
 @pytest.mark.django_db
@@ -61,9 +66,9 @@ def test_id_filter_backend_filter_queryset_filters_on_ids():
 
 
 def test_get_period_filter_returns_function():
-    yesterday = date.today() - timedelta(days=1)
-    today = date.today()
-    ret_val = get_period_filter(yesterday, today, 'start_date', 'end_date')
+    start_date = date.today() - timedelta(days=1)
+    end_date = date.today()
+    ret_val = get_period_filter(start_date, end_date, 'start_date', 'end_date')
     assert isfunction(ret_val)
 
 
@@ -86,3 +91,23 @@ def test_get_period_filter_function_filters_queryset():
     actual_query = mock_queryset.filter.call_args[0][0]
 
     assert unicode(expected_query) == unicode(actual_query)
+
+
+@mock.patch('logframe.api.get_period_filter')
+def test_period_overlap_filter_backend_filter_queryset_filters_queryset(get_period_filter_func):
+    request = RequestFactory().get('/?start_date=20151105&end_date=20151104')
+    request = Request(request)
+
+    get_period_filter_func.return_value = mock.Mock()
+
+    mock_queryset = mock.Mock(filter=mock.Mock())
+
+    filter_backend = PeriodOverlapFilterBackend()
+    filter_backend.filter_queryset(
+        request,
+        mock_queryset,
+        mock.Mock(lookup_period_start='start_date', lookup_period_end='end_date')
+    )
+
+    get_period_filter_func.assert_called_with('20151105', '20151104', 'start_date', 'end_date')
+    get_period_filter_func.return_value.assert_called_with(mock_queryset)
