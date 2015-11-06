@@ -1,3 +1,5 @@
+from datetime import date, timedelta
+
 from django.contrib.auth.models import Permission
 from django.test.client import RequestFactory
 
@@ -8,7 +10,8 @@ from rest_framework.request import Request
 
 from contacts.models import User
 from contacts.group_permissions import GroupPermissions
-from ..api import CanEditOrReadOnly, IDFilterBackend
+from ..api import CanEditOrReadOnly, IDFilterBackend, get_period_filter
+from inspect import isfunction
 
 
 @pytest.mark.django_db
@@ -54,3 +57,10 @@ def test_id_filter_backend_filter_queryset_filters_on_ids():
     id_filter_backend.filter_queryset(request, mock_queryset, None)
 
     mock_queryset.filter.assert_called_with(id__in=[1, 2, 3])
+
+
+def test_get_period_filter_returns_function():
+    yesterday = date.today() - timedelta(days=1)
+    today = date.today()
+    ret_val = get_period_filter(yesterday, today, 'start_date', 'end_date')
+    assert isfunction(ret_val)
