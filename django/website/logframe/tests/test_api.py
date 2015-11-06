@@ -145,3 +145,15 @@ def test_status_update_view_set_orders_by_date_and_id():
     queryset_ordering = get_queryset_ordering_for_view_set(StatusUpdateViewSet)
 
     assert ['date', 'id'] == queryset_ordering
+
+
+def test_status_update_view_pre_save_sets_status_update_user_to_request_user():
+    request = mock.Mock(user=mock.Mock)
+    status_update = mock.Mock()
+
+    status_update_view_set = StatusUpdateViewSet()
+    status_update_view_set.request = request
+
+    status_update_view_set.pre_save(status_update)
+
+    assert request.user == status_update.user
