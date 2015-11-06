@@ -1,11 +1,14 @@
-import pytest
-import mock
+from django.contrib.auth.models import Permission
+from django.test.client import RequestFactory
 
 from django_dynamic_fixture import G
-from django.contrib.auth.models import Permission
+import mock
+import pytest
+from rest_framework.request import Request
+
 from contacts.models import User
 from contacts.group_permissions import GroupPermissions
-from ..api import CanEditOrReadOnly
+from ..api import CanEditOrReadOnly, IDFilterBackend
 
 
 @pytest.mark.django_db
@@ -41,3 +44,13 @@ def test_editor_can_change_data():
     request = mock.Mock(method="POST", user=u1)
     perm_obj = CanEditOrReadOnly()
     assert perm_obj.has_object_permission(request, None, None) is True
+
+
+def test_id_filter_backend_filter_queryset_filters_on_ids():
+    request = RequestFactory().get('/?id=1&id=2&id=3')
+    request = Request(request)
+    id_filter_backend = IDFilterBackend()
+    mock_queryset = mock.Mock(filter=mock.Mock())
+    id_filter_backend.filter_queryset(request, mock_queryset, None)
+
+    mock_queryset.filter.assert_called_with(id__in=[1, 2, 3])
