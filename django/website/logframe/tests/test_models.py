@@ -198,16 +198,32 @@ def test_get_period_correctly_crosses_end_of_year():
     assert p == (date(2014, 11, 1), date(2015, 1, 31))
 
 
-def test_logframe_average_target_percent_for_list_of_values():
-    log_frame = LogFrame()
+def assign_logframe_dataset(log_frame, percent_field_name):
     output_set_list = []
-    log_frame.output_set = Mock(all=lambda: output_set_list)
 
     for i in range(1, 10):
-        output_item = Mock(impact_weighting=i, target_percent=float(i) / 10)
+        mock_object_attributes = {
+            'impact_weighting': i,
+            percent_field_name: i / 10.0
+        }
+        output_item = Mock(**mock_object_attributes)
         output_set_list.append(output_item)
 
-    expected_result = 28.5 / 45
+    log_frame.output_set = Mock(all=lambda: output_set_list)
+
+
+# This is the sum of (1 * 1/10) to (9 * 9/10) divided by the sum of 1 to 9
+# It is based on the way that the logframe calculates average values
+EXPECTED_RESULT = 28.5 / 45
+
+
+def test_logframe_average_target_percent_for_list_of_values():
+    log_frame = LogFrame()
+
+    # The dataset contains a list of mock objects with an impact weighting of
+    # 1 to 9 and a value from 1/10 to 9/10 for a percentage.
+    assign_logframe_dataset(log_frame, 'target_percent')
+    expected_result = EXPECTED_RESULT
 
     actual_result = log_frame.average_target_percent()
 
@@ -221,5 +237,31 @@ def test_logframe_average_target_percent_for_no_values():
     expected_result = 0
 
     actual_result = log_frame.average_target_percent()
+
+    assert expected_result == actual_result
+
+
+def test_logframe_average_budget_percent_for_list_of_values():
+    log_frame = LogFrame()
+
+    # The dataset contains a list of mock objects with an impact weighting of
+    # 1 to 9 and a value from 1/10 to 9/10 for a percentage.
+    assign_logframe_dataset(log_frame, 'budget_percent')
+
+    expected_result = EXPECTED_RESULT
+    actual_result = log_frame.average_budget_percent()
+
+    assert expected_result == actual_result
+
+
+def test_logframe_average_activities_percent_for_list_of_values():
+    log_frame = LogFrame()
+
+    # The dataset contains a list of mock objects with an impact weighting of
+    # 1 to 9 and a value from 1/10 to 9/10 for a percentage.
+    assign_logframe_dataset(log_frame, 'activities_percent')
+
+    expected_result = EXPECTED_RESULT
+    actual_result = log_frame.average_activities_percent()
 
     assert expected_result == actual_result
