@@ -14,6 +14,7 @@ from contacts.models import User
 from contacts.group_permissions import GroupPermissions
 from ..api import (
     CanEditOrReadOnly,
+    ColumnViewSet,
     FilterRelationship,
     IDFilterBackend,
     PeriodOverlapFilterBackend,
@@ -123,3 +124,12 @@ def test_filter_relationship_backend_queryset_filters_on_relationship():
     filter_relationship.get_queryset()
 
     filter_relationship.model.objects.filter.assert_called_with(**{'foreign_key_id': '1'})
+
+
+def test_column_view_set_get_queryset_orders_by_date_and_id():
+    column_view_set = ColumnViewSet()
+    column_view_set.kwargs = {'logframe_pk': '1'}
+
+    queryset = column_view_set.get_queryset()
+
+    assert ['date', 'id'] == queryset.query.order_by
