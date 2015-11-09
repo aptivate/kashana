@@ -17,14 +17,15 @@ from ..models import (
     LogFrame,
     Measurement,
     Period,
+    Rating,
     Result,
     RiskRating,
     StatusCode,
+    StatusUpdate,
     SubIndicator,
     TALine,
     TAType
 )
-from logframe.models import StatusUpdate
 
 
 class TestAverageTargetPercentMixin(TestCase):
@@ -456,3 +457,8 @@ def test_status_update_string_representation_is_description_when_present():
 def test_status_update_string_representation_is_empty_string_when_no_name():
     status_update = StatusUpdate()
     assert "" == str(status_update)
+
+
+def test_rating_string_representation_is_name():
+    rating = Rating(name="Test Name")
+    assert rating.name == str(rating)
