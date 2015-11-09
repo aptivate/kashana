@@ -14,6 +14,7 @@ from ..models import (
     Column,
     Indicator,
     LogFrame,
+    Measurement,
     Period,
     Result,
     RiskRating,
@@ -431,3 +432,8 @@ def test_status_code_default_order_with_no_sibilings_is_one():
 def test_column_string_representation_is_date():
     column = Column(date=date.today())
     assert str(date.today()) == str(column)
+
+
+def test_measurement_string_representation_is_value():
+    measurement = Measurement(value="Test value")
+    assert "Test value" == str(measurement)
