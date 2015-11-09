@@ -11,13 +11,16 @@ import pytest
 from ..models import (
     Assumption,
     AverageTargetPercentMixin,
+    Column,
     Indicator,
     LogFrame,
+    Period,
     Result,
     RiskRating,
-    Period
+    StatusCode,
+    SubIndicator,
+    TAType
 )
-from logframe.models import SubIndicator, TAType, StatusCode
 
 
 class TestAverageTargetPercentMixin(TestCase):
@@ -423,3 +426,8 @@ def test_status_code_default_order_with_no_sibilings_is_one():
     status_code.save()
 
     assert status_code.order == 1
+
+
+def test_column_string_representation_is_date():
+    column = Column(date=date.today())
+    assert str(date.today()) == str(column)
