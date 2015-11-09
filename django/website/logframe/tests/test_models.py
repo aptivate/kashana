@@ -11,6 +11,7 @@ import pytest
 from ..models import (
     AverageTargetPercentMixin, LogFrame, Result, Period, RiskRating
 )
+from logframe.models import Assumption
 
 
 class TestAverageTargetPercentMixin(TestCase):
@@ -327,3 +328,10 @@ def test_result_representation_as_string_is_result_name():
     result.name = "Test Result"
 
     assert result.name == str(result)
+
+
+def test_assumption_representation_as_string_is_description():
+    assumption = Assumption()
+    assumption.description = "Test Description"
+
+    assert assumption.description == str(assumption)
