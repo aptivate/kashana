@@ -462,3 +462,9 @@ def test_status_update_string_representation_is_empty_string_when_no_name():
 def test_rating_string_representation_is_name():
     rating = Rating(name="Test Name")
     assert rating.name == str(rating)
+
+
+def test_rating_string_for_period_contains_logframe_name():
+    log_frame = LogFrame(name="Logframe Name")
+    period = Period(log_frame=log_frame)
+    assert "Periods for logframe {0}".format(period.log_frame.name) == str(period)
