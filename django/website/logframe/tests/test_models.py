@@ -9,6 +9,7 @@ from mock import Mock
 import pytest
 
 from ..models import (
+    Activity,
     Assumption,
     AverageTargetPercentMixin,
     BudgetLine,
@@ -358,13 +359,13 @@ def create_indicator():
 @pytest.mark.django_db
 def test_subindicator_default_order_is_maxiumum_of_sibling_subindicators_plus_one():
     indicator = create_indicator()
-    G(SubIndicator, indicator=indicator, ignore_fields=['rating'], n=4)
+    first_subindicator = G(SubIndicator, indicator=indicator, ignore_fields=['rating'], n=4)[0]
 
     subindicator = N(SubIndicator, indicator=indicator, ignore_fields=['rating'])
     subindicator.order = None
     subindicator.save()
 
-    assert 5 == subindicator.order
+    assert first_subindicator.order + 4 == subindicator.order
 
 
 @pytest.mark.django_db
@@ -381,13 +382,13 @@ def test_subindicator_default_order_with_no_sibilings_is_one():
 @pytest.mark.django_db
 def test_ta_type_default_order_is_maxiumum_of_sibling_ta_types_plus_one():
     log_frame, _ = LogFrame.objects.get_or_create()
-    G(TAType, log_frame=log_frame, n=4)
+    first_ta_type = G(TAType, log_frame=log_frame, n=4)[0]
 
     ta_type = N(TAType, log_frame=log_frame)
     ta_type.order = None
     ta_type.save()
 
-    assert 5 == ta_type.order
+    assert first_ta_type.order + 4 == ta_type.order
 
 
 @pytest.mark.django_db
@@ -404,13 +405,13 @@ def test_ta_type_default_order_with_no_sibilings_is_one():
 @pytest.mark.django_db
 def test_status_code_default_order_is_maxiumum_of_sibling_status_codes_plus_one():
     log_frame, _ = LogFrame.objects.get_or_create()
-    G(StatusCode, log_frame=log_frame, n=4)
+    first_status_code = G(StatusCode, log_frame=log_frame, n=4)[0]
 
     status_code = N(StatusCode, log_frame=log_frame)
     status_code.order = None
     status_code.save()
 
-    assert 5 == status_code.order
+    assert first_status_code.order + 4 == status_code.order
 
 
 @pytest.mark.django_db
@@ -422,6 +423,31 @@ def test_status_code_default_order_with_no_sibilings_is_one():
     status_code.save()
 
     assert status_code.order == 1
+
+
+@pytest.mark.django_db
+def test_activity_default_order_is_maxiumum_of_sibling_status_codes_plus_one():
+    log_frame, _ = LogFrame.objects.get_or_create()
+    result = G(Result, log_frame=log_frame, ignore_fields=['parent', 'rating', 'risk_rating'])
+    first_activity = G(Activity, log_frame=log_frame, result=result, n=4)[0]
+
+    activity = N(Activity, log_frame=log_frame, result=result)
+    activity.order = None
+    activity.save()
+
+    assert first_activity.order + 4 == activity.order
+
+
+@pytest.mark.django_db
+def test_activity_default_order_with_no_sibilings_is_one():
+    log_frame, _ = LogFrame.objects.get_or_create()
+    result = G(Result, log_frame=log_frame, ignore_fields=['parent', 'rating', 'risk_rating'])
+
+    activity = N(Activity, log_frame=log_frame, result=result)
+    activity.order = None
+    activity.save()
+
+    assert activity.order == 1
 
 
 def test_column_string_representation_is_date():
