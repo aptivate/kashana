@@ -3,7 +3,7 @@ import json
 
 from unittest import TestCase
 from django_dynamic_fixture import G
-from ..views import ResultEditor
+from ..views import ResultEditor, ResultMonitor
 from ..models import (
     LogFrame,
     Result,
@@ -58,3 +58,15 @@ class ResultEditorTests(TestCase):
         self.assertTrue('assumptions' in full_dict)
         results = full_dict['assumptions']
         self.assertEqual(3, len(results))
+
+
+class ResultMonitorTests(TestCase):
+    @pytest.mark.django_db
+    def test_result_monitor_get_logframe_returns_result_logframe(self):
+        log_frame, _ = LogFrame.objects.get_or_create(name='Test Logframe')
+
+        result = Result(log_frame=log_frame)
+        result_monitor_view = ResultMonitor()
+        result_monitor_view.object = result
+
+        assert log_frame == result_monitor_view.get_logframe()
