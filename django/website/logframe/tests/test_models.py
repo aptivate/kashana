@@ -11,6 +11,7 @@ import pytest
 from ..models import (
     Assumption,
     AverageTargetPercentMixin,
+    BudgetLine,
     Column,
     Indicator,
     LogFrame,
@@ -320,36 +321,27 @@ def test_logframe_summary_status_when_warning():
 
 
 def test_logframe_representation_as_string_is_logframe_name():
-    log_frame = LogFrame()
-    log_frame.name = "Test Logframe"
-
+    log_frame = LogFrame(name="Test Logframe")
     assert log_frame.name == str(log_frame)
 
 
 def test_risk_rating_representation_as_string_is_risk_rating_name():
-    risk_rating = RiskRating()
-    risk_rating.name = "Test Risk Rating"
-
+    risk_rating = RiskRating(name="Test Risk Rating")
     assert risk_rating.name == str(risk_rating)
 
 
 def test_result_representation_as_string_is_result_name():
-    result = Result()
-    result.name = "Test Result"
-
+    result = Result(name="Test Result")
     assert result.name == str(result)
 
 
 def test_assumption_representation_as_string_is_description():
-    assumption = Assumption()
-    assumption.description = "Test Description"
-
+    assumption = Assumption(description="Test Description")
     assert assumption.description == str(assumption)
 
 
 def test_indicator_representation_as_string_is_name():
-    indicator = Indicator()
-    indicator.name = "Test Indicator"
+    indicator = Indicator(name="Test Indicator")
 
     assert indicator.name == str(indicator)
 
@@ -431,9 +423,14 @@ def test_status_code_default_order_with_no_sibilings_is_one():
 
 def test_column_string_representation_is_date():
     column = Column(date=date.today())
-    assert str(date.today()) == str(column)
+    assert str(column.date) == str(column)
 
 
 def test_measurement_string_representation_is_value():
     measurement = Measurement(value="Test value")
-    assert "Test value" == str(measurement)
+    assert measurement.value == str(measurement)
+
+
+def test_budget_line_string_representation_is_name():
+    budget_line = BudgetLine(name="Test Name")
+    assert budget_line.name == str(budget_line)
