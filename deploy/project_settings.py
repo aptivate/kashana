@@ -28,6 +28,9 @@ repository = 'git@github.com:' + github_user + '/' + project_name + '.git'
 # put "plain" here for a basic apache app
 project_type = "django"
 
+# set the python version - uncomment once all instances off lin-one
+# python_version = (2, 7)
+
 # does this virtualenv for python packages
 use_virtualenv = True
 
