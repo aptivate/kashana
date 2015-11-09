@@ -21,6 +21,7 @@ from ..models import (
     RiskRating,
     StatusCode,
     SubIndicator,
+    TALine,
     TAType
 )
 
@@ -434,3 +435,13 @@ def test_measurement_string_representation_is_value():
 def test_budget_line_string_representation_is_name():
     budget_line = BudgetLine(name="Test Name")
     assert budget_line.name == str(budget_line)
+
+
+def test_ta_line_string_representation_is_name_when_present():
+    ta_line = TALine(name="Test Name")
+    assert ta_line.name == str(ta_line)
+
+
+def test_ta_line_string_representation_is_wmpty_string_when_no_name():
+    ta_line = TALine()
+    assert "" == str(ta_line)
