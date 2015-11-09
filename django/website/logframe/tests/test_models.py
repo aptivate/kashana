@@ -24,6 +24,7 @@ from ..models import (
     TALine,
     TAType
 )
+from logframe.models import StatusUpdate
 
 
 class TestAverageTargetPercentMixin(TestCase):
@@ -442,6 +443,16 @@ def test_ta_line_string_representation_is_name_when_present():
     assert ta_line.name == str(ta_line)
 
 
-def test_ta_line_string_representation_is_wmpty_string_when_no_name():
+def test_ta_line_string_representation_is_empty_string_when_no_name():
     ta_line = TALine()
     assert "" == str(ta_line)
+
+
+def test_status_update_string_representation_is_description_when_present():
+    status_update = StatusUpdate(description="Test Name")
+    assert status_update.description == str(status_update)
+
+
+def test_status_update_string_representation_is_empty_string_when_no_name():
+    status_update = StatusUpdate()
+    assert "" == str(status_update)
