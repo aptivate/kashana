@@ -18,3 +18,7 @@ class ValidatorTests(TestCase):
 
         self.assertIsNone(year_to_now(1900))
         self.assertIsNone(year_to_now(this_year - 1))
+
+    def test_calling_year_to_now_with_non_integer_throws_value_error(self):
+        self.assertRaises(ValidationError, year_to_now, 'a')
+        self.assertRaises(ValidationError, year_to_now, '1900.1')

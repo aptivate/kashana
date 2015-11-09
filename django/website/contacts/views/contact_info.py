@@ -92,13 +92,12 @@ class UpdateContactBase(LoginRequiredMixin, UpdateView):
     template_name = 'contacts/edit_contact.html'
 
     def get_success_url(self):
-        if 'save-and-student' in self.request.POST:
-            url = reverse('contact_edit_student', args=(self.object.id,))
-        elif 'save-and-email' in self.request.POST:
+        if 'save-and-email' in self.request.POST:
             url = reverse('contact_claim_account', args=(self.object.id,))
         else:
             url = reverse('contact_update', args=(self.object.id,))
         return url
+
 
 class UpdateContact(PermissionRequiredMixin, UpdateContactBase):
     form_class = UpdateContactForm

@@ -54,13 +54,6 @@
     {% endif  %}
 
     {% if object %}
-        {% if object.is_student %}
-    <p>
-        {% trans "Also edit" %}
-        <button data-form="#contact-form" type="submit" name="save-and-student" class="remote-submit pure-button pure-button-secondary">{% trans "Student information" %}</button>
-    </p>
-        {% endif %}
-
         {% if object.id == request.user.id %}
     <p><a href="{% url "password_change" %}">{% trans "Change password" %}</a></p>
         {% endif %}

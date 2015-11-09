@@ -2,8 +2,8 @@ import pytest
 import json
 
 from unittest import TestCase
-from django_dynamic_fixture import G
-from ..views import ResultEditor
+from django_dynamic_fixture import G, N
+from ..views import ResultEditor, ResultMonitor
 from ..models import (
     LogFrame,
     Result,
@@ -58,3 +58,45 @@ class ResultEditorTests(TestCase):
         self.assertTrue('assumptions' in full_dict)
         results = full_dict['assumptions']
         self.assertEqual(3, len(results))
+
+
+class ResultMonitorTests(TestCase):
+    @pytest.mark.django_db
+    def test_result_monitor_get_logframe_returns_result_logframe(self):
+        log_frame, _ = LogFrame.objects.get_or_create(name='Test Logframe')
+
+        result = Result(log_frame=log_frame)
+        result_monitor_view = ResultMonitor()
+        result_monitor_view.object = result
+
+        assert log_frame == result_monitor_view.get_logframe()
+
+    def test_result_monitor_get_data_contains_serialised_result(self):
+        log_frame = N(LogFrame, id=1)
+
+        result = N(Result, ignore_fields=['log_frame', 'parent', 'rating', 'risk_rating'])
+        result.log_frame = log_frame
+
+        result_monitor_view = ResultMonitor()
+        result_monitor_view.object = result
+
+        expected_data = {
+            'id': result.id,
+            'name': result.name,
+            'description': result.description,
+            'order': result.order,
+            'parent': None,
+            'level': result.level,
+            'contribution_weighting': result.contribution_weighting,
+            'risk_rating': None,
+            'rating': None,
+            'log_frame': log_frame.id,
+            'indicators': [],
+            'activities': [],
+            'assumptions': []
+        }
+
+        actual_data = result_monitor_view.get_data(log_frame, {})
+
+        assert expected_data == actual_data['result']
+
