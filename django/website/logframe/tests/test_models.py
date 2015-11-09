@@ -4,7 +4,7 @@ from collections import namedtuple
 from datetime import date
 from unittest import TestCase
 
-from django_dynamic_fixture import G
+from django_dynamic_fixture import G, N
 from mock import Mock
 import pytest
 
@@ -17,6 +17,7 @@ from ..models import (
     RiskRating,
     Period
 )
+from logframe.models import SubIndicator, TAType, StatusCode
 
 
 class TestAverageTargetPercentMixin(TestCase):
@@ -347,3 +348,78 @@ def test_indicator_representation_as_string_is_name():
     indicator.name = "Test Indicator"
 
     assert indicator.name == str(indicator)
+
+
+def create_indicator():
+    log_frame = LogFrame.objects.get_or_create()[0]
+    result = G(Result, log_frame=log_frame, ignore_fields=['parent', 'rating'])
+    return G(Indicator, result=result)
+
+
+@pytest.mark.django_db
+def test_subindicator_default_order_is_maxiumum_of_sibling_subindicators_plus_one():
+    indicator = create_indicator()
+    G(SubIndicator, indicator=indicator, ignore_fields=['rating'], n=4)
+
+    subindicator = N(SubIndicator, indicator=indicator, ignore_fields=['rating'])
+    subindicator.order = None
+    subindicator.save()
+
+    assert 5 == subindicator.order
+
+
+@pytest.mark.django_db
+def test_subindicator_default_order_with_no_sibilings_is_one():
+    indicator = create_indicator()
+
+    subindicator = N(SubIndicator, indicator=indicator, ignore_fields=['rating'])
+    subindicator.order = None
+    subindicator.save()
+
+    assert subindicator.order == 1
+
+
+@pytest.mark.django_db
+def test_ta_type_default_order_is_maxiumum_of_sibling_ta_types_plus_one():
+    log_frame, _ = LogFrame.objects.get_or_create()
+    G(TAType, log_frame=log_frame, n=4)
+
+    ta_type = N(TAType, log_frame=log_frame)
+    ta_type.order = None
+    ta_type.save()
+
+    assert 5 == ta_type.order
+
+
+@pytest.mark.django_db
+def test_ta_type_default_order_with_no_sibilings_is_one():
+    log_frame, _ = LogFrame.objects.get_or_create()
+
+    ta_type = N(TAType, log_frame=log_frame)
+    ta_type.order = None
+    ta_type.save()
+
+    assert ta_type.order == 1
+
+
+@pytest.mark.django_db
+def test_status_code_default_order_is_maxiumum_of_sibling_status_codes_plus_one():
+    log_frame, _ = LogFrame.objects.get_or_create()
+    G(StatusCode, log_frame=log_frame, n=4)
+
+    status_code = N(StatusCode, log_frame=log_frame)
+    status_code.order = None
+    status_code.save()
+
+    assert 5 == status_code.order
+
+
+@pytest.mark.django_db
+def test_status_code_default_order_with_no_sibilings_is_one():
+    log_frame, _ = LogFrame.objects.get_or_create()
+
+    status_code = N(StatusCode, log_frame=log_frame)
+    status_code.order = None
+    status_code.save()
+
+    assert status_code.order == 1
