@@ -9,9 +9,14 @@ from mock import Mock
 import pytest
 
 from ..models import (
-    AverageTargetPercentMixin, LogFrame, Result, Period, RiskRating
+    Assumption,
+    AverageTargetPercentMixin,
+    Indicator,
+    LogFrame,
+    Result,
+    RiskRating,
+    Period
 )
-from logframe.models import Assumption
 
 
 class TestAverageTargetPercentMixin(TestCase):
@@ -335,3 +340,10 @@ def test_assumption_representation_as_string_is_description():
     assumption.description = "Test Description"
 
     assert assumption.description == str(assumption)
+
+
+def test_indicator_representation_as_string_is_name():
+    indicator = Indicator()
+    indicator.name = "Test Indicator"
+
+    assert indicator.name == str(indicator)
