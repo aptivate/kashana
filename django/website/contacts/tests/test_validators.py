@@ -18,3 +18,8 @@ class ValidatorTests(TestCase):
 
         self.assertIsNone(year_to_now(1900))
         self.assertIsNone(year_to_now(this_year - 1))
+
+        self.assertIsNone(year_to_now(1900.1))
+        self.assertRaises(ValidationError, year_to_now, '1900.1')
+
+        self.assertRaises(ValidationError, year_to_now, 'a')

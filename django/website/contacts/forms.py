@@ -5,9 +5,10 @@ from django.contrib.auth.forms import (
     UserCreationForm, UserChangeForm, PasswordResetForm
 )
 from django.forms import (
-    ModelForm, HiddenInput, ValidationError, ImageField
+    ModelForm, ValidationError, ImageField
 )
 from django.utils.http import int_to_base36
+from django.utils.translation import ugettext as _
 
 import mail
 import floppyforms as forms
@@ -109,7 +110,7 @@ class UpdateContactForm(AddContactForm):
         }
         mail.notify(options)
 
-    def save(self, *args, **kwargs):
+    def send_notification_if_email_changed(self):
         if self.instance and self.instance.has_usable_password():
             old = self._meta.model.objects.get(pk=self.instance.pk)
             old_email = old.business_email
@@ -117,17 +118,17 @@ class UpdateContactForm(AddContactForm):
                 self.notify_email_change(
                     old_email,
                     self.cleaned_data['business_email'])
+
+    def save(self, *args, **kwargs):
+        self.send_notification_if_email_changed()
         return super(UpdateContactForm, self).save(*args, **kwargs)
 
 
 class DeleteContactForm(ModelForm):
-    def __init__(self, user, *args, **kwargs):
-        super(DeleteContactForm, self).__init__(*args, **kwargs)
-        self.fields['id'].widget = HiddenInput()
 
     class Meta:
         model = User
-        fields = ('id',)
+        fields = ()
 
 
 #######################################################################
@@ -166,6 +167,17 @@ class AdminUserChangeForm(UserChangeForm):
 # Password reset forms
 #######################################################################
 class ContactPasswordResetForm(PasswordResetForm):
+    email = forms.EmailField(
+        label=_("Email"),
+        max_length=254,
+        error_messages={
+            'unknown': _(
+                "We couldn't find a user for that email address. Please "
+                "check that you typed the address correctly."
+            )
+        }
+    )
+
     def clean_email(self):
         """
         Validates that an active user exists with the given email address.
@@ -175,10 +187,10 @@ class ContactPasswordResetForm(PasswordResetForm):
         self.users_cache = UserModel._default_manager.filter(
             business_email__iexact=email)
         if not len(self.users_cache):
-            raise ValidationError(self.error_messages['unknown'])
+            raise ValidationError(self.fields['email'].error_messages['unknown'])
         if not any(user.is_active for user in self.users_cache):
             # none of the filtered users are active
-            raise ValidationError(self.error_messages['unknown'])
+            raise ValidationError(self.fields['email'].error_messages['unknown'])
         return email
 
     def save(self, subject,
