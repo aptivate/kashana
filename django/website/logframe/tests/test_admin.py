@@ -4,7 +4,7 @@ from ..admin import RatingAdmin, SubIndicatorAdmin
 from ..models import colors, Rating, SubIndicator
 
 
-def test_sub_indicator_admin_rsult_returns_indicator_result():
+def test_sub_indicator_admin_result_returns_indicator_result():
     sub_indicator = Mock(indicator=Mock(result='result'))
 
     admin = SubIndicatorAdmin(SubIndicator, None)
