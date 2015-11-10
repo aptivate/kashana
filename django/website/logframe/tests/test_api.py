@@ -79,11 +79,11 @@ def test_get_period_filter_function_filters_queryset():
     start_date = date.today() - timedelta(days=1)
     end_date = date.today()
 
-    rel_1 = Q(**{'start_date__gte': start_date}) & Q(**{'start_date__lte': end_date})
-    rel_2 = Q(**{'start_date__lte': start_date}) & Q(**{'end_date__gte': start_date})
-    rel_3 = Q(**{'start_date__lte': end_date}) & Q(**{'end_date': None})
-    rel_4 = Q(**{'end_date__gte': start_date}) & Q(**{'start_date': None})
-    rel_5 = Q(**{'start_date': None}) & Q(**{'end_date': None})
+    rel_1 = Q(start_date__gte=start_date) & Q(start_date__lte=end_date)
+    rel_2 = Q(start_date__lte=start_date) & Q(end_date__gte=start_date)
+    rel_3 = Q(start_date__lte=end_date) & Q(end_date=None)
+    rel_4 = Q(end_date__gte=start_date) & Q(start_date=None)
+    rel_5 = Q(start_date=None) & Q(end_date=None)
 
     expected_query = rel_1 | rel_2 | rel_3 | rel_4 | rel_5
 
