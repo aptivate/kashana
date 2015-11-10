@@ -3,6 +3,20 @@ from datetime import date, timedelta
 from ..period_utils import get_month_shift, get_periods, periods_intersect
 
 
+def test_get_month_shift_returns_next_period_start_date_within_same_year():
+    new_month, add_year = get_month_shift(1, 12, 0)
+
+    assert 1 == new_month
+    assert 0 == add_year
+
+
+def test_get_month_shift_returns_next_period_start_date_within_different_years():
+    new_month, add_year = get_month_shift(11, 2, 1)
+
+    assert 5 == new_month
+    assert 1 == add_year
+
+
 def test_get_month_shift_handles_december():
     new_month, _ = get_month_shift(12, 1)
     assert 12 == new_month
