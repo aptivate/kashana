@@ -59,7 +59,8 @@ def test_saving_a_contact_sends_email_change_if_password_check_contents():
     assert old_email in email.body
 
 
-def test_update_contact_form_only_sends_email_change_notifications_when_email_changed():
+@mock.patch('contacts.tests.test_email.UpdateContactForm.Meta.model.objects.get')
+def test_update_contact_form_only_sends_email_change_notifications_when_email_changed(get_method):
     form = UpdateContactForm()
     form.notify_email_change = Mock()
     form.instance = Mock(
@@ -68,12 +69,9 @@ def test_update_contact_form_only_sends_email_change_notifications_when_email_ch
     )
     form.cleaned_data = {'business_email': 'test@example.com'}
 
-    old_get_method = form._meta.model.objects.get
-    form._meta.model.objects.get = lambda pk: Mock(business_email='test@example.com')
+    get_method.return_value = Mock(business_email='test@example.com')
 
     form.send_notification_if_email_changed()
-
-    form._meta.model.objects.get = old_get_method
 
     assert not form.notify_email_change.called
 
