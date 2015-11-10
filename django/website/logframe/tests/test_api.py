@@ -124,7 +124,7 @@ def test_filter_relationship_backend_queryset_filters_on_relationship():
 
     filter_relationship.get_queryset()
 
-    filter_relationship.model.objects.filter.assert_called_with(**{'foreign_key_id': '1'})
+    filter_relationship.model.objects.filter.assert_called_with(foreign_key_id='1')
 
 
 def get_queryset_ordering_for_view_set(viewset_klass):
