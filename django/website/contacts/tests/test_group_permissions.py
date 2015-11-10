@@ -91,7 +91,7 @@ def test_deleting_all_group_permissions():
 
 
 @pytest.mark.django_db
-def test_retrieving_permissions():
+def test_group_permissions_get_perm_retrieves_permission_with_given_name():
     any_model = User
 
     group_permission_codenames = [permission_attribute[0] for permission_attribute in GroupPermissions.custom_permissions]
