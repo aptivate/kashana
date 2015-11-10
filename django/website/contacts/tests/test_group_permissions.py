@@ -129,6 +129,9 @@ def test_has_permission_returns_false_when_user_doesnt_have_permission():
 
 @pytest.mark.django_db
 def test_perm_name_returns_permission_name():
+    # This returns the permission name in the format that would be used when
+    # checking if a user has it - app_label.codename. This format is coded into
+    # the GroupPermissions.perm_name method.
     codenames = [permission_attribute[0] for permission_attribute in GroupPermissions.custom_permissions]
     permission = create_expected_permissions(User, codenames)[0]
 
