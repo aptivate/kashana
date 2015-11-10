@@ -21,6 +21,15 @@ def create_expected_permissions(model, codenames):
     return expected_permissions
 
 
+def create_custom_group_permissions():
+    codenames = [permission_attribute[0] for permission_attribute in GroupPermissions.custom_permissions]
+    return create_expected_permissions(User, codenames)
+
+
+def get_first_custom_group_permission():
+    return create_custom_group_permissions()[0]
+
+
 def create_groups_with_permissions(codenames):
     g1, _ = Group.objects.get_or_create(name="Test Group 1")
     g2, _ = Group.objects.get_or_create(name="Test Group 2")
@@ -92,11 +101,7 @@ def test_deleting_all_group_permissions():
 
 @pytest.mark.django_db
 def test_group_permissions_get_perm_retrieves_permission_with_given_name():
-    any_model = User
-
-    group_permission_codenames = [permission_attribute[0] for permission_attribute in GroupPermissions.custom_permissions]
-
-    expected_permission = create_expected_permissions(any_model, group_permission_codenames)[0]
+    expected_permission = get_first_custom_group_permission()
     permission_name = GroupPermissions.custom_permissions[0][0]
 
     permission = GroupPermissions.get_perm(permission_name)
@@ -110,21 +115,19 @@ def test_has_permission_returns_true_when_user_has_permission():
     users_group = Group.objects.create(name='test_group')
     user.groups.add(users_group)
 
-    codenames = [permission_attribute[0] for permission_attribute in GroupPermissions.custom_permissions]
-    permission = create_expected_permissions(User, codenames)[0]
+    permission = get_first_custom_group_permission()
     users_group.permissions.add(permission)
 
-    assert GroupPermissions.has_perm(user, codenames[0])
+    assert GroupPermissions.has_perm(user, permission.codename)
 
 
 @pytest.mark.django_db
 def test_has_permission_returns_false_when_user_doesnt_have_permission():
     user = User.objects.create(business_email="test@example.com")
 
-    codenames = [permission_attribute[0] for permission_attribute in GroupPermissions.custom_permissions]
-    create_expected_permissions(User, codenames)[0]
+    permission = get_first_custom_group_permission()
 
-    assert not GroupPermissions.has_perm(user, codenames[0])
+    assert not GroupPermissions.has_perm(user, permission.codename)
 
 
 @pytest.mark.django_db
@@ -132,7 +135,6 @@ def test_perm_name_returns_permission_name():
     # This returns the permission name in the format that would be used when
     # checking if a user has it - app_label.codename. This format is coded into
     # the GroupPermissions.perm_name method.
-    codenames = [permission_attribute[0] for permission_attribute in GroupPermissions.custom_permissions]
-    permission = create_expected_permissions(User, codenames)[0]
+    permission = get_first_custom_group_permission()
 
     assert 'contacts.{0}'.format(permission.codename) == GroupPermissions.perm_name(permission)
