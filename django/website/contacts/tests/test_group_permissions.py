@@ -46,14 +46,10 @@ def test_add_perms():
 
 @pytest.mark.django_db
 def test_add_nonexistent_perms():
-    g1, _ = Group.objects.get_or_create(name="Test Group 1")
-    g2, _ = Group.objects.get_or_create(name="Test Group 2")
-    any_model = Group  # for example
     codenames = ['a_do_stuff', 'b_do_more_stuff']
 
-    gp = GroupPermissions()
-    with gp.groups(g1, g2), pytest.raises(ObjectDoesNotExist):
-        gp.add_permissions(any_model, *codenames)
+    with pytest.raises(ObjectDoesNotExist):
+        create_groups_with_permissions(codenames)
 
 
 def test_logging_happens_when_verbose_is_true(capsys):
