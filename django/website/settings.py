@@ -165,6 +165,7 @@ INSTALLED_APPS = (
 
 AUTH_USER_MODEL = 'contacts.User'
 EMAIL_BOT_ADDRESS = 'blackhole@aptivate.org'
+CONTACT_ADDRESS = 'kashana@aptivate.org'
 SITE_HOSTNAME = 'localhost:8000'
 SITE_NAME = 'Kashana'
 
