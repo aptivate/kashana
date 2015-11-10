@@ -8,7 +8,6 @@ from ..forms import (
     AdminUserChangeForm,
     ContactPasswordResetForm,
     UpdatePersonalInfoForm,
-    UpdateContactForm
 )
 from .context_managers import doesnt_raise
 
@@ -37,25 +36,6 @@ def test_contact_password_reset_form_can_handle_invalid_user():
     form = ContactPasswordResetForm(data={'email': 'test@example.org'})
     with doesnt_raise(AttributeError, "An attribute error shouldn't be raised here"):
         form.is_valid()
-
-
-def test_update_contact_form_only_sends_email_change_notifications_when_email_changed():
-    form = UpdateContactForm()
-    form.notify_email_change = Mock()
-    form.instance = Mock(
-            has_usable_password=lambda: True,
-            business_email='test1@example.org'
-    )
-    form.cleaned_data = {'business_email': 'test@example.com'}
-
-    old_get_method = form._meta.model.objects.get
-    form._meta.model.objects.get = lambda pk: Mock(business_email='test@example.com')
-
-    form.send_notification_if_email_changed()
-
-    form._meta.model.objects.get = old_get_method
-
-    assert not form.notify_email_change.called
 
 
 def test_username_not_in_admin_user_creation_form():

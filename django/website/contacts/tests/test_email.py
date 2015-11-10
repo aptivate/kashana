@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 import pytest
 import mock
+from mock import Mock
 
 from django.conf import settings
 from django.core import mail
@@ -56,6 +57,25 @@ def test_saving_a_contact_sends_email_change_if_password_check_contents():
     assert email.to == [old_email, new_email]
     assert new_email in email.body
     assert old_email in email.body
+
+
+def test_update_contact_form_only_sends_email_change_notifications_when_email_changed():
+    form = UpdateContactForm()
+    form.notify_email_change = Mock()
+    form.instance = Mock(
+            has_usable_password=lambda: True,
+            business_email='test1@example.org'
+    )
+    form.cleaned_data = {'business_email': 'test@example.com'}
+
+    old_get_method = form._meta.model.objects.get
+    form._meta.model.objects.get = lambda pk: Mock(business_email='test@example.com')
+
+    form.send_notification_if_email_changed()
+
+    form._meta.model.objects.get = old_get_method
+
+    assert not form.notify_email_change.called
 
 
 @pytest.mark.integration
