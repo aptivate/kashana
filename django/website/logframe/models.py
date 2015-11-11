@@ -413,7 +413,7 @@ PERIODS = (
 
 @python_2_unicode_compatible
 class Period(models.Model):
-    log_frame = models.ForeignKey(LogFrame, unique=True)
+    log_frame = models.OneToOneField(LogFrame)
     start_month = models.PositiveSmallIntegerField(default=1, choices=MONTH_CHOICES)
     num_periods = models.PositiveSmallIntegerField(default=4, choices=PERIODS)
 

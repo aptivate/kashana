@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.messages.middleware import MessageMiddleware
@@ -28,7 +30,7 @@ def test_reset_password_subject_contains_site_name():
 @pytest.mark.django_db
 @patch('contacts.views.activation.messages', new=Mock())
 def test_reset_password_view_sends_email_when_form_valid():
-    user = User.objects.create(business_email='test@example.com')
+    user = User.objects.create(business_email='test@example.com', last_login=datetime.now())
     form = ContactPasswordResetForm(data={'email': 'test@example.com'})
     form.users_cache = [user]
 
@@ -46,7 +48,7 @@ def test_reset_password_view_sends_email_when_form_valid():
 @pytest.mark.django_db
 @patch('contacts.views.activation.messages', new=Mock())
 def test_reset_password_view_doesnt_send_email_when_form_invalid():
-    user = User.objects.create(business_email='test@example.com')
+    user = User.objects.create(business_email='test@example.com', last_login=datetime.now())
     form = ContactPasswordResetForm()
     form.users_cache = [user]
 
@@ -63,7 +65,7 @@ def test_reset_password_view_doesnt_send_email_when_form_invalid():
 
 @pytest.mark.django_db
 def test_reset_password_view_displays_message_when_form_valid():
-    user = User.objects.create(business_email='test@example.com')
+    user = User.objects.create(business_email='test@example.com', last_login=datetime.now())
     form = ContactPasswordResetForm(data={'email': 'test@example.com'})
     form.users_cache = [user]
 
@@ -82,7 +84,7 @@ def test_reset_password_view_displays_message_when_form_valid():
 @pytest.mark.django_db
 @patch('contacts.views.activation.messages', new=Mock())
 def test_reset_password_view_redirects_on_success():
-    user = User.objects.create(business_email='test@example.com')
+    user = User.objects.create(business_email='test@example.com', last_login=datetime.now())
     form = ContactPasswordResetForm(data={'email': 'test@example.com'})
     form.users_cache = [user]
 
@@ -113,7 +115,7 @@ def test_reset_password_view_displays_error_message_when_form_invalid():
 
 @pytest.mark.django_db
 def test_password_change_view_redirects_to_personal_edit_on_success():
-    user = User.objects.create(business_email='test@example.com')
+    user = User.objects.create(business_email='test@example.com', last_login=datetime.now())
     user.set_password('password')
     user.save()
 
@@ -124,6 +126,9 @@ def test_password_change_view_redirects_to_personal_edit_on_success():
             'new_password1': 'new_pass',
             'new_password2': 'new_pass',
     })
+    SessionMiddleware().process_request(request)
+    request.session.save()
+
     request.user = user
     request.csrf_processing_done = True
 
@@ -135,7 +140,7 @@ def test_password_change_view_redirects_to_personal_edit_on_success():
 
 @pytest.mark.django_db
 def test_email_acitvation_view_shows_error_on_invalid_form():
-    user = User.objects.create(business_email='test@example.com')
+    user = User.objects.create(business_email='test@example.com', last_login=datetime.now())
     user.is_active = False
     user.save()
 

@@ -30,7 +30,6 @@ class ResetPassword(FormView):
             'subject': self.get_subject(),
             'request': self.request,
         }
-
         form.save(**opts)
         messages.success(
             self.request, ('Reset password email was sent to this '
@@ -52,6 +51,7 @@ def change_password(request):
 class ActivationEmailsView(RedirectView):
     from_address = settings.EMAIL_BOT_ADDRESS
     email_template = 'contacts/email/activation_body.email'
+    permanent = False
 
     def get_subject(self):
         raise NotImplementedError
