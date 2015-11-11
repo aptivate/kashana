@@ -1,4 +1,5 @@
 import os.path
+
 from django.db.models import (
     CharField, TextField, EmailField,
     FileField, DateTimeField, BooleanField,
@@ -8,25 +9,33 @@ from django.contrib.auth.models import (
     AbstractBaseUser, BaseUserManager, PermissionsMixin
 )
 from django.utils import timezone
-from main.upload_handler import create_upload_to_handler
+from django.utils.deconstruct import deconstructible
+
+from main.upload_handler import UploadToHandler
 from .countries import COUNTRIES, NATIONALITIES
 
 
 GENDER_CHOICES = (('female', 'Female'),
                   ('male', 'Male'))
 
+
 def get_user_fields(instance):
     return (instance.business_email, instance.last_name, instance.first_name)
 
 
-def create_picture_upload_handler(path_base):
-    def get_picture_path(instance, filename):
+@deconstructible
+class PictureUploadHandler(object):
+    path_base = ''
+
+    def __init__(self, path_base):
+        self.path_base = path_base
+
+    def __call__(self, instance, filename):
         name = "_".join([instance.last_name, instance.first_name]).strip('_')
         prefix = name if name else instance.business_email
         new_filename = "{0}_{1}".format(prefix, filename)
-        new_path = os.path.join(path_base, new_filename)
+        new_path = os.path.join(self.path_base, new_filename)
         return new_path
-    return get_picture_path
 
 
 # Managers
@@ -114,9 +123,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     notes = TextField(blank=True)
     picture = ImageField(null=True,
                          blank=True,
-                         upload_to=create_picture_upload_handler('pictures'))
+                         upload_to=PictureUploadHandler('pictures'))
     cv = FileField(
-        upload_to=create_upload_to_handler('pi_cvs', get_user_fields),
+        upload_to=UploadToHandler('pi_cvs', get_user_fields),
         blank=True,
         null=True)
 

@@ -1,7 +1,6 @@
 import private_settings
 
 DEBUG = True
-TEMPLATE_DEBUG = DEBUG
 
 DATABASES = {
     'default': {
@@ -14,7 +13,9 @@ DATABASES = {
         'OPTIONS': {
             "init_command": "SET storage_engine=INNODB",
         },
-        'TEST_CHARSET': "utf8",
+        'TEST': {
+            'CHARSET': "utf8",
+        }
     }
 }
 

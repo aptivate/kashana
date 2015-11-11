@@ -1,5 +1,4 @@
 from django.conf.urls import (
-    patterns,
     include,
     url
 )
@@ -8,6 +7,6 @@ from logframe.api import (
 )
 
 # URLs
-urlpatterns = patterns('',
+urlpatterns = [
     url(r'^', include(router.urls)),
-)
+]

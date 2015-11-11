@@ -79,6 +79,7 @@ class RatingForm(forms.ModelForm):
     color = forms.ChoiceField(widget=ColorSelect, choices=colors)
 
     class Meta:
+        fields = ('log_frame', 'name', 'color')
         model = Rating
 
     class Media:

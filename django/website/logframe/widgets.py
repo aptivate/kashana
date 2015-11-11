@@ -5,7 +5,7 @@ from django.utils.html import format_html
 class ColorChoiceInput(widgets.RadioChoiceInput):
     def render(self, name=None, value=None, attrs=None, choices=()):
         if 'id' in self.attrs:
-            label_for = format_html(' for="{0}_{1}"', self.attrs['id'], self.index)
+            label_for = format_html(' for="{0}"', self.attrs['id'])
         else:
             label_for = ''
         label_cls = format_html(' class="color-tag {0}"', self.choice_value)

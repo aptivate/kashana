@@ -1,9 +1,13 @@
 # coding=utf-8
 from __future__ import unicode_literals
+from datetime import datetime
+
 import factory
+
 from django.contrib.auth.models import Group
-from contacts.models import User
-from contacts.group_permissions import GroupPermissions
+
+from ..group_permissions import GroupPermissions
+from ..models import User
 
 
 class UserFactory(factory.django.DjangoModelFactory):
@@ -19,6 +23,8 @@ class UserFactory(factory.django.DjangoModelFactory):
     gender = 'female'
     contact_type = 'ｃòлｔáｃｔ ｔｙｐé'
     title = 'ｔïｔｌë'
+
+    last_login = datetime.now()
 
 
 def ContactsManagerFactory():
