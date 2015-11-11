@@ -85,6 +85,3 @@ def periods_intersect(s, e, x, y):
         return y >= s
     else:
         return (x >= s and x <= e) or (x <= s and y >= s)
-
-    return (x >= s and x <= e) or (x <= s and y >= s) or \
-           (x <= e and not y) or (y >= s and not x) or (not x and not y)

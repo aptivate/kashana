@@ -265,9 +265,6 @@ class StatusUpdateSerializer(serializers.ModelSerializer):
 
     user = serializers.Field(source='user.id')
 
-    def validate_user(self, attrs, source):
-        return attrs
-
     class Meta:
         model = StatusUpdate
 

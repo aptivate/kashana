@@ -83,9 +83,10 @@ class SendActivationEmailView(ActivationEmailsView):
             messages.success(request,
                              'Activation email was sent to this contact.')
         else:
-            messages.error(request,
-                           'Email could not be sent. \
-                                   Check if business email is correct.')
+            messages.error(request, (
+                               'Email could not be sent. '
+                               'Check if business email is correct.'
+                            ))
 
     def send_emails(self, request, **kwargs):
         self.pk = int(kwargs['pk'])
