@@ -21,13 +21,12 @@ from settings import INSTALLED_APPS
 # add the jenkins app here
 INSTALLED_APPS = (
       'django_jenkins',
-    )  + INSTALLED_APPS
+    ) + INSTALLED_APPS
 
 DEBUG = True
 
 JENKINS_TASKS = (
     'django_jenkins.tasks.run_pylint',
-    'django_jenkins.tasks.with_coverage',
 )
 
 JENKINS_TEST_RUNNER = 'jenkins_test_runner.JenkinsPytestRunner'
