@@ -10,7 +10,7 @@ DATABASES = {
         'PORT': '',  # Set to empty string for default. Not used with sqlite3.
         'TEST': {
             'COLLATION': 'utf8_general_ci',
-        }
+        },
         'OPTIONS': {
                "init_command": "SET storage_engine=INNODB",
         }
