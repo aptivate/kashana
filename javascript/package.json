@@ -39,8 +39,6 @@
     "grunt-blanket-qunit": "~0.2.0",
     "grunt-reporter": "~0.1.0",
     "grunt-lib-phantomjs-istanbul": "~0.6.0",
-    "jscover": "~0.2.4",
-    "grunt-jscover": "0.0.1",
     "grunt-gulp": "~0.1.0"
   }
 }

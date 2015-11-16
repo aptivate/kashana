@@ -7,9 +7,23 @@ var gulp = require('gulp'),
 module.exports = function(grunt) {
 	grunt.initConfig({
 	    pkg: grunt.file.readJSON('package.json'),
+	    gulp: {
+	    	templates: function (){
+	    		return gulp.src(['src/templates/*.handlebars'])
+	    		.pipe(handlebars())
+	    		.pipe(defineModule('plain'))
+	    		.pipe(declare({
+	    			namespace: 'Aptivate.data.templates'
+	    		}))
+	    		.pipe(concat('src/lib/templates.js'))
+	    		.pipe(gulp.dest('.'));
+	    	}
+	    },
 	    jshint: {
-	    	'logframe': ['src/**/*.js'],
-	    	'ignores': ['src/**/lib/**/lib/**/*.js']
+	    	'logframe': ['src/**/*.js', '!src/lib/*'],
+	    	'options': {
+	    		'jshintrc': '.jshintrc',
+	    	}
 	    },
 	    qunit: {
 	      src: ['./tests/test_runner.html'],
@@ -28,21 +42,35 @@ module.exports = function(grunt) {
 		    	dest: '../reports/'
 		    }
 	    },
+	    requirejs: {
+	    	compile: {
+		    	options: {
+		    		baseUrl: './src/',
+		    		findNestedDependencies: true,
+		    		mainConfigFile: './src/require.config.js',
+		    		name: 'main',
+		    		out: 'dist/logframe.min.js'
+		    	}
+	    	},
+		    copy: {
+		    	options: {
+		    		baseUrl: './src/',
+		    		findNestedDependencies: true,
+		    		mainConfigFile: './src/require.config.js',
+		    		name: 'main',
+		    		out: 'dist/logframe.js',
+		    		optimize: 'none'
+		    	}
+		    }
+	    },
+	    uglify: {
+	    	logframe: {
+	    		'dist/logframe.min.js': ['src/**/*.js']
+	    	}
+	    },
 	    watch: {
 	      files: ['src/**/*.js'],
 	      tasks: ['jshint', 'qunit']
-	    },
-	    gulp: {
-	    	templates: function (){
-	    		return gulp.src(['src/templates/*.handlebars'])
-	            .pipe(handlebars())
-	            .pipe(defineModule('plain'))
-	            .pipe(declare({
-	              namespace: 'Aptivate.data.templates'
-	            }))
-	            .pipe(concat('src/lib/templates.js'))
-	            .pipe(gulp.dest('.'));
-	    	}
 	    }
 	  });
 
@@ -53,11 +81,12 @@ module.exports = function(grunt) {
 	  grunt.loadNpmTasks('grunt-qunit-istanbul');
 	  grunt.loadNpmTasks('grunt-contrib-watch');
 	  grunt.loadNpmTasks('grunt-contrib-concat');
+	  grunt.loadNpmTasks('grunt-requirejs');
 	  grunt.loadNpmTasks('grunt-qunit-junit');
 	  grunt.loadNpmTasks('grunt-gulp');
 
 	  grunt.registerTask('test', ['qunit', 'qunit_junit']);
 
-	  grunt.registerTask('default', ['jshint', 'qunit', 'concat', 'uglify']);
+	  grunt.registerTask('default', ['gulp:templates', 'jshint', 'uglify']);
 
 };
