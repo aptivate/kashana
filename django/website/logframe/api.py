@@ -3,6 +3,7 @@ from django.db.models import Q
 import django_filters
 
 from rest_framework import viewsets, serializers, filters, permissions
+from rest_framework.serializers import ModelSerializer
 from rest_framework_nested import routers
 
 from .models import (
@@ -10,6 +11,15 @@ from .models import (
     Milestone, Rating, Result, RiskRating, StatusCode, StatusUpdate,
     SubIndicator, TALine, TAType, Target
 )
+
+
+def create_serializer(model_class):
+        assert model_class is not None
+
+        class DefaultSerializer(ModelSerializer):
+            class Meta:
+                model = model_class
+        return DefaultSerializer
 
 
 #
@@ -172,12 +182,14 @@ class IndicatorViewSet(FilterRelationship, viewsets.ModelViewSet):
 class SubIndicatorViewSet(viewsets.ModelViewSet):
     queryset = SubIndicator.objects.all()
     lookup_rel = 'indicator__result__log_frame_id'
+    serializer_class = create_serializer(queryset.model)
 
 
 # Milestones
 class MilestoneViewSet(FilterRelationship, viewsets.ModelViewSet):
     queryset = Milestone.objects.all()
     lookup_rel = 'log_frame_id'
+    serializer_class = create_serializer(queryset.model)
 
 
 # Targets
@@ -191,6 +203,7 @@ class TargetFilter(django_filters.FilterSet):
 
 class TargetViewSet(FilterRelationship, viewsets.ModelViewSet):
     queryset = Target.objects.all()
+    serializer_class = create_serializer(queryset.model)
     lookup_rel = 'milestone__log_frame_id'
     filter_backends = (filters.DjangoFilterBackend, IDFilterBackend)
     filter_class = TargetFilter
@@ -198,11 +211,13 @@ class TargetViewSet(FilterRelationship, viewsets.ModelViewSet):
 
 class ActualViewSet(FilterRelationship, viewsets.ModelViewSet):
     queryset = Actual.objects.all()
+    serializer_class = create_serializer(queryset.model)
     lookup_rel = 'indicator__result__log_frame_id'
 
 
 class ColumnViewSet(FilterRelationship, viewsets.ModelViewSet):
     queryset = Column.objects.all()
+    serializer_class = create_serializer(queryset.model)
     lookup_rel = 'indicator__result__log_frame_id'
 
     def get_queryset(self):
@@ -213,18 +228,21 @@ class ColumnViewSet(FilterRelationship, viewsets.ModelViewSet):
 # RiskRatings
 class RiskRatingViewSet(FilterRelationship, viewsets.ModelViewSet):
     queryset = RiskRating.objects.all()
+    serializer_class = create_serializer(queryset.model)
     lookup_rel = 'result__log_frame_id'
 
 
 # Assumptions
 class AssumptionViewSet(FilterRelationship, viewsets.ModelViewSet):
     queryset = Assumption.objects.all()
+    serializer_class = create_serializer(queryset.model)
     lookup_rel = 'result__log_frame_id'
 
 
 # Activities
 class ActivityViewSet(FilterRelationship, viewsets.ModelViewSet):
     queryset = Activity.objects.all()
+    serializer_class = create_serializer(queryset.model)
     lookup_rel = 'log_frame_id'
     lookup_period_start = 'start_date'
     lookup_period_end = 'end_date'
@@ -234,6 +252,7 @@ class ActivityViewSet(FilterRelationship, viewsets.ModelViewSet):
 # Budgetlines
 class BudgetLineViewSet(FilterRelationship, viewsets.ModelViewSet):
     queryset = BudgetLine.objects.all()
+    serializer_class = create_serializer(queryset.model)
     lookup_rel = 'activity__log_frame_id'
     lookup_period_start = 'activity__start_date'
     lookup_period_end = 'activity__end_date'
@@ -243,6 +262,7 @@ class BudgetLineViewSet(FilterRelationship, viewsets.ModelViewSet):
 # TAs
 class TALinesViewSet(FilterRelationship, viewsets.ModelViewSet):
     queryset = TALine.objects.all()
+    serializer_class = create_serializer(queryset.model)
     lookup_rel = 'activity__log_frame_id'
     lookup_period_start = 'activity__start_date'
     lookup_period_end = 'activity__end_date'
@@ -251,12 +271,14 @@ class TALinesViewSet(FilterRelationship, viewsets.ModelViewSet):
 
 class TATypeViewSet(FilterRelationship, viewsets.ModelViewSet):
     queryset = TAType.objects.all()
+    serializer_class = create_serializer(queryset.model)
     lookup_rel = 'log_frame_id'
 
 
 # Statuses
 class StatusCodeViewSet(FilterRelationship, viewsets.ModelViewSet):
     queryset = StatusCode.objects.all()
+    serializer_class = create_serializer(queryset.model)
     lookup_rel = 'log_frame_id'
 
 
@@ -288,6 +310,7 @@ class StatusUpdateViewSet(FilterRelationship, viewsets.ModelViewSet):
 # Ratings
 class RatingViewSet(FilterRelationship, viewsets.ModelViewSet):
     queryset = Rating.objects.all()
+    serializer_class = create_serializer(queryset.model)
     lookup_rel = 'log_frame_id'
 
 

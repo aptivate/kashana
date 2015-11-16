@@ -20,7 +20,7 @@ from ..api import (
     PeriodOverlapFilterBackend,
     get_period_filter
 )
-from logframe.api import StatusUpdateViewSet
+from logframe.api import StatusUpdateViewSet, create_serializer
 
 
 @pytest.mark.django_db
@@ -157,3 +157,10 @@ def test_status_update_view_pre_save_sets_status_update_user_to_request_user():
     status_update_view_set.pre_save(status_update)
 
     assert request.user == status_update.user
+
+
+def test_create_serializer_returns_serializer_with_specified_class_as_model():
+    model_class = mock.Mock()
+    serializer_class = create_serializer(model_class)
+
+    assert model_class == serializer_class.Meta.model
