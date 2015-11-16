@@ -120,11 +120,11 @@ def test_filter_relationship_backend_queryset_filters_on_relationship():
     filter_relationship = FilterRelationship()
     filter_relationship.lookup_rel = 'foreign_key_id'
     filter_relationship.kwargs = {'logframe_pk': '1'}
-    filter_relationship.model = mock.Mock(objects=mock.Mock(filter=mock.Mock()))
+    filter_relationship.queryset = mock.Mock(filter=mock.Mock())
 
     filter_relationship.get_queryset()
 
-    filter_relationship.model.objects.filter.assert_called_with(foreign_key_id='1')
+    filter_relationship.queryset.filter.assert_called_with(foreign_key_id='1')
 
 
 def get_queryset_ordering_for_view_set(viewset_klass):

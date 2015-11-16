@@ -28,7 +28,7 @@ class CanEditOrReadOnly(permissions.BasePermission):
 
 class IDFilterBackend(filters.BaseFilterBackend):
     def filter_queryset(self, request, queryset, view):
-        ids = [int(i) for i in request.QUERY_PARAMS.getlist('id')]
+        ids = [int(i) for i in request.query_params.getlist('id')]
         if len(ids):
             return queryset.filter(id__in=ids)
         return queryset
@@ -86,8 +86,8 @@ def get_period_filter(start_date, end_date, s_lookup, e_lookup):
 
 class PeriodOverlapFilterBackend(filters.BaseFilterBackend):
     def filter_queryset(self, request, queryset, view):
-        start_date = request.QUERY_PARAMS.get('start_date')
-        end_date = request.QUERY_PARAMS.get('end_date')
+        start_date = request.query_params.get('start_date')
+        end_date = request.query_params.get('end_date')
 
         s_lookup = view.lookup_period_start
         e_lookup = view.lookup_period_end
@@ -103,7 +103,7 @@ class FilterRelationship(object):
 
     def get_queryset(self):
         relationship = {self.lookup_rel: self.kwargs['logframe_pk']}
-        return self.model.objects.filter(**relationship)
+        return self.queryset.filter(**relationship)
 
 
 #
