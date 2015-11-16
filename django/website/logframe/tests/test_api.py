@@ -20,7 +20,7 @@ from ..api import (
     PeriodOverlapFilterBackend,
     get_period_filter
 )
-from logframe.api import StatusUpdateViewSet
+from logframe.api import StatusUpdateViewSet, create_serializer
 
 
 @pytest.mark.django_db
@@ -120,11 +120,11 @@ def test_filter_relationship_backend_queryset_filters_on_relationship():
     filter_relationship = FilterRelationship()
     filter_relationship.lookup_rel = 'foreign_key_id'
     filter_relationship.kwargs = {'logframe_pk': '1'}
-    filter_relationship.model = mock.Mock(objects=mock.Mock(filter=mock.Mock()))
+    filter_relationship.queryset = mock.Mock(filter=mock.Mock())
 
     filter_relationship.get_queryset()
 
-    filter_relationship.model.objects.filter.assert_called_with(foreign_key_id='1')
+    filter_relationship.queryset.filter.assert_called_with(foreign_key_id='1')
 
 
 def get_queryset_ordering_for_view_set(viewset_klass):
@@ -157,3 +157,10 @@ def test_status_update_view_pre_save_sets_status_update_user_to_request_user():
     status_update_view_set.pre_save(status_update)
 
     assert request.user == status_update.user
+
+
+def test_create_serializer_returns_serializer_with_specified_class_as_model():
+    model_class = mock.Mock()
+    serializer_class = create_serializer(model_class)
+
+    assert model_class == serializer_class.Meta.model
