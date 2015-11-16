@@ -3,6 +3,7 @@ from rest_framework.serializers import ModelSerializer
 from .api import (
     LogFrameSerializer,
     ResultSerializer,
+    create_serializer
 )
 from contacts.models import User
 from appconf.models import Settings
@@ -10,14 +11,7 @@ from .models import Period, Rating
 
 
 class QuerysetSerializer(object):
-    @staticmethod
-    def create_serializer(model_class):
-        assert model_class is not None
-
-        class DefaultSerializer(ModelSerializer):
-            class Meta:
-                model = model_class
-        return DefaultSerializer
+    create_serializer = staticmethod(create_serializer)
 
     @staticmethod
     def _json_object_list(qs, serializer=None, model_class=None):
