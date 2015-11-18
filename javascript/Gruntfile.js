@@ -70,7 +70,7 @@ module.exports = function(grunt) {
 	    },
 	    watch: {
 	      files: ['src/**/*.js'],
-	      tasks: ['jshint', 'qunit']
+	      tasks: ['gulp:templates', 'jshint']
 	    }
 	  });
 
@@ -86,7 +86,9 @@ module.exports = function(grunt) {
 	  grunt.loadNpmTasks('grunt-gulp');
 
 	  grunt.registerTask('test', ['qunit', 'qunit_junit']);
+	  
+	  grunt.registerTask('templates', ['gulp:templates']);
 
-	  grunt.registerTask('default', ['gulp:templates', 'jshint', 'uglify']);
+	  grunt.registerTask('default', ['templates', 'jshint', 'requirejs']);
 
 };
