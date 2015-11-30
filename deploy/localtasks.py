@@ -23,6 +23,13 @@ def install_javascript_modules():
     _check_call_wrapper(['npm', 'install'], cwd=javascript_dir)
 
 
+def run_javascript_tests():
+    print "### Running Javascript tests"
+    javascript_dir = os.path.join(env['vcs_root_dir'], 'javascript')
+
+    _check_call_wrapper(['grunt', 'test'], cwd=javascript_dir)
+
+
 def run_jenkins():
     """ make sure the local settings is correct and the database exists """
     env['verbose'] = True
