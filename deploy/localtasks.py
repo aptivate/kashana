@@ -13,6 +13,13 @@ def build_webassets():
 def install_javascript_modules():
     print "### Installing javascript modules"
     javascript_dir = os.path.join(env['vcs_root_dir'], 'javascript')
+
+    # If the directory already exists get rid of it and reinstall to keep
+    # things clean.
+    npm_dir = os.path.join(javascript_dir, 'node_modules')
+    if os.path.exists(npm_dir):
+        _check_call_wrapper(['rm', '-r', npm_dir])
+
     _check_call_wrapper(['npm', 'install'], cwd=javascript_dir)
 
 
