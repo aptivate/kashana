@@ -4,54 +4,95 @@ define([
     'jquery',
     'views/overview/filter-lead',
 ], function (_, BB, $, LeadView) {
-    var runtests = function () {
-        var setVisibility = LeadView.prototype.setVisibility,
-            ctx = $("#qunit-fixture");
-
-        test('Check filter matches correct item', function () {
+	
+	jasmine.getFixtures().fixturesPath = 'tests/html_fixtures';
+	
+	var setVisibility = LeadView.prototype.setVisibility,
+        ctx = null;
+	
+	
+	
+    describe("Filter Lead Tests",  function() {
+    	beforeEach(function() {
+    		loadFixtures('filter_lead.html');
+    		ctx = $("#qunit-fixture");
+    	});
+    	
+        it('Check filter matches correct item', function () {
             var not_empty = ['node1', 'node2', 'node5', 'node6', 'node8'];
-            expect(9);
-
-            equal($("div", ctx).length, 10, "There are just 10 containers");
+            
+            var assertCount = 0;
+            
+            since("There are just 10 containers");
+            expect($("div", ctx)).toHaveLength(10);
+            assertCount++;
 
             setVisibility(1);
-            equal($("div.empty", ctx).length, 5, "Only 5 or them should be set to empty");
+            
+            since("Only 5 or them should be set to empty");
+            expect($("div.empty", ctx)).toHaveLength(5);
+        	assertCount++;
+       
             // The right ones are marked as not empty
             $("div:not(.empty)", ctx).each(function (i, el) {
-                equal($(el).attr("id"), not_empty[i]);
+                expect($(el)).toHaveId(not_empty[i]);
+                assertCount++;
             });
-
-            equal($(".selected-activity").length, 1, "Only one activity is selected");
-            equal($(".selected-activity").attr("id"), "act2", "The right one was selected");
+            
+            since("Only one activity is selected");
+            expect($(".selected-activity").length).toEqual(1);
+            assertCount++;
+            
+            since("The right one was selected");
+            expect($(".selected-activity").attr("id")).toEqual("act2");
+            assertCount++;
+            
+            since("There should be 9 assertions.");
+            expect(assertCount).toEqual(9);
         });
 
-        test('Check filter none clears everything', function () {
-            equal($("div", ctx).length, 10, "There are just 10 containers");
+        it('Check filter none clears everything', function () {
+        	since("There are just 10 containers");
+            expect($("div", ctx)).toHaveLength(10);
             setVisibility(1);
             setVisibility();
-
-            equal($("div.empty", ctx).length, 0, "No container is marked as empty");
-            equal($(".selected-activity").length, 0, "No activity is marked as selected");
+            
+            since( "No container is marked as empty");
+            expect($("div.empty", ctx)).toHaveLength(0);
+            
+            since("No activity is marked as selected");
+            expect($(".selected-activity")).toHaveLength(0);
         });
 
-        test('Check new filter marks only new matches', function () {
+        it('Check new filter marks only new matches', function () {
             var not_empty = ['node1', 'node2', 'node7', 'node8', 'node9'];
-            expect(9);
+            var assertCount = 0;
 
-            equal($("div", ctx).length, 10, "There are just 10 containers");
+            since("There are just 10 containers");
+            expect($("div", ctx)).toHaveLength(10);
+            assertCount++;
             setVisibility(1);
             setVisibility(2);
-
-            equal($("div.empty", ctx).length, 5, "Only 5 or them should be set to empty");
+            
+            since("Only 5 or them should be set to empty");
+            expect($("div.empty", ctx).length).toEqual(5);
+            assertCount++;
             // The right ones are marked as not empty
             $("div:not(.empty)", ctx).each(function (i, el) {
-                equal($(el).attr("id"), not_empty[i]);
+                expect($(el)).toHaveId(not_empty[i]);
+                assertCount++;
             });
 
-            equal($(".selected-activity").length, 1, "Only one activity is selected");
-            equal($(".selected-activity").attr("id"), "act3", "The right one was selected");
+            since("Only one activity is selected")
+            expect($(".selected-activity")).toHaveLength(1);
+            assertCount++;
+            
+            since("The right one was selected")
+            expect($(".selected-activity")).toHaveId("act3");
+            assertCount++;
+            
+            since("There should be 9 assertions.");
+            expect(assertCount).toEqual(9);
         });
-    };
-
-    return runtests;
+    });
 });
