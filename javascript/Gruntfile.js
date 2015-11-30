@@ -138,7 +138,7 @@ module.exports = function(grunt) {
 	  grunt.loadNpmTasks('grunt-qunit-junit');
 	  grunt.loadNpmTasks('grunt-gulp');
 
-	  grunt.registerTask('test', ['connect', 'qunit', 'qunit_junit']);
+	  grunt.registerTask('test', ['jasmine']);
 	  
 	  grunt.registerTask('templates', ['gulp:templates']);
 
