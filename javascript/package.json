@@ -28,7 +28,6 @@
     "grunt-qunit-junit": "~0.1.0",
     "grunt-qunit-cov": "~0.3.2",
     "grunt-qunit-istanbul": "~0.5.0",
-    "intern": "*",
     "grunt-contrib-jasmine": "*",
     "grunt-template-jasmine-requirejs": "*",
     "jasmine2-custom-message": "~0.8.0",
