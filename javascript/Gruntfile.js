@@ -96,6 +96,7 @@ module.exports = function(grunt) {
 	      files: ['src/**/*.js'],
 	      tasks: ['gulp:templates', 'jshint']
 	    },
+	    // Based on https://github.com/maenu/grunt-template-jasmine-istanbul-example/blob/requirejs-client/Gruntfile.js at 30/11/2015
 		jasmine: {
 			coverage: {
 				src: ['src/**/*.js', "!src/lib/*.js"],
@@ -160,7 +161,7 @@ module.exports = function(grunt) {
 												url = url.substring(2);
 											}
 											// redirect
-											if (instrumented.indexOf(url) > -1 && url.indexOf('lib') == -1) {
+											if (instrumented.indexOf(url) > -1) {
 												url = './.grunt/grunt-contrib-jasmine/' + url;
 											}
 											return oldLoad.apply(this, [context, moduleName, url]);
