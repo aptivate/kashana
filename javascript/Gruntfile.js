@@ -26,21 +26,45 @@ module.exports = function(grunt) {
 	    	}
 	    },
 	    qunit: {
-	      src: ['./tests/test_runner.html'],
-		  options: {
-			coverage: {
-				src: ['src/**/*.js'],
-				instrumentedFiles: 'temp/',
-				coberturaReport: '../reports/',
-				htmlReport: 'report/coverage',
-				linesThresholdPct: 20
-			}
+	      all: {
+			  options: {
+				urls: ["http://localhost:8500/tests/test.html"],
+				coverage: {
+					src: ['src/**/*.js', 'tests/js/*.js'],
+					instrumentedFiles: 'temp/',
+					coberturaReport: '../reports/',
+					htmlReport: 'report/coverage',
+					linesThresholdPct: 20
+				}
+			  }
 		  }
 	    },
 	    qunit_junit: {
 		    options: {
 		    	dest: '../reports/'
 		    }
+	    },
+	    connect: {
+	        server: {
+	          options: {
+	            port: 8500,
+	            base: '.'
+	          }
+	        }
+	    },
+	    intern: {
+	        grunt: {
+	          options: {
+	            runType: 'runner', // defaults to 'client'
+	            config: 'tests/intern',
+	            reporters: [ 'Cobertura' ],
+	            suites: [ 'tests/js/test' ],
+	            loaders: {
+	            	'host-node': 'requirejs',
+	               	'host-browser': 'node_modules/requirejs/require.js'
+	            }
+	          }
+	        },
 	    },
 	    requirejs: {
 	    	compile: {
@@ -71,6 +95,35 @@ module.exports = function(grunt) {
 	    watch: {
 	      files: ['src/**/*.js'],
 	      tasks: ['gulp:templates', 'jshint']
+	    },
+	    jasmine : {
+	        src : ['src/**/*.js', "!src/lib/*.js"],
+	        options : {
+	        	keepRunner: true,
+	        	vendor:[
+        	        'tests/lib/fixtures.js',
+        	        'node_modules/jquery/dist/jquery.js',
+	        	],
+	            specs : [
+	                'tests/js/list-tests.js', 
+                    'tests/js/input-tests.js',
+                    'tests/js/filter-lead-tests.js',
+                    'tests/js/filter-date-tests.js',
+                    'tests/js/editables/feedback-mixin-tests.js',
+                    'tests/js/editables/cleaninput-mixin-tests.js',
+                    'tests/js/components/base-view-tests.js'
+	            ],	
+	            helpers: [
+	                'node_modules/jasmine2-custom-message/jasmine2-custom-message.js',
+	                'node_modules/jasmine-jquery/lib/jasmine-jquery.js'
+	            ],
+	            template: require('grunt-template-jasmine-requirejs'),
+	            templateOptions: {
+	            	requireConfigFile: 'src/require.config.js',
+	 	            requireConfig: {'baseUrl': './src'},
+	            },
+	    		
+	        }
 	    }
 	  });
 
@@ -79,13 +132,14 @@ module.exports = function(grunt) {
 	  grunt.loadNpmTasks('grunt-contrib-qunit');
 	  grunt.loadNpmTasks('grunt-qunit-cov');
 	  grunt.loadNpmTasks('grunt-qunit-istanbul');
+	  grunt.loadNpmTasks('grunt-contrib-jasmine');
 	  grunt.loadNpmTasks('grunt-contrib-watch');
 	  grunt.loadNpmTasks('grunt-contrib-concat');
-	  grunt.loadNpmTasks('grunt-requirejs');
+	  grunt.loadNpmTasks('grunt-contrib-connect');
 	  grunt.loadNpmTasks('grunt-qunit-junit');
 	  grunt.loadNpmTasks('grunt-gulp');
 
-	  grunt.registerTask('test', ['qunit', 'qunit_junit']);
+	  grunt.registerTask('test', ['connect', 'qunit', 'qunit_junit']);
 	  
 	  grunt.registerTask('templates', ['gulp:templates']);
 
