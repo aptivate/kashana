@@ -25,33 +25,6 @@ module.exports = function(grunt) {
 	    		'jshintrc': '.jshintrc',
 	    	}
 	    },
-	    qunit: {
-	      all: {
-			  options: {
-				urls: ["http://localhost:8500/tests/test.html"],
-				coverage: {
-					src: ['src/**/*.js', 'tests/js/*.js'],
-					instrumentedFiles: 'temp/',
-					coberturaReport: '../reports/',
-					htmlReport: 'report/coverage',
-					linesThresholdPct: 20
-				}
-			  }
-		  }
-	    },
-	    qunit_junit: {
-		    options: {
-		    	dest: '../reports/'
-		    }
-	    },
-	    connect: {
-	        server: {
-	          options: {
-	            port: 8500,
-	            base: '.'
-	          }
-	        }
-	    },
 	    intern: {
 	        grunt: {
 	          options: {
@@ -65,27 +38,6 @@ module.exports = function(grunt) {
 	            }
 	          }
 	        },
-	    },
-	    requirejs: {
-	    	compile: {
-		    	options: {
-		    		baseUrl: './src/',
-		    		findNestedDependencies: true,
-		    		mainConfigFile: './src/require.config.js',
-		    		name: 'main',
-		    		out: 'dist/logframe.min.js'
-		    	}
-	    	},
-		    copy: {
-		    	options: {
-		    		baseUrl: './src/',
-		    		findNestedDependencies: true,
-		    		mainConfigFile: './src/require.config.js',
-		    		name: 'main',
-		    		out: 'dist/logframe.js',
-		    		optimize: 'none'
-		    	}
-		    }
 	    },
 	    uglify: {
 	    	logframe: {
@@ -178,20 +130,15 @@ module.exports = function(grunt) {
 
 	  grunt.loadNpmTasks('grunt-contrib-uglify');
 	  grunt.loadNpmTasks('grunt-contrib-jshint');
-	  grunt.loadNpmTasks('grunt-contrib-qunit');
-	  grunt.loadNpmTasks('grunt-qunit-cov');
-	  grunt.loadNpmTasks('grunt-qunit-istanbul');
 	  grunt.loadNpmTasks('grunt-contrib-jasmine');
 	  grunt.loadNpmTasks('grunt-contrib-watch');
-	  grunt.loadNpmTasks('grunt-contrib-concat');
-	  grunt.loadNpmTasks('grunt-contrib-connect');
-	  grunt.loadNpmTasks('grunt-qunit-junit');
+	  
 	  grunt.loadNpmTasks('grunt-gulp');
 
 	  grunt.registerTask('test', ['jasmine']);
 	  
 	  grunt.registerTask('templates', ['gulp:templates']);
 
-	  grunt.registerTask('default', ['templates', 'jshint', 'requirejs']);
+	  grunt.registerTask('default', ['templates', 'jshint']);
 
 };
