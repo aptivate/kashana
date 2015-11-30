@@ -99,7 +99,6 @@ module.exports = function(grunt) {
 	    jasmine : {
 	        src : ['src/**/*.js', "!src/lib/*.js"],
 	        options : {
-	        	keepRunner: true,
 	        	vendor:[
         	        'tests/lib/fixtures.js',
         	        'node_modules/jquery/dist/jquery.js',
