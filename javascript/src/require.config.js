@@ -1,4 +1,4 @@
-require.config({
+requirejs.config({
     paths: {
         "jquery": "lib/jquery",
         "ui.jquery": "lib/jquery-ui-1.11.4.custom.min",
