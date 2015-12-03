@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<coverage branch-rate="0.9706" line-rate="0.997" timestamp="1448974905504" version="4.0.2">
+	
+	
+	<sources>
+		<source>/home/user/git/kashana</source>
+	</sources>
+	<packages>
+		<package branch-rate="1" complexity="0" line-rate="1" name="django.website.example5">
+			<classes>
+				<class branch-rate="1" complexity="0" filename="django/website/example5/__init__.py" line-rate="1" name="__init__.py">
+					<methods />
+					<lines />
+				</class>
+				<class branch-rate="1" complexity="0" filename="django/website/example5/admin.py" line-rate="1" name="admin.py">
+					<methods />
+					<lines>
+						<line hits="1" number="1" />
+						<line hits="1" number="2" />
+						<line hits="1" number="3" />
+						<line hits="1" number="4" />
+						<line branch="true" condition-coverage="100% (2/2)" hits="1" number="5" />
+					</lines>
+				</class>
+				<class branch-rate="1" complexity="0" filename="django/website/example5/models.py" line-rate="1" name="models.py">
+					<methods />
+					<lines>
+						<line hits="1" number="1" />
+						<line hits="1" number="4" />
+						<line hits="1" number="5" />
+						<line hits="1" number="6" />
+						<line hits="1" number="8" />
+						<line hits="1" number="13" />
+						<line hits="1" number="22" />
+						<line hits="1" number="23" />
+					</lines>
+				</class>
+			</classes>
+		</package>
+		<package branch-rate="1" complexity="0" line-rate="1" name="django.website.example5.tests">
+			<classes>
+				<class branch-rate="1" complexity="0" filename="django/website/example5/tests/test1.py" line-rate="1" name="test1.py">
+					<methods />
+					<lines>
+						<line hits="1" number="1" />
+						<line hits="1" number="2" />
+						<line hits="1" number="3" />
+						<line hits="1" number="4" />
+					</lines>
+				</class>
+				<class branch-rate="1" complexity="0" filename="django/website/example5/tests/test2.py" line-rate="1" name="test2.py">
+					<methods />
+					<lines>
+						<line hits="1" number="1" />
+						<line hits="1" number="2" />
+						<line hits="1" number="3" />
+						<line hits="1" number="4" />
+					</lines>
+				</class>
+			</classes>
+		</package>
+	    <package branch-rate="1" line-rate="0.3529" name="src.second">
+		    <classes>
+		        <class branch-rate="1" filename="src/second/example3.js" line-rate="0.6" name="example3.js">
+		        <methods>
+		            <method hits="1" name="(anonymous_1)" signature="()V">
+		                <lines><line hits="1" number="3" /></lines>
+		            </method>
+		            <method hits="0" name="(anonymous_2)" signature="()V">
+		                <lines><line hits="0" number="57" /></lines>
+		            </method>
+		            <method hits="0" name="(anonymous_3)" signature="()V">
+		                <lines><line hits="0" number="75" /></lines>
+		            </method>
+		        </methods>
+		        <lines>
+		            <line branch="false" hits="1" number="1" />
+		            <line branch="false" hits="1" number="2" />
+		            <line branch="false" hits="0" number="3" />
+		        </lines>
+		        </class>
+		    </classes>
+	    </package>
+	</packages>
+</coverage>
