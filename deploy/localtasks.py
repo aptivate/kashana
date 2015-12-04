@@ -46,7 +46,7 @@ def run_jenkins():
     _manage_py_jenkins()
     run_javascript_tests()
     _manage_py([
-        'merge_coverage_reports',
+        'merge_coverage_files',
         'coverage.xml',
         'cobertura-coverage.xml',
         '--output=coverage-merged.xml',
