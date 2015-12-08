@@ -9,11 +9,14 @@ from logframe.models import (
     TALine,
     StatusUpdate
 )
+from django.conf import settings
 
 
 class OverviewMixin(object):
     def get_logframe(self):
-        return LogFrame.objects.get_or_create()[0]
+        if not LogFrame.objects.exists():
+            LogFrame.objects.create(name=settings.DEFAULT_LOGFRAME_NAME)
+        return LogFrame.objects.all()[0]
 
     def get_activities(self, logframe):
         return self.get_related_model_data(
