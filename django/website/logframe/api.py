@@ -3,7 +3,9 @@ from django.db.models import Q
 import django_filters
 
 from rest_framework import viewsets, serializers, filters, permissions
-from rest_framework.serializers import ModelSerializer
+from rest_framework.serializers import (
+    ManyRelatedField, ModelSerializer, PrimaryKeyRelatedField
+)
 from rest_framework_nested import routers
 
 from .models import (
@@ -121,7 +123,7 @@ class FilterRelationship(object):
 #
 
 # Logframe
-class LogFrameSerializer(serializers.ModelSerializer):
+class LogFrameSerializer(ModelSerializer):
     class Meta:
         model = LogFrame
         fields = ('id', 'name', 'results')
@@ -133,7 +135,11 @@ class LogFrameViewSet(viewsets.ModelViewSet):
 
 
 # Results
-class ResultSerializer(serializers.ModelSerializer):
+class ResultSerializer(ModelSerializer):
+    indicators = ManyRelatedField(child_relation=PrimaryKeyRelatedField(queryset=Indicator.objects.all()), required=False)
+    activities = ManyRelatedField(child_relation=PrimaryKeyRelatedField(queryset=Activity.objects.all()), required=False)
+    assumptions = ManyRelatedField(child_relation=PrimaryKeyRelatedField(queryset=Assumption.objects.all()), required=False)
+
     class Meta:
         model = Result
         fields = (
@@ -160,7 +166,9 @@ class ResultViewSet(FilterRelationship, viewsets.ModelViewSet):
 
 
 # Indicators & subindicators
-class IndicatorSerializer(serializers.ModelSerializer):
+class IndicatorSerializer(ModelSerializer):
+    subindicators = ManyRelatedField(child_relation=PrimaryKeyRelatedField(queryset=SubIndicator.objects.all()), required=False)
+
     class Meta:
         model = Indicator
         fields = (
@@ -283,7 +291,7 @@ class StatusCodeViewSet(FilterRelationship, viewsets.ModelViewSet):
 
 
 # StatusUpdate
-class StatusUpdateSerializer(serializers.ModelSerializer):
+class StatusUpdateSerializer(ModelSerializer):
 
     user = serializers.Field(source='user.id')
 
