@@ -16,7 +16,13 @@ class OverviewMixin(object):
     def get_logframe(self):
         if not LogFrame.objects.exists():
             LogFrame.objects.create(name=settings.DEFAULT_LOGFRAME_NAME)
-        return LogFrame.objects.all()[0]
+
+        if 'current_logframe' in self.request.session:
+            logframe = LogFrame.objects.get(id=self.request.session['current_logframe'])
+        else:
+            logframe = LogFrame.objects.all()[0]
+
+        return logframe
 
     def get_activities(self, logframe):
         return self.get_related_model_data(
