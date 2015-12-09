@@ -20,7 +20,9 @@ class OverviewMixin(object):
         if 'current_logframe' in self.request.session:
             logframe = LogFrame.objects.get(id=self.request.session['current_logframe'])
         else:
-            logframe = LogFrame.objects.all()[0]
+            logframe = LogFrame.objects.all().order_by('id')[0]
+
+        self.request.session['current_logframe'] = logframe.id
 
         return logframe
 

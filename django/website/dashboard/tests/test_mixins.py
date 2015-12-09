@@ -61,3 +61,18 @@ def test_get_logframe_gets_current_logframe_id_from_session():
     actual_log_frame = overview_mixin.get_logframe()
 
     assert expected_log_frame == actual_log_frame
+
+
+@pytest.mark.django_db
+def test_get_logframe_stores_logframe_id_in_session():
+    request = RequestFactory().get('/')
+    SessionMiddleware().process_request(request)
+
+    expected_log_frame = G(LogFrame, n=2)[0]
+
+    overview_mixin = OverviewMixin()
+    overview_mixin.request = request
+
+    overview_mixin.get_logframe()
+
+    assert expected_log_frame.id == request.session['current_logframe']
