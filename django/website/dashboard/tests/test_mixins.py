@@ -8,6 +8,7 @@ import pytest
 from logframe.models import LogFrame
 
 from ..mixins import OverviewMixin
+from django.http.response import Http404
 
 
 @pytest.mark.django_db
@@ -76,3 +77,17 @@ def test_get_logframe_stores_logframe_id_in_session():
     overview_mixin.get_logframe()
 
     assert expected_log_frame.id == request.session['current_logframe']
+
+
+@pytest.mark.django_db
+def test_get_logframe_raises_404_when_given_invalid_logframe_id():
+    request = RequestFactory().get('/')
+    SessionMiddleware().process_request(request)
+
+    request.session['current_logframe'] = -1
+
+    overview_mixin = OverviewMixin()
+    overview_mixin.request = request
+
+    with pytest.raises(Http404):
+        overview_mixin.get_logframe()

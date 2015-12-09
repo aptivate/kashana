@@ -10,6 +10,7 @@ from logframe.models import (
     StatusUpdate
 )
 from django.conf import settings
+from django.shortcuts import get_object_or_404
 
 
 class OverviewMixin(object):
@@ -18,7 +19,7 @@ class OverviewMixin(object):
             LogFrame.objects.create(name=settings.DEFAULT_LOGFRAME_NAME)
 
         if 'current_logframe' in self.request.session:
-            logframe = LogFrame.objects.get(id=self.request.session['current_logframe'])
+            logframe = get_object_or_404(LogFrame, id=self.request.session['current_logframe'])
         else:
             logframe = LogFrame.objects.all().order_by('id')[0]
 
