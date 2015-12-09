@@ -23,9 +23,9 @@ from ..api import (
     PeriodOverlapFilterBackend,
     ResultViewSet,
     StatusUpdateViewSet,
+    SwitchLogframes,
     create_serializer,
     get_period_filter,
-    switch_logframes
 )
 from ..models import LogFrame, Result
 
@@ -199,7 +199,7 @@ def test_switch_logframes_sets_session_id_to_new_logframe_id():
     request = APIRequestFactory().post('/', data, format='json')
     request.user = mock.Mock()
     request.session = mock.MagicMock(__setitem__=mock.Mock())
-    switch_logframes(request)
+    SwitchLogframes.as_view()(request)
 
     request.session.__setitem__.assert_called_with('current_logframe', data['new_logframe_id'])
 
@@ -211,8 +211,8 @@ def test_switch_logframes_containts_instruction_to_redirect_to_dashboard():
     request = APIRequestFactory().post('/', data, format='json')
     request.user = mock.Mock()
     request.session = {}
-    response = switch_logframes(request)
 
+    response = SwitchLogframes.as_view()(request)
     response_data = json.loads(response.data)
     assert reverse('dashboard') == response_data['redirect']
 
@@ -225,6 +225,6 @@ def test_switch_logfram_with_invalid_id_raises_404():
     request.user = mock.Mock()
     request.session = {}
 
-    response = switch_logframes(request)
+    response = SwitchLogframes.as_view()(request)
 
     assert 404 == response.status_code
