@@ -22,7 +22,8 @@ from ..api import (
     ResultViewSet,
     StatusUpdateViewSet,
     create_serializer,
-    get_period_filter
+    get_period_filter,
+    switch_logframes
 )
 from ..models import LogFrame, Result
 
@@ -187,3 +188,14 @@ def test_results_viewset_fields_create_result_with_just_title():
         Result.objects.get(name='Test Item')
     except Result.DoesNotExist:
         pytest.fail("Result wasn't created")
+
+
+def test_switch_logframes_sets_session_id_to_new_logframe_id():
+    data = {'new_logframe_id': '2'}
+
+    request = APIRequestFactory().post('/', data, format='json')
+    request.user = mock.Mock()
+    request.session = mock.MagicMock(__setitem__=mock.Mock())
+    switch_logframes(request, 1)
+
+    request.session.__setitem__.assert_called_with('current_logframe', data['new_logframe_id'])

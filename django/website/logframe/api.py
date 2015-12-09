@@ -1,8 +1,10 @@
 from django.db.models import Q
+from django.http.response import HttpResponse
 
 import django_filters
 
 from rest_framework import viewsets, serializers, filters, permissions
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.serializers import (
     ManyRelatedField, ModelSerializer, PrimaryKeyRelatedField
 )
@@ -132,6 +134,13 @@ class LogFrameSerializer(ModelSerializer):
 class LogFrameViewSet(viewsets.ModelViewSet):
     queryset = LogFrame.objects.all()
     serializer_class = LogFrameSerializer
+
+
+@api_view(['POST'])
+@permission_classes((permissions.IsAuthenticated,))
+def switch_logframes(request, logframe_pk):
+    request.session['current_logframe'] = request.data['new_logframe_id']
+    return HttpResponse()
 
 
 # Results
