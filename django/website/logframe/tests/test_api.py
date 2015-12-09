@@ -215,3 +215,16 @@ def test_switch_logframes_containts_instruction_to_redirect_to_dashboard():
 
     response_data = json.loads(response.data)
     assert reverse('dashboard') == response_data['redirect']
+
+
+@pytest.mark.django_db
+def test_switch_logfram_with_invalid_id_raises_404():
+    data = {'new_logframe_id': '-1'}
+
+    request = APIRequestFactory().post('/', data, format='json')
+    request.user = mock.Mock()
+    request.session = {}
+
+    response = switch_logframes(request)
+
+    assert 404 == response.status_code
