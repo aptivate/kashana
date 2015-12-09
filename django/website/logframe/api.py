@@ -1,5 +1,8 @@
+import json
+
+from django.core.urlresolvers import reverse
 from django.db.models import Q
-from django.http.response import HttpResponse
+from django.http.response import HttpResponseRedirect, Http404
 
 import django_filters
 
@@ -9,6 +12,7 @@ from rest_framework.serializers import (
     ManyRelatedField, ModelSerializer, PrimaryKeyRelatedField
 )
 from rest_framework_nested import routers
+from rest_framework.response import Response
 
 from .models import (
     Activity, Actual, Assumption, BudgetLine, Column, Indicator, LogFrame,
@@ -138,9 +142,10 @@ class LogFrameViewSet(viewsets.ModelViewSet):
 
 @api_view(['POST'])
 @permission_classes((permissions.IsAuthenticated,))
-def switch_logframes(request, logframe_pk):
+def switch_logframes(request):
     request.session['current_logframe'] = request.data['new_logframe_id']
-    return HttpResponse()
+    response_data = json.dumps({'redirect': reverse('dashboard')})
+    return Response(response_data)
 
 
 # Results
