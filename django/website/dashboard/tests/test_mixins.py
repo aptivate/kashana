@@ -1,4 +1,5 @@
 from django.contrib.sessions.middleware import SessionMiddleware
+from django.http.response import Http404
 from django.test.client import RequestFactory
 
 from django_dynamic_fixture import G
@@ -8,7 +9,6 @@ import pytest
 from logframe.models import LogFrame
 
 from ..mixins import OverviewMixin
-from django.http.response import Http404
 
 
 @pytest.mark.django_db
@@ -91,3 +91,24 @@ def test_get_logframe_raises_404_when_given_invalid_logframe_id():
 
     with pytest.raises(Http404):
         overview_mixin.get_logframe()
+
+
+@pytest.mark.django_db
+def test_get_logframe_doesnt_set_logframe_id_in_session_if_present():
+    request = RequestFactory().get('/')
+    SessionMiddleware().process_request(request)
+
+    logframe = G(LogFrame)
+
+    overview_mixin = OverviewMixin()
+    overview_mixin.request = request
+
+    request.session = mock.MagicMock(
+        __getitem__=lambda _, __: logframe.id,
+        __contains__=lambda _, __: True,
+        __setitem__=mock.Mock()
+    )
+
+    overview_mixin.get_logframe()
+
+    assert not request.session.__setitem__.called

@@ -22,8 +22,7 @@ class OverviewMixin(object):
             logframe = get_object_or_404(LogFrame, id=self.request.session['current_logframe'])
         else:
             logframe = LogFrame.objects.all().order_by('id')[0]
-
-        self.request.session['current_logframe'] = logframe.id
+            self.request.session['current_logframe'] = logframe.id
 
         return logframe
 
