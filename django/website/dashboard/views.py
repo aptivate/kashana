@@ -7,7 +7,7 @@ from braces.views import LoginRequiredMixin
 
 from logframe.mixins import AptivateDataBaseMixin
 from logframe.models import LogFrame
-from .mixins import OverviewMixin
+from .mixins import OverviewMixin, update_current_logframe
 
 
 class Home(LoginRequiredMixin, OverviewMixin, RedirectView):
@@ -26,7 +26,7 @@ class SwitchLogframes(LoginRequiredMixin, RedirectView):
 
     def post(self, request, *args, **kwargs):
         self.object = get_object_or_404(LogFrame, pk=self.request.POST['logframe'])
-        request.session['current_logframe'] = self.object.slug
+        update_current_logframe(self.request.user, self.object)
         return self.get(request, slug=self.object.slug)
 
 

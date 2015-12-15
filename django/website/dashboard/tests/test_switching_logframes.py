@@ -9,15 +9,15 @@ from ..views import SwitchLogframes
 
 
 @mock.patch('dashboard.views.get_object_or_404', new=mock.Mock(return_value=mock.Mock(slug='test')))
-def test_switch_logframes_sets_session_id_to_new_logframe_id():
+def test_switch_logframes_sets_user_last_viewed_logframe_to_new_logframe():
     data = {'logframe': '2'}
 
     request = RequestFactory().post('/', data)
     request.user = mock.Mock()
-    request.session = mock.MagicMock(__setitem__=mock.Mock())
+
     SwitchLogframes.as_view()(request)
 
-    request.session.__setitem__.assert_called_with('current_logframe', 'test')
+    assert 'test' == request.user.last_viewed_logframe.slug
 
 
 @mock.patch('dashboard.views.get_object_or_404', new=mock.Mock(return_value=mock.Mock(slug='test')))

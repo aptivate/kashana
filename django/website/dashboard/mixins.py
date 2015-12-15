@@ -13,19 +13,30 @@ from django.conf import settings
 from django.shortcuts import get_object_or_404
 
 
+def update_current_logframe(user, logframe):
+    user.last_viewed_logframe = logframe
+    user.save()
+
+
 class OverviewMixin(object):
     def get_logframe(self):
         if not LogFrame.objects.exists():
-            LogFrame.objects.create(name=settings.DEFAULT_LOGFRAME_NAME)
+            LogFrame.objects.create(name=settings.DEFAULT_LOGFRAME_NAME, slug=settings.DEFAULT_LOGFRAME_SLUG)
 
-        if 'slug' in self.kwargs or 'current_logframe' in self.request.session:
-            slug = self.kwargs.get('slug') or self.request.session['current_logframe']
-            logframe = get_object_or_404(LogFrame, slug=slug)
-            if 'current_logframe' not in self.request.session or slug != self.request.session['current_logframe']:
-                self.request.session['current_logframe'] = slug
+        user = self.request.user
+
+        if 'slug' in self.kwargs or user.last_viewed_logframe:
+            slug = self.kwargs.get('slug') or user.last_viewed_logframe.slug
+
+            if not user.last_viewed_logframe or slug != user.last_viewed_logframe.slug:
+                logframe = get_object_or_404(LogFrame, slug=slug)
+                update_current_logframe(user, logframe)
+            else:
+                logframe = user.last_viewed_logframe
+
         else:
             logframe = LogFrame.objects.all().order_by('id')[0]
-            self.request.session['current_logframe'] = logframe.slug
+            update_current_logframe(user, logframe)
 
         return logframe
 
