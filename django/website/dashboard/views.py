@@ -1,14 +1,12 @@
+from django.shortcuts import get_object_or_404
 from django.views.generic import TemplateView
 from django.views.generic.base import RedirectView
-from django.views.generic.edit import UpdateView
 
 from braces.views import LoginRequiredMixin
 
 from logframe.mixins import AptivateDataBaseMixin
 from logframe.models import LogFrame
 from .mixins import OverviewMixin
-from django.http.response import HttpResponseNotFound
-from django.shortcuts import get_object_or_404
 
 
 class Home(LoginRequiredMixin, OverviewMixin, RedirectView):
