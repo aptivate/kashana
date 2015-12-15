@@ -3,7 +3,7 @@ import os.path
 from django.db.models import (
     CharField, TextField, EmailField,
     FileField, DateTimeField, BooleanField,
-    ImageField
+    ImageField, ForeignKey
 )
 from django.contrib.auth.models import (
     AbstractBaseUser, BaseUserManager, PermissionsMixin
@@ -128,6 +128,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         upload_to=UploadToHandler('pi_cvs', get_user_fields),
         blank=True,
         null=True)
+
+    last_viewed_logframe = ForeignKey('logframe.LogFrame', null=True)
 
     # Managers and book-keeping
 
