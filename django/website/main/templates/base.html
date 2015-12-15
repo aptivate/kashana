@@ -21,8 +21,8 @@
         {% block logframe_switching_form %}
         {% if request.user and request.user.is_authenticated %}
         <form id="logframes-switch" action="{% url "switch-logframes" %}" method="post">{% csrf_token %}
-            <select id="logframes-switch-select" name="switch_logframes" onchange="this.form.submit();">
-            	{% for logframe in logframe_list %}<option value="{{ logframe.id }}"{% if request.session.current_logframe == logframe.id %}selected="selected"{% endif %}>{{ logframe.name }}</option>{% endfor %}            
+            <select id="logframes-switch-select" name="logframe" onchange="this.form.submit();">
+            	{% for logframe in logframe_list %}<option value="{{ logframe.id }}"{% if request.session.current_logframe == logframe.slug %}selected="selected"{% endif %}>{{ logframe.name }}</option>{% endfor %}            
 			</select>
 		</form>
 		{% endif %}
