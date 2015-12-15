@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404
 from django.views.generic import TemplateView
 from django.views.generic.base import RedirectView
+from django.views.generic.list import ListView
 
 from braces.views import LoginRequiredMixin
 
@@ -26,3 +27,9 @@ class SwitchLogframes(LoginRequiredMixin, RedirectView):
     def post(self, request, *args, **kwargs):
         self.object = get_object_or_404(LogFrame, pk=self.request.POST['id'])
         return self.get(request, slug=self.object.slug)
+
+
+class DashboardLogframeSelection(LoginRequiredMixin, ListView):
+    model = LogFrame
+    context_object_name = 'logframe_list'
+    template_name = 'dashboard/dashboard_logframe_list.html'
