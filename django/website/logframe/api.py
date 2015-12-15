@@ -1,17 +1,11 @@
-import json
-
-from django.core.urlresolvers import reverse
 from django.db.models import Q
-from django.http.response import Http404
 
 import django_filters
 
 from rest_framework import viewsets, serializers, filters, permissions
-from rest_framework.response import Response
 from rest_framework.serializers import (
     ManyRelatedField, ModelSerializer, PrimaryKeyRelatedField
 )
-from rest_framework.views import APIView
 from rest_framework_nested import routers
 
 from .models import (
@@ -138,18 +132,6 @@ class LogFrameSerializer(ModelSerializer):
 class LogFrameViewSet(viewsets.ModelViewSet):
     queryset = LogFrame.objects.all()
     serializer_class = LogFrameSerializer
-
-
-class SwitchLogframes(APIView):
-    http_method_names = ['post']
-    permission_classes = [permissions.IsAuthenticated]
-
-    def post(self, request, *args, **kwargs):
-        if not LogFrame.objects.filter(pk=request.data['new_logframe_id']).exists():
-            raise Http404
-        request.session['current_logframe'] = request.data['new_logframe_id']
-        response_data = json.dumps({'redirect': reverse('dashboard')})
-        return Response(response_data)
 
 
 # Results

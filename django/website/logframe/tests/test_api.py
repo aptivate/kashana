@@ -1,9 +1,7 @@
 from datetime import date, timedelta
 from inspect import isfunction
-import json
 
 from django.contrib.auth.models import Permission
-from django.core.urlresolvers import reverse
 from django.db.models.query_utils import Q
 from django.test.client import RequestFactory
 
@@ -23,7 +21,6 @@ from ..api import (
     PeriodOverlapFilterBackend,
     ResultViewSet,
     StatusUpdateViewSet,
-    SwitchLogframes,
     create_serializer,
     get_period_filter,
 )
@@ -190,41 +187,3 @@ def test_results_viewset_fields_create_result_with_just_title():
         Result.objects.get(name='Test Item')
     except Result.DoesNotExist:
         pytest.fail("Result wasn't created")
-
-
-@mock.patch('logframe.api.LogFrame.objects.filter', new=mock.Mock(exists=lambda: True))
-def test_switch_logframes_sets_session_id_to_new_logframe_id():
-    data = {'new_logframe_id': '2'}
-
-    request = APIRequestFactory().post('/', data, format='json')
-    request.user = mock.Mock()
-    request.session = mock.MagicMock(__setitem__=mock.Mock())
-    SwitchLogframes.as_view()(request)
-
-    request.session.__setitem__.assert_called_with('current_logframe', data['new_logframe_id'])
-
-
-@mock.patch('logframe.api.LogFrame.objects.filter', new=mock.Mock(exists=lambda: True))
-def test_switch_logframes_containts_instruction_to_redirect_to_dashboard():
-    data = {'new_logframe_id': '2'}
-
-    request = APIRequestFactory().post('/', data, format='json')
-    request.user = mock.Mock()
-    request.session = {}
-
-    response = SwitchLogframes.as_view()(request)
-    response_data = json.loads(response.data)
-    assert reverse('dashboard') == response_data['redirect']
-
-
-@pytest.mark.django_db
-def test_switch_logfram_with_invalid_id_raises_404():
-    data = {'new_logframe_id': '-1'}
-
-    request = APIRequestFactory().post('/', data, format='json')
-    request.user = mock.Mock()
-    request.session = {}
-
-    response = SwitchLogframes.as_view()(request)
-
-    assert 404 == response.status_code
