@@ -21,7 +21,7 @@ class DashboardView(LoginRequiredMixin,
     template_name = 'dashboard/dashboard_base.html'
 
 
-class SwitchLogframes(RedirectView):
+class SwitchLogframes(LoginRequiredMixin, RedirectView):
     permanent = False
     pattern_name = 'logframe-dashboard'
 
