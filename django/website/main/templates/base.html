@@ -41,8 +41,9 @@
         {% if request.user and request.user.is_authenticated %}
         <div class="section-navigation pure-menu pure-menu-open pure-menu-horizontal">
             <ul>
-                <li><a href="/" id="nav-dashboard">Dashboard</a></li>
-                {# <li><a href="/logframe/1/">Log Frame</a></li> #}
+                {% if request.session.current_logframe %}
+                <li><a href="{% url "logframe-dashboard" request.session.current_logframe %}" id="nav-dashboard">Dashboard</a></li>
+                {% endif %}
                 {% if perms.contacts.add_user %}
                 <li><a href="{% url "contact_list" %}" id="nav-people">People</a></li>
                 {% endif %}
