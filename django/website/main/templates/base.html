@@ -18,6 +18,7 @@
 
     <header class="page-header">
         <h1><a href="/" class="logo">{% settings_value "SITE_NAME" %} <span> MIS</span></a></h1>
+        {% block logframe_switching_form %}
         {% if request.user.is_authenticated %}
         <form id="logframes-switch" action="{% url "switch-logframes" %}" method="post">{% csrf_token %}
             <select id="logframes-switch-select" name="switch_logframes" onchange="this.form.submit();">
@@ -25,6 +26,7 @@
 			</select>
 		</form>
 		{% endif %}
+		{% endblock logframe_switching_form %}
         <div class="account-links">
             {% if request.user and request.user.is_authenticated %}
             <p class="account-links-profile"><a href="{% url "personal_edit" %}">{{ user.get_full_name|default:user.business_email }}</a></p>
