@@ -25,7 +25,8 @@ class SwitchLogframes(LoginRequiredMixin, RedirectView):
     pattern_name = 'logframe-dashboard'
 
     def post(self, request, *args, **kwargs):
-        self.object = get_object_or_404(LogFrame, pk=self.request.POST['id'])
+        self.object = get_object_or_404(LogFrame, pk=self.request.POST['logframe'])
+        request.session['current_logframe'] = self.object.slug
         return self.get(request, slug=self.object.slug)
 
 

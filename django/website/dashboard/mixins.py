@@ -18,11 +18,14 @@ class OverviewMixin(object):
         if not LogFrame.objects.exists():
             LogFrame.objects.create(name=settings.DEFAULT_LOGFRAME_NAME)
 
-        if 'current_logframe' in self.request.session:
-            logframe = get_object_or_404(LogFrame, id=self.request.session['current_logframe'])
+        if 'slug' in self.kwargs or 'current_logframe' in self.request.session:
+            slug = self.kwargs.get('slug') or self.request.session['current_logframe']
+            logframe = get_object_or_404(LogFrame, slug=slug)
+            if 'current_logframe' not in self.request.session or slug != self.request.session['current_logframe']:
+                self.request.session['current_logframe'] = slug
         else:
             logframe = LogFrame.objects.all().order_by('id')[0]
-            self.request.session['current_logframe'] = logframe.id
+            self.request.session['current_logframe'] = logframe.slug
 
         return logframe
 
