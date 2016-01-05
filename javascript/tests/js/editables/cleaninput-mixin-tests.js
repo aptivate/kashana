@@ -12,89 +12,113 @@ define([
 
     var keep = createSet(Mixin.keep_tags);
 
-    return function () {
-        module("processNode");
+    describe("processNode", function() {
 
-        test("Test processNode works on text node", function () {
-            var text = 'Node has text',
-                node = document.createTextNode(text),
-                result;
+	    it("Test processNode works on text node", function () {
+	        var text = 'Node has text',
+	            node = document.createTextNode(text),
+	            result;
+	
+	        result = Mixin.processNode(node, keep);
+	
+	        expect(result.nodeValue).toBe(text);
+	    });
+	
+	    it("Test processNode works on tags to keep", function () {
+	        var text = 'Node has text',
+	            $el = $('<p class="class1" onclick="true">'+text+'</p>'),
+	            result;
+	
+	        expect($el).toHaveClass("class1");
+	        expect($el[0].onclick).toBeTruthy();
+	
+	        result = Mixin.processNode($el[0], keep);
+	
+	        expect(result.innerHTML).toBe(text);
+	        expect(result.nodeName.toLowerCase()).toEqual("p");
+	        expect(result.className).toBeFalsy();
+	    });
+	
+	    it("Test processNode works filters non-keepable tags", function () {
+	        var text = 'Node has text',
+	            $el = $('<div class="class1" onclick="true">'+text+'</div>'),
+	            result;
+	        
+	        since("Has a class");
+	        expect($el).toHaveClass("class1");
+	        
+	        since("Has an onclick handler");
+	        expect($el[0].onclick).toBeTruthy();
+	
+	        result = Mixin.processNode($el[0], keep);
+	
+	        since("Is now a document fragment");
+	        expect(result.nodeType).toBe(11);
+	        
+	        since("Fragment has only one child node");
+	        expect(result.childNodes.length).toBe(1);
+	        
+	        since("Has the right content");
+	        expect(result.firstChild.nodeValue).toBe(text);
+	        
+	        since("Removed class");
+	        expect($(result)).not.toHaveClass("class1");
+	        
+	        since("onclick handler is gone");
+	        expect(result.onclick).toBeFalsy();
+	    });
+	
+	    it("Test processNode keeps unkeepable tag if marked wrapper", function () {
+	        var text = 'Node has text',
+	            $el = $('<div class="class1" onclick="true">'+text+'</div>'),
+	            result;
+	        
+	        since("Has class");
+	        expect($el).toHaveClass("class1");
+	        
+	        since("Has onclick handler");
+	        expect($el[0].onclick).toBeTruthy();
+	
+	        result = Mixin.processNode($el[0], keep, true);
+	
+	        since("Still div that is otherwise not allowed");
+	        expect(result.nodeName.toLowerCase()).toEqual("div");
+	        
+	        since("Removed class");
+	        expect($(result)).not.toHaveClass("class1");
+	        
+	        since("Removed onclick handler");
+	        expect(result.onclick).toBeFalsy();
+	        
+	        since("Has only one child");
+	        expect(result.childNodes.length).toBe(1);
+	        
+	        since("...which has the correct value");
+	        expect(result.firstChild.nodeValue).toBe(text);
+	    });
+	
+	    it("Test links keep href value", function () {
+	        var $el = $('<a href="http://aptivate.org">Aptivate</a>'),
+	            result;
+	        
+	        since("Link has the correct href value");
+	        expect($el.attr("href")).toEqual("http://aptivate.org");
+	
+	        result = Mixin.processNode($el[0], keep);
+	
+	        since("Link still points to the same source");
+	        expect($(result).attr("href")).toEqual("http://aptivate.org");
+	    });
+    });
 
-            result = Mixin.processNode(node, keep);
 
-            ok(result.nodeValue === text);
-        });
-
-        test("Test processNode works on tags to keep", function () {
-            var text = 'Node has text',
-                $el = $('<p class="class1" onclick="true">'+text+'</p>'),
-                result;
-
-            ok($el.hasClass("class1"));
-            ok(!!$el[0].onclick);
-
-            result = Mixin.processNode($el[0], keep);
-
-            ok(result.innerHTML === text);
-            equal(result.nodeName.toLowerCase(), "p");
-            ok(!result.className);
-        });
-
-        test("Test processNode works filters non-keepable tags", function () {
-            var text = 'Node has text',
-                $el = $('<div class="class1" onclick="true">'+text+'</div>'),
-                result;
-
-            ok($el.hasClass("class1"), "Has a class");
-            ok(!!$el[0].onclick, "Has an onclick handler");
-
-            result = Mixin.processNode($el[0], keep);
-
-            ok(result.nodeType === 11, "Is now a document fragment");
-            ok(result.childNodes.length === 1, "Fragment has only one child node");
-            ok(result.firstChild.nodeValue === text, "Has the right content");
-            ok(!$(result).hasClass("class1"), "Removed class");
-            ok(!result.onclick, "onclick handler is gone");
-        });
-
-        test("Test processNode keeps unkeepable tag if marked wrapper", function () {
-            var text = 'Node has text',
-                $el = $('<div class="class1" onclick="true">'+text+'</div>'),
-                result;
-
-            ok($el.hasClass("class1"), "Has class");
-            ok(!!$el[0].onclick, "Has onclick handler");
-
-            result = Mixin.processNode($el[0], keep, true);
-
-            equal(result.nodeName.toLowerCase(), "div",
-                "Still div that is otherwise not allowed");
-            ok(!$(result).hasClass("class1"), "Removed class");
-            ok(!result.onclick, "Removed onclick handler");
-            ok(result.childNodes.length === 1, "Has only one child");
-            ok(result.firstChild.nodeValue === text,
-                "...which has the correct value");
-        });
-
-        test("Test links keep href value", function () {
-            var $el = $('<a href="http://aptivate.org">Aptivate</a>'),
-                result;
-
-            equal($el.attr("href"), "http://aptivate.org", "Link has the correct href value");
-
-            result = Mixin.processNode($el[0], keep);
-
-            equal($(result).attr("href"), "http://aptivate.org", "Link still points to the same source");
-        });
-
-
-        module("cleanInput");
-
-        test("Test removing of classes and other attributes", function () {
-            var dirty = 'Some <span>like</span> it <b class="strong">hot</b> and some <em data-bla="5">not</em>.',
-                clean = 'Some like it <b>hot</b> and some <em>not</em>.';
-
-            equal(Mixin.cleanInput(dirty), clean, "Classes and attributes were removed");
-        });
-    };
+    describe("cleanInput", function () {
+    	it("Test removing of classes and other attributes", function () {
+	        var dirty = 'Some <span>like</span> it <b class="strong">hot</b> and some <em data-bla="5">not</em>.',
+	            clean = 'Some like it <b>hot</b> and some <em>not</em>.';
+	        
+	        since("Classes and attributes were removed");
+	        expect(Mixin.cleanInput(dirty)).toEqual(clean);
+    	});
+    });
 });

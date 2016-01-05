@@ -1,4 +1,3 @@
-
 require.config({
     paths: {
         "jquery": "lib/jquery",
@@ -13204,7 +13203,7 @@ THE SOFTWARE.
 var Handlebars = (function() {
 // handlebars/safe-string.js
 var __module3__ = (function() {
-  
+  "use strict";
   var __exports__;
   // Build out our basic SafeString type
   function SafeString(string) {
@@ -13221,7 +13220,7 @@ var __module3__ = (function() {
 
 // handlebars/utils.js
 var __module2__ = (function(__dependency1__) {
-  
+  "use strict";
   var __exports__ = {};
   /*jshint -W004 */
   var SafeString = __dependency1__;
@@ -13303,7 +13302,7 @@ var __module2__ = (function(__dependency1__) {
 
 // handlebars/exception.js
 var __module4__ = (function() {
-  
+  "use strict";
   var __exports__;
 
   var errorProps = ['description', 'fileName', 'lineNumber', 'message', 'name', 'number', 'stack'];
@@ -13337,7 +13336,7 @@ var __module4__ = (function() {
 
 // handlebars/base.js
 var __module1__ = (function(__dependency1__, __dependency2__) {
-  
+  "use strict";
   var __exports__ = {};
   var Utils = __dependency1__;
   var Exception = __dependency2__;
@@ -13523,7 +13522,7 @@ var __module1__ = (function(__dependency1__, __dependency2__) {
 
 // handlebars/runtime.js
 var __module5__ = (function(__dependency1__, __dependency2__, __dependency3__) {
-  
+  "use strict";
   var __exports__ = {};
   var Utils = __dependency1__;
   var Exception = __dependency2__;
@@ -13666,7 +13665,7 @@ var __module5__ = (function(__dependency1__, __dependency2__, __dependency3__) {
 
 // handlebars.runtime.js
 var __module0__ = (function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__) {
-  
+  "use strict";
   var __exports__;
   /*globals Handlebars: true */
   var base = __dependency1__;
@@ -14842,7 +14841,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<div class=\"overview-main\">\n    <div id=\"filter-result\">\n        Lead:\n        <div data-subview=\"leadSelect\"></div>\n        <span id=\"filter-time\">\n            Start:\n            <span>\n                <input id=\"filter-time-start\" type=\"text\" placeholder=\"YYYY-MM-DD\" class=\"date addpicker\" />\n            </span>\n\n            End:\n            <span>\n                <input id=\"filter-time-end\" type=\"text\" placeholder=\"YYYY-MM-DD\" class=\"date addpicker\" />\n            </span>\n        </span>\n        <span id=\"filter-reset\">\n            <button id=\"filter-clear\" title=\"Clear filter selection\">X</button>\n        </span>\n    </div>\n    <div data-subview=\"resultList\"></div>\n</div>\n<div data-subview=\"exportData\"></div>\n<p>\n<span data-subview=\"exportAnnualPlan\"></span>\n<span data-subview=\"exportQuarterPlan\"></span>\n</p>\n";
+  return "<div class=\"overview-main\">\n    <div data-subview=\"resultList\"></div>\n</div>\n<div data-subview=\"exportData\"></div>\n<p>\n<span data-subview=\"exportAnnualPlan\"></span>\n<span data-subview=\"exportQuarterPlan\"></span>\n</p>\n";
   });;
 this["Aptivate"] = this["Aptivate"] || {};
 this["Aptivate"]["data"] = this["Aptivate"]["data"] || {};
@@ -15173,7 +15172,7 @@ define('views/permission-mixin',[],function () {
 	}
 } )( Backbone, _ );
 
-define("backbone_subviews", function(){});
+define("backbone_subviews", ["backbone_base"], function(){});
 
 define('views/base_view',[
     'underscore',
@@ -17029,12 +17028,6 @@ define('views/overview/container',[
             });
         },
         subviewCreators: {
-            "leadSelect": function () {
-                return new LeadView({
-                    // Required by BaseView, but not used
-                    model: new Backbone.Model()
-                });
-            },
             "resultList": function () {
                 return new ListView({
                     className: "result-tree",
@@ -18063,3 +18056,4 @@ require(['require.config'], function () {
 });
 
 define("main", function(){});
+

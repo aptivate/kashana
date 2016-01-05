@@ -1,9 +1,7 @@
 define([
     'underscore', 'backbone', 'jquery', 'views/generic/list',
 ], function (_, BB, $, AddOneList) {
-
-    var runtests = function () {
-        var ids = ["1", "2", "3"],
+	var ids = ["1", "2", "3"],
             models = _.map(ids, function(n){return {id: n};}),
             MyListView = AddOneList.extend({
                 itemView: BB.View.extend({
@@ -14,80 +12,97 @@ define([
                 }),
             });
 
-        module("Basic rendering");
+        describe("Basic rendering", function() {
 
-        test("Elements in collection rendered", function() {
+        it("Elements in collection rendered", function() {
             var listView = new MyListView({
                 collection: new BB.Collection(models)
             });
-            expect(4);
+
             listView.render();
+            
+            var assertionCount = 0
             listView.$el.children("div").each(function (i, el) {
                 var contents = $(el).html();
                 if (contents==="empty") {
-                    ok(true, "blank element included");
+                	since("blank element included");
+                	expect(true).toBe(true);
+                	assertionCount++;
                 } else {
-                    ok(_.contains(ids, contents, "ID rendered is from list"));
+                    expect(_.contains(ids, contents, "ID rendered is from list")).toBe(true);
+                    assertionCount++;
                 }
             });
-        });
+            expect(assertionCount).toEqual(4);
+        })});
 
-        module("Max-size");
+        describe("Max-size", function() {
 
-        test("No blank element if max size reached", function() {
+        it("No blank element if max size reached", function() {
             var listView = new MyListView({
                 maxLength: 3,
                 collection: new BB.Collection(models)
             });
-            expect(4);
             listView.render();
+            
+            var assertionCount = 0;
             listView.$el.children("div").each(function (i, el) {
                 var contents = $(el).html();
                 if (contents==="empty") {
-                    ok(false, "blank element should not be included");
+                	since("blank element should not be included");
+                    expect(false).toBe(true);
                 } else if (contents === "") {
-                    ok(true, "Empty placeholder div, but no view");
+                	since("Empty placeholder div, but no view");
+                    expect(true).toBe(true);
+                    assertionCount++;
                 } else {
-                    ok(_.contains(ids, contents, "ID rendered is from list"));
+                    expect(_.contains(ids, contents, "ID rendered is from list")).toBe(true);
+                    assertionCount++;
                 }
             });
+            expect(assertionCount).toEqual(4);
         });
 
-        test("Blank element if max size not yet reached", function() {
+        it("Blank element if max size not yet reached", function() {
             var listView = new MyListView({
                 maxLength: 4,
                 collection: new BB.Collection(models)
             });
-            expect(4);
             listView.render();
+            
+            var assertionCount = 0;
             listView.$el.children("div").each(function (i, el) {
                 var contents = $(el).html();
                 if (contents==="empty") {
-                    ok(true, "blank element should be included");
+                    expect(true).toBe(true);
+                    assertionCount++;
                 } else if (contents === "") {
-                    ok(fail, "No empty divs please");
+                    expect(false).toBe(true);
+                    assertionCount++;
                 } else {
-                    ok(_.contains(ids, contents, "ID rendered is from list"));
+                    expect(_.contains(ids, contents, "ID rendered is from list")).toBe(true);
+                    assertionCount++;
                 }
             });
-        });
+            expect(assertionCount).toEqual(4);
+        })});
 
-        module("itemViewOptions");
+        describe("itemViewOptions", function() {
 
-        test("Test passing  itemViewOptions", function () {
+        it("Test passing itemViewOptions", function () {
             var listView = new MyListView({
                 itemViewOptions: { tagName: 'span' },
                 collection: new BB.Collection(models)
             });
-            expect(4); // TODO
             listView.render();
+            
+            // Jasmine has no default way to count the number of assertions, 
+            // So I'm adding something manually.
+            var assertionCount = 0;
             listView.$el.children("span").each(function () {
-                ok(true, "it's a span");
+                expect(true, "it's a span");
+                assertionCount++;
             });
-        });
-
-    };
-
-    return runtests;
-
+            expect(assertionCount).toEqual(4);
+        })});
 });

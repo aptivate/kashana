@@ -2,12 +2,33 @@ import os
 from dye import tasklib
 from dye.tasklib.django import _manage_py, _install_django_jenkins, create_private_settings, link_local_settings, clean_db, update_db, _manage_py_jenkins
 from dye.tasklib.environment import env
-from dye.tasklib.util import _rm_all_pyc
+from dye.tasklib.util import _rm_all_pyc, _check_call_wrapper
 
 def build_webassets():
     print "### Build assets"
     _manage_py(['assets', 'clean'])
     _manage_py(['assets', 'build'])
+
+
+def install_javascript_modules():
+    print "### Installing javascript modules"
+    javascript_dir = os.path.join(env['vcs_root_dir'], 'javascript')
+
+    # If the directory already exists get rid of it and reinstall to keep
+    # things clean.
+    npm_dir = os.path.join(javascript_dir, 'node_modules')
+    if os.path.exists(npm_dir):
+        _check_call_wrapper(['rm', '-r', npm_dir])
+
+    _check_call_wrapper(['npm', 'install'], cwd=javascript_dir)
+
+
+def run_javascript_tests():
+    print "### Running Javascript tests"
+    javascript_dir = os.path.join(env['vcs_root_dir'], 'javascript')
+
+    _check_call_wrapper(['grunt', 'test'], cwd=javascript_dir)
+
 
 def run_jenkins():
     """ make sure the local settings is correct and the database exists """
@@ -21,6 +42,7 @@ def run_jenkins():
     update_db()
     build_webassets()
     collect_static_files()
+    install_javascript_modules()
     _manage_py_jenkins()
 
 def collect_static_files():
@@ -33,6 +55,7 @@ def post_deploy(environment):
     all the other tasks are done.  So this is the place where you can
     add any custom tasks that your project requires, such as creating
     directories, setting permissions etc."""
+    install_javascript_modules()
     setup_group_permissions()
     build_webassets()
 
