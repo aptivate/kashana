@@ -51,11 +51,13 @@ module.exports = function(grunt) {
 	    // Based on https://github.com/maenu/grunt-template-jasmine-istanbul-example/blob/requirejs-client/Gruntfile.js at 30/11/2015
 		jasmine: {
 			coverage: {
-				src: ['src/**/*.js', "!src/lib/*.js"],
+				src: ['src/**/*.js', "!src/lib/*.js", "!src/lib/**/*.js"],
 				options: {
 					vendor:[
 					        'tests/lib/fixtures.js',
 					        'node_modules/jquery/dist/jquery.js',
+					        'src/lib/jquery-ui-1.11.4.custom.js',
+					        'src/lib/jquery-selectBoxIt-3.8.1/jquery.selectBoxIt.js',
 			        ],
 					specs: [
 					        'tests/js/list-tests.js', 
