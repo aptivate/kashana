@@ -119,6 +119,16 @@
     }
 }
 
+#logframes-switch {
+    display: inline-block;
+    padding: 1em 0 0.5em;
+    border-right: $header-right-border;
+}
+
+#logframes-switch select {
+    padding-right: 1.5em;
+}
+
 /* Django comments provides a honeypot field to help trick spammers but 
 we dont' want to show it to users */
 #id_honeypot {
