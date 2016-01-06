@@ -21,6 +21,7 @@ from settings import INSTALLED_APPS
 # add the jenkins app here
 INSTALLED_APPS = (
       'django_jenkins',
+      'cobertura_report_merger',
     ) + INSTALLED_APPS
 
 DEBUG = True
