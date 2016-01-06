@@ -20,6 +20,7 @@ lxml
 django-waffle==0.9.1
 beautifulsoup4==4.3.2
 html5lib==0.9999999
+-e git+git://github.com/daniell/django-cobertura-report-merger@9ed8bf119301057d261ae8500f64e4371c12f82d#egg=django-cobertura-report-merger
 
 # Views
 django-braces==1.2.2

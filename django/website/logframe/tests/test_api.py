@@ -9,6 +9,7 @@ from django_dynamic_fixture import G
 import mock
 import pytest
 from rest_framework.request import Request
+from rest_framework.test import APIRequestFactory
 
 from contacts.models import User
 from contacts.group_permissions import GroupPermissions
@@ -18,9 +19,12 @@ from ..api import (
     FilterRelationship,
     IDFilterBackend,
     PeriodOverlapFilterBackend,
+    ResultViewSet,
+    StatusUpdateViewSet,
+    create_serializer,
     get_period_filter
 )
-from logframe.api import StatusUpdateViewSet, create_serializer
+from ..models import LogFrame, Result
 
 
 @pytest.mark.django_db
@@ -164,3 +168,21 @@ def test_create_serializer_returns_serializer_with_specified_class_as_model():
     serializer_class = create_serializer(model_class)
 
     assert model_class == serializer_class.Meta.model
+
+
+@pytest.mark.django_db
+def test_results_viewset_fields_create_result_with_just_title():
+    log_frame = G(LogFrame)
+    data = {'name': 'Test Item', 'log_frame': unicode(log_frame.id), 'order': '0', 'level': '1'}
+
+    request = APIRequestFactory().post('/', data, format='json')
+    request.user = mock.Mock()
+
+    result_view_set = ResultViewSet.as_view({'post': 'create'})
+
+    result_view_set(request)
+
+    try:
+        Result.objects.get(name='Test Item')
+    except Result.DoesNotExist:
+        pytest.fail("Result wasn't created")

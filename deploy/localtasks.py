@@ -40,10 +40,18 @@ def run_jenkins():
     link_local_settings('jenkins')
     clean_db()
     update_db()
-    build_webassets()
     collect_static_files()
+    build_webassets()
     install_javascript_modules()
     _manage_py_jenkins()
+    run_javascript_tests()
+    _manage_py([
+        'merge_coverage_files',
+        'coverage.xml',
+        'cobertura-coverage.xml',
+        '--output=coverage-merged.xml',
+        '--path=../../reports'
+    ])
 
 def collect_static_files():
     """ Collect static files """
