@@ -7,7 +7,8 @@ from django.contrib.auth.forms import (
 from django.forms import (
     ModelForm, ValidationError, ImageField
 )
-from django.utils.http import int_to_base36
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode
 from django.utils.translation import ugettext as _
 
 import mail
@@ -226,7 +227,7 @@ class ContactPasswordResetForm(PasswordResetForm):
             ctx = {
                 'email': user.business_email,
                 'site': settings.SITE_HOSTNAME,
-                'uid': int_to_base36(user.pk),
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                 'user': user,
                 'token': token_generator.make_token(user),
                 'protocol': use_https and 'https' or 'http',
