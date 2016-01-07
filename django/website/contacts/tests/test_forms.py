@@ -1,6 +1,10 @@
-import pytest
+from django.contrib.auth import get_user_model
+from django.core import mail
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode
 
-from mock import Mock
+from django_dynamic_fixture import G
+import pytest
 
 from ..forms import (
     AddContactForm,
@@ -46,3 +50,18 @@ def test_username_not_in_admin_user_creation_form():
 def test_username_not_in_admin_user_change_form():
     form = AdminUserChangeForm()
     assert 'username' not in form.fields
+
+
+@pytest.mark.django_db
+def test_user_id_encoded_in_base_64_when_sending_password_reset_email():
+    mail.outbox = []
+
+    User = get_user_model()
+    user = G(User)
+    encoded_username = urlsafe_base64_encode(force_bytes(user.pk))
+
+    form = ContactPasswordResetForm(data={'email': user.business_email})
+    form.is_valid()
+    form.save('Test Email')
+
+    assert encoded_username in mail.outbox[0].body
