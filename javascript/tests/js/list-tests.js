@@ -78,7 +78,6 @@ define([
                     assertionCount++;
                 } else if (contents === "") {
                     expect(false).toBe(true);
-                    assertionCount++;
                 } else {
                     expect(_.contains(ids, contents, "ID rendered is from list")).toBe(true);
                     assertionCount++;
@@ -100,7 +99,8 @@ define([
             // So I'm adding something manually.
             var assertionCount = 0;
             listView.$el.children("span").each(function () {
-                expect(true, "it's a span");
+            	since("it's a span")
+                expect(true).toBe(true);
                 assertionCount++;
             });
             expect(assertionCount).toEqual(4);
