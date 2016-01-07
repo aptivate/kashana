@@ -56,8 +56,6 @@ module.exports = function(grunt) {
 					vendor:[
 					        'tests/lib/fixtures.js',
 					        'node_modules/jquery/dist/jquery.js',
-					        'src/lib/jquery-ui-1.11.4.custom.js',
-					        'src/lib/jquery-selectBoxIt-3.8.1/jquery.selectBoxIt.js',
 			        ],
 					specs: [
 					        'tests/js/list-tests.js', 
@@ -97,7 +95,7 @@ module.exports = function(grunt) {
 								//    unfortunately, grunt.config.get() doesn't work because the config is just being evaluated
 								config: {
 									instrumented: {
-										src: grunt.file.expand('src/**/*.js', "!src/lib/*.js")
+										src: grunt.file.expand('src/**/*.js', "!src/lib/*.js", "!src/lib/**/*.js" )
 									}
 								},
 								// 4. use this callback to read the paths of the sources being instrumented and redirect requests to them appropriately
