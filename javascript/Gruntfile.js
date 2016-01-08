@@ -51,8 +51,9 @@ module.exports = function(grunt) {
 	    // Based on https://github.com/maenu/grunt-template-jasmine-istanbul-example/blob/requirejs-client/Gruntfile.js at 30/11/2015
 		jasmine: {
 			coverage: {
-				src: ['src/**/*.js', "!src/lib/*.js"],
+				src: ['src/**/*.js', "!src/lib/*.js", "!src/lib/**/*.js"],
 				options: {
+					keepRunner: true,
 					vendor:[
 					        'tests/lib/fixtures.js',
 					        'node_modules/jquery/dist/jquery.js',
@@ -60,6 +61,7 @@ module.exports = function(grunt) {
 					specs: [
 					        'tests/js/list-tests.js', 
 					        'tests/js/input-tests.js',
+					        'tests/js/item-show-hide-tests.js',
 					        'tests/js/filter-lead-tests.js',
 					        'tests/js/filter-date-tests.js',
 					        'tests/js/editables/feedback-mixin-tests.js',
