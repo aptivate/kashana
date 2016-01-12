@@ -95,14 +95,6 @@ define([
             });
             listView.render();
             
-            // Jasmine has no default way to count the number of assertions, 
-            // So I'm adding something manually.
-            var assertionCount = 0;
-            listView.$el.children("span").each(function () {
-            	since("it's a span")
-                expect(true).toBe(true);
-                assertionCount++;
-            });
-            expect(assertionCount).toEqual(4);
+            expect(listView.$el.children("span").length).toEqual(4);
         })});
 });
