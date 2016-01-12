@@ -53,7 +53,6 @@ module.exports = function(grunt) {
 			coverage: {
 				src: ['src/**/*.js', "!src/lib/*.js", "!src/lib/**/*.js"],
 				options: {
-					keepRunner: true,
 					vendor:[
 					        'tests/lib/fixtures.js',
 					        'node_modules/jquery/dist/jquery.js',
@@ -64,8 +63,8 @@ module.exports = function(grunt) {
 					        'tests/js/item-show-hide-tests.js',
 					        'tests/js/filter-lead-tests.js',
 					        'tests/js/filter-date-tests.js',
-					        'tests/js/editables/feedback-mixin-tests.js',
 					        'tests/js/editables/cleaninput-mixin-tests.js',
+					        'tests/js/editables/feedback-mixin-tests.js', // This breaks if you move it above clean-input-mixin-tests.js. TODO: find out why and fix.
 					        'tests/js/components/base-view-tests.js',
 					],
 					helpers: [
