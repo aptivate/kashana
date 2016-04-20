@@ -3,7 +3,7 @@ import os.path
 from django.db.models import (
     CharField, TextField, EmailField,
     FileField, DateTimeField, BooleanField,
-    ImageField, ForeignKey
+    ImageField, ForeignKey, OneToOneField, Model
 )
 from django.contrib.auth.models import (
     AbstractBaseUser, BaseUserManager, PermissionsMixin
@@ -129,8 +129,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         blank=True,
         null=True)
 
-    last_viewed_logframe = ForeignKey('logframe.LogFrame', null=True)
-
     # Managers and book-keeping
 
     USERNAME_FIELD = 'business_email'
@@ -153,3 +151,8 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def save(self, *args, **kwargs):
         super(User, self).save(*args, **kwargs)
+
+
+class UserPreferences(Model):
+    user = OneToOneField(User, related_name='preferences')
+    last_viewed_logframe = ForeignKey('logframe.LogFrame', null=True)
