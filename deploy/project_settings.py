@@ -13,7 +13,7 @@ github_user = "aptivate"
 
 # The django apps that are part of this project - used for running tests
 # and migrations
-django_apps = ['appconf', 'contacts', 'dashboard', 'logframe']
+django_apps = ['appconf', 'contacts', 'dashboard', 'export', 'logframe', 'mail']
 
 # repository type can be "cvs", "svn" or "git"
 repo_type = "git"
