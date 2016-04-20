@@ -11,12 +11,19 @@ from logframe.models import LogFrame
 from ..mixins import OverviewMixin, update_last_viewed_logframe
 
 
+class MockUser(object):
+    preferences = None
+
+    def __init__(self):
+        self.preferences = mock.Mock(last_viewed_logfame=None)
+
+
 @pytest.mark.django_db
 def test_get_logframe_returns_new_logframe_if_none_exists():
     LogFrame.objects.all().delete()
 
     overview_mixin = OverviewMixin()
-    overview_mixin.request = mock.Mock(user=mock.Mock(last_viewed_logframe=None))
+    overview_mixin.request = mock.Mock(user=MockUser())
     overview_mixin.kwargs = {}
 
     log_frame = overview_mixin.get_logframe()
@@ -31,7 +38,7 @@ def test_get_logframe_returns_existing_logframe_where_one_exists():
     expected_log_frame = G(LogFrame)
 
     overview_mixin = OverviewMixin()
-    overview_mixin.request = mock.Mock(user=mock.Mock(last_viewed_logframe=None))
+    overview_mixin.request = mock.Mock(user=MockUser())
     overview_mixin.kwargs = {}
     actual_log_frame = overview_mixin.get_logframe()
 
@@ -45,7 +52,7 @@ def test_get_logframe_returns_first_logframe_by_default():
     expected_log_frame = G(LogFrame, n=2)[0]
 
     overview_mixin = OverviewMixin()
-    overview_mixin.request = mock.Mock(user=mock.Mock(last_viewed_logframe=None))
+    overview_mixin.request = mock.Mock(user=MockUser())
     overview_mixin.kwargs = {}
     actual_log_frame = overview_mixin.get_logframe()
 
@@ -59,7 +66,7 @@ def test_get_logframe_gets_last_viewed_logframe_slug_from_current_user():
     SessionMiddleware().process_request(request)
 
     expected_log_frame = G(LogFrame, n=2)[1]
-    request.user.last_viewed_logframe = expected_log_frame
+    request.user.preferences.last_viewed_logframe = expected_log_frame
 
     overview_mixin = OverviewMixin()
     overview_mixin.request = request
@@ -94,7 +101,7 @@ def test_get_logframe_gets_last_viewed_logframe_slug_from_kwargs_in_preference_t
     SessionMiddleware().process_request(request)
 
     unused_logframe, expected_log_frame = G(LogFrame, n=2)
-    request.user.last_viewed_logframe = unused_logframe
+    request.user.preferences.last_viewed_logframe = unused_logframe
 
     overview_mixin = OverviewMixin()
     overview_mixin.request = request
@@ -128,7 +135,7 @@ def test_last_viewed_logframe_set_when_different_in_session_and_slug_in_kwargs()
     request.user = mock.Mock()
 
     unused_logframe, expected_log_frame = G(LogFrame, n=2)
-    request.user.last_viewed_logframe = unused_logframe
+    request.user.preferences.last_viewed_logframe = unused_logframe
 
     overview_mixin = OverviewMixin()
     overview_mixin.request = request
@@ -166,7 +173,7 @@ def test_get_logframe_doesnt_set_logframe_id_in_session_if_present():
     overview_mixin.request = request
     overview_mixin.kwargs = {}
 
-    request.user.last_viewed_logframe = logframe
+    request.user.preferences.last_viewed_logframe = logframe
 
     overview_mixin.get_logframe()
 
@@ -175,9 +182,9 @@ def test_get_logframe_doesnt_set_logframe_id_in_session_if_present():
 
 @pytest.mark.django_db
 def test_update_session_logframe_updates_user_last_viewed_logframe():
-    request = mock.Mock(user=mock.Mock(last_viewed_logframe=None))
+    request = mock.Mock(user=MockUser())
 
     logframe = N(LogFrame, slug='test_slug')
     update_last_viewed_logframe(request.user, logframe)
 
-    assert 'test_slug' == request.user.last_viewed_logframe.slug
+    assert 'test_slug' == request.user.preferences.last_viewed_logframe.slug
