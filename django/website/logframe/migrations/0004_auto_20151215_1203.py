@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import re
+
 from __future__ import unicode_literals
 
 from django.db import migrations, models
@@ -9,6 +11,11 @@ def set_logframe_slug(apps, schema_editor):
     for logframe in LogFrame.objects.all():
         slug = logframe.name.lower()
         slug.replace(' ', '_')
+        slug = re.sub('[^\w-]', '', slug)
+        slug = slug[:47]
+        if LogFrame.objects.filter(slug=slug).exists():
+            count = LogFrame.objects.filter(slug__startswith=slug).count() + 1
+            slug += unicode(count)
         logframe.slug = slug
         logframe.save()
 
