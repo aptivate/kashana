@@ -8,7 +8,7 @@ import pytest
 
 from logframe.models import LogFrame
 
-from ..mixins import OverviewMixin, update_current_logframe
+from ..mixins import OverviewMixin, update_last_viewed_logframe
 
 
 @pytest.mark.django_db
@@ -53,7 +53,7 @@ def test_get_logframe_returns_first_logframe_by_default():
 
 
 @pytest.mark.django_db
-def test_get_logframe_gets_current_logframe_slug_from_current_user():
+def test_get_logframe_gets_last_viewed_logframe_slug_from_current_user():
     request = RequestFactory().get('/')
     request.user = mock.Mock()
     SessionMiddleware().process_request(request)
@@ -71,7 +71,7 @@ def test_get_logframe_gets_current_logframe_slug_from_current_user():
 
 
 @pytest.mark.django_db
-def test_get_logframe_gets_current_logframe_slug_from_kwargs():
+def test_get_logframe_gets_last_viewed_logframe_slug_from_kwargs():
     request = RequestFactory().get('/')
     request.user = mock.Mock()
     SessionMiddleware().process_request(request)
@@ -88,7 +88,7 @@ def test_get_logframe_gets_current_logframe_slug_from_kwargs():
 
 
 @pytest.mark.django_db
-def test_get_logframe_gets_current_logframe_slug_from_kwargs_in_preference_to_session():
+def test_get_logframe_gets_last_viewed_logframe_slug_from_kwargs_in_preference_to_session():
     request = RequestFactory().get('/')
     request.user = mock.Mock()
     SessionMiddleware().process_request(request)
@@ -106,7 +106,7 @@ def test_get_logframe_gets_current_logframe_slug_from_kwargs_in_preference_to_se
 
 
 @pytest.mark.django_db
-def test_current_logframe_set_when_not_set_on_user_but_slug_in_kwargs():
+def test_last_viewed_logframe_set_when_not_set_on_user_but_slug_in_kwargs():
     request = RequestFactory().get('/')
     request.user = mock.Mock()
     SessionMiddleware().process_request(request)
@@ -123,7 +123,7 @@ def test_current_logframe_set_when_not_set_on_user_but_slug_in_kwargs():
 
 
 @pytest.mark.django_db
-def test_current_logframe_set_when_different_in_session_and_slug_in_kwargs():
+def test_last_viewed_logframe_set_when_different_in_session_and_slug_in_kwargs():
     request = RequestFactory().get('/')
     request.user = mock.Mock()
 
@@ -178,6 +178,6 @@ def test_update_session_logframe_updates_user_last_viewed_logframe():
     request = mock.Mock(user=mock.Mock(last_viewed_logframe=None))
 
     logframe = N(LogFrame, slug='test_slug')
-    update_current_logframe(request.user, logframe)
+    update_last_viewed_logframe(request.user, logframe)
 
     assert 'test_slug' == request.user.last_viewed_logframe.slug

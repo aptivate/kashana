@@ -13,7 +13,7 @@ from django.conf import settings
 from django.shortcuts import get_object_or_404
 
 
-def update_current_logframe(user, logframe):
+def update_last_viewed_logframe(user, logframe):
     user.last_viewed_logframe = logframe
     user.save()
 
@@ -30,13 +30,13 @@ class OverviewMixin(object):
 
             if not user.last_viewed_logframe or slug != user.last_viewed_logframe.slug:
                 logframe = get_object_or_404(LogFrame, slug=slug)
-                update_current_logframe(user, logframe)
+                update_last_viewed_logframe(user, logframe)
             else:
                 logframe = user.last_viewed_logframe
 
         else:
             logframe = LogFrame.objects.all().order_by('id')[0]
-            update_current_logframe(user, logframe)
+            update_last_viewed_logframe(user, logframe)
 
         return logframe
 
