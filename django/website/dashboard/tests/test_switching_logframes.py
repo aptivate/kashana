@@ -17,7 +17,7 @@ def test_switch_logframes_sets_user_last_viewed_logframe_to_new_logframe():
 
     SwitchLogframes.as_view()(request)
 
-    assert 'test' == request.user.last_viewed_logframe.slug
+    assert 'test' == request.user.preferences.last_viewed_logframe.slug
 
 
 @mock.patch('dashboard.views.get_object_or_404', new=mock.Mock(return_value=mock.Mock(slug='test')))

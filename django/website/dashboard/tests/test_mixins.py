@@ -15,7 +15,10 @@ class MockUser(object):
     preferences = None
 
     def __init__(self):
-        self.preferences = mock.Mock(last_viewed_logfame=None)
+        self.preferences = mock.Mock(last_viewed_logframe=None)
+
+    def save(self):
+        pass
 
 
 @pytest.mark.django_db
@@ -126,7 +129,7 @@ def test_last_viewed_logframe_set_when_not_set_on_user_but_slug_in_kwargs():
 
     overview_mixin.get_logframe()
 
-    assert expected_log_frame == overview_mixin.request.user.last_viewed_logframe
+    assert expected_log_frame == overview_mixin.request.user.preferences.last_viewed_logframe
 
 
 @pytest.mark.django_db
@@ -143,7 +146,7 @@ def test_last_viewed_logframe_set_when_different_in_session_and_slug_in_kwargs()
 
     overview_mixin.get_logframe()
 
-    assert expected_log_frame == request.user.last_viewed_logframe
+    assert expected_log_frame == request.user.preferences.last_viewed_logframe
 
 
 @pytest.mark.django_db
@@ -159,7 +162,7 @@ def test_get_logframe_stores_logframe_id_in_request_user():
 
     overview_mixin.get_logframe()
 
-    assert expected_log_frame == request.user.last_viewed_logframe
+    assert expected_log_frame == request.user.preferences.last_viewed_logframe
 
 
 @pytest.mark.django_db

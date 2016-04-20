@@ -14,7 +14,7 @@ from django.shortcuts import get_object_or_404
 
 
 def update_last_viewed_logframe(user, logframe):
-    user.last_viewed_logframe = logframe
+    user.preferences.last_viewed_logframe = logframe
     user.save()
 
 
@@ -24,21 +24,21 @@ class OverviewMixin(object):
             LogFrame.objects.create(name=settings.DEFAULT_LOGFRAME_NAME, slug=settings.DEFAULT_LOGFRAME_SLUG)
 
         user = self.request.user
+        logframe = user.preferences.last_viewed_logframe
+        if 'slug' in self.kwargs or logframe:
+            slug = self.kwargs.get('slug') or logframe.slug
 
-        if 'slug' in self.kwargs or user.last_viewed_logframe:
-            slug = self.kwargs.get('slug') or user.last_viewed_logframe.slug
-
-            if not user.last_viewed_logframe or slug != user.last_viewed_logframe.slug:
-                logframe = get_object_or_404(LogFrame, slug=slug)
-                update_last_viewed_logframe(user, logframe)
+            if not logframe or slug != logframe.slug:
+                new_logframe = get_object_or_404(LogFrame, slug=slug)
+                update_last_viewed_logframe(user, new_logframe)
             else:
-                logframe = user.last_viewed_logframe
+                new_logframe = user.preferences.last_viewed_logframe
 
         else:
-            logframe = LogFrame.objects.all().order_by('id')[0]
-            update_last_viewed_logframe(user, logframe)
+            new_logframe = LogFrame.objects.all().order_by('id')[0]
+            update_last_viewed_logframe(user, new_logframe)
 
-        return logframe
+        return new_logframe
 
     def get_activities(self, logframe):
         return self.get_related_model_data(
