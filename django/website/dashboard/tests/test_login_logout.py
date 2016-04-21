@@ -1,5 +1,6 @@
 import pytest
 
+from django.contrib.auth.models import AnonymousUser
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 from django.test.client import Client, RequestFactory
@@ -29,6 +30,7 @@ class FrontpageTests(TestCase):
     @pytest.mark.integration
     def test_homepage_logged_out(self):
         request = RequestFactory().get('/')
+        request.user = AnonymousUser()
         response = self.view(request)
         next_url = "{0}?next={1}".format(reverse("login"), reverse("home"))
 

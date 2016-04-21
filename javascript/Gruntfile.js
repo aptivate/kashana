@@ -51,7 +51,7 @@ module.exports = function(grunt) {
 	    // Based on https://github.com/maenu/grunt-template-jasmine-istanbul-example/blob/requirejs-client/Gruntfile.js at 30/11/2015
 		jasmine: {
 			coverage: {
-				src: ['src/**/*.js', "!src/lib/*.js"],
+				src: ['src/**/*.js', "!src/lib/*.js", "!src/lib/**/*.js"],
 				options: {
 					vendor:[
 					        'tests/lib/fixtures.js',
@@ -95,7 +95,7 @@ module.exports = function(grunt) {
 								//    unfortunately, grunt.config.get() doesn't work because the config is just being evaluated
 								config: {
 									instrumented: {
-										src: grunt.file.expand('src/**/*.js', "!src/lib/*.js")
+										src: grunt.file.expand('src/**/*.js', "!src/lib/*.js", "!src/lib/**/*.js" )
 									}
 								},
 								// 4. use this callback to read the paths of the sources being instrumented and redirect requests to them appropriately

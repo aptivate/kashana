@@ -10,33 +10,43 @@
     {% assets "css_all" %}
     <link rel="stylesheet" href="{{ ASSET_URL }}">
     {% endassets %}
-    
     <script>window.Aptivate = {};</script>
 </head>
 <body{% block body_attrs %}{% endblock %}>
     <div class="body"> {# Created because ui.jquery really doesn't like sized <body> #}
 
     <header class="page-header">
-        <h1><a href="/" class="logo">{% settings_value "SITE_NAME" %} <span> MIS</span></a></h1>
-        <div class="account-links">
-            {% if request.user and request.user.is_authenticated %}
-            <p class="account-links-profile"><a href="{% url "personal_edit" %}">{{ user.get_full_name|default:user.business_email }}</a></p>
-            <p class="account-links-auth"><a href="{% url "logout" %}">Log out</a></p>
-            {% else %}
-            <p class="account-links-auth"><a href="{% url "login" %}">Log in</a></p>
-            {% endif %}
-        </div>
+        <h1 class="logo"><a href="/">{% settings_value "SITE_NAME" %}</a></h1>
+        {% block logframe_switching_form %}
+        {% if request.user and request.user.is_authenticated %}
+        <form id="logframes-switch" action="{% url "switch-logframes" %}" method="post">{% csrf_token %}
+            <select id="logframes-switch-select" name="logframe" onchange="this.form.submit();">
+            	{% for logframe in logframe_list %}<option value="{{ logframe.id }}"{% if request.user.preferences.last_viewed_logframe == logframe %} selected="selected"{% endif %}>{{ logframe.name }}</option>{% endfor %}
+			</select>
+		</form>
+		{% endif %}
+		{% endblock logframe_switching_form %}
+        {% if request.user and request.user.is_authenticated %}
+         <div class="account-links-auth"><a href="{% url "logout" %}">Log out</a></div>
+         {% if perms.contacts.add_user %}
+            <div class="navigation-link"><a href="{% url "contact_list" %}" id="nav-people">People</a></li></div>
+         {% endif %}
+         {% if request.user.preferences.last_viewed_logframe %}
+            <div class="navigation-link"><a href="{% url "logframe-dashboard" request.user.preferences.last_viewed_logframe.slug %}" id="nav-dashboard">Dashboard</a></div>
+         {% endif %}
+         <div class="account-links-profile"><span>Logged in as: </span><a href="{% url "personal_edit" %}">{{ user.get_full_name|default:user.business_email }}</a></div>
+        {% else %}
+            <div class="account-links-auth"><a href="{% url "login" %}">Log in</a></div>
+        {% endif %}
     </header>
     <div class="content-box">
         {% block main_menu %}
         {% if request.user and request.user.is_authenticated %}
         <div class="section-navigation pure-menu pure-menu-open pure-menu-horizontal">
             <ul>
-                <li><a href="/" id="nav-dashboard">Dashboard</a></li>
-                {# <li><a href="/logframe/1/">Log Frame</a></li> #}
-                {% if perms.contacts.add_user %}
-                <li><a href="{% url "contact_list" %}" id="nav-people">People</a></li>
-                {% endif %}
+                 
+              
+                
             </ul>
         </div>
         {% endif %}
