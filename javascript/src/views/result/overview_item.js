@@ -139,9 +139,6 @@ define([
                     level: level + 1
                 }
             });
-            if (level === 1){
-                listView.maxLength = 1;
-            }
             return listView;
         },
 
