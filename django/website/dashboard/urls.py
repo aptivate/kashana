@@ -1,9 +1,11 @@
 from django.conf.urls import url
 from .views import (
-    Home, DashboardView
+    Home, DashboardView, DashboardLogframeSelection, SwitchLogframes
 )
 
 urlpatterns = [
-    url(r'^dashboard/$', DashboardView.as_view(), name='dashboard'),
+    url(r'^dashboard/$', DashboardLogframeSelection.as_view(), name='dashboard'),
+    url(r'logframes/switch$', SwitchLogframes.as_view(), name='switch-logframes'),
+    url(r'^dashboard/(?P<slug>[\w\d_-]+)/$', DashboardView.as_view(), name='logframe-dashboard'),
     url(r'', Home.as_view(), name='home'),
 ]

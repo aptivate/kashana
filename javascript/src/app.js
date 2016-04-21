@@ -3,10 +3,15 @@ define([
     'jquery',
     'models/models',
     'models/collections',
-], function (Backbone, $, models, collections) {
+    'select_box_it',
+], function (Backbone, $, models, collections, selectBoxIt) {
     if (!Aptivate.status) {
         Aptivate.status = {};
     }
+    $('#logframes-switch-select').selectBoxIt({
+    	hideCurrent: true,
+    	dynamicPositioning: false
+    });
 
     // Initialize collections
     Aptivate.logframe = new models.Logframe(Aptivate.data.logframe);

@@ -12,7 +12,7 @@ class UserTests(TestCase):
         self.user = UserFactory(first_name='Fake', last_name='Name')
 
     def test_get_full_name(self):
-        self.assertEqual(self.user.get_full_name(), "Name, Fake")
+        self.assertEqual(self.user.get_full_name(), "Fake Name")
 
     def test_get_short_name(self):
         self.assertEqual(self.user.get_short_name(), "Fake")

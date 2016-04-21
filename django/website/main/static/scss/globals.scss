@@ -8,6 +8,8 @@
        -moz-box-sizing: border-box;
             box-sizing: border-box;
 }
+
+$header-right-border: $black solid 1px;
 html {
     font-size:1em;
     background-color: $page-background;
@@ -24,7 +26,6 @@ body {
     margin: 0 auto;
     min-width:18em;
     position: relative;
-    border-top:15px solid $dusk-blue;
 }
 a,
 a:link,

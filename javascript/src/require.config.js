@@ -2,6 +2,7 @@ requirejs.config({
     paths: {
         "jquery": "lib/jquery",
         "ui.jquery": "lib/jquery-ui-1.11.4.custom.min",
+        "select_box_it": "lib/jquery-selectBoxIt-3.8.1/jquery.selectBoxIt.min",
         "underscore": "lib/underscore",
         "backbone_base": "lib/backbone",
         "backbone_sync": "lib/backbone_sync",
@@ -38,6 +39,7 @@ requirejs.config({
             "exports": "Pen"
         },
         "ui.jquery": ["jquery"],
+        "select_box_it": ["jquery", "ui.jquery"],
         "backbone_subviews": ["backbone_base"],
         "handlebars": {
             "deps": ["lib/handlebars.runtime"],

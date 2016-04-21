@@ -38,7 +38,7 @@ define([
     var Router = Backbone.Router.extend({
         routes: {
             "": "home",
-            "dashboard/": "showOverview",
+            "dashboard/:logframe_slug/": "showOverview",
             "design/:logframe_id/result/:result_id/": "showResult",
             "monitor/:logframe_id/result/:result_id/": "showMonitor",
             "*other": "defaultRouter"
