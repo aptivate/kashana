@@ -3,7 +3,7 @@ import os.path
 from django.db.models import (
     CharField, TextField, EmailField,
     FileField, DateTimeField, BooleanField,
-    ImageField
+    ImageField, ForeignKey, OneToOneField, Model
 )
 from django.contrib.auth.models import (
     AbstractBaseUser, BaseUserManager, PermissionsMixin
@@ -137,7 +137,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     def get_full_name(self):
-        return u"{1}, {0}".format(self.first_name, self.last_name)
+        return u"{0} {1}".format(self.first_name, self.last_name)
 
     def get_short_name(self):
         return self.first_name
@@ -151,3 +151,8 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def save(self, *args, **kwargs):
         super(User, self).save(*args, **kwargs)
+
+
+class UserPreferences(Model):
+    user = OneToOneField(User, related_name='preferences')
+    last_viewed_logframe = ForeignKey('logframe.LogFrame', null=True)
