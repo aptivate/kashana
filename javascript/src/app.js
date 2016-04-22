@@ -1,6 +1,7 @@
 define([
     'backbone',
     'jquery',
+    'ui.jquery',
     'models/models',
     'models/collections',
     'select_box_it',

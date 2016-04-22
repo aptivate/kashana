@@ -13187,6 +13187,7 @@ define("select_box_it", ["jquery","ui.jquery"], function(){});
 define('app',[
     'backbone',
     'jquery',
+    'ui.jquery',
     'models/models',
     'models/collections',
     'select_box_it',
