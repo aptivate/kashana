@@ -2,7 +2,8 @@ var gulp = require('gulp'),
     handlebars = require('gulp-handlebars'),
     defineModule = require('gulp-define-module'),
     declare = require('gulp-declare'),
-    concat = require('gulp-concat');
+    concat = require('gulp-concat'),
+    saveLicense = require('uglify-save-license');
 
 module.exports = function(grunt) {
 	grunt.initConfig({
@@ -17,7 +18,7 @@ module.exports = function(grunt) {
 	    		}))
 	    		.pipe(concat('src/lib/templates.js'))
 	    		.pipe(gulp.dest('.'));
-	    	}
+	    	},
 	    },
 	    jshint: {
 	    	'logframe': ['src/**/*.js', '!src/lib/*'],
@@ -39,9 +40,26 @@ module.exports = function(grunt) {
 	          }
 	        },
 	    },
+	    requirejs: {
+    	  compile: {
+    	    options: {
+    	      baseUrl: './src/',
+    	      mainConfigFile: './src/require.config.js',
+    	      name: 'main',
+    	      findNestedDependencies: true,
+    	      out: 'dist/logframe.js',
+    	      optimize: 'none',
+    	    }
+    	  }
+	    },
 	    uglify: {
 	    	logframe: {
-	    		'dist/logframe.min.js': ['src/**/*.js']
+	    		options: {
+	    			preserveComments: saveLicense
+	    		},
+	    		files: {
+	    			'dist/logframe.min.js': ['dist/logframe.js']
+	    		}
 	    	}
 	    },
 	    watch: {
@@ -132,6 +150,9 @@ module.exports = function(grunt) {
 	  grunt.loadNpmTasks('grunt-contrib-jshint');
 	  grunt.loadNpmTasks('grunt-contrib-jasmine');
 	  grunt.loadNpmTasks('grunt-contrib-watch');
+	  grunt.loadNpmTasks('grunt-contrib-concat');
+	  grunt.loadNpmTasks('grunt-contrib-uglify');
+	  grunt.loadNpmTasks('grunt-contrib-requirejs');
 	  
 	  grunt.loadNpmTasks('grunt-gulp');
 
@@ -139,6 +160,6 @@ module.exports = function(grunt) {
 	  
 	  grunt.registerTask('templates', ['gulp:templates']);
 
-	  grunt.registerTask('default', ['templates', 'jshint']);
+	  grunt.registerTask('default', ['templates', 'requirejs', 'uglify']);
 
 };
