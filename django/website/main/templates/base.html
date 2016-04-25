@@ -20,7 +20,7 @@
         {% block logframe_switching_form %}
         {% if request.user and request.user.is_authenticated %}
         <form id="logframes-switch" action="{% url "switch-logframes" %}" method="post">{% csrf_token %}
-            <select id="logframes-switch-select" name="logframe" onchange="this.form.submit();">
+            <select id="logframes-switch-select" name="logframe" onchange="this.form.submit();"{% if logframe_list|length == 1 %}disabled="disabled"{% endif %}>
             	{% for logframe in logframe_list %}<option value="{{ logframe.id }}"{% if request.user.preferences.last_viewed_logframe == logframe %} selected="selected"{% endif %}>{{ logframe.name }}</option>{% endfor %}
 			</select>
 		</form>
