@@ -453,3 +453,8 @@ class Period(models.Model):
 
     def __str__(self):
         return 'Periods for logframe %s' % self.log_frame.name
+
+
+class ResultLevelName(models.Model):
+    level_number = models.IntegerField(primary_key=True)
+    level_name = models.CharField(max_length=128)
