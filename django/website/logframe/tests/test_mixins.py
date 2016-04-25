@@ -4,11 +4,11 @@ import mock
 from datetime import date
 from django_dynamic_fixture import G
 from django.contrib.auth.models import Permission
-from contacts.group_permissions import GroupPermissions
-from ..mixins import AptivateDataBaseMixin, QuerysetSerializer
-from ..models import LogFrame, Result, Period, Milestone
-from contacts.models import User
 from appconf.models import Settings
+from contacts.group_permissions import GroupPermissions
+from contacts.models import User
+from ..mixins import AptivateDataBaseMixin, QuerysetSerializer
+from ..models import LogFrame, Result, Period, Milestone, ResultLevelName
 
 
 def test_queryserializer_creates_correct_serializer():
@@ -143,3 +143,23 @@ def test_get_periods_returns_correct_periods():
     ]
 
     assert periods == expected
+
+
+@pytest.mark.django_db
+def test_data_for_data_for_level_names_is_dict_of_number_to_name():
+    logframe = G(LogFrame)
+    # Some names are added by migration. We want to start with the table empty
+    ResultLevelName.objects.all().delete()
+    level_names = G(ResultLevelName, n=3)
+
+    mixin = AptivateDataBaseMixin()
+
+    expected_level_data = {
+        the_level_name.level_number: the_level_name.level_name
+        for the_level_name in level_names
+    }
+
+    logframe_data = mixin.get_logframe_data(logframe)
+
+    actual_level_data = logframe_data['levels']
+    assert expected_level_data == actual_level_data
