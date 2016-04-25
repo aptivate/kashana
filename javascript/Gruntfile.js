@@ -2,7 +2,8 @@ var gulp = require('gulp'),
     handlebars = require('gulp-handlebars'),
     defineModule = require('gulp-define-module'),
     declare = require('gulp-declare'),
-    concat = require('gulp-concat');
+    concat = require('gulp-concat'),
+    saveLicense = require('uglify-save-license');
 
 module.exports = function(grunt) {
 	grunt.initConfig({
@@ -17,7 +18,7 @@ module.exports = function(grunt) {
 	    		}))
 	    		.pipe(concat('src/lib/templates.js'))
 	    		.pipe(gulp.dest('.'));
-	    	}
+	    	},
 	    },
 	    jshint: {
 	    	'logframe': ['src/**/*.js', '!src/lib/*'],
@@ -39,9 +40,26 @@ module.exports = function(grunt) {
 	          }
 	        },
 	    },
+	    requirejs: {
+    	  compile: {
+    	    options: {
+    	      baseUrl: './src/',
+    	      mainConfigFile: './src/require.config.js',
+    	      name: 'main',
+    	      findNestedDependencies: true,
+    	      out: 'dist/logframe.js',
+    	      optimize: 'none',
+    	    }
+    	  }
+	    },
 	    uglify: {
 	    	logframe: {
-	    		'dist/logframe.min.js': ['src/**/*.js']
+	    		options: {
+	    			preserveComments: saveLicense
+	    		},
+	    		files: {
+	    			'dist/logframe.min.js': ['dist/logframe.js']
+	    		}
 	    	}
 	    },
 	    watch: {
@@ -51,7 +69,7 @@ module.exports = function(grunt) {
 	    // Based on https://github.com/maenu/grunt-template-jasmine-istanbul-example/blob/requirejs-client/Gruntfile.js at 30/11/2015
 		jasmine: {
 			coverage: {
-				src: ['src/**/*.js', "!src/lib/*.js"],
+				src: ['src/**/*.js', "!src/lib/*.js", "!src/lib/**/*.js"],
 				options: {
 					keepRunner: true,
 					vendor:[
@@ -98,7 +116,7 @@ module.exports = function(grunt) {
 								//    unfortunately, grunt.config.get() doesn't work because the config is just being evaluated
 								config: {
 									instrumented: {
-										src: grunt.file.expand('src/**/*.js', "!src/lib/*.js")
+										src: grunt.file.expand('src/**/*.js', "!src/lib/*.js", "!src/lib/**/*.js" )
 									}
 								},
 								// 4. use this callback to read the paths of the sources being instrumented and redirect requests to them appropriately
@@ -135,6 +153,9 @@ module.exports = function(grunt) {
 	  grunt.loadNpmTasks('grunt-contrib-jshint');
 	  grunt.loadNpmTasks('grunt-contrib-jasmine');
 	  grunt.loadNpmTasks('grunt-contrib-watch');
+	  grunt.loadNpmTasks('grunt-contrib-concat');
+	  grunt.loadNpmTasks('grunt-contrib-uglify');
+	  grunt.loadNpmTasks('grunt-contrib-requirejs');
 	  
 	  grunt.loadNpmTasks('grunt-gulp');
 
@@ -142,6 +163,6 @@ module.exports = function(grunt) {
 	  
 	  grunt.registerTask('templates', ['gulp:templates']);
 
-	  grunt.registerTask('default', ['templates', 'jshint']);
+	  grunt.registerTask('default', ['templates', 'requirejs', 'uglify']);
 
 };

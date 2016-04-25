@@ -1,0 +1,14 @@
+{% extends "dashboard/dashboard_base.html" %}
+
+{% load i18n %}
+{% block logframe_switching_form %}
+{% endblock logframe_switching_form %}
+
+{% block content %}
+    <h2>{% trans "Logframes available for you to view" %}</h2>
+    <ul>
+    {% for logframe in logframe_list %}
+        <li><a href="{% url "logframe-dashboard" logframe.slug %}">{{ logframe.name }}</a> </li>
+    {% endfor %}
+    </ul>
+{% endblock content %}

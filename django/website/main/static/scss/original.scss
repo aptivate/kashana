@@ -78,51 +78,58 @@ a.pure-button {
 }
 .page-header {
     color: $dark-grey;
-    background-color:$row-stripe;
+    background-color:$dusk-blue;
     font-size: 0.9em;
-    border-top:3px solid $text-background;
 }
     .logo {
-        display: block;
-        position: absolute;
-        height: 64px;
-        font-size:1.3em;
-        top: 0;
-        left: 1.5em;
+        display: inline-block;
+        font-size:2em;
         z-index: 2;
         padding: 10px;
-        background-color: $text-background;
-        @include border-radius(0 0 15px 15px);
-        @include box-shadow(0 0 10px rgba(0, 0, 0, 0.3));
+        margin: 0;
+        color: $text-background;
+        border-right: $header-right-border;
+        float: left;
         text-align:center;
+        
+        a {
+            color: $white;
+            font-weight: normal;
+        }
     }
-    
-      .logo > span {
-          font-size: 1em;
-          font-weight: normal;
-      }
+
 .account-links {
-    float: right;
-    position: relative;
+    
     top: -0.5em;
     padding-right:1.5em;
     padding-left: 300px;
 }
 .account-links-profile,
-.account-links-auth {
+.account-links-auth,
+.navigation-link {
+    float: right;
+    position: relative;
     display: inline-block;
-    margin-right: 1em;
+    border-right: $header-right-border; 
 }
     .account-links-profile,
-    .account-links-auth {
-        margin: 0em 1em 0 0;
+    .account-links-auth,
+    .navigation-link {
+        padding: 1.5em;
         font-size:0.9em;
+        color: $white;
     }
     .account-links-profile > a,
-    .account-links-auth > a {
+    .account-links-profile > span,
+    .account-links-auth > a,
+    .navigation-link > a {
         font-size:1.2em;
+        color: $white;
     }
     
+.account-links-auth {
+    margin-right: 2em;
+}
 .section-navigation {
     display: block;
     padding-right: 1.8em;

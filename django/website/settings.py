@@ -118,6 +118,7 @@ TEMPLATES = [{
             'django.template.context_processors.media',
             'django.template.context_processors.static',
             'django.contrib.messages.context_processors.messages',
+            'main.context_processors.logframe_list',
             'main.context_processors.deploy_env',
         ],
         'debug': DEBUG,
@@ -214,6 +215,7 @@ JSTEMPLATE_DIRS = [
 
 # Project Specific Settings
 DEFAULT_LOGFRAME_NAME = "Log Frame"
+DEFAULT_LOGFRAME_SLUG = "log_frame"
 
 # tasks.py expects to find local_settings.py so the database stuff is there
 #--------------------------------
