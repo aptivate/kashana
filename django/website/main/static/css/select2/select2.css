@@ -135,7 +135,8 @@
   }
   .select2-container--default .select2-selection--single .select2-selection__rendered {
     color: #FFF;
-    line-height: 28px; }
+    line-height: 28px;
+    font-size: 1.2em; }
   .select2-container--default .select2-selection--single .select2-selection__clear {
     cursor: pointer;
     float: right;
