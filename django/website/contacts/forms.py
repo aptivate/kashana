@@ -19,6 +19,7 @@ from main.widgets import (
     BetterFileInput,
     BetterImageInput,
 )
+from tabular_permissions.widgets import TabularPermissionsWidget
 from .models import User
 
 TITLES = (
@@ -242,3 +243,13 @@ class ContactPasswordResetForm(PasswordResetForm):
                 'context': ctx
             }
             mail.notify(options)
+
+
+class PermissionsForm(ModelForm):
+
+    class Meta:
+        model = User
+        fields = ['user_permissions']
+        widgets = {
+            'user_permissions': TabularPermissionsWidget('User Permissions', False)
+        }

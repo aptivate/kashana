@@ -10,6 +10,8 @@
     {% assets "css_all" %}
     <link rel="stylesheet" href="{{ ASSET_URL }}">
     {% endassets %}
+    {% block extra_media %}
+    {% endblock %}
     <script>window.Aptivate = {};</script>
 </head>
 <body{% block body_attrs %}{% endblock %}>

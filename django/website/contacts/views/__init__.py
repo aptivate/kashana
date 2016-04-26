@@ -13,4 +13,5 @@ from .contact_info import (
     UpdateContact,
     UpdatePersonalInfo,
     DeleteContact,
+    SetUserPermissions,
 )

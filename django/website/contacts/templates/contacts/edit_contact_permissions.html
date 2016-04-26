@@ -1,0 +1,75 @@
+{% extends "main_aside.html" %}
+{% load assets %}
+{% load i18n %}
+{% load basename %}
+{% load assets %}
+
+{% block title %}{% trans "Update personal information" %}{% endblock %}
+
+{% block extra_media %}<script type="text/javascript" src="/admin/jsi18n/"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}admin/js/jquery.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}admin/js/jquery.init.js"></script>
+{{ form.media }}
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}admin/css/widgets.css"/>
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}admin/css/base.css"/>
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}admin/css/forms.css"/>{% endblock %}
+{% block main_content %}
+    <form action="" method="post" class="pure-form pure-form-stacked" enctype="multipart/form-data" id="contact-form">
+        {% csrf_token %}
+
+{# COMMON #}
+
+        <fieldset class="section-common">
+            <h3>{% trans "Personal information" %}</h3>
+            {% with form=form %}
+                {% include "form_snippet.html" %}
+            {% endwith %}
+        </fieldset>
+
+{# ACTION CONTROLS #}
+        <fieldset>
+            <div class="pure-control-group">
+                <button type="submit" class="pure-button pure-button-primary">{% trans "Save contact" %}</button>
+								{% if not object.has_usable_password and object.business_email %}
+									<button type="submit" name="save-and-email" class="pure-button pure-button-secondary">{% trans "Send invitation" %}</button>
+								{% endif %}
+
+								{% if request.path == '/contacts/personal/' %}
+                <a href="{% url "home" %}" class="pure-button">{% trans "Cancel" %}</a>
+								{% elif perms.contacts.add_user %}
+                <a href="{% url "contact_list" %}" class="pure-button">{% trans "Back to contact list" %}</a>
+								{% else %}
+                <a href="{% url "home" %}" class="pure-button">{% trans "Cancel" %}</a>
+								{% endif %}
+            </div>
+        </fieldset>
+    </form>
+    {% if object and perms.contacts.delete_user %}
+    <p>{% url "contact_delete" object.id as delete_url %}
+    {% blocktrans %}You can also <a href="{{ delete_url }}">delete this contact</a>.{% endblocktrans %}
+    </p>
+    {% endif %}
+{% endblock %}
+
+{% block sidebar %}
+    {% if not object.has_usable_password and object.business_email %}
+    <p>
+        {% trans "Account not claimed" %}
+        <button data-form="#contact-form" type="submit" name="save-and-email" class="remote-submit pure-button pure-button-secondary">{% trans "Send invitation" %}</button><br />
+        This will also save any changes to your contact form
+    </p>
+    {% endif  %}
+
+    {% if object %}
+        {% if object.id == request.user.id %}
+    <p><a href="{% url "password_change" %}">{% trans "Change password" %}</a></p>
+        {% endif %}
+
+        {% endif %} {# endif object #}
+{% endblock %}
+
+{% block page_bottom %}
+    {% assets "widget_js_all" %}
+    <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+    {% endassets %}
+{% endblock %}

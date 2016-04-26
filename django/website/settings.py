@@ -129,7 +129,8 @@ TEMPLATES = [{
     }
 }]
 
-
+TABULAR_PERMISSIONS_AUTO_IMPLEMENT = False
+TABULAR_PERMISSIONS_EXCLUDE_APPS = ['south']
 ROOT_URLCONF = 'urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
@@ -153,13 +154,14 @@ INSTALLED_APPS = (
     'django_assets',
     'floppyforms',
     'rest_framework_nested',
+    'tabular_permissions',
     # 'waffle',
 
     # our apps
     'main',
     'logframe',
-    'contacts',
     'dashboard',
+    'contacts',
     'appconf',
     'export',
 )

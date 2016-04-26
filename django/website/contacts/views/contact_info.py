@@ -12,8 +12,7 @@ from django_tables2 import SingleTableMixin
 from contacts.models import User
 from contacts.forms import (
     AddContactForm, UpdateContactForm, DeleteContactForm,
-    UpdatePersonalInfoForm
-)
+    UpdatePersonalInfoForm, PermissionsForm)
 from contacts.tables import UserTable
 
 
@@ -114,6 +113,14 @@ class UpdateContact(PermissionRequiredMixin, UpdateContactBase):
         redirect = super(UpdateContact, self).form_valid(form)
         self.object.save()
         return redirect
+
+
+class SetUserPermissions(PermissionRequiredMixin, UpdateView):
+    permission_required = 'contacts.add_user'
+    raise_exception = True
+    form_class = PermissionsForm
+    model = User
+    template_name = 'contacts/edit_contact_permissions.html'
 
 
 class UpdatePersonalInfo(UpdateContactBase):
