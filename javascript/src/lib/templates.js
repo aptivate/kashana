@@ -635,8 +635,12 @@ function program7(depth0,data) {
   }
 function program8(depth0,data) {
   
-  
-  return "Click to add title";
+  var buffer = "", stack1, helper;
+  buffer += "Click to add ";
+  if (helper = helpers.level_name) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.level_name); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1);
+  return buffer;
   }
 
 function program10(depth0,data) {

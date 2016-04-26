@@ -31,6 +31,7 @@ define([
 
             // Add global values
             data.editable = this.is_editable;
+            data.level_name = Aptivate.data.levels[data.level];
 
             this.$el.html(template(data));
             if (this.postRender) {
