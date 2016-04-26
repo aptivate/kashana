@@ -1,7 +1,9 @@
-from django.views.generic import DetailView
+from django.core.urlresolvers import reverse
+from django.views.generic import CreateView, DetailView
 from braces.views import LoginRequiredMixin
 from .models import (
-    Result, Assumption, Indicator, SubIndicator, Target, Milestone, RiskRating
+    Assumption, Indicator, LogFrame, Milestone, Result, RiskRating,
+    SubIndicator, Target
 )
 from .api import ResultSerializer
 from .mixins import AptivateDataBaseMixin
@@ -58,3 +60,12 @@ class ResultMonitor(LoginRequiredMixin, AptivateDataBaseMixin, DetailView):
             'result': ResultSerializer(self.object).data,
         })
         return data
+
+
+class CreateLogframe(LoginRequiredMixin, CreateView):
+    model = LogFrame
+    fields = ['name', 'slug']
+    template_name = 'logframe/create_logframe.html'
+
+    def get_success_url(self):
+        return reverse('logframe-dashboard', kwargs={'slug': self.object.slug})

@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from .views import ResultEditor, ResultMonitor
+from .views import CreateLogframe, ResultEditor, ResultMonitor
 
 
 urlpatterns = [
@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'^monitor/(?P<logframe_id>\d+)/result/(?P<pk>\d+)/$',
         ResultMonitor.as_view(),
         name="monitor-result"),
+    url(r'^create/', CreateLogframe.as_view(), name='create-logframe'),
 ]

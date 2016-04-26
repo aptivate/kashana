@@ -52,7 +52,10 @@ class LogFrame(AverageTargetPercentMixin, models.Model):
         max_length=255,
         unique=True
     )
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(unique=True, help_text=(
+        "A 'slug' can consist of letters, numbers, underscores or hyphens and "
+        "can be up to 50 characters long."
+    ))
 
     def average_target_percent(self):
         return self._calculate_weighted_target_percent(self.output_set.all())
