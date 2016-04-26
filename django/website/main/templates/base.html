@@ -27,6 +27,9 @@
 		{% endif %}
 		{% endblock logframe_switching_form %}
         {% if request.user and request.user.is_authenticated %}
+         {% if perms.logframe.add_logframe %}
+            <div class="add-logframe"><a href="{% url "create-logframe" %}">Create Logframe</a></div>
+         {% endif %}
          <div class="account-links-auth"><a href="{% url "logout" %}">Log out</a></div>
          {% if perms.contacts.add_user %}
             <div class="navigation-link"><a href="{% url "contact_list" %}" id="nav-people">People</a></li></div>
