@@ -122,6 +122,9 @@ class SetUserPermissions(PermissionRequiredMixin, UpdateView):
     model = User
     template_name = 'contacts/edit_contact_permissions.html'
 
+    def get_success_url(self):
+        return reverse('contact_update', kwargs=self.kwargs)
+
 
 class UpdatePersonalInfo(UpdateContactBase):
     form_class = UpdatePersonalInfoForm
