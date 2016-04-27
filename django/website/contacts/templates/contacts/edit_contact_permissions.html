@@ -4,7 +4,7 @@
 {% load basename %}
 {% load assets %}
 
-{% block title %}{% trans "Update personal information" %}{% endblock %}
+{% block title %}{% blocktrans %}Update {{ object }}'s permissions{% endblocktrans %}{% endblock %}
 
 {% block extra_media %}<script type="text/javascript" src="/admin/jsi18n/"></script>
 <script type="text/javascript" src="{{ STATIC_URL }}admin/js/jquery.min.js"></script>
@@ -12,7 +12,8 @@
 {{ form.media }}
 <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}admin/css/widgets.css"/>
 <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}admin/css/base.css"/>
-<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}admin/css/forms.css"/>{% endblock %}
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}admin/css/forms.css"/>
+{% endblock %}
 {% block main_content %}
     <form action="" method="post" class="pure-form pure-form-stacked" enctype="multipart/form-data" id="contact-form">
         {% csrf_token %}
@@ -20,7 +21,7 @@
 {# COMMON #}
 
         <fieldset class="section-common">
-            <h3>{% trans "Personal information" %}</h3>
+            <h3>{% blocktrans %}Update {{ object }}'s permissions{% endblocktrans %}</h3>
             {% with form=form %}
                 {% include "form_snippet.html" %}
             {% endwith %}
