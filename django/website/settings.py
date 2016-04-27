@@ -130,7 +130,6 @@ TEMPLATES = [{
 }]
 
 TABULAR_PERMISSIONS_AUTO_IMPLEMENT = False
-TABULAR_PERMISSIONS_EXCLUDE_APPS = ['south']
 ROOT_URLCONF = 'urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
