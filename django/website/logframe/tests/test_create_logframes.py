@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from random import randint
 from django.core.urlresolvers import reverse
+from django.test.client import RequestFactory
 
 import pytest
 from django_dynamic_fixture import N
@@ -8,7 +9,6 @@ from mock import Mock, patch
 
 from ..models import LogFrame
 from ..views import CreateLogframe
-from django.test.client import RequestFactory
 
 
 def test_redirects_to_created_logframe_on_success():
