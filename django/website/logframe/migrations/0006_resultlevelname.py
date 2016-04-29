@@ -14,8 +14,10 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='ResultLevelName',
             fields=[
-                ('level_number', models.IntegerField(serialize=False, primary_key=True)),
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('level_number', models.IntegerField()),
                 ('level_name', models.CharField(max_length=128)),
+                ('logframe', models.ForeignKey(to='logframe.LogFrame')),
             ],
         ),
     ]
