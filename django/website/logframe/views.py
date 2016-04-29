@@ -1,7 +1,7 @@
 import re
 from django.core.urlresolvers import reverse
 from django.views.generic import CreateView, DetailView
-from braces.views import LoginRequiredMixin
+from braces.views import LoginRequiredMixin, PermissionRequiredMixin
 from .models import (
     Assumption, Indicator, LogFrame, Milestone, Result, RiskRating,
     SubIndicator, Target
@@ -63,10 +63,11 @@ class ResultMonitor(LoginRequiredMixin, AptivateDataBaseMixin, DetailView):
         return data
 
 
-class CreateLogframe(LoginRequiredMixin, CreateView):
+class CreateLogframe(PermissionRequiredMixin, CreateView):
     model = LogFrame
     fields = ['name']
     template_name = 'logframe/create_logframe.html'
+    permission_required = 'logframe.edit_logframe'
 
     def get_unique_slug_name(self, logframe):
         slug = logframe.name.lower()
