@@ -1,6 +1,6 @@
 import re
 from django.core.urlresolvers import reverse
-from django.views.generic import CreateView, DetailView, UpdateView
+from django.views.generic import CreateView, DeleteView, DetailView, UpdateView
 from braces.views import LoginRequiredMixin, PermissionRequiredMixin
 from django_tables2.views import SingleTableView
 from .models import (
@@ -103,3 +103,8 @@ class EditLogframe(PermissionRequiredMixin, UpdateView):
 
     def get_success_url(self):
         return reverse('manage-logframes')
+
+
+class DeleteLogframe(PermissionRequiredMixin, DeleteView):
+    model = LogFrame
+    permission_required = 'logframe.edit_logframe'
