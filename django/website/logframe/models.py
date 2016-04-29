@@ -461,4 +461,5 @@ class ResultLevelName(models.Model):
     level_name = models.CharField(max_length=128)
     logframe = models.ForeignKey(LogFrame)
 
-    unique_together = (('level_number', 'logframe'),)
+    class Meta:
+        unique_together = (('level_number', 'logframe'),)
