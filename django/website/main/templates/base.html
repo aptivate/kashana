@@ -10,6 +10,9 @@
     {% assets "css_all" %}
     <link rel="stylesheet" href="{{ ASSET_URL }}">
     {% endassets %}
+    {% assets "css_tables" %}
+    <link rel="stylesheet" href="{{ ASSET_URL }}">
+    {% endassets %}
     <script>window.Aptivate = {};</script>
 </head>
 <body{% block body_attrs %}{% endblock %}>
@@ -28,7 +31,7 @@
 		{% endblock logframe_switching_form %}
         {% if request.user and request.user.is_authenticated %}
          {% if perms.logframe.add_logframe %}
-            <div class="add-logframe"><a href="{% url "create-logframe" %}">Create Logframe</a></div>
+            <div class="add-logframe"><a href="{% url "manage-logframes" %}">Manage Logframes</a></div>
          {% endif %}
          <div class="account-links-auth"><a href="{% url "logout" %}">Log out</a></div>
          {% if perms.contacts.add_user %}

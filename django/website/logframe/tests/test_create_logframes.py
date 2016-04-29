@@ -11,11 +11,11 @@ from ..models import LogFrame
 from ..views import CreateLogframe
 
 
-def test_redirects_to_created_logframe_on_success():
+def test_redirects_to_logframe_management_page_on_success():
     create_logframe_view = CreateLogframe()
     logframe = N(LogFrame)
     create_logframe_view.object = logframe
-    assert reverse('logframe-dashboard', kwargs={'slug': logframe.slug}) == create_logframe_view.get_success_url()
+    assert reverse('manage-logframes') == create_logframe_view.get_success_url()
 
 
 @patch('logframe.views.LogFrame')

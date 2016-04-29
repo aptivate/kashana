@@ -1,13 +1,15 @@
 import re
 from django.core.urlresolvers import reverse
-from django.views.generic import CreateView, DetailView
+from django.views.generic import CreateView, DetailView, UpdateView
 from braces.views import LoginRequiredMixin, PermissionRequiredMixin
+from django_tables2.views import SingleTableView
 from .models import (
     Assumption, Indicator, LogFrame, Milestone, Result, RiskRating,
     SubIndicator, Target
 )
 from .api import ResultSerializer
 from .mixins import AptivateDataBaseMixin
+from .tables import LogframeManagementTable
 
 
 class ResultEditor(LoginRequiredMixin, AptivateDataBaseMixin, DetailView):
@@ -66,7 +68,7 @@ class ResultMonitor(LoginRequiredMixin, AptivateDataBaseMixin, DetailView):
 class CreateLogframe(PermissionRequiredMixin, CreateView):
     model = LogFrame
     fields = ['name']
-    template_name = 'logframe/create_logframe.html'
+    template_name = 'logframe/edit_logframe.html'
     permission_required = 'logframe.edit_logframe'
 
     def get_unique_slug_name(self, logframe):
@@ -80,8 +82,24 @@ class CreateLogframe(PermissionRequiredMixin, CreateView):
         return slug
 
     def get_success_url(self):
-        return reverse('logframe-dashboard', kwargs={'slug': self.object.slug})
+        return reverse('manage-logframes')
 
     def form_valid(self, form):
         form.instance.slug = self.get_unique_slug_name(form.instance)
         return CreateView.form_valid(self, form)
+
+
+class ManageLogframes(PermissionRequiredMixin, SingleTableView):
+    permission_required = 'logframe.edit_logframe'
+    model = LogFrame
+    table_class = LogframeManagementTable
+
+
+class EditLogframe(PermissionRequiredMixin, UpdateView):
+    model = LogFrame
+    fields = ['name', 'slug']
+    template_name = 'logframe/edit_logframe.html'
+    permission_required = 'logframe.edit_logframe'
+
+    def get_success_url(self):
+        return reverse('manage-logframes')
