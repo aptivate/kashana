@@ -14,14 +14,14 @@ class LogframeManagementTable(Table):
     slug = Column()
     edit = LinkColumn(
         'update-logframe',
-        args=[A('pk')],
+        args=[A('slug')],
         text=mark_safe('<img src="{0}admin/img/icon_changelink.gif" alt="{1}" />'.format(settings.STATIC_URL, _("Edit Logframe"))),
         orderable=False,
         empty_values=()
     )
     delete = LinkColumn(
-        'update-logframe',
-        args=[A('pk')],
+        'delete-logframe',
+        args=[A('slug')],
         text=mark_safe('<img src="{0}admin/img/icon_deletelink.gif" alt="{1}" />'.format(settings.STATIC_URL, _("Delete Logframe"))),
         orderable=False,
         empty_values=()
