@@ -2,6 +2,7 @@
 {% load i18n %}
 
 {% block content %}
+    <h2>{% trans "Create a new logframe" %}</h2>
     <form method="post" class="pure-form pure-form-stacked" action=".">{% csrf_token %}
         {% include "form_snippet.html" %}
         <input type="submit" name="submit" value="{% trans "Create Logframe" %}" />
