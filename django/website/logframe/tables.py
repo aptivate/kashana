@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
 
 from django_tables2.columns import Column, LinkColumn
@@ -6,7 +7,6 @@ from django_tables2.tables import Table
 from django_tables2.utils import A
 
 from .models import LogFrame
-from django.utils.safestring import mark_safe
 
 
 class LogframeManagementTable(Table):
