@@ -132,7 +132,7 @@ TEMPLATES = [{
 TABULAR_PERMISSIONS_AUTO_IMPLEMENT = False
 TABULAR_PERMISSIONS_EXCLUDE = {
     'override': False,
-    'app': ['auth', 'sites', 'appconf'],
+    'app': ['auth', 'sites', 'appconf', 'contacts', 'logframe'],
     'model': [
         'RiskRating',
         'Assumption',
