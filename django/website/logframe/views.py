@@ -94,6 +94,12 @@ class ManageLogframes(PermissionRequiredMixin, SingleTableView):
     model = LogFrame
     table_class = LogframeManagementTable
 
+    def get_table(self, **kwargs):
+        table = SingleTableView.get_table(self, **kwargs)
+        if len(table.data) == 1:
+            table.exclude = ('delete',)
+        return table
+
 
 class EditLogframe(PermissionRequiredMixin, UpdateView):
     model = LogFrame
