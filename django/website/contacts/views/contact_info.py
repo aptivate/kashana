@@ -101,6 +101,7 @@ class UpdateContactBase(LoginRequiredMixin, UpdateView):
 class UpdateContact(PermissionRequiredMixin, UpdateContactBase):
     form_class = UpdateContactForm
     permission_required = 'contacts.add_user'
+    context_object_name = 'edited_user'
     raise_exception = True
 
     def form_invalid(self, form):
@@ -119,6 +120,7 @@ class SetUserPermissions(PermissionRequiredMixin, UpdateView):
     permission_required = 'contacts.add_user'
     raise_exception = True
     form_class = PermissionsForm
+    context_object_name = 'edited_user'
     model = User
     template_name = 'contacts/edit_contact_permissions.html'
 
