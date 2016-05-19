@@ -5,7 +5,7 @@
 {% block content %}
     <div class="manage-logframes">
         <h2>{% trans "Manage Logframes" %}</h2>
-        <div><a href="{% url "create-logframe" %}">{% trans "Create a new logframe" %}</a></div>
+        <div class="new-logframe"><a class="pure-button" href="{% url "create-logframe" %}">{% trans "Create a new logframe" %}</a></div>
         {% render_table table %}
     </div>
 {% endblock %}
