@@ -4,7 +4,7 @@
 {% block content %}
     <h2>{% trans "Delete the " %}{{ object.name }}{% trans " Logframe" %}</h2>
     <form method="post" class="pure-form pure-form-stacked" action=".">{% csrf_token %}
-        <p>{% trans "Are you sure you want to delete the " %}{{ object.name }}{% trans " logframe? This will delete everything under that logframe." %}  
+        <p>{% trans "Are you sure you want to delete the " %}{{ object.name }}{% trans " logframe? This will delete everything in that logframe." %}  
         <input class="pure-button" type="submit" name="submit" value="{% trans "Yes" %}" />
         <a class="pure-button" href="{% url "manage-logframes" %}">{% trans "No" %}</a>
     </form>
