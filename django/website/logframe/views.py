@@ -114,3 +114,6 @@ class EditLogframe(PermissionRequiredMixin, UpdateView):
 class DeleteLogframe(PermissionRequiredMixin, DeleteView):
     model = LogFrame
     permission_required = 'logframe.edit_logframe'
+
+    def get_success_url(self):
+        return reverse('manage-logframes')
