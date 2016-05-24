@@ -129,6 +129,7 @@ TEMPLATES = [{
     }
 }]
 
+
 ROOT_URLCONF = 'urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
@@ -157,8 +158,8 @@ INSTALLED_APPS = (
     # our apps
     'main',
     'logframe',
-    'dashboard',
     'contacts',
+    'dashboard',
     'appconf',
     'export',
 )

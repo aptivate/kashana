@@ -57,6 +57,7 @@
         {% if object.id == request.user.id %}
     <p><a href="{% url "password_change" %}">{% trans "Change password" %}</a></p>
         {% endif %}
+
     {% endif %} {# endif object #}
 {% endblock %}
 

@@ -78,26 +78,3 @@ a.deleted {
 textarea.editable-textarea {
     width: 100%;
 }
-
-/*
- * Select filter
- */
-.pure-form-stacked select.filtered {
-    margin: 0;
-}
-
-.selector-available h2, .selector-chosen h2 {
-    margin-bottom: 0;
-}
-
-.selector-chosen h2 {
-    background: #7ca0c7 url("/static/admin/img/default-bg.gif") repeat-x scroll left top;
-}
-
-table#tabular_permissions {
-    border-collapse: separate;
-}
-
-td.user-permissions-app-separator {
-    padding: 3px;
-}
