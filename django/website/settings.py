@@ -129,27 +129,6 @@ TEMPLATES = [{
     }
 }]
 
-TABULAR_PERMISSIONS_AUTO_IMPLEMENT = False
-TABULAR_PERMISSIONS_EXCLUDE = {
-    'override': False,
-    'app': ['auth', 'sites', 'appconf', 'contacts', 'logframe'],
-    'model': [
-        'RiskRating',
-        'Assumption',
-        'Milestone',
-        'SubIndicator',
-        'Column',
-        'BudgetLine',
-        'TaType',
-        'TaLine',
-        'StatusCode',
-        'StatusUpdate',
-        'Rating',
-        'Period',
-        'Target',
-        'UserPreferences'
-    ]
-}
 ROOT_URLCONF = 'urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
