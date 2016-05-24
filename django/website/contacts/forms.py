@@ -1,12 +1,13 @@
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.forms import (
     UserCreationForm, UserChangeForm, PasswordResetForm
 )
+from django.contrib.auth.tokens import default_token_generator
 from django.forms import (
-    ModelForm, ValidationError, ImageField
+    ModelMultipleChoiceField, ModelForm, ValidationError, ImageField
 )
+from django.forms.widgets import CheckboxSelectMultiple
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 from django.utils.translation import ugettext as _
@@ -19,7 +20,7 @@ from main.widgets import (
     BetterFileInput,
     BetterImageInput,
 )
-from .models import User
+from .models import NameOnlyPermission, User
 
 TITLES = (
     'Dr', 'Hon', 'Mrs', 'Ms', 'Mr', 'Prof', 'His Excellency',
@@ -41,12 +42,24 @@ class TitleInput(forms.TextInput):
 #######################################################################
 class UpdatePersonalInfoForm(BetterModelForm):
     picture = ImageField(required=False, widget=BetterImageInput())
+    user_permissions = ModelMultipleChoiceField(
+        NameOnlyPermission.objects,
+        widget=CheckboxSelectMultiple,
+        required=False,
+        help_text=(
+            "A user without any permissions will only be able to view the "
+            "logframe. In order for them to be able to edit the logframe or "
+            "manage users, you will need to give them one of the permissions "
+            "below:"
+        ),
+        limit_choices_to={'codename__in': ['edit_logframe', 'add_personal_info']}
+    )
 
     class Meta:
         model = User
         fields = [
             'business_email', 'title', 'first_name',
-            'last_name', 'personal_email',
+            'last_name', 'personal_email', 'user_permissions',
             # Address
             'home_address', 'business_address', 'country', 'nationality',
             # Personal info
@@ -61,7 +74,7 @@ class UpdatePersonalInfoForm(BetterModelForm):
         ]
         fieldsets = [('all', {'fields': [
             'business_email', 'title', 'first_name',
-            'last_name', 'personal_email',
+            'last_name', 'personal_email', 'user_permissions',
             # Address
             'home_address', 'business_address', 'country', 'nationality',
             # Personal info
@@ -82,11 +95,24 @@ class UpdatePersonalInfoForm(BetterModelForm):
 
 class AddContactForm(BetterModelForm):
     picture = ImageField(required=False, widget=BetterImageInput())
+    user_permissions = ModelMultipleChoiceField(
+        NameOnlyPermission.objects,
+        widget=CheckboxSelectMultiple,
+        required=False,
+        help_text=(
+            "A user without any permissions will only be able to view the "
+            "logframe. In order for them to be able to edit the logframe or "
+            "manage users, you will need to give them one of the permissions "
+            "below:"
+        ),
+        limit_choices_to={'codename__in': ['edit_logframe', 'add_personal_info']}
+    )
 
     class Meta:
         model = User
         fields = ['business_email', 'title', 'first_name',
                   'last_name', 'personal_email', 'is_active',
+                  'user_permissions',
                   # Address
                   'home_address', 'business_address', 'country', 'nationality',
                   # Personal info
@@ -101,6 +127,7 @@ class AddContactForm(BetterModelForm):
         fieldsets = [('all', {'fields':
                  ['business_email', 'title', 'first_name',
                   'last_name', 'personal_email', 'is_active',
+                  'user_permissions',
                   # Address
                   'home_address', 'business_address', 'country', 'nationality',
                   # Personal info

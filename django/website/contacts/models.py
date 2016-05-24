@@ -6,10 +6,10 @@ from django.db.models import (
     ImageField, ForeignKey, OneToOneField, Model
 )
 from django.contrib.auth.models import (
-    AbstractBaseUser, BaseUserManager, PermissionsMixin
-)
+    AbstractBaseUser, BaseUserManager, PermissionsMixin, Permission)
 from django.utils import timezone
 from django.utils.deconstruct import deconstructible
+from django.utils.six import python_2_unicode_compatible
 
 from main.upload_handler import UploadToHandler
 from .countries import COUNTRIES, NATIONALITIES
@@ -156,3 +156,12 @@ class User(AbstractBaseUser, PermissionsMixin):
 class UserPreferences(Model):
     user = OneToOneField(User, related_name='preferences')
     last_viewed_logframe = ForeignKey('logframe.LogFrame', null=True)
+
+
+@python_2_unicode_compatible
+class NameOnlyPermission(Permission):
+    class Meta:
+        proxy = True
+
+    def __str__(self):
+        return "Can {0}".format(self.name.lower())
