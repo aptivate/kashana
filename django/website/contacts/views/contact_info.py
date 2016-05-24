@@ -12,7 +12,8 @@ from django_tables2 import SingleTableMixin
 from contacts.models import User
 from contacts.forms import (
     AddContactForm, UpdateContactForm, DeleteContactForm,
-    UpdatePersonalInfoForm)
+    UpdatePersonalInfoForm
+)
 from contacts.tables import UserTable
 
 
