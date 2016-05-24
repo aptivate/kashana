@@ -16,7 +16,6 @@ PyYAML==3.10
 django_tables2==1.0.4
 django-extensions==1.5.9
 django-jstemplate
-django-tabular-permissions==1.0.8
 lxml
 django-waffle==0.9.1
 beautifulsoup4==4.3.2

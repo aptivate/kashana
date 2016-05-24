@@ -57,9 +57,6 @@
         {% if object.id == request.user.id %}
     <p><a href="{% url "password_change" %}">{% trans "Change password" %}</a></p>
         {% endif %}
-        {% if perms.contacts.add_user %}
-    <p><a href="{% url "contact_permissions_update" object.id %}">{% trans "Set user permissions" %}</a>
-        {% endif %}
     {% endif %} {# endif object #}
 {% endblock %}
 

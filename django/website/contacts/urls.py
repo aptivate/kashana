@@ -2,7 +2,7 @@ from django.conf.urls import url
 from contacts.views import (
     AddContact, UpdateContact, DeleteContact, ListContacts,
     SendActivationEmailView,
-    UpdatePersonalInfo, ListContactsExport, SetUserPermissions
+    UpdatePersonalInfo, ListContactsExport
 )
 
 
@@ -10,8 +10,6 @@ urlpatterns = [
     url(r'edit/$', AddContact.as_view(), name='contact_add'),
     url(r'edit/(?P<pk>\d+)/$', UpdateContact.as_view(),
         name='contact_update'),
-    url(r'edit/(?P<pk>\d+)/permissions/$', SetUserPermissions.as_view(),
-        name='contact_permissions_update'),
     url(r'delete/(?P<pk>\d+)/$', DeleteContact.as_view(),
         name='contact_delete'),
     url(r'activate/(?P<pk>\d+)/$', SendActivationEmailView.as_view(),
