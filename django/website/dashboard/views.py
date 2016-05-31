@@ -25,9 +25,14 @@ class SwitchLogframes(LoginRequiredMixin, RedirectView):
     pattern_name = 'logframe-dashboard'
 
     def post(self, request, *args, **kwargs):
-        self.object = get_object_or_404(LogFrame, pk=self.request.POST['logframe'])
-        update_last_viewed_logframe(self.request.user, self.object)
-        return self.get(request, slug=self.object.slug)
+        try:
+            self.object = LogFrame.objects.get(pk=self.request.POST['logframe'])
+            update_last_viewed_logframe(self.request.user, self.object)
+            response = self.get(request, slug=self.object.slug)
+        except LogFrame.DoesNotExist:
+            self.pattern_name = 'create-logframe'
+            response = self.get(request)
+        return response
 
 
 class DashboardLogframeSelection(LoginRequiredMixin, ListView):
