@@ -15,7 +15,7 @@ def test_redirects_to_logframe_management_page_on_success():
     create_logframe_view = CreateLogframe()
     logframe = N(LogFrame)
     create_logframe_view.object = logframe
-    assert reverse('manage-logframes') == create_logframe_view.get_success_url()
+    assert reverse('dashboard') == create_logframe_view.get_success_url()
 
 
 @patch('logframe.views.LogFrame')

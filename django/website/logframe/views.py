@@ -65,11 +65,17 @@ class ResultMonitor(LoginRequiredMixin, AptivateDataBaseMixin, DetailView):
         return data
 
 
-class CreateLogframe(PermissionRequiredMixin, CreateView):
+class ManageLogFrame(PermissionRequiredMixin):
     model = LogFrame
+    permission_required = 'logframe.edit_logframe'
+
+    def get_success_url(self):
+        return reverse('dashboard')
+
+
+class CreateLogframe(ManageLogFrame, CreateView):
     fields = ['name']
     template_name = 'logframe/edit_logframe.html'
-    permission_required = 'logframe.edit_logframe'
 
     def get_unique_slug_name(self, logframe):
         slug = logframe.name.lower()
@@ -81,39 +87,15 @@ class CreateLogframe(PermissionRequiredMixin, CreateView):
             slug += unicode(count)
         return slug
 
-    def get_success_url(self):
-        return reverse('manage-logframes')
-
     def form_valid(self, form):
         form.instance.slug = self.get_unique_slug_name(form.instance)
         return CreateView.form_valid(self, form)
 
 
-class ManageLogframes(PermissionRequiredMixin, SingleTableView):
-    permission_required = 'logframe.edit_logframe'
-    model = LogFrame
-    table_class = LogframeManagementTable
-
-    def get_table(self, **kwargs):
-        table = SingleTableView.get_table(self, **kwargs)
-        if len(table.data) == 1:
-            table.exclude = ('delete',)
-        return table
-
-
-class EditLogframe(PermissionRequiredMixin, UpdateView):
-    model = LogFrame
+class EditLogframe(ManageLogFrame, UpdateView):
     fields = ['name', 'slug']
     template_name = 'logframe/edit_logframe.html'
-    permission_required = 'logframe.edit_logframe'
-
-    def get_success_url(self):
-        return reverse('manage-logframes')
 
 
-class DeleteLogframe(PermissionRequiredMixin, DeleteView):
-    model = LogFrame
-    permission_required = 'logframe.edit_logframe'
-
-    def get_success_url(self):
-        return reverse('manage-logframes')
+class DeleteLogframe(ManageLogFrame, DeleteView):
+    pass

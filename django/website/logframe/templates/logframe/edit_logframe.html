@@ -2,9 +2,17 @@
 {% load i18n %}
 
 {% block content %}
-    <h2>{% if form.instance.id %}{% trans "Edit" %} {{ form.instance.name }} {% trans "Logframe" %}{% else %}{% trans "Create a new logframe" %}{% endif %}</h2>
-    <form method="post" class="pure-form pure-form-stacked" action=".">{% csrf_token %}
-        {% include "form_snippet.html" %}
-        <input type="submit" name="submit" value="{% trans "Save Logframe" %}" />
-    </form>
+    <div class="logframe-edit">
+	    <h2>{% if form.instance.id %}{% trans "Edit" %} {{ form.instance.name }} {% trans "Logframe" %}{% else %}{% trans "Create a new logframe" %}{% endif %}</h2>
+	    <form method="post" class="pure-form pure-form-stacked" action=".">{% csrf_token %}
+	       <fieldset>
+	           <legend></legend>
+	        {% include "form_snippet.html" %}
+	       </fieldset>
+	       {% if logframe_list|length > 1 %} 
+	        <a class="pure-button" href="{% url "delete-logframe" form.instance.slug %}">Delete</a>
+	       {% endif %}
+	        <input type="submit" class="form-submit pure-button" name="submit" value="{% trans "Save" %}" />
+	    </form>
+    </div>
 {% endblock %}
