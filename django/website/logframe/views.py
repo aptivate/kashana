@@ -2,14 +2,12 @@ import re
 from django.core.urlresolvers import reverse
 from django.views.generic import CreateView, DeleteView, DetailView, UpdateView
 from braces.views import LoginRequiredMixin, PermissionRequiredMixin
-from django_tables2.views import SingleTableView
 from .models import (
     Assumption, Indicator, LogFrame, Milestone, Result, RiskRating,
     SubIndicator, Target
 )
 from .api import ResultSerializer
 from .mixins import AptivateDataBaseMixin
-from .tables import LogframeManagementTable
 
 
 class ResultEditor(LoginRequiredMixin, AptivateDataBaseMixin, DetailView):
