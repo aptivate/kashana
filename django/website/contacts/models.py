@@ -151,6 +151,10 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def save(self, *args, **kwargs):
         super(User, self).save(*args, **kwargs)
+        try:
+            self.preferences
+        except UserPreferences.DoesNotExist:
+            UserPreferences.objects.create(user=self)
 
 
 class UserPreferences(Model):
