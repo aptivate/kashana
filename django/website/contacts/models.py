@@ -149,12 +149,17 @@ class User(AbstractBaseUser, PermissionsMixin):
     def email(self):
         return self.business_email
 
-    def save(self, *args, **kwargs):
-        super(User, self).save(*args, **kwargs)
+    @property
+    def preferences(self):
+        try:
+            preferences = self._preferences
+        except UserPreferences.DoesNotExist:
+            preferences = UserPreferences.objects.create(user=self)
+        return preferences
 
 
 class UserPreferences(Model):
-    user = OneToOneField(User, related_name='preferences')
+    user = OneToOneField(User, related_name='_preferences')
     last_viewed_logframe = ForeignKey('logframe.LogFrame', null=True)
 
 
