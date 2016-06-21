@@ -8,6 +8,7 @@ from .api import (
 from contacts.models import User
 from appconf.models import Settings
 from .models import Period, Rating
+from logframe.api import SettingsSerializer
 
 
 class QuerysetSerializer(object):
@@ -36,9 +37,9 @@ class AptivateDataBaseMixin(QuerysetSerializer):
         instances = model.objects.filter(**filter_dict)
         return self._json_object_list(instances, None, model)
 
-    def get_settings(self):
-        serializer = QuerysetSerializer.create_serializer(Settings)
-        conf = Settings.objects.get_or_create()[0]
+    def get_settings(self, logframe):
+        serializer = SettingsSerializer
+        conf = Settings.objects.get_or_create(logframe=logframe)[0]
         serialized = serializer(conf).data
         del serialized['id']
         return serialized
@@ -68,7 +69,7 @@ class AptivateDataBaseMixin(QuerysetSerializer):
             'users': [{"id": u.id, "name": u.get_full_name()}
                       for u in User.objects.all()],
             'periods': self.get_periods(logframe),
-            'conf': self.get_settings(),
+            'conf': self.get_settings(logframe),
             'is_editable': self.is_editable()
         }
         return data
