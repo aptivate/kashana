@@ -120,5 +120,5 @@ def test_user_doesnt_have_profile_created_if_it_exists():
     # prevents them being created at all.
     with patch('contacts.models.UserPreferences.objects') as preferences:
         u = User.objects.get(pk=u.pk)
-        u.save()
+        u.preferences
         assert not preferences.create.called
