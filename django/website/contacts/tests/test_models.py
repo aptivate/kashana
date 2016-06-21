@@ -1,8 +1,9 @@
 from django.test import TestCase
 
+from mock import patch
 import pytest
 
-from ..models import PictureUploadHandler, User, UserManager, get_user_fields
+from ..models import PictureUploadHandler, User, UserPreferences, UserManager, get_user_fields
 
 from .factories import UserFactory
 
@@ -98,3 +99,26 @@ def test_user_represented_as_full_name_in_unicode():
 def test_user_email_returns_business_email():
     u = User(business_email='fake@aptivate.org')
     assert 'fake@aptivate.org' == u.email
+
+
+@pytest.mark.django_db
+@patch('contacts.models.UserPreferences.objects')
+def test_user_has_profile_created_if_none_exists(preferences):
+    u = User(business_email='fake@aptivate.org', first_name='User', last_name='Test')
+    u.save()
+    u.preferences
+    assert preferences.create.called
+
+
+@pytest.mark.django_db
+def test_user_doesnt_have_profile_created_if_it_exists():
+    u = User(business_email='fake@aptivate.org', first_name='User', last_name='Test')
+    u.save()
+    u.preferences
+
+    # Preferences should only be created the first time. Patching sooner
+    # prevents them being created at all.
+    with patch('contacts.models.UserPreferences.objects') as preferences:
+        u = User.objects.get(pk=u.pk)
+        u.preferences
+        assert not preferences.create.called

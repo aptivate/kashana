@@ -22,7 +22,7 @@ class SettingsAdmin(admin.ModelAdmin):
         return response
 
     def changelist_view(self, request, extra_ctx=None):
-        conf = Settings.objects.get()
+        conf = Settings.objects.get_or_create()[0]
         return HttpResponseRedirect(reverse("admin:appconf_settings_change", args=[conf.id]))
 
 
