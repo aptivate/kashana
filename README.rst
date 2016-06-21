@@ -14,8 +14,6 @@ Usecases
 API
 ---
 
-API work appears to be done through models ``(javascript/src/models/models.js)`` and collections ``(javascript/src/models/collections.js)``.
-
 All URLS except creation are ``/logframes/<logframe_pk>/<itemtype>/<item id>``
 URLS for creation are ``/logframes/<logframe_pk>/<itemtype>``
 Actions determined by request type::
