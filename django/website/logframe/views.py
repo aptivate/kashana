@@ -2,12 +2,13 @@ import re
 from django.core.urlresolvers import reverse
 from django.views.generic import CreateView, DetailView
 from braces.views import LoginRequiredMixin, PermissionRequiredMixin
+from appconf.models import Settings
+from .api import ResultSerializer
+from .mixins import AptivateDataBaseMixin
 from .models import (
     Assumption, Indicator, LogFrame, Milestone, Result, RiskRating,
     SubIndicator, Target
 )
-from .api import ResultSerializer
-from .mixins import AptivateDataBaseMixin
 
 
 class ResultEditor(LoginRequiredMixin, AptivateDataBaseMixin, DetailView):
@@ -84,4 +85,8 @@ class CreateLogframe(PermissionRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.slug = self.get_unique_slug_name(form.instance)
-        return CreateView.form_valid(self, form)
+        # The logframe needs to exist before we create the settings, so finish
+        # the regular form_valid code.
+        response = CreateView.form_valid(self, form)
+        Settings.objects.create(logframe=form.instance)
+        return response
