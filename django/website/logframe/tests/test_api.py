@@ -22,7 +22,7 @@ from ..api import (
     ResultViewSet,
     StatusUpdateViewSet,
     create_serializer,
-    get_period_filter
+    get_period_filter,
 )
 from ..models import LogFrame, Result
 
@@ -170,6 +170,7 @@ def test_create_serializer_returns_serializer_with_specified_class_as_model():
     assert model_class == serializer_class.Meta.model
 
 
+@pytest.mark.integration
 @pytest.mark.django_db
 def test_results_viewset_fields_create_result_with_just_title():
     log_frame = G(LogFrame)

@@ -1,4 +1,5 @@
 import os
+
 from django.conf import settings
 
 
@@ -18,3 +19,8 @@ def deploy_env(request):
     extra_context = {'deploy_env': deploy_env,
                      'DEBUG_MODE': getattr(settings, "DEBUG", False)}
     return extra_context
+
+
+def logframe_list(request):
+    from logframe.models import LogFrame
+    return {'logframe_list': LogFrame.objects.all()}

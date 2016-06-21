@@ -3,10 +3,12 @@ define([
     'jquery',
     'models/models',
     'models/collections',
-], function (Backbone, $, models, collections) {
+    'select2',
+], function (Backbone, $, models, collections, select2) {
     if (!Aptivate.status) {
         Aptivate.status = {};
     }
+    $('#logframes-switch-select').select2({minimumResultsForSearch: 99999});
 
     // Initialize collections
     Aptivate.logframe = new models.Logframe(Aptivate.data.logframe);

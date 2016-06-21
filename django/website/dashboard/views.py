@@ -1,62 +1,36 @@
-from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404
 from django.views.generic import TemplateView
+from django.views.generic.base import RedirectView
+from django.views.generic.list import ListView
+
 from braces.views import LoginRequiredMixin
-from logframe.models import (
-    LogFrame,
-    Activity,
-    BudgetLine,
-    TALine,
-    StatusUpdate,
-    TAType,
-    StatusCode,
-)
+
 from logframe.mixins import AptivateDataBaseMixin
+from logframe.models import LogFrame
+from .mixins import OverviewMixin, update_last_viewed_logframe
 
 
-class OverviewMixin(object):
-    def get_logframe(self):
-        return LogFrame.objects.get_or_create()[0]
-
-    def get_activities(self, logframe):
-        return self.get_related_model_data(
-            {'log_frame': logframe}, Activity)
-
-    def get_activities_data(self, logframe, model):
-        return self.get_related_model_data(
-            {'activity__log_frame': logframe}, model)
-
-    def get_data(self, logframe, data):
-        data.update({
-            'export_url': reverse("export-logframe-data-period",
-                                  args=[logframe.id, "1900-01-01"]),
-            'export_annual_plan_url': reverse(
-                "export-annual-plan", args=[logframe.id, "1900"]),
-            'export_quarter_plan_url': reverse(
-                "export-quarter-plan", args=[logframe.id, "01", "1900"]),
-            'activities': self.get_activities(logframe),
-            'tatypes': [{"id": t.id, "name": t.name}
-                        for t in TAType.objects.filter(log_frame=logframe)],
-            'statuscodes': [{"id": c.id, "name": c.name}
-                            for c in StatusCode.objects.filter(
-                                log_frame=logframe)],
-            'budgetlines': self.get_activities_data(logframe, BudgetLine),
-            'talines': self.get_activities_data(logframe, TALine),
-            'statusupdates': self.get_activities_data(logframe, StatusUpdate)
-        })
-        return data
-
-
-class Home(OverviewMixin, TemplateView):
-    template_name = 'dashboard/dashboard_base.html'
-
-    def get(self, request, *args, **kwargs):
-        if not hasattr(request, 'user') or not request.user.is_authenticated():
-            return HttpResponseRedirect("{0}?next={1}".format(reverse("login"),
-                                                              reverse("home")))
-        return HttpResponseRedirect(reverse(u"dashboard"))
+class Home(LoginRequiredMixin, OverviewMixin, RedirectView):
+    permanent = False
+    pattern_name = 'dashboard'
 
 
 class DashboardView(LoginRequiredMixin,
                     OverviewMixin, AptivateDataBaseMixin, TemplateView):
     template_name = 'dashboard/dashboard_base.html'
+
+
+class SwitchLogframes(LoginRequiredMixin, RedirectView):
+    permanent = False
+    pattern_name = 'logframe-dashboard'
+
+    def post(self, request, *args, **kwargs):
+        self.object = get_object_or_404(LogFrame, pk=self.request.POST['logframe'])
+        update_last_viewed_logframe(self.request.user, self.object)
+        return self.get(request, slug=self.object.slug)
+
+
+class DashboardLogframeSelection(LoginRequiredMixin, ListView):
+    model = LogFrame
+    context_object_name = 'logframe_list'
+    template_name = 'dashboard/dashboard_logframe_list.html'
