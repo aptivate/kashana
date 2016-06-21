@@ -106,6 +106,7 @@ def test_user_email_returns_business_email():
 def test_user_has_profile_created_if_none_exists(preferences):
     u = User(business_email='fake@aptivate.org', first_name='User', last_name='Test')
     u.save()
+    u.preferences
     assert preferences.create.called
 
 
@@ -113,6 +114,7 @@ def test_user_has_profile_created_if_none_exists(preferences):
 def test_user_doesnt_have_profile_created_if_it_exists():
     u = User(business_email='fake@aptivate.org', first_name='User', last_name='Test')
     u.save()
+    u.preferences
 
     # Preferences should only be created the first time. Patching sooner
     # prevents them being created at all.
