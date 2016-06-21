@@ -37,12 +37,10 @@ class AptivateDataBaseMixin(QuerysetSerializer):
         return self._json_object_list(instances, None, model)
 
     def get_settings(self):
-        serialized = {}
         serializer = QuerysetSerializer.create_serializer(Settings)
-        if Settings.objects.exists():
-            conf = Settings.objects.get()
-            serialized = serializer(conf).data
-            del serialized['id']
+        conf = Settings.objects.get_or_create()[0]
+        serialized = serializer(conf).data
+        del serialized['id']
         return serialized
 
     def get_periods(self, logframe):
