@@ -7,6 +7,7 @@ import pytest
 from django_dynamic_fixture import N
 from mock import Mock, patch
 
+from appconf.models import Settings
 from ..models import LogFrame
 from ..views import CreateLogframe
 
@@ -131,3 +132,24 @@ def test_instance_slug_set_when_creating_logframe():
     logframe = LogFrame.objects.get(name='Test Name')
 
     assert expected_slug_name == logframe.slug
+
+
+@pytest.mark.django_db
+def test_settings_created_along_with_logframe():
+    logframe = LogFrame(name='Test Name', slug='')
+
+    request = RequestFactory().post('/', {'name': 'Test Name'})
+    create_logframe_view = CreateLogframe()
+    create_logframe_view.request = request
+
+    form_class = create_logframe_view.get_form_class()
+    form = create_logframe_view.get_form(form_class)
+    form.instance = logframe
+
+    create_logframe_view.form_valid(form)
+    logframe = LogFrame.objects.get(name='Test Name')
+    try:
+        Settings.objects.get(logframe=logframe)
+    except Settings.DoesNotExist:
+        pytest.fail("Settings should have been created for this logframe")
+
