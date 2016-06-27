@@ -292,8 +292,7 @@ class StatusCodeViewSet(FilterRelationship, viewsets.ModelViewSet):
 
 # StatusUpdate
 class StatusUpdateSerializer(ModelSerializer):
-
-    user = serializers.Field(source='user.id')
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
     class Meta:
         model = StatusUpdate
@@ -310,10 +309,6 @@ class StatusUpdateViewSet(FilterRelationship, viewsets.ModelViewSet):
     def get_queryset(self):
         qs = super(StatusUpdateViewSet, self).get_queryset()
         return qs.order_by('date', 'id')
-
-    def pre_save(self, status_update):
-        status_update.user = self.request.user
-
 
 # Ratings
 class RatingViewSet(FilterRelationship, viewsets.ModelViewSet):
