@@ -89,6 +89,16 @@ def test_get_logframe_data_contains_conf():
 
 
 @pytest.mark.django_db
+def test_get_logframe_data_creates_and_contains_conf_where_none_exists():
+    lf = G(LogFrame)
+
+    mixin = AptivateDataBaseMixin()
+    data = mixin.get_logframe_data(lf)
+    assert Settings.objects.count() == 1
+    assert 'conf' in data
+
+
+@pytest.mark.django_db
 def test_is_editable_fails_on_non_editors():
     u1 = G(User)
     mixin = AptivateDataBaseMixin()
