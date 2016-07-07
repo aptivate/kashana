@@ -78,10 +78,11 @@ module.exports = function(grunt) {
 					specs: [
 					        'tests/js/list-tests.js', 
 					        'tests/js/input-tests.js',
+					        'tests/js/item-show-hide-tests.js',
 					        'tests/js/filter-lead-tests.js',
 					        'tests/js/filter-date-tests.js',
-					        'tests/js/editables/feedback-mixin-tests.js',
 					        'tests/js/editables/cleaninput-mixin-tests.js',
+					        'tests/js/editables/feedback-mixin-tests.js', // This breaks if you move it above clean-input-mixin-tests.js. TODO: find out why and fix.
 					        'tests/js/components/base-view-tests.js',
 					],
 					helpers: [
