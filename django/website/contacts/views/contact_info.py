@@ -44,8 +44,7 @@ class ListContacts(LoginRequiredMixin, PermissionRequiredMixin,
             qs = self.model.objects
             return qs.filter(Q(first_name__icontains=query) |
                              Q(last_name__icontains=query) |
-                             Q(business_email__icontains=query) |
-                             Q(personal_email__icontains=query))
+                             Q(business_email__icontains=query))
         else:
             return self.model.objects.all()
 
@@ -53,9 +52,7 @@ class ListContacts(LoginRequiredMixin, PermissionRequiredMixin,
 class ListContactsExport(SpreadsheetResponseMixin, ListContacts):
     def get(self, request, *args, **kwargs):
         queryset = self.get_queryset()
-        fields = ('business_email', 'first_name', 'last_name', 'title',
-                  'personal_email', 'is_active', 'contact_type',
-                  'home_address')
+        fields = ('business_email', 'first_name', 'last_name')
         list_format = kwargs.get('format')
         if list_format == 'csv':
             return self.render_csv_response(queryset=queryset,
