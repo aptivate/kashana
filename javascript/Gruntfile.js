@@ -81,6 +81,8 @@ module.exports = function(grunt) {
 					        'tests/js/item-show-hide-tests.js',
 					        'tests/js/filter-lead-tests.js',
 					        'tests/js/filter-date-tests.js',
+					        'tests/js/overview-container-tests.js',
+					        'tests/js/overview-item-tests.js',
 					        'tests/js/editables/cleaninput-mixin-tests.js',
 					        'tests/js/editables/feedback-mixin-tests.js', // This breaks if you move it above clean-input-mixin-tests.js. TODO: find out why and fix.
 					        'tests/js/components/base-view-tests.js',
