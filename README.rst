@@ -4,6 +4,15 @@ Kashana
 Kashana is an open source logframe manangement tool for planning and evaluating 
 projects, used and written by `Aptivate <http://aptivate.org/>`_.
 
+Installation
+------------
+
+In the deploy directory, run:
+
+    ./bootstrap.py
+    ./tasks.py deploy:<enviroment name>
+
+
 Usecases
 --------
 1. A multi-stakeholder and multi-organisation team operates in dozens or hundreds of villages and urban areas across Zambia. They need Android-based support to coordinate their work. They are assessing well-being, using ODK or similar on their tablets / phones. They may also be coordinating the delivery of some services -- perhaps health education, for example. They may be helping people to fill out forms to apply for various types of aid, or to register for different relations with the government bureaucracies. They need to have a well-being assessment tool that tracks the impact of their work and the work of the other development agencies in the area. How do they coordinate their activities? How do they collaborate? How are their documents hosted? Could Kashana be all or part of the solution?

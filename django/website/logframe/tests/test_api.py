@@ -5,7 +5,7 @@ from django.contrib.auth.models import Permission
 from django.db.models.query_utils import Q
 from django.test.client import RequestFactory
 
-from django_dynamic_fixture import G
+from django_dynamic_fixture import G, N
 import mock
 import pytest
 from rest_framework.request import Request
@@ -20,11 +20,15 @@ from ..api import (
     IDFilterBackend,
     PeriodOverlapFilterBackend,
     ResultViewSet,
+    StatusUpdateSerializer,
     StatusUpdateViewSet,
     create_serializer,
     get_period_filter,
 )
 from ..models import LogFrame, Result
+from logframe.models import Activity, StatusCode
+from django.template.context import RequestContext
+from mock import patch
 
 
 @pytest.mark.django_db
@@ -151,16 +155,17 @@ def test_status_update_view_set_orders_by_date_and_id():
     assert ['date', 'id'] == queryset_ordering
 
 
-def test_status_update_view_pre_save_sets_status_update_user_to_request_user():
-    request = mock.Mock(user=mock.Mock)
-    status_update = mock.Mock()
+@pytest.mark.django_db
+def test_status_update_serializer_sets_status_update_user_to_request_user():
+    request = mock.Mock(user=N(User, persist_dependencies=False))
+    request.user.id = 1
+    activity = G(Activity)
+    serializer = StatusUpdateSerializer(data={'activity': unicode(activity.id)}, context={'request': request})
 
-    status_update_view_set = StatusUpdateViewSet()
-    status_update_view_set.request = request
+    serializer.is_valid(True)
+    data = serializer.validated_data
 
-    status_update_view_set.pre_save(status_update)
-
-    assert request.user == status_update.user
+    assert request.user == data['user']
 
 
 def test_create_serializer_returns_serializer_with_specified_class_as_model():

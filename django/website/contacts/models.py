@@ -15,10 +15,6 @@ from main.upload_handler import UploadToHandler
 from .countries import COUNTRIES, NATIONALITIES
 
 
-GENDER_CHOICES = (('female', 'Female'),
-                  ('male', 'Male'))
-
-
 def get_user_fields(instance):
     return (instance.business_email, instance.last_name, instance.first_name)
 
@@ -79,55 +75,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     date_joined = DateTimeField(default=timezone.now)
 
     # general contact information
-    title = CharField(max_length=32)
     first_name = CharField(max_length=50)
     last_name = CharField(max_length=50)
-    gender = CharField(max_length=6, choices=GENDER_CHOICES)
-    contact_type = CharField(max_length=32,
-                             verbose_name="Type of Contact")
-    # Address
-    home_address = TextField(blank=True)
-    business_address = TextField(blank=True)
-    country = CharField(max_length=64,
-                        blank=True,
-                        choices=COUNTRIES,
-                        help_text=('The country in which the contact is '
-                                   'currently working in'))
-    nationality = CharField(max_length=64, blank=True, choices=NATIONALITIES)
-
-    # Work
-    job_title = CharField(max_length=64, blank=True)
-    area_of_specialisation = CharField(max_length=128, blank=True)
-
-    # Email
-    personal_email = EmailField(blank=True)
-
-    # IM
-    skype_id = CharField(max_length=32, blank=True)
-    yahoo_messenger = CharField(max_length=32,
-                                blank=True,
-                                verbose_name='Yahoo Messenger')
-    msn_id = CharField(max_length=32, blank=True, verbose_name='MSN ID')
-
-    # Phones & fax
-    home_tel = CharField(max_length=20,
-                         blank=True,
-                         verbose_name="Home telephone")
-    business_tel = CharField(max_length=20,
-                             blank=True,
-                             verbose_name="Business telephone")
-    mobile = CharField(max_length=20, blank=True)
-    fax = CharField(max_length=20, blank=True, verbose_name="Fax no")
-
-    # Misc
-    notes = TextField(blank=True)
-    picture = ImageField(null=True,
-                         blank=True,
-                         upload_to=PictureUploadHandler('pictures'))
-    cv = FileField(
-        upload_to=UploadToHandler('pi_cvs', get_user_fields),
-        blank=True,
-        null=True)
 
     # Managers and book-keeping
 
