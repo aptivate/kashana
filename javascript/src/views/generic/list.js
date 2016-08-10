@@ -93,7 +93,7 @@ define([
             itemView: function (placeholder) {
                 var itemId = placeholder.attr('data-subview-id'),
                     viewOptions;
-                if (itemId === "new" &&
+                if (itemId === "new" && this.maxLength && 
                         this.collection.length >= this.maxLength){
                     return null; // Don't show empty item
                 }

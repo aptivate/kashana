@@ -10,6 +10,7 @@ define([
 
             Result: Backbone.Model.extend({
                 defaults: {
+                	level: 1,
                     order: 0
                 },
                 urlRoot: logframeUrl + '/results',

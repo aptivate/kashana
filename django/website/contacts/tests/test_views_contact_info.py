@@ -127,12 +127,6 @@ class ListContactsTests(TestCase):
         self.assertListEqual(list(response.context_data['object_list']),
                              [searched_user])
 
-    def test_get_queryset_returns_a_subset_from_personal_email_search(self):
-        searched_user = UserFactory(personal_email="searchterm")
-        response = self.view(self.request)
-        self.assertListEqual(list(response.context_data['object_list']),
-                             [searched_user])
-
 
 class AddContactTests(TestCase):
 
@@ -246,13 +240,13 @@ def test_contacts_list_csv_export():
     view.request = request
 
     expected_text_lines = [
-        u'Business Email,First Name,Last Name,Title,Personal Email,Active,Type Of Contact,Home Address\r\n',
+        u'Business Email,First Name,Last Name\r\n',
     ]
 
     for user in contacts:
         user_number = user.first_name.split(' ')[1]
         expected_text_lines.append(
-            u'email{0}@test.com,ｆíｒѕｔ {0},ｌåｓｔɭａｓｔ {0},ｔïｔｌë,,True,ｃòлｔáｃｔ ｔｙｐé,\r\n'.format(user_number)
+            u'email{0}@test.com,ｆíｒѕｔ {0},ｌåｓｔɭａｓｔ {0}\r\n'.format(user_number)
         )
 
     expected_text = u"".join(expected_text_lines)
@@ -272,13 +266,13 @@ def test_contacts_list_excel_export():
     view.request = request
 
     expected_text_lines = [
-        u'Business Email,First Name,Last Name,Title,Personal Email,Active,Type Of Contact,Home Address\r\n',
+        u'Business Email,First Name,Last Name\r\n',
     ]
 
     for user in contacts:
         user_number = user.first_name.split(' ')[1]
         expected_text_lines.append(
-            u'email{0}@test.com,ｆíｒѕｔ {0},ｌåｓｔɭａｓｔ {0},ｔïｔｌë,,True,ｃòлｔáｃｔ ｔｙｐé,\r\n'.format(user_number)
+            u'email{0}@test.com,ｆíｒѕｔ {0},ｌåｓｔɭａｓｔ {0}\r\n'.format(user_number)
         )
 
     expected_text = u"".join(expected_text_lines)

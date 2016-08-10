@@ -10,20 +10,30 @@ define([
     
     jasmine.getFixtures().fixturesPath = 'tests/html_fixtures';
     
-    function callFeedback(feedback, ctx, done) {
+    function callFeedback(feedback, ctx, done, assertionCounter) {
     	feedback.call(Mixin);
     	since("Target element now has the class");
         expect($(".editable", ctx)).toHaveClass("works");
+        assertionCounter.count++;
 		done();
     }
     
-    function triggerModel(view, m, ctx, trigger, elementClass, done) {
+    function triggerModel(view, m, ctx, trigger, elementClass, done, assertionCounter) {
     	view.saveFlag = true;
         m.trigger(trigger);
+        
         since("Target element now has the class");
     	expect($(".editable", ctx)).toHaveClass(elementClass);
+    	if(assertionCounter) {
+    		assertionCounter.count++;
+    	}
+    	
         since("saveFlag attribute was resetted.");
         expect(view.saveFlag).toEqual(false);
+        if(assertionCounter) {
+    		assertionCounter.count++;
+    	}
+        
         done();
     }
     
@@ -35,40 +45,38 @@ define([
     	});
     	
 	    it("Test loadingFeedback works", function (done) {
-	        var assertionCounter = 0;
+	        var assertionCounter = {count: 0};
 	        
 	        Mixin.saveFlag = true;
 	        feedback = Mixin.loadingFeedback(".editable", "works");
 	        since("Target element does not have class yet");
 	        expect($(".editable", ctx)).not.toHaveClass("works");
-		    assertionCounter++;
+		    assertionCounter.count++;
 		    
-		    callFeedback(feedback, ctx, done);
-    		assertionCounter++;
+		    callFeedback(feedback, ctx, done, assertionCounter);
     		
 	        since("Target element again does not have the class");
 	        expect($(".editable", ctx)).not.toHaveClass("works");
-	        assertionCounter++;
+	        assertionCounter.count++;
 
-			expect(assertionCounter).toEqual(3);
+			expect(assertionCounter.count).toEqual(3);
 	    });
 	
 	    it("Test loadingFeedback keeps class when instructed", function (done) {
-	        var assertionCounter = 0;
+	        var assertionCounter = {count: 0};
 	        Mixin.saveFlag = true;
 	        feedback = Mixin.loadingFeedback(".editable", "works", true);
 	        since("Target element does not have class yet");
 	        expect($(".editable", ctx)).not.toHaveClass("works");
-	        assertionCounter++;
+	        assertionCounter.count++;
 	        
-	        callFeedback(feedback, ctx, done);
-	        assertionCounter++;
+	        callFeedback(feedback, ctx, done, assertionCounter);
 	        
 	       	since("Target element still has the class");
 	        expect($(".editable", ctx)).toHaveClass("works");
-	        assertionCounter++;
+	        assertionCounter.count++;
 	        
-	        expect(assertionCounter).toEqual(3);
+	        expect(assertionCounter.count).toEqual(3);
 	    });
 	
 	    it("Test attachFeedback attached model listeners", function (done) {
@@ -100,20 +108,20 @@ define([
 	            view = new ViewClass({
 	                model: m
 	            });
-	        var assertionCounter = 0;
+	        
+	        var assertionCounter = {count: 0};
 	        
 	        since("Target element does not have class yet");
 	        expect($(".editable", ctx)).not.toHaveClass("success");
-	    	assertionCounter++;
+	    	assertionCounter.count++;
 	    
-	        triggerModel(view, m, ctx, "sync", "success", done);
-	        assertionCounter+=2;
+	        triggerModel(view, m, ctx, "sync", "success", done, assertionCounter);
 	        
 	        since("Target element lost the class");
 	        expect($(".editable", ctx)).not.toHaveClass("success");
-	        assertionCounter++;
+	        assertionCounter.count++;
 	            
-	        expect(assertionCounter).toEqual(4);
+	        expect(assertionCounter.count).toEqual(4);
 	    });
 	
 	    it("Test attachFeedback attached error listener keeps class", function (done) {
@@ -127,20 +135,19 @@ define([
 	            view = new ViewClass({
 	                model: m
 	            });
-	        var assertionCounter = 0;
+	        var assertionCounter = {count: 0};
 	        
 	        since("Target element does not have class yet");
 	        expect($(".editable", ctx)).not.toHaveClass("error");
-	    	assertionCounter++;
+	    	assertionCounter.count++;
 	
-	        triggerModel(view, m, ctx, "error", "error", done)
-	        assertionCounter += 2;
+	        triggerModel(view, m, ctx, "error", "error", done, assertionCounter)
 	        
 	        since("Target element kept the class");
 	        expect($(".editable", ctx)).toHaveClass("error");
-	        assertionCounter++;
+	        assertionCounter.count++;
 	        
-	        expect(assertionCounter).toEqual(4);
+	        expect(assertionCounter.count).toEqual(4);
 	    });
     });
 });

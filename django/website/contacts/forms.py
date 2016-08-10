@@ -1,9 +1,9 @@
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.forms import (
     UserCreationForm, UserChangeForm, PasswordResetForm
 )
-from django.contrib.auth.tokens import default_token_generator
 from django.forms import (
     ModelMultipleChoiceField, ModelForm, ValidationError, ImageField
 )
@@ -41,7 +41,6 @@ class TitleInput(forms.TextInput):
 # Contacts forms
 #######################################################################
 class UpdatePersonalInfoForm(BetterModelForm):
-    picture = ImageField(required=False, widget=BetterImageInput())
     user_permissions = ModelMultipleChoiceField(
         NameOnlyPermission.objects,
         widget=CheckboxSelectMultiple,
@@ -58,43 +57,14 @@ class UpdatePersonalInfoForm(BetterModelForm):
     class Meta:
         model = User
         fields = [
-            'business_email', 'title', 'first_name',
-            'last_name', 'personal_email', 'user_permissions',
-            # Address
-            'home_address', 'business_address', 'country', 'nationality',
-            # Personal info
-            'gender', 'contact_type',
-            # Work
-            'job_title', 'area_of_specialisation',
-            # Phones & fax
-            'home_tel', 'business_tel', 'mobile', 'fax',
-            # IM
-            'skype_id', 'yahoo_messenger', 'msn_id',
-            'notes', 'picture', 'cv'
+            'business_email', 'first_name', 'last_name', 'user_permissions',
         ]
         fieldsets = [('all', {'fields': [
-            'business_email', 'title', 'first_name',
-            'last_name', 'personal_email', 'user_permissions',
-            # Address
-            'home_address', 'business_address', 'country', 'nationality',
-            # Personal info
-            'gender', 'contact_type',
-            # Work
-            'job_title', 'area_of_specialisation',
-            # Phones & fax
-            'home_tel', 'business_tel', 'mobile', 'fax',
-            # IM
-            'skype_id', 'yahoo_messenger', 'msn_id',
-            'notes', 'picture', 'cv']})]
-
-        widgets = {
-            'title': TitleInput,
-            'cv': BetterFileInput
-        }
+            'business_email', 'first_name',
+            'last_name', 'user_permissions']})]
 
 
 class AddContactForm(BetterModelForm):
-    picture = ImageField(required=False, widget=BetterImageInput())
     user_permissions = ModelMultipleChoiceField(
         NameOnlyPermission.objects,
         widget=CheckboxSelectMultiple,
@@ -110,39 +80,11 @@ class AddContactForm(BetterModelForm):
 
     class Meta:
         model = User
-        fields = ['business_email', 'title', 'first_name',
-                  'last_name', 'personal_email', 'is_active',
-                  'user_permissions',
-                  # Address
-                  'home_address', 'business_address', 'country', 'nationality',
-                  # Personal info
-                  'gender',
-                  # Work
-                  'job_title', 'area_of_specialisation',
-                  # Phones & fax
-                  'home_tel', 'business_tel', 'mobile', 'fax',
-                  # IM
-                  'skype_id', 'yahoo_messenger', 'msn_id',
-                  'notes', 'picture', 'cv']
-        fieldsets = [('all', {'fields':
-                 ['business_email', 'title', 'first_name',
-                  'last_name', 'personal_email', 'is_active',
-                  'user_permissions',
-                  # Address
-                  'home_address', 'business_address', 'country', 'nationality',
-                  # Personal info
-                  'gender',
-                  # Work
-                  'job_title', 'area_of_specialisation',
-                  # Phones & fax
-                  'home_tel', 'business_tel', 'mobile', 'fax',
-                  # IM
-                  'skype_id', 'yahoo_messenger', 'msn_id',
-                  'notes', 'picture', 'cv']})]
-        widgets = {
-            'title': TitleInput,
-            'cv': BetterFileInput
-        }
+        fields = [
+            'business_email', 'first_name', 'last_name', 'is_active', 'user_permissions',
+        ]
+        fieldsets = [('all', {'fields': [
+            'business_email', 'first_name', 'last_name', 'is_active', 'user_permissions',]})]
 
 
 class UpdateContactForm(AddContactForm):

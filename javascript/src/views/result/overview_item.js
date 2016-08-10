@@ -52,6 +52,25 @@ define([
 
             this.show = !seen;
             this.setShow(e.target, this.show);
+            
+            if(this.show){
+	            for(var i=this.model.get("level") + 1; i <= Aptivate.data.conf.max_result_level; i++) {
+	            	var cls = ".result-overview.level-" + i;
+	            		
+	            	$(e.delegateTarget).find(cls).each(function (index, target) {
+	            		target = $(target);
+	            		
+	            		if(target.hasClass("show") && !target.find(".toggle-triangle:first").hasClass("show")){
+	            			target.find(".toggle-triangle:first").addClass("show");
+	            		} 
+	            		else if(!target.hasClass("show") && target.find(".toggle-triangle:first").hasClass("show")) {
+	            			target.find(".toggle-triangle:first").removeClass("show");
+	            		}
+	            		
+	            	});
+	            }
+            }
+            
             if (!this.rerendered) {
                 this.render();
                 this.rerendered = true;
@@ -139,9 +158,6 @@ define([
                     level: level + 1
                 }
             });
-            if (level === 1){
-                listView.maxLength = 1;
-            }
             return listView;
         },
 
