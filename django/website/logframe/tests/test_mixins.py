@@ -7,6 +7,7 @@ from django.contrib.auth.models import Permission
 from appconf.models import Settings
 from contacts.group_permissions import GroupPermissions
 from contacts.models import User
+from ..api import SettingsSerializer
 from ..mixins import AptivateDataBaseMixin, QuerysetSerializer
 from ..models import LogFrame, Result, Period, Milestone, ResultLevelName
 
