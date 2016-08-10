@@ -8,6 +8,7 @@ from django.utils.encoding import python_2_unicode_compatible
 from django.utils.functional import cached_property
 
 from contacts.models import User
+from django.db.models.fields.related import ForeignKey
 
 # http://djangosnippets.org/snippets/1054/
 
@@ -456,3 +457,12 @@ class Period(models.Model):
 
     def __str__(self):
         return 'Periods for logframe %s' % self.log_frame.name
+
+
+class ResultLevelName(models.Model):
+    level_number = models.IntegerField()
+    level_name = models.CharField(max_length=128)
+    logframe = models.ForeignKey(LogFrame)
+
+    class Meta:
+        unique_together = (('level_number', 'logframe'),)

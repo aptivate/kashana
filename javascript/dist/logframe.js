@@ -12948,6 +12948,7 @@ define('models/models',[
 
             Result: Backbone.Model.extend({
                 defaults: {
+                	level: 1,
                     order: 0
                 },
                 urlRoot: logframeUrl + '/results',
@@ -14348,8 +14349,12 @@ function program7(depth0,data) {
   }
 function program8(depth0,data) {
   
-  
-  return "Click to add title";
+  var buffer = "", stack1, helper;
+  buffer += "Click to add ";
+  if (helper = helpers.level_name) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.level_name); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1);
+  return buffer;
   }
 
 function program10(depth0,data) {
@@ -15212,6 +15217,7 @@ define('views/base_view',[
 
             // Add global values
             data.editable = this.is_editable;
+            data.level_name = Aptivate.data.levels[data.level];
 
             this.$el.html(template(data));
             if (this.postRender) {
@@ -15382,7 +15388,7 @@ define('views/generic/list',[
             itemView: function (placeholder) {
                 var itemId = placeholder.attr('data-subview-id'),
                     viewOptions;
-                if (itemId === "new" &&
+                if (itemId === "new" && this.maxLength && 
                         this.collection.length >= this.maxLength){
                     return null; // Don't show empty item
                 }
@@ -16732,6 +16738,25 @@ define('views/result/overview_item',[
 
             this.show = !seen;
             this.setShow(e.target, this.show);
+            
+            if(this.show){
+	            for(var i=this.model.get("level") + 1; i <= Aptivate.data.conf.max_result_level; i++) {
+	            	var cls = ".result-overview.level-" + i;
+	            		
+	            	$(e.delegateTarget).find(cls).each(function (index, target) {
+	            		target = $(target);
+	            		
+	            		if(target.hasClass("show") && !target.find(".toggle-triangle:first").hasClass("show")){
+	            			target.find(".toggle-triangle:first").addClass("show");
+	            		} 
+	            		else if(!target.hasClass("show") && target.find(".toggle-triangle:first").hasClass("show")) {
+	            			target.find(".toggle-triangle:first").removeClass("show");
+	            		}
+	            		
+	            	});
+	            }
+            }
+            
             if (!this.rerendered) {
                 this.render();
                 this.rerendered = true;
@@ -16819,9 +16844,6 @@ define('views/result/overview_item',[
                     level: level + 1
                 }
             });
-            if (level === 1){
-                listView.maxLength = 1;
-            }
             return listView;
         },
 
@@ -17036,7 +17058,6 @@ define('views/overview/container',[
             "resultList": function () {
                 return new ListView({
                     className: "result-tree",
-                    maxLength: 1,
                     itemView: OverviewItem,
                     collection: this.collection,
                     newModelOptions: {

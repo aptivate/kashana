@@ -1,14 +1,14 @@
 from rest_framework.renderers import JSONRenderer
 from rest_framework.serializers import ModelSerializer
+from contacts.models import User
+from appconf.models import Settings
 from .api import (
     LogFrameSerializer,
     ResultSerializer,
+    SettingsSerializer,
     create_serializer
 )
-from contacts.models import User
-from appconf.models import Settings
-from .models import Period, Rating
-from logframe.api import SettingsSerializer
+from .models import Period, Rating, ResultLevelName 
 
 
 class QuerysetSerializer(object):
@@ -62,6 +62,10 @@ class AptivateDataBaseMixin(QuerysetSerializer):
         """
         data = {
             'logframe': LogFrameSerializer(logframe).data,
+            'levels': {
+                the_level_name.level_number: the_level_name.level_name
+                for the_level_name in ResultLevelName.objects.all()
+            },
             'ratings': self.get_related_model_data(
                 {'log_frame': logframe}, Rating),
             'results': self._json_object_list(logframe.results,
