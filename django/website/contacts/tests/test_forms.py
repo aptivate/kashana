@@ -73,6 +73,8 @@ def test_registration_form_sets_business_email():
     user_data = N(get_user_model(), persist_dependencies=False)
     form = RegistrationForm(data={
         'email': user_data.business_email,
+        'first_name': user_data.first_name,
+        'last_name': user_data.last_name,
         'password1': 'password',
         'password2': 'password'
     })
