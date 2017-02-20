@@ -34,7 +34,7 @@
          {% if request.user.preferences.last_viewed_logframe %}
             <div class="navigation-link"><a href="{% url "logframe-dashboard" request.user.preferences.last_viewed_logframe.slug %}" id="nav-dashboard">Dashboard</a></div>
          {% endif %}
-         <div class="account-links-profile"><span>Logged in as: </span><a href="{% url "personal_edit" %}">{{ user.get_full_name|default:user.business_email }}</a></div>
+         <div class="account-links-profile"><span>Logged in as: </span><a href="{% url "personal_edit" %}">{{ request.user.get_full_name|default:user.business_email }}</a></div>
         {% else %}
             <div class="account-links-auth"><a href="{% url "login" %}">Log in</a></div>
         {% endif %}
