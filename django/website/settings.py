@@ -161,6 +161,7 @@ INSTALLED_APPS = (
     'django_assets',
     'floppyforms',
     'rest_framework_nested',
+    'organizations',
     # 'waffle',
 
     # our apps

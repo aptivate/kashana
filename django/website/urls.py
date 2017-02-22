@@ -7,6 +7,8 @@ from django.conf import settings
 from django.contrib import admin
 admin.autodiscover()
 
+from organizations.backends import invitation_backend
+
 import logframe.urls
 import api.urls
 
@@ -15,6 +17,8 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^accounts/', include('contacts.auth_urls')),
     url(r'^accounts/sign-up/', include('registration.backends.default.urls')),
+    url(r'^orgs/', include('organizations.urls')),
+    url(r'^orgs/invitations/', include(invitation_backend().get_urls())),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^api/', include(api.urls)),
     url(r'^contacts/', include('contacts.urls')),

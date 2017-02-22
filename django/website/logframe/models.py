@@ -2,13 +2,16 @@ from __future__ import unicode_literals
 
 from datetime import date, timedelta
 from django.db import models
+from django.db.models.fields.related import ForeignKey
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.functional import cached_property
 
+from organizations.models import Organization
+
+
 from contacts.models import User
-from django.db.models.fields.related import ForeignKey
 
 # http://djangosnippets.org/snippets/1054/
 
@@ -54,6 +57,7 @@ class LogFrame(AverageTargetPercentMixin, models.Model):
         unique=True
     )
     slug = models.SlugField(unique=True)
+    organization = models.ForeignKey(Organization)
 
     def average_target_percent(self):
         return self._calculate_weighted_target_percent(self.output_set.all())
