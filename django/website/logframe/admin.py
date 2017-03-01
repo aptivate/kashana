@@ -22,6 +22,7 @@ from .models import (
     StatusUpdate,
     Rating,
     Period,
+    ResultLevelName,
 
     colors
 )
@@ -111,6 +112,9 @@ class RatingAdmin(admin.ModelAdmin):
         }
 
 
+class ResultLevelNameAdmin(admin.ModelAdmin):
+    ordering = ('logframe', 'level_number', )
+
 admin.site.register(LogFrame)
 admin.site.register(Result, ResultAdmin)
 admin.site.register(Milestone, MilestoneAdmin)
@@ -129,3 +133,4 @@ admin.site.register(StatusCode)
 admin.site.register(StatusUpdate, StatusUpdateAdmin)
 admin.site.register(Rating, RatingAdmin)
 admin.site.register(Period)
+admin.site.register(ResultLevelName, ResultLevelNameAdmin)
