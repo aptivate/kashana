@@ -20,6 +20,7 @@ from ..models import (
     Period,
     Rating,
     Result,
+    ResultLevelName,
     RiskRating,
     StatusCode,
     StatusUpdate,
@@ -494,3 +495,11 @@ def test_rating_string_for_period_contains_logframe_name():
     log_frame = LogFrame(name="Logframe Name")
     period = Period(log_frame=log_frame)
     assert "Periods for logframe {0}".format(period.log_frame.name) == str(period)
+
+
+def test_result_level_name_str_has_logframe_and_level():
+    log_frame = LogFrame(name="Results Framework")
+    result_name = ResultLevelName(logframe=log_frame,
+                                  level_number=2,
+                                  level_name='Outcome')
+    assert str(result_name) == "Results Framework [2 - Outcome]"

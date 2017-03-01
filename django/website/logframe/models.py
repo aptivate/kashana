@@ -463,3 +463,8 @@ class ResultLevelName(models.Model):
 
     class Meta:
         unique_together = (('level_number', 'logframe'),)
+
+    def __str__(self):
+        return '{0} [{1} - {2}]'.format(self.logframe.name,
+                                        self.level_number,
+                                        self.level_name)
