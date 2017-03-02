@@ -133,7 +133,7 @@ footer {
       color:#fff;
   }
 
-.ribbon .heading, 
+.ribbon .heading,
 .ribbon input {
     font-size: 1.5em;
     font-weight: bold;
@@ -160,7 +160,7 @@ footer {
 .indicator-data-table .result-input,
 #result-assumptions .result-input {
 	width:100%;
-} 
+}
 
 
 
@@ -173,6 +173,10 @@ footer {
     font-size: 1em;
     font-weight: bold;
     padding: 1em;
+
+    &.result-level-name {
+        color: $black;
+    }
 }
 .ribbon .editable.heading:hover,
 #result-detail > div > div.editable:hover {
@@ -279,7 +283,7 @@ footer {
 }
 .ribbon-assumptions {
     background-color: #FFCC99;
-    margin-top: 1px; 
+    margin-top: 1px;
     display:block;
 }
 .heading.assumptions {
@@ -344,6 +348,12 @@ footer {
     @include transition-property(transform);
     @include transition-duration(.25s);
 }
+
+.result-level-name {
+    background-color: $sky-blue;
+    text-transform: uppercase;
+}
+
 .level-1 {
     &.result-overview {
         background-color: $level-1-blue;
@@ -561,9 +571,9 @@ div.activity-item {
 .result-overview-table > tbody > tr { /* Ugly, but limits scope */
 }
 
-.overview-manage, 
-.overview-minmax, 
-.overview-title, 
+.overview-manage,
+.overview-minmax,
+.overview-title,
 .overview-title > h2 {
   background-color:$dusk-blue;
 }
