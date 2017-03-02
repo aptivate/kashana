@@ -221,6 +221,7 @@ JSTEMPLATE_DIRS = [
 ]
 
 # Project Specific Settings
+DEFAULT_ORGANIZATION_NAME = "Kashana"
 DEFAULT_LOGFRAME_NAME = "Log Frame"
 DEFAULT_LOGFRAME_SLUG = "log_frame"
 

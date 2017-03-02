@@ -3,6 +3,8 @@ import json
 
 from unittest import TestCase
 from django_dynamic_fixture import G, N
+from organizations.models import Organization
+
 from ..views import ResultEditor, ResultMonitor
 from ..models import (
     LogFrame,
@@ -63,7 +65,8 @@ class ResultEditorTests(TestCase):
 class ResultMonitorTests(TestCase):
     @pytest.mark.django_db
     def test_result_monitor_get_logframe_returns_result_logframe(self):
-        log_frame, _ = LogFrame.objects.get_or_create(name='Test Logframe')
+        organization = Organization.objects.create(name='Test Org')
+        log_frame, _ = LogFrame.objects.get_or_create(name='Test Logframe', organization=organization)
 
         result = Result(log_frame=log_frame)
         result_monitor_view = ResultMonitor()
@@ -72,7 +75,7 @@ class ResultMonitorTests(TestCase):
         assert log_frame == result_monitor_view.get_logframe()
 
     def test_result_monitor_get_data_contains_serialised_result(self):
-        log_frame = N(LogFrame, id=1)
+        log_frame = N(LogFrame, id=1, persist_dependencies=False)
 
         result = N(Result, ignore_fields=['log_frame', 'parent', 'rating', 'risk_rating'])
         result.log_frame = log_frame

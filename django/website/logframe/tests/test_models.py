@@ -27,6 +27,7 @@ from ..models import (
     TALine,
     TAType
 )
+from organizations.models import Organization
 
 
 class TestAverageTargetPercentMixin(TestCase):
@@ -351,7 +352,7 @@ def test_indicator_representation_as_string_is_name():
 
 
 def create_indicator():
-    log_frame = LogFrame.objects.get_or_create()[0]
+    log_frame = G(LogFrame)
     result = G(Result, log_frame=log_frame, ignore_fields=['parent', 'rating'])
     return G(Indicator, result=result)
 
@@ -381,7 +382,7 @@ def test_subindicator_default_order_with_no_sibilings_is_one():
 
 @pytest.mark.django_db
 def test_ta_type_default_order_is_maxiumum_of_sibling_ta_types_plus_one():
-    log_frame, _ = LogFrame.objects.get_or_create()
+    log_frame = G(LogFrame)
     first_ta_type = G(TAType, log_frame=log_frame, n=4)[0]
 
     ta_type = N(TAType, log_frame=log_frame)
@@ -393,7 +394,7 @@ def test_ta_type_default_order_is_maxiumum_of_sibling_ta_types_plus_one():
 
 @pytest.mark.django_db
 def test_ta_type_default_order_with_no_sibilings_is_one():
-    log_frame, _ = LogFrame.objects.get_or_create()
+    log_frame = G(LogFrame)
 
     ta_type = N(TAType, log_frame=log_frame)
     ta_type.order = None
@@ -404,7 +405,7 @@ def test_ta_type_default_order_with_no_sibilings_is_one():
 
 @pytest.mark.django_db
 def test_status_code_default_order_is_maxiumum_of_sibling_status_codes_plus_one():
-    log_frame, _ = LogFrame.objects.get_or_create()
+    log_frame = G(LogFrame)
     first_status_code = G(StatusCode, log_frame=log_frame, n=4)[0]
 
     status_code = N(StatusCode, log_frame=log_frame)
@@ -416,7 +417,7 @@ def test_status_code_default_order_is_maxiumum_of_sibling_status_codes_plus_one(
 
 @pytest.mark.django_db
 def test_status_code_default_order_with_no_sibilings_is_one():
-    log_frame, _ = LogFrame.objects.get_or_create()
+    log_frame = G(LogFrame)
 
     status_code = N(StatusCode, log_frame=log_frame)
     status_code.order = None
@@ -427,7 +428,7 @@ def test_status_code_default_order_with_no_sibilings_is_one():
 
 @pytest.mark.django_db
 def test_activity_default_order_is_maxiumum_of_sibling_status_codes_plus_one():
-    log_frame, _ = LogFrame.objects.get_or_create()
+    log_frame = G(LogFrame)
     result = G(Result, log_frame=log_frame, ignore_fields=['parent', 'rating', 'risk_rating'])
     first_activity = G(Activity, log_frame=log_frame, result=result, n=4)[0]
 
@@ -440,7 +441,8 @@ def test_activity_default_order_is_maxiumum_of_sibling_status_codes_plus_one():
 
 @pytest.mark.django_db
 def test_activity_default_order_with_no_sibilings_is_one():
-    log_frame, _ = LogFrame.objects.get_or_create()
+    organization = Organization.objects.create(name='Test organization')
+    log_frame, _ = LogFrame.objects.get_or_create(organization=organization)
     result = G(Result, log_frame=log_frame, ignore_fields=['parent', 'rating', 'risk_rating'])
 
     activity = N(Activity, log_frame=log_frame, result=result)

@@ -8,7 +8,7 @@
     <h2>{% trans "Logframes available for you to view" %}</h2>
     <ul>
     {% for logframe in logframe_list %}
-        <li><a href="{% url "logframe-dashboard" logframe.slug %}">{{ logframe.name }}</a> </li>
+        <li><a href="{% url "logframe-dashboard" logframe.organization.slug logframe.slug %}">{{ logframe.name }}</a> </li>
     {% endfor %}
     </ul>
 {% endblock content %}

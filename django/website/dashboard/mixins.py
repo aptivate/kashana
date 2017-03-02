@@ -11,34 +11,56 @@ from logframe.models import (
 )
 from django.conf import settings
 from django.shortcuts import get_object_or_404
+from organizations.models import Organization
 
 
-def update_last_viewed_logframe(user, logframe):
-    user.preferences.last_viewed_logframe = logframe
-    user.save()
+def update_last_viewed_item(user, item):
+    setattr(user.preferences, 'last_viewed_' + item.__class__.__name__.lower(), item)
+    user.preferences.save()
 
 
 class OverviewMixin(object):
-    def get_logframe(self):
-        if not LogFrame.objects.exists():
-            LogFrame.objects.create(name=settings.DEFAULT_LOGFRAME_NAME, slug=settings.DEFAULT_LOGFRAME_SLUG)
-
+    def get_item(self, klass, slug_field_name, **item_kwargs):
         user = self.request.user
-        logframe = user.preferences.last_viewed_logframe
-        if 'slug' in self.kwargs or logframe:
-            slug = self.kwargs.get('slug') or logframe.slug
+        if not klass.objects.exists():
+            item = klass.objects.create(**item_kwargs)
+            if hasattr(item, 'add_user'):
+                item.add_user(user)
+        item = getattr(user.preferences, 'last_viewed_' + klass.__name__.lower())
 
-            if not logframe or slug != logframe.slug:
-                new_logframe = get_object_or_404(LogFrame, slug=slug)
-                update_last_viewed_logframe(user, new_logframe)
+        if slug_field_name in self.kwargs or item:
+            slug = self.kwargs.get(slug_field_name) or item.slug
+
+            if not item or slug != item.slug:
+                new_item = get_object_or_404(klass, slug=slug)
+                update_last_viewed_item(user, new_item)
             else:
-                new_logframe = user.preferences.last_viewed_logframe
-
+                new_item = item
         else:
-            new_logframe = LogFrame.objects.all().order_by('id')[0]
-            update_last_viewed_logframe(user, new_logframe)
+            new_item = klass()
+        return new_item
 
-        return new_logframe
+    def get_organization(self):
+        organization = self.get_item(Organization, 'org_slug', name=settings.DEFAULT_ORGANIZATION_NAME)
+        if not organization.pk:
+            if self.request.user.organizations_organization.exists():
+                organization = self.request.user.organizations_organization.first()
+            update_last_viewed_item(self.request.user, organization)
+
+        return organization
+
+    def get_logframe(self):
+        organization = self.get_organization()
+        logframe = self.get_item(LogFrame, 'slug',
+                name=settings.DEFAULT_LOGFRAME_NAME,
+                slug=settings.DEFAULT_LOGFRAME_SLUG,
+                organization=organization)
+
+        if not logframe.pk:
+            logframe = LogFrame.objects.filter(organization=organization).order_by('id')[0]
+            update_last_viewed_item(self.request.user, logframe)
+
+        return logframe
 
     def get_activities(self, logframe):
         return self.get_related_model_data(

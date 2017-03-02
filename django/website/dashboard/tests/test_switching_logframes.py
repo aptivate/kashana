@@ -5,10 +5,12 @@ from django.test.client import RequestFactory
 import mock
 import pytest
 
+from logframe.models import LogFrame
+
 from ..views import SwitchLogframes
 
 
-@mock.patch('dashboard.views.get_object_or_404', new=mock.Mock(return_value=mock.Mock(slug='test')))
+@mock.patch('dashboard.views.get_object_or_404', new=mock.Mock(return_value=mock.Mock(spec=LogFrame, slug='test')))
 def test_switch_logframes_sets_user_last_viewed_logframe_to_new_logframe():
     data = {'logframe': '2'}
 
@@ -20,7 +22,7 @@ def test_switch_logframes_sets_user_last_viewed_logframe_to_new_logframe():
     assert 'test' == request.user.preferences.last_viewed_logframe.slug
 
 
-@mock.patch('dashboard.views.get_object_or_404', new=mock.Mock(return_value=mock.Mock(slug='test')))
+@mock.patch('dashboard.views.get_object_or_404', new=mock.Mock(spec=LogFrame, return_value=mock.Mock(slug='test')))
 def test_switch_logframes_containts_instruction_to_redirect_to_dashboard():
     data = {'logframe': '2'}
 
