@@ -23,4 +23,8 @@ def deploy_env(request):
 
 def logframe_list(request):
     from logframe.models import LogFrame
-    return {'logframe_list': LogFrame.objects.all()}
+    if request.user.is_authenticated():
+        extra_context = {'logframe_list': LogFrame.objects.filter(organization__in=request.user.organizations_organization.all())}
+    else:
+        extra_context = {'lograne_list': []}
+    return extra_context
