@@ -18,3 +18,4 @@ reports/*
 .pydevproject
 *.sql
 *.sql.gz
+.cache
