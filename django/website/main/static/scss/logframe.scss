@@ -125,20 +125,19 @@ footer {
   }
   .ribbon-result {
       color: #fff;
-      background-color: $dusk-blue;
   }
   .ribbon .heading {
       padding: 0.2em;
       margin:0;
-      color:#fff;
+      color: $black;
   }
 
 .ribbon .heading,
 .ribbon input {
-    font-size: 1.5em;
+    font-size: 1rem;
     font-weight: bold;
     margin-bottom: 0;
-    padding:5px 5px 5px 12px;
+    padding: 0;
 }
 
 .ribbon-indicator .heading {
@@ -165,21 +164,31 @@ footer {
 
 
 #result-detail {
-    background-color: $dusk-blue;
+    background-color: $light-sky-blue;
 }
 
 #result-detail > div {
-    color: #fff;
+    color: $black;
     font-size: 1em;
-    font-weight: bold;
-    padding: 1em;
+    padding: 0 1em;
 
     &.result-level-name {
         color: $black;
+        font-weight:bold;
+        padding: 1em;
+    }
+
+    &.ribbon-result {
+        padding: 2em 1em 1em 1em;
     }
 
     &.description-label {
-        color:$grey;
+        color: $grey;
+        padding: 1em;
+    }
+
+    > .editable {
+        padding:0;
     }
 }
 .ribbon .editable.heading:hover,
