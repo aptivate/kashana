@@ -19,3 +19,5 @@ reports/*
 *.sql
 *.sql.gz
 _SpecRunner.html
+.cache
+
