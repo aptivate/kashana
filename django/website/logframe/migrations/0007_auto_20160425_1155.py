@@ -10,8 +10,8 @@ def add_level_details(apps, schema_editor):
     for logframe in LogFrame.objects.all():
         ResultLevelName.objects.bulk_create([
             ResultLevelName(level_number=1, level_name="Goal", logframe=logframe),
-            ResultLevelName(level_number=2, level_name="Output", logframe=logframe),
-            ResultLevelName(level_number=3, level_name="Outcome", logframe=logframe),
+            ResultLevelName(level_number=2, level_name="Outcome", logframe=logframe),
+            ResultLevelName(level_number=3, level_name="Output", logframe=logframe),
             ResultLevelName(level_number=4, level_name="Activity", logframe=logframe)
         ])
 
