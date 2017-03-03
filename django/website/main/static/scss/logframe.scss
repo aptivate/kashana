@@ -202,6 +202,13 @@ footer {
 #indicator-column {
     padding:7px;
 }
+
+.indicators-label {
+    font-weight:bold;
+    padding:1em;
+}
+
+
 #indicator-column > div > div {
     clear: both;
 }
@@ -364,6 +371,10 @@ footer {
 
 .result-level-name {
     background-color: $sky-blue;
+}
+
+.result-level-name,
+.indicators-label {
     text-transform: uppercase;
 }
 
