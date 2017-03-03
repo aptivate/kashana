@@ -21,6 +21,7 @@ def test_redirects_to_created_logframe_on_success():
 
 
 def test_logframe_name_converted_to_lowercase():
+    temp_filter = LogFrame.objects.filter
     LogFrame.objects.filter = Mock(return_value=Mock(exists=lambda: False))
 
     a_logframe = LogFrame()
@@ -28,24 +29,27 @@ def test_logframe_name_converted_to_lowercase():
 
     expected_slug = 'testcapslowered'
     actual_slug = a_logframe.get_unique_slug_name()
+    LogFrame.objects.filter = temp_filter
 
     assert expected_slug == actual_slug
 
 
-@patch('logframe.views.LogFrame')
-def test_logframe_slug_only_contains_letters_numbers_hyphens_and_underscores(logframes):
-    logframes.objects.filter = Mock(return_value=Mock(exists=lambda: False))
+def test_logframe_slug_only_contains_letters_numbers_hyphens_and_underscores():
+    temp_filter = LogFrame.objects.filter
+    LogFrame.objects.filter = Mock(return_value=Mock(exists=lambda: False))
 
     a_logframe = LogFrame()
     a_logframe.name = u'Test£$%^(-Name_Preserved'
 
     expected_slug = 'test-name_preserved'
     actual_slug = a_logframe.get_unique_slug_name()
+    LogFrame.objects.filter = temp_filter
 
     assert expected_slug == actual_slug
 
 
 def test_spaces_from_logframe_name_replaced_with_underscores():
+    temp_filter = LogFrame.objects.filter
     LogFrame.objects.filter = Mock(return_value=Mock(exists=lambda: False))
 
     a_logframe = LogFrame()
@@ -53,11 +57,13 @@ def test_spaces_from_logframe_name_replaced_with_underscores():
 
     expected_slug = 'test-name'
     actual_slug = a_logframe.get_unique_slug_name()
+    LogFrame.objects.filter = temp_filter
 
     assert expected_slug == actual_slug
 
 
 def test_unique_slug_never_longer_than_50_characters():
+    temp_filter = LogFrame.objects.filter
     LogFrame.objects.filter = Mock(return_value=Mock(exists=lambda: False))
 
     a_logframe = LogFrame()
@@ -65,6 +71,7 @@ def test_unique_slug_never_longer_than_50_characters():
 
     expected_slug = 'a-very-very-very-very-very-very-long-test-name-ind'
     actual_slug = a_logframe.get_unique_slug_name()
+    LogFrame.objects.filter = temp_filter
 
     assert expected_slug == actual_slug
 
