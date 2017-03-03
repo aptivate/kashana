@@ -1,4 +1,3 @@
-import re
 from django.core.urlresolvers import reverse
 from django.views.generic import CreateView, DetailView
 from braces.views import LoginRequiredMixin, PermissionRequiredMixin
@@ -70,21 +69,10 @@ class CreateLogframe(PermissionRequiredMixin, CreateView):
     template_name = 'logframe/create_logframe.html'
     permission_required = 'logframe.edit_logframe'
 
-    def get_unique_slug_name(self, logframe):
-        slug = logframe.name.lower()
-        slug = slug.replace(' ', '_')
-        slug = re.sub('[^\w-]', '', slug)
-        slug = slug[:46]
-        if LogFrame.objects.filter(slug=slug).exists():
-            count = LogFrame.objects.filter(slug__startswith=slug).count() + 1
-            slug += unicode(count)
-        return slug
-
     def get_success_url(self):
         return reverse('logframe-dashboard', kwargs={'slug': self.object.slug})
 
     def form_valid(self, form):
-        form.instance.slug = self.get_unique_slug_name(form.instance)
         # The logframe needs to exist before we create the settings, so finish
         # the regular form_valid code.
         response = CreateView.form_valid(self, form)

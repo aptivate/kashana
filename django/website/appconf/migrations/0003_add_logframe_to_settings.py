@@ -14,7 +14,7 @@ def add_logframe_to_settings(apps, schema_editor):
     first_logframe = LogFrame.objects.order_by('id')[0]
     remaining_logframes = LogFrame.objects.order_by('id')[1:]
 
-    settings = Settings.objects.get()
+    settings, _ = Settings.objects.get_or_create()
     settings.logframe = first_logframe
     settings.save()
 
