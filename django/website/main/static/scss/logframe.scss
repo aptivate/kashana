@@ -177,6 +177,10 @@ footer {
     &.result-level-name {
         color: $black;
     }
+
+    &.description-label {
+        color:$grey;
+    }
 }
 .ribbon .editable.heading:hover,
 #result-detail > div > div.editable:hover {
