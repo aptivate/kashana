@@ -3,6 +3,7 @@ from django.views.generic import CreateView, DetailView
 from braces.views import LoginRequiredMixin, PermissionRequiredMixin
 from appconf.models import Settings
 from .api import ResultSerializer
+from .forms import CreateLogFrameForm
 from .mixins import AptivateDataBaseMixin
 from .models import (
     Assumption, Indicator, LogFrame, Milestone, Result, RiskRating,
@@ -65,6 +66,7 @@ class ResultMonitor(LoginRequiredMixin, AptivateDataBaseMixin, DetailView):
 
 class CreateLogframe(PermissionRequiredMixin, CreateView):
     model = LogFrame
+    form_class = CreateLogFrameForm
     fields = ['name']
     template_name = 'logframe/create_logframe.html'
     permission_required = 'logframe.edit_logframe'
