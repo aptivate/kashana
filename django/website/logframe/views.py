@@ -67,7 +67,6 @@ class ResultMonitor(LoginRequiredMixin, AptivateDataBaseMixin, DetailView):
 class CreateLogframe(PermissionRequiredMixin, CreateView):
     model = LogFrame
     form_class = CreateLogFrameForm
-    fields = ['name']
     template_name = 'logframe/create_logframe.html'
     permission_required = 'logframe.edit_logframe'
 
