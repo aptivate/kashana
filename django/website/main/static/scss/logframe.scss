@@ -120,21 +120,28 @@ footer {
     position:relative;
     padding:5px;
 }
-  .ribbon input {
+
+.ribbon input {
   	background-color:#fff;
-  }
-  .ribbon-result {
-      color: #fff;
-  }
-  .ribbon .heading {
-      padding: 0.2em;
-      margin:0;
-      color: $black;
-  }
+}
+
+.ribbon-result {
+    color: #fff;
+
+    > .heading.editable {
+        font-size:1em;
+    }
+}
+
+.ribbon .heading {
+    padding: 0.2em;
+    margin:0;
+    color: $black;
+}
 
 .ribbon .heading,
 .ribbon input {
-    font-size: 1rem;
+    font-size: 1.5em;
     font-weight: bold;
     margin-bottom: 0;
     padding: 0;
@@ -200,10 +207,11 @@ footer {
     display:block;
 }
 #indicator-column {
-    padding:7px;
+    padding:0 7px;
 }
 
 .indicators-label {
+    color: $black;
     font-weight:bold;
     padding:1em;
 }
@@ -305,9 +313,11 @@ footer {
     background-color: #FFCC99;
     margin-top: 1px;
     display:block;
+    padding: 1em;
 }
 .heading.assumptions {
-  color:#333;
+    font-size: 1em;
+    color: $black;
 }
 #result-assumptions {
     margin-top: 0;
@@ -374,7 +384,8 @@ footer {
 }
 
 .result-level-name,
-.indicators-label {
+.indicators-label,
+.ribbon-assumptions {
     text-transform: uppercase;
 }
 
