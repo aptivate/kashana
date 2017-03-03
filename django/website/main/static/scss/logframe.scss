@@ -25,13 +25,13 @@ footer {
 
 .monitor-result,
 .logframe-result {
-    border: 1em solid $page-background;
     margin-bottom: 1em;
     position:relative;
     display:table;
 }
 .monitor-result{
-  border-top:0;
+    border: 1em solid $page-background;
+    border-top:0;
 }
 
 .logframe-result td:first-child {
