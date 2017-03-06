@@ -211,12 +211,20 @@ footer {
     padding:0 7px;
 }
 
-.indicators-label {
+.indicators-label,
+.milestones-label {
     color: $black;
     font-weight:bold;
-    padding:1em;
+    background-color: $white;
 }
 
+.indicators-label {
+    padding: 1em;
+}
+
+.milestones-label {
+    padding: 1em 0;
+}
 
 #indicator-column > div > div {
     clear: both;
@@ -386,6 +394,7 @@ footer {
 
 .result-level-name,
 .indicators-label,
+.milestones-label,
 .ribbon-assumptions {
     text-transform: uppercase;
 }

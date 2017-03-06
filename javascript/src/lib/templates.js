@@ -761,7 +761,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<div class=\"indicator-detail\">\n    <div data-subview=\"indicatorName\"></div>\n    <div data-subview=\"indicatorDescription\"></div>\n</div>\n<div class=\"indicator-data\">\n    <div class=\"scrolling-container\">\n        <div class=\"indicator-data-table scrolling-table\">\n            <div data-subview=\"targetsTable\"></div>\n        </div>\n    </div>\n    <div class=\"indicator-source\">\n        <h3>Source</h3>\n        <div data-subview=\"indicatorSource\"></div>\n    </div>\n</div>\n";
+  return "<div class=\"indicator-detail\">\n    <div data-subview=\"indicatorName\"></div>\n    <div data-subview=\"indicatorDescription\"></div>\n</div>\n<div class=\"indicator-data\">\n    <div class=\"scrolling-container\">\n        <div class=\"indicator-data-table scrolling-table\">\n            <div class=\"milestones-label\">Milestones</div>\n            <div data-subview=\"targetsTable\"></div>\n        </div>\n    </div>\n    <div class=\"indicator-source\">\n        <h3>Source</h3>\n        <div data-subview=\"indicatorSource\"></div>\n    </div>\n</div>\n";
   });;
 this["Aptivate"] = this["Aptivate"] || {};
 this["Aptivate"]["data"] = this["Aptivate"]["data"] || {};
