@@ -5,6 +5,9 @@ from django.contrib.auth.models import Permission, Group, ContentType
 from django.core.exceptions import ObjectDoesNotExist
 
 from contacts.group_permissions import GroupPermissions
+from contacts.models import NameOnlyPermission
+from django.contrib.admin.options import get_content_type_for_model
+from logframe.models import LogFrame
 
 
 User = get_user_model()
@@ -138,3 +141,14 @@ def test_perm_name_returns_permission_name():
     permission = get_first_custom_group_permission()
 
     assert 'contacts.{0}'.format(permission.codename) == GroupPermissions.perm_name(permission)
+
+
+@pytest.mark.django_db
+def test_name_only_permission_gives_descriptive_name_as_string():
+    content_type = get_content_type_for_model(LogFrame)
+    permission = NameOnlyPermission.objects.create(
+        name='Add personal info',
+        content_type=content_type,
+        codename='add_personal_info'
+    )
+    assert "Can add personal info" == unicode(permission)

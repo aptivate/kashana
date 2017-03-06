@@ -8,6 +8,8 @@
     <meta charset="UTF-8">
     <meta name="csrf-token" content="{{ csrf_token }}">
     <title>{% settings_value "SITE_NAME" %} MIS {% block title %}{% endblock %}</title>
+    {% block extra_media %}
+    {% endblock %}
     {% assets "css_all" %}
     <link rel="stylesheet" href="{{ ASSET_URL }}">
     {% endassets %}
