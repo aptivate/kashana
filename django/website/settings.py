@@ -142,6 +142,7 @@ SITE_HOSTNAME = 'localhost:8000'
 SITE_NAME = 'Kashana'
 INCLUDE_REGISTER_URL = True
 REGISTRATION_FORM = 'contacts.forms.RegistrationForm'
+INVITATION_BACKEND = 'contacts.organization_backends.InvitationBackend'
 
 INSTALLED_APPS = (
     'django.contrib.auth',
