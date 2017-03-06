@@ -21,7 +21,7 @@
         {% block logframe_switching_form %}
         {% if request.user and request.user.is_authenticated %}
         <form id="logframes-switch" action="{% url "switch-logframes" %}" method="post">{% csrf_token %}
-            <select id="logframes-switch-select" name="logframe" onchange="this.form.submit();"{% if logframe_list|length == 1 %}disabled="disabled"{% endif %}>
+            <select id="logframes-switch-select" name="logframe" onchange="this.form.submit();"{% if logframe_list|length == 1 %} disabled="disabled"{% endif %}>
             	{% for logframe in logframe_list %}<option value="{{ logframe.id }}"{% if request.user.preferences.last_viewed_logframe == logframe %} selected="selected"{% endif %}>{{ logframe.name }}</option>{% endfor %}
 			</select>
 		</form>
@@ -32,8 +32,8 @@
          {% if perms.contacts.add_user %}
             <div class="navigation-link"><a href="{% url "contact_list" %}" id="nav-people">People</a></li></div>
          {% endif %}
-         {% if request.user.preferences.last_viewed_logframe %}
-            <div class="navigation-link"><a href="{% url "logframe-dashboard" request.user.preferences.last_viewed_logframe.slug %}" id="nav-dashboard">Dashboard</a></div>
+         {% if request.user.preferences.last_viewed_organization and request.user.preferences.last_viewed_logframe %}
+            <div class="navigation-link"><a href="{% url "logframe-dashboard" request.user.preferences.last_viewed_organization.slug request.user.preferences.last_viewed_logframe.slug %}" id="nav-dashboard">Dashboard</a></div>
          {% endif %}
          <div class="account-links-profile"><span>Logged in as: </span><a href="{% url "personal_edit" %}">{{ user.get_full_name|default:user.business_email }}</a></div>
         {% else %}
