@@ -5,21 +5,24 @@ from django.contrib.auth.forms import (
     UserCreationForm, UserChangeForm, PasswordResetForm
 )
 from django.forms import (
-    ModelForm, ValidationError, ImageField
+    ModelMultipleChoiceField, ModelForm, ValidationError, ImageField
 )
+from django.forms.widgets import CheckboxSelectMultiple
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 from django.utils.translation import ugettext as _
 
 import mail
 import floppyforms as forms
-from form_utils.forms import BetterModelForm
+from floppyforms.fields import EmailField
+from form_utils.forms import BetterModelForm, BetterForm
+from registration.forms import RegistrationForm as BaseRegistrationForm
 
 from main.widgets import (
     BetterFileInput,
     BetterImageInput,
 )
-from .models import User
+from .models import NameOnlyPermission, User
 
 TITLES = (
     'Dr', 'Hon', 'Mrs', 'Ms', 'Mr', 'Prof', 'His Excellency',
@@ -40,82 +43,50 @@ class TitleInput(forms.TextInput):
 # Contacts forms
 #######################################################################
 class UpdatePersonalInfoForm(BetterModelForm):
-    picture = ImageField(required=False, widget=BetterImageInput())
+    user_permissions = ModelMultipleChoiceField(
+        NameOnlyPermission.objects,
+        widget=CheckboxSelectMultiple,
+        required=False,
+        help_text=(
+            "A user without any permissions will only be able to view the "
+            "logframe. In order for them to be able to edit the logframe or "
+            "manage users, you will need to give them one of the permissions "
+            "below:"
+        ),
+        limit_choices_to={'codename__in': ['edit_logframe', 'add_personal_info']}
+    )
 
     class Meta:
         model = User
         fields = [
-            'business_email', 'title', 'first_name',
-            'last_name', 'personal_email',
-            # Address
-            'home_address', 'business_address', 'country', 'nationality',
-            # Personal info
-            'gender', 'contact_type',
-            # Work
-            'job_title', 'area_of_specialisation',
-            # Phones & fax
-            'home_tel', 'business_tel', 'mobile', 'fax',
-            # IM
-            'skype_id', 'yahoo_messenger', 'msn_id',
-            'notes', 'picture', 'cv'
+            'business_email', 'first_name', 'last_name', 'user_permissions',
         ]
         fieldsets = [('all', {'fields': [
-            'business_email', 'title', 'first_name',
-            'last_name', 'personal_email',
-            # Address
-            'home_address', 'business_address', 'country', 'nationality',
-            # Personal info
-            'gender', 'contact_type',
-            # Work
-            'job_title', 'area_of_specialisation',
-            # Phones & fax
-            'home_tel', 'business_tel', 'mobile', 'fax',
-            # IM
-            'skype_id', 'yahoo_messenger', 'msn_id',
-            'notes', 'picture', 'cv']})]
-
-        widgets = {
-            'title': TitleInput,
-            'cv': BetterFileInput
-        }
+            'business_email', 'first_name',
+            'last_name', 'user_permissions']})]
 
 
 class AddContactForm(BetterModelForm):
-    picture = ImageField(required=False, widget=BetterImageInput())
+    user_permissions = ModelMultipleChoiceField(
+        NameOnlyPermission.objects,
+        widget=CheckboxSelectMultiple,
+        required=False,
+        help_text=(
+            "A user without any permissions will only be able to view the "
+            "logframe. In order for them to be able to edit the logframe or "
+            "manage users, you will need to give them one of the permissions "
+            "below:"
+        ),
+        limit_choices_to={'codename__in': ['edit_logframe', 'add_personal_info']}
+    )
 
     class Meta:
         model = User
-        fields = ['business_email', 'title', 'first_name',
-                  'last_name', 'personal_email', 'is_active',
-                  # Address
-                  'home_address', 'business_address', 'country', 'nationality',
-                  # Personal info
-                  'gender',
-                  # Work
-                  'job_title', 'area_of_specialisation',
-                  # Phones & fax
-                  'home_tel', 'business_tel', 'mobile', 'fax',
-                  # IM
-                  'skype_id', 'yahoo_messenger', 'msn_id',
-                  'notes', 'picture', 'cv']
-        fieldsets = [('all', {'fields':
-                 ['business_email', 'title', 'first_name',
-                  'last_name', 'personal_email', 'is_active',
-                  # Address
-                  'home_address', 'business_address', 'country', 'nationality',
-                  # Personal info
-                  'gender',
-                  # Work
-                  'job_title', 'area_of_specialisation',
-                  # Phones & fax
-                  'home_tel', 'business_tel', 'mobile', 'fax',
-                  # IM
-                  'skype_id', 'yahoo_messenger', 'msn_id',
-                  'notes', 'picture', 'cv']})]
-        widgets = {
-            'title': TitleInput,
-            'cv': BetterFileInput
-        }
+        fields = [
+            'business_email', 'first_name', 'last_name', 'is_active', 'user_permissions',
+        ]
+        fieldsets = [('all', {'fields': [
+            'business_email', 'first_name', 'last_name', 'is_active', 'user_permissions',]})]
 
 
 class UpdateContactForm(AddContactForm):
@@ -242,3 +213,16 @@ class ContactPasswordResetForm(PasswordResetForm):
                 'context': ctx
             }
             mail.notify(options)
+
+
+# The registration process assumes a field called 'email' on the user model
+# Our model uses a field called 'business_email' for this purpose, so we need
+# to map the email field onto business_email
+class RegistrationForm(BetterModelForm, BaseRegistrationForm):
+    class Meta:
+        model = User
+        fields = ('email', 'first_name', 'last_name', 'password1', 'password2')
+
+    def save(self, commit=True):
+        self.instance.business_email = self.cleaned_data['email']
+        return BaseRegistrationForm.save(self, commit=commit)

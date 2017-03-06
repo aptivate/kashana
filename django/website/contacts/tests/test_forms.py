@@ -3,7 +3,7 @@ from django.core import mail
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 
-from django_dynamic_fixture import G
+from django_dynamic_fixture import G, N
 import pytest
 
 from ..forms import (
@@ -14,6 +14,7 @@ from ..forms import (
     UpdatePersonalInfoForm,
 )
 from .context_managers import doesnt_raise
+from contacts.forms import RegistrationForm
 
 
 def test_is_active_is_only_difference_on_add_contact_form():
@@ -65,3 +66,19 @@ def test_user_id_encoded_in_base_64_when_sending_password_reset_email():
     form.save('Test Email')
 
     assert encoded_username in mail.outbox[0].body
+
+
+@pytest.mark.django_db
+def test_registration_form_sets_business_email():
+    user_data = N(get_user_model(), persist_dependencies=False)
+    form = RegistrationForm(data={
+        'email': user_data.business_email,
+        'first_name': user_data.first_name,
+        'last_name': user_data.last_name,
+        'password1': 'password',
+        'password2': 'password'
+    })
+    form.is_valid()
+    user = form.save()
+
+    assert user.business_email == user_data.business_email

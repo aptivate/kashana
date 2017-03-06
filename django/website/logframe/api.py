@@ -13,6 +13,7 @@ from .models import (
     Milestone, Rating, Result, RiskRating, StatusCode, StatusUpdate,
     SubIndicator, TALine, TAType, Target
 )
+from appconf.models import Settings
 
 
 def create_serializer(model_class):
@@ -292,8 +293,7 @@ class StatusCodeViewSet(FilterRelationship, viewsets.ModelViewSet):
 
 # StatusUpdate
 class StatusUpdateSerializer(ModelSerializer):
-
-    user = serializers.Field(source='user.id')
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
     class Meta:
         model = StatusUpdate
@@ -311,16 +311,22 @@ class StatusUpdateViewSet(FilterRelationship, viewsets.ModelViewSet):
         qs = super(StatusUpdateViewSet, self).get_queryset()
         return qs.order_by('date', 'id')
 
-    def pre_save(self, status_update):
-        status_update.user = self.request.user
-
-
 # Ratings
 class RatingViewSet(FilterRelationship, viewsets.ModelViewSet):
     queryset = Rating.objects.all()
     serializer_class = create_serializer(queryset.model)
     lookup_rel = 'log_frame_id'
 
+
+# Settings
+class SettingsSerializer(ModelSerializer):
+    class Meta:
+        model = Settings
+        fields = (
+            'id',
+            'max_result_level',
+            'open_result_level',
+        )
 
 # Routers
 # Top level router

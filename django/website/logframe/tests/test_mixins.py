@@ -4,34 +4,36 @@ import mock
 from datetime import date
 from django_dynamic_fixture import G
 from django.contrib.auth.models import Permission
-from contacts.group_permissions import GroupPermissions
-from ..mixins import AptivateDataBaseMixin, QuerysetSerializer
-from ..models import LogFrame, Result, Period, Milestone
-from contacts.models import User
 from appconf.models import Settings
+from contacts.group_permissions import GroupPermissions
+from contacts.models import User
+from ..api import SettingsSerializer
+from ..mixins import AptivateDataBaseMixin, QuerysetSerializer
+from ..models import LogFrame, Result, Period, Milestone, ResultLevelName
 
 
 def test_queryserializer_creates_correct_serializer():
     s = Settings()
-    serializer = QuerysetSerializer.create_serializer(Settings)
+    serializer = SettingsSerializer
     data = serializer(s).data
     fields = s._meta.fields
 
     assert isinstance(data, dict) is True
     for field in fields:
-        if field.name != "id" and field.default:
+        if field.name not in ["id", "logframe"] and field.default:
             assert data[field.name] == field.default
 
 
 @pytest.mark.django_db
 def test_json_object_list_serializes_correctly_given_model():
-    s = Settings.objects.create()
+    s = Settings.objects.create(logframe=G(LogFrame))
     data = {}
     for field in s._meta.fields:
-        data[field.name] = getattr(s, field.name)
+        if field.name != 'logframe':
+            data[field.name] = getattr(s, field.name)
 
     serialized = QuerysetSerializer._json_object_list(Settings.objects.all(),
-                                                      None,
+                                                      SettingsSerializer,
                                                       Settings)
     assert serialized == [data]
 
@@ -77,14 +79,14 @@ def test_get_logframe_data_contains_conf():
     s = Settings()
     fields = s._meta.fields
     lf = G(LogFrame)
-    Settings.objects.create()
+    Settings.objects.create(logframe=lf)
 
     mixin = AptivateDataBaseMixin()
     data = mixin.get_logframe_data(lf)
     assert 'conf' in data
     assert 'id' not in data['conf']
     for field in fields:
-        if field.name != "id" and field.default:
+        if field.name not in ["id", "logframe"] and field.default:
             assert data['conf'][field.name] == field.default
 
 
@@ -153,3 +155,23 @@ def test_get_periods_returns_correct_periods():
     ]
 
     assert periods == expected
+
+
+@pytest.mark.django_db
+def test_data_for_data_for_level_names_is_dict_of_number_to_name():
+    logframe = G(LogFrame)
+    # Some names are added by migration. We want to start with the table empty
+    ResultLevelName.objects.all().delete()
+    level_names = G(ResultLevelName, n=3)
+
+    mixin = AptivateDataBaseMixin()
+
+    expected_level_data = {
+        the_level_name.level_number: the_level_name.level_name
+        for the_level_name in level_names
+    }
+
+    logframe_data = mixin.get_logframe_data(logframe)
+
+    actual_level_data = logframe_data['levels']
+    assert expected_level_data == actual_level_data

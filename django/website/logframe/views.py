@@ -2,12 +2,14 @@ import re
 from django.core.urlresolvers import reverse
 from django.views.generic import CreateView, DeleteView, DetailView, UpdateView
 from braces.views import LoginRequiredMixin, PermissionRequiredMixin
+from appconf.models import Settings
+from .api import ResultSerializer
+from .forms import CreateLogFrameForm
+from .mixins import AptivateDataBaseMixin
 from .models import (
     Assumption, Indicator, LogFrame, Milestone, Result, RiskRating,
     SubIndicator, Target
 )
-from .api import ResultSerializer
-from .mixins import AptivateDataBaseMixin
 
 
 class ResultEditor(LoginRequiredMixin, AptivateDataBaseMixin, DetailView):
@@ -68,26 +70,19 @@ class ManageLogFrame(PermissionRequiredMixin):
     permission_required = 'logframe.edit_logframe'
 
     def get_success_url(self):
-        return reverse('dashboard')
-
+        return reverse('logframe-dashboard', kwargs={'slug': self.object.slug})
 
 class CreateLogframe(ManageLogFrame, CreateView):
-    fields = ['name']
-    template_name = 'logframe/edit_logframe.html'
+    form_class = CreateLogFrameForm
+    template_name = 'logframe/create_logframe.html'
 
-    def get_unique_slug_name(self, logframe):
-        slug = logframe.name.lower()
-        slug = slug.replace(' ', '_')
-        slug = re.sub('[^\w-]', '', slug)
-        slug = slug[:46]
-        if LogFrame.objects.filter(slug=slug).exists():
-            count = LogFrame.objects.filter(slug__startswith=slug).count() + 1
-            slug += unicode(count)
-        return slug
 
     def form_valid(self, form):
-        form.instance.slug = self.get_unique_slug_name(form.instance)
-        return CreateView.form_valid(self, form)
+        # The logframe needs to exist before we create the settings, so finish
+        # the regular form_valid code.
+        response = CreateView.form_valid(self, form)
+        Settings.objects.create(logframe=form.instance)
+        return response
 
 
 class EditLogframe(ManageLogFrame, UpdateView):

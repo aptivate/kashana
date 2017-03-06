@@ -131,6 +131,11 @@
     display: none;
 }
 
+.pure-control-group ul {
+    list-style: none;
+    padding: 0;
+}
+
 .select2-results li {
     background-color: #2f353f;
     color: #fff;

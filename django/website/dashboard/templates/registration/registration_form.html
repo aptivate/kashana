@@ -1,0 +1,33 @@
+{% extends "registration/registration_base.html" %}
+{% load i18n %}
+{% load settings_value %}
+
+{% block title %}{% trans "Register for an account" %}{% endblock %}
+
+{% block content %}
+<form class="login-form pure-form pure-form-aligned solo-box centered clearfix" method="post" action="">
+    {% csrf_token %}
+    <h3>User Registration for {% settings_value "SITE_NAME" %}</h3>
+    {{ form.non_field_errors }}
+    <fieldset class="move-right">
+        {% include "form_snippet.html" %}
+        {% csrf_token %}
+        <div class="pure-control-group move-right">
+            <button type="submit" class="pure-button pure-button-primary">{% trans "Register" %}</button>
+        </div>
+    </fieldset>
+</form>
+{% endblock %}
+
+
+{% comment %}
+**registration/registration_form.html**
+Used to show the form users will fill out to register. By default, has
+the following context:
+
+``form``
+    The registration form. This will be an instance of some subclass
+    of ``django.forms.Form``; consult `Django's forms documentation
+    <http://docs.djangoproject.com/en/dev/topics/forms/>`_ for
+    information on how to display this in a template.
+{% endcomment %}

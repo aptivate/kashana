@@ -18,3 +18,6 @@ reports/*
 .pydevproject
 *.sql
 *.sql.gz
+_SpecRunner.html
+.cache
+

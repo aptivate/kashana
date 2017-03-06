@@ -71,7 +71,6 @@ define([
             "resultList": function () {
                 return new ListView({
                     className: "result-tree",
-                    maxLength: 1,
                     itemView: OverviewItem,
                     collection: this.collection,
                     newModelOptions: {

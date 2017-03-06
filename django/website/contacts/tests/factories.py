@@ -18,12 +18,6 @@ class UserFactory(factory.django.DjangoModelFactory):
     first_name = factory.Sequence(lambda n: "ｆíｒѕｔ %d" % n)
     last_name = factory.Sequence(lambda n: "ｌåｓｔɭａｓｔ %d" % n)
 
-    # Other required fields (you will still need to handle password
-    # yourself depending on what you want to do
-    gender = 'female'
-    contact_type = 'ｃòлｔáｃｔ ｔｙｐé'
-    title = 'ｔïｔｌë'
-
     last_login = datetime.now()
 
 
