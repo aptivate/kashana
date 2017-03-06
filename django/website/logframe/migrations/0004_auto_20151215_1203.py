@@ -13,7 +13,7 @@ def set_logframe_slug(apps, schema_editor):
         count = LogFrame.objects.filter(slug__startswith=logframe.slug[:46]).count()
 
         max_length = LogFrame._meta.get_field('slug').max_length
-        base_slug = slugify(logframe.name.lower())
+        base_slug = slugify(logframe.name)
         slug = base_slug[:max_length]
 
         while LogFrame.objects.filter(slug=slug).exists():

@@ -88,7 +88,7 @@ class LogFrame(AverageTargetPercentMixin, models.Model):
         count = LogFrame.objects.filter(slug__startswith=self.slug[:46]).count()
 
         max_length = LogFrame._meta.get_field('slug').max_length
-        base_slug = slugify(self.name.lower())
+        base_slug = slugify(self.name)
         slug = base_slug[:max_length]
 
         while LogFrame.objects.filter(slug=slug).exists():
