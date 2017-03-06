@@ -127,16 +127,12 @@ footer {
 
 .ribbon-result {
     color: #fff;
-
-    > .heading.editable {
-        font-size:1em;
-    }
 }
 
 .ribbon .heading {
     padding: 0.2em;
     margin:0;
-    color: $black;
+    color: #fff;
 }
 
 .ribbon .heading,
@@ -187,6 +183,11 @@ footer {
 
     &.ribbon-result {
         padding: 2em 1em 1em 1em;
+
+        > .heading.editable {
+            color: $black;
+            font-size: 1em;
+        }
     }
 
     &.description-label {
