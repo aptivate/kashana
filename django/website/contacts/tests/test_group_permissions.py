@@ -144,7 +144,7 @@ def test_perm_name_returns_permission_name():
 
 
 @pytest.mark.django_db
-def test_name_only_postion_gives_descriptive_name_as_string():
+def test_name_only_permission_gives_descriptive_name_as_string():
     content_type = get_content_type_for_model(LogFrame)
     permission = NameOnlyPermission.objects.create(
         name='Add personal info',
