@@ -1,0 +1,14 @@
+{% extends "dashboard/dashboard_base.html" %}
+
+{% load i18n %}
+{% block logframe_switching_form %}
+{% endblock logframe_switching_form %}
+
+{% block content %}
+    <h2>{% trans "Organizations that you are a member of" %}</h2>
+    <ul>
+    {% for organization in organization_list %}
+        <li><a href="{% url "org-dashboard" organization.slug %}">{{ organization.name }}</a> </li>
+    {% endfor %}
+    </ul>
+{% endblock content %}
