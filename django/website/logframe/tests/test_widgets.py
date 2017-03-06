@@ -1,5 +1,5 @@
-from ..widgets import ColorChoiceInput
-from logframe.widgets import ColorSelect
+from ..widgets import ColorChoiceInput, ColorSelect
+import re
 
 
 def test_color_choice_input_widget_rendering():
@@ -12,6 +12,6 @@ def test_color_choice_input_widget_rendering():
 def test_color_choice_input_widget_not_escaped_when_rendering_color_select():
     color_choices = (('blue', 'Blue',), ('green', 'Green'))
     color_select = ColorSelect(choices=color_choices)
-    expected_output = '<ul><li><input name="color" type="radio" value="blue" /> <label class="color-tag blue">Blue</label></li>\n<li><input name="color" type="radio" value="green" /> <label class="color-tag green">Green</label></li></ul>'
-    actual_output = color_select.render('color', None, {}, [])
-    assert expected_output == actual_output
+    output = color_select.render('color', None, {}, [])
+    escaped_html = re.search('(&lt;|&gt;|&quot;)', output)
+    assert escaped_html is None

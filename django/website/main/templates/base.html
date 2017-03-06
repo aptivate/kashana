@@ -1,5 +1,6 @@
 {% load assets %}
 {% load settings_value %}
+{% load i18n %}
 
 <!DOCTYPE HTML>
 <html lang="en">
@@ -36,7 +37,8 @@
          {% endif %}
          <div class="account-links-profile"><span>Logged in as: </span><a href="{% url "personal_edit" %}">{{ request.user.get_full_name|default:request.user.business_email }}</a></div>
         {% else %}
-            <div class="account-links-auth"><a href="{% url "login" %}">Log in</a></div>
+            <div class="account-links-auth"><a href="{% url "login" %}">{% trans "Log in" %}</a></div>
+            <div class="account-links-auth"><a href="{% url "registration_register" %}">{% trans "Register" %}</a></div>
         {% endif %}
     </header>
     <div class="content-box">

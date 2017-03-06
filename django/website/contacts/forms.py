@@ -13,7 +13,9 @@ from django.utils.translation import ugettext as _
 
 import mail
 import floppyforms as forms
-from form_utils.forms import BetterModelForm
+from floppyforms.fields import EmailField
+from form_utils.forms import BetterModelForm, BetterForm
+from registration.forms import RegistrationForm as BaseRegistrationForm
 
 from main.widgets import (
     BetterFileInput,
@@ -184,3 +186,16 @@ class ContactPasswordResetForm(PasswordResetForm):
                 'context': ctx
             }
             mail.notify(options)
+
+
+# The registration process assumes a field called 'email' on the user model
+# Our model uses a field called 'business_email' for this purpose, so we need
+# to map the email field onto business_email
+class RegistrationForm(BetterModelForm, BaseRegistrationForm):
+    class Meta:
+        model = User
+        fields = ('email', 'first_name', 'last_name', 'password1', 'password2')
+
+    def save(self, commit=True):
+        self.instance.business_email = self.cleaned_data['email']
+        return BaseRegistrationForm.save(self, commit=commit)

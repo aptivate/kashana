@@ -14,6 +14,7 @@ import api.urls
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^accounts/', include('contacts.auth_urls')),
+    url(r'^accounts/sign-up/', include('registration.backends.default.urls')),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^api/', include(api.urls)),
     url(r'^contacts/', include('contacts.urls')),
