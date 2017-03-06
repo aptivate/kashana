@@ -8,7 +8,16 @@
     <h2>{% trans "Organizations that you are a member of" %}</h2>
     <ul>
     {% for organization in organization_list %}
-        <li><a href="{% url "org-dashboard" organization.slug %}">{{ organization.name }}</a> </li>
+        <li>{{ organization.name }}</li>
+        {% if organization.logframe_set.exists %}
+        <li class="sublist">
+            <ul>
+                {% for logframe in organization.logframe_set.all %}
+                <li><a href="{% url "logframe-dashboard" organization.slug logframe.slug %}">{{ logframe.name }}</a></li>
+                {% endfor %}
+            </ul>
+        </li>
+        {% endif %}
     {% endfor %}
     </ul>
 {% endblock content %}
