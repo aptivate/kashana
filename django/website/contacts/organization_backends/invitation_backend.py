@@ -1,7 +1,5 @@
 from organizations.backends.defaults import InvitationBackend as BaseInvitaitonBackend
 
-from ..forms import RegistrationForm
-
 
 class InvitationBackend(BaseInvitaitonBackend):
     """
@@ -25,4 +23,3 @@ class InvitationBackend(BaseInvitaitonBackend):
             user.save()
         self.send_invitation(user, sender, **kwargs)
         return user
-
