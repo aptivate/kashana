@@ -22,7 +22,7 @@ def test_switch_logframes_sets_user_last_viewed_logframe_to_new_logframe():
     assert 'test' == request.user.preferences.last_viewed_logframe.slug
 
 
-@mock.patch('dashboard.views.get_object_or_404', new=mock.Mock(spec=LogFrame, return_value=mock.Mock(slug='test')))
+@mock.patch('dashboard.views.get_object_or_404', new=mock.Mock(spec=LogFrame, return_value=mock.Mock(slug='test', organization=mock.Mock(slug='org_test'))))
 def test_switch_logframes_containts_instruction_to_redirect_to_dashboard():
     data = {'logframe': '2'}
 
@@ -31,7 +31,7 @@ def test_switch_logframes_containts_instruction_to_redirect_to_dashboard():
     request.session = {}
 
     response = SwitchLogframes.as_view()(request)
-    assert reverse('logframe-dashboard', kwargs={'slug': 'test'}) == response['Location']
+    assert reverse('logframe-dashboard', kwargs={'slug': 'test', 'org_slug': 'org_test'}) == response['Location']
 
 
 @pytest.mark.django_db

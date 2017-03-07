@@ -5,19 +5,20 @@ from django.core.urlresolvers import reverse
 from django.test.client import RequestFactory
 
 import pytest
-from django_dynamic_fixture import N
+from django_dynamic_fixture import N, G
 from mock import Mock, patch
 
 from appconf.models import Settings
 from ..models import LogFrame
 from ..views import CreateLogframe
+from organizations.models import Organization
 
 
 def test_redirects_to_created_logframe_on_success():
     create_logframe_view = CreateLogframe()
-    logframe = N(LogFrame)
+    logframe = N(LogFrame, persist_dependencies=False)
     create_logframe_view.object = logframe
-    assert reverse('logframe-dashboard', kwargs={'slug': logframe.slug}) == create_logframe_view.get_success_url()
+    assert reverse('logframe-dashboard', kwargs={'slug': logframe.slug, 'org_slug':logframe.organization.slug}) == create_logframe_view.get_success_url()
 
 
 def test_logframe_name_converted_to_lowercase():
@@ -119,6 +120,7 @@ def test_slug_for_logframe_always_unique():
 @pytest.mark.django_db
 def test_instance_slug_set_when_creating_logframe():
     logframe = LogFrame(name='Test Name', slug='')
+    logframe.organization = G(Organization)
 
     request = RequestFactory().post('/', {'name': 'Test Name'})
     create_logframe_view = CreateLogframe()
@@ -141,6 +143,7 @@ def test_instance_slug_set_when_creating_logframe():
 @pytest.mark.django_db
 def test_settings_created_along_with_logframe():
     logframe = LogFrame(name='Test Name', slug='')
+    logframe.organization = G(Organization)
 
     request = RequestFactory().post('/', {'name': 'Test Name'})
     create_logframe_view = CreateLogframe()

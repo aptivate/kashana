@@ -71,7 +71,7 @@ class CreateLogframe(PermissionRequiredMixin, CreateView):
     permission_required = 'logframe.edit_logframe'
 
     def get_success_url(self):
-        return reverse('logframe-dashboard', kwargs={'slug': self.object.slug})
+        return reverse('logframe-dashboard', kwargs={'slug': self.object.slug, 'org_slug': self.object.organization.slug})
 
     def form_valid(self, form):
         # The logframe needs to exist before we create the settings, so finish
