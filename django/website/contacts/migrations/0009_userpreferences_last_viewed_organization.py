@@ -8,7 +8,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('organizations', '0002_model_update'),
-        ('contacts', '0007_assign_default_orgranisations'),
+        ('contacts', '0008_assign_default_orgranisations'),
     ]
 
     operations = [

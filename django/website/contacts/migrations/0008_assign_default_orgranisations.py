@@ -32,8 +32,8 @@ def add_existing_users_to_default_organization(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('contacts', '0006_auto_20160713_1115'),
-        ('logframe', '0011_auto_20170222_1614'),
+        ('contacts', '0007_merge'),
+        ('logframe', '0012_auto_20170222_1614'),
     ]
 
     operations = [

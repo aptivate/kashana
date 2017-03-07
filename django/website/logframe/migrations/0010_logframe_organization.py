@@ -8,7 +8,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('organizations', '0002_model_update'),
-        ('logframe', '0008_auto_20160429_1237'),
+        ('logframe', '0009_merge'),
     ]
 
     operations = [

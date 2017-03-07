@@ -17,7 +17,7 @@ def create_default_logframe(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('logframe', '0009_logframe_organization'),
+        ('logframe', '0010_logframe_organization'),
     ]
 
     operations = [
