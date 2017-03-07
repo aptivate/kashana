@@ -25,13 +25,13 @@ footer {
 
 .monitor-result,
 .logframe-result {
-    border: 1em solid $page-background;
     margin-bottom: 1em;
     position:relative;
     display:table;
 }
 .monitor-result{
-  border-top:0;
+    border: 1em solid $page-background;
+    border-top:0;
 }
 
 .logframe-result td:first-child {
@@ -120,25 +120,27 @@ footer {
     position:relative;
     padding:5px;
 }
-  .ribbon input {
-  	background-color:#fff;
-  }
-  .ribbon-result {
-      color: #fff;
-      background-color: $dusk-blue;
-  }
-  .ribbon .heading {
-      padding: 0.2em;
-      margin:0;
-      color:#fff;
-  }
 
-.ribbon .heading, 
+.ribbon input {
+  	background-color:#fff;
+}
+
+.ribbon-result {
+    color: #fff;
+}
+
+.ribbon .heading {
+    padding: 0.2em;
+    margin:0;
+    color: #fff;
+}
+
+.ribbon .heading,
 .ribbon input {
     font-size: 1.5em;
     font-weight: bold;
     margin-bottom: 0;
-    padding:5px 5px 5px 12px;
+    padding: 5px 5px 5px 12px;
 }
 
 .ribbon-indicator .heading {
@@ -160,19 +162,42 @@ footer {
 .indicator-data-table .result-input,
 #result-assumptions .result-input {
 	width:100%;
-} 
+}
 
 
 
 #result-detail {
-    background-color: $dusk-blue;
+    background-color: $light-sky-blue;
 }
 
 #result-detail > div {
-    color: #fff;
+    color: $black;
     font-size: 1em;
-    font-weight: bold;
-    padding: 1em;
+    padding: 0 1em;
+
+    &.result-level-name {
+        color: $black;
+        font-weight:bold;
+        padding: 1em;
+    }
+
+    &.ribbon-result {
+        padding: 2em 1em 1em 1em;
+
+        > .heading.editable {
+            color: $black;
+            font-size: 1em;
+        }
+    }
+
+    &.description-label {
+        color: $grey;
+        padding: 1em;
+    }
+
+    > .editable {
+        padding:0;
+    }
 }
 .ribbon .editable.heading:hover,
 #result-detail > div > div.editable:hover {
@@ -183,8 +208,24 @@ footer {
     display:block;
 }
 #indicator-column {
-    padding:7px;
+    padding:0 7px;
 }
+
+.indicators-label,
+.milestones-label {
+    color: $black;
+    font-weight:bold;
+    background-color: $white;
+}
+
+.indicators-label {
+    padding: 1em;
+}
+
+.milestones-label {
+    padding: 1em 0;
+}
+
 #indicator-column > div > div {
     clear: both;
 }
@@ -279,15 +320,21 @@ footer {
 }
 .ribbon-assumptions {
     background-color: #FFCC99;
-    margin-top: 1px; 
+    margin-top: 1px;
     display:block;
+    padding: 1em;
 }
 .heading.assumptions {
-  color:#333;
+    font-size: 1em;
+    color: $black;
 }
 #result-assumptions {
     margin-top: 0;
     padding: 6px 7px 7em 0;
+
+    > .ribbon > .heading {
+        padding: 0;
+    }
 }
   #result-assumptions ul {
       list-style: none outside none;
@@ -344,6 +391,18 @@ footer {
     @include transition-property(transform);
     @include transition-duration(.25s);
 }
+
+.result-level-name {
+    background-color: $sky-blue;
+}
+
+.result-level-name,
+.indicators-label,
+.milestones-label,
+.ribbon-assumptions {
+    text-transform: uppercase;
+}
+
 .level-1 {
     &.result-overview {
         background-color: $level-1-blue;
@@ -561,9 +620,9 @@ div.activity-item {
 .result-overview-table > tbody > tr { /* Ugly, but limits scope */
 }
 
-.overview-manage, 
-.overview-minmax, 
-.overview-title, 
+.overview-manage,
+.overview-minmax,
+.overview-title,
 .overview-title > h2 {
   background-color:$dusk-blue;
 }
