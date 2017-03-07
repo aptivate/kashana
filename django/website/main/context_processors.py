@@ -26,5 +26,13 @@ def logframe_list(request):
     if request.user.is_authenticated():
         extra_context = {'logframe_list': LogFrame.objects.filter(organization__in=request.user.organizations_organization.all())}
     else:
-        extra_context = {'lograne_list': []}
+        extra_context = {'logframe_list': []}
+    return extra_context
+
+
+def organization_list(request):
+    if request.user.is_authenticated():
+        extra_context = {'organization_list': request.user.organizations_organization.all()}
+    else:
+        extra_context = {'organization_list': []}
     return extra_context
