@@ -1,7 +1,7 @@
 from mock import Mock
 from django.contrib.auth import get_user_model
 
-from ..organization_backends.invitation_backend import InvitationBackend
+from ..backends.invitation_backend import InvitationBackend
 
 
 def test_sending_invite_works_with_business_email_as_username():
