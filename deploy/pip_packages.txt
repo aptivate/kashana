@@ -17,7 +17,7 @@ django_tables2==1.0.4
 django-extensions==1.5.9
 django-jstemplate==1.3.8
 lxml==3.6.0
-django-waffle==0.9.1
+django-waffle==0.11.1
 beautifulsoup4==4.3.2
 html5lib==0.9999999
 -e git+git://github.com/daniell/django-cobertura-report-merger@9ed8bf119301057d261ae8500f64e4371c12f82d#egg=django-cobertura-report-merger
