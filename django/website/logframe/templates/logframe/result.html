@@ -7,6 +7,6 @@
 
 {% block post_footer %}
 <script type="text/javascript">
-Aptivate.data = {{ data|safe }};
+Aptivate.data = {{ data|default:"{ logframe: {} }"|safe }};
 </script>
 {% endblock post_footer %}
