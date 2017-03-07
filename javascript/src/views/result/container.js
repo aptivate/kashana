@@ -34,11 +34,15 @@ define([
                 });
             },
             resultContribution: function () {
-                return new Editable({
-                    model: this.model,
-                    template_selector: "#result-contribution-weighting",
-                    attributes: { class: "at-bottom negative" }
-                });
+                if (waffle.switch_is_active("enable impact weighting")) {
+                    return new Editable({
+                        model: this.model,
+                        template_selector: "#result-contribution-weighting",
+                        attributes: { class: "at-bottom negative" }
+                    });
+                }
+
+                return null;
             },
             assumptionList: function () {
                 var resultId = this.model.get("id");

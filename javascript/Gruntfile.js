@@ -76,7 +76,7 @@ module.exports = function(grunt) {
 					        'node_modules/jquery/dist/jquery.js',
 			        ],
 					specs: [
-					        'tests/js/list-tests.js', 
+					        'tests/js/list-tests.js',
 					        'tests/js/input-tests.js',
 					        'tests/js/item-show-hide-tests.js',
 					        'tests/js/filter-lead-tests.js',
@@ -86,6 +86,7 @@ module.exports = function(grunt) {
 					        'tests/js/editables/cleaninput-mixin-tests.js',
 					        'tests/js/editables/feedback-mixin-tests.js', // This breaks if you move it above clean-input-mixin-tests.js. TODO: find out why and fix.
 					        'tests/js/components/base-view-tests.js',
+                            'tests/js/waffle-tests.js',
 					],
 					helpers: [
 					          'node_modules/jasmine2-custom-message/jasmine2-custom-message.js',
@@ -109,7 +110,7 @@ module.exports = function(grunt) {
 							requireConfigFile: 'src/require.config.js',
 							requireConfig: {
 								// 2. use the baseUrl you want
-								
+
 								baseUrl: 'src/',
 								// 3. pass paths of the sources being instrumented as a configuration option
 								//    these paths should be the same as the jasmine task's src
@@ -156,11 +157,11 @@ module.exports = function(grunt) {
 	  grunt.loadNpmTasks('grunt-contrib-concat');
 	  grunt.loadNpmTasks('grunt-contrib-uglify');
 	  grunt.loadNpmTasks('grunt-contrib-requirejs');
-	  
+
 	  grunt.loadNpmTasks('grunt-gulp');
 
 	  grunt.registerTask('test', ['jasmine']);
-	  
+
 	  grunt.registerTask('templates', ['gulp:templates']);
 
 	  grunt.registerTask('default', ['templates', 'requirejs', 'uglify']);
