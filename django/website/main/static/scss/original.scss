@@ -108,13 +108,21 @@ a.pure-button {
 .account-links-auth,
 .navigation-link {
     float: right;
+}
+.account-links-profile,
+.account-links-auth,
+.navigation-link,
+.add-logframe
+ {
     position: relative;
     display: inline-block;
     border-right: $header-right-border; 
 }
+
     .account-links-profile,
     .account-links-auth,
-    .navigation-link {
+    .navigation-link, 
+    .add-logframe {
         padding: 1.5em;
         font-size:0.9em;
         color: $white;
@@ -122,7 +130,8 @@ a.pure-button {
     .account-links-profile > a,
     .account-links-profile > span,
     .account-links-auth > a,
-    .navigation-link > a {
+    .navigation-link > a,
+    .add-logframe > a {
         font-size:1.2em;
         color: $white;
     }

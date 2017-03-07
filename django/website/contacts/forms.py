@@ -5,8 +5,9 @@ from django.contrib.auth.forms import (
     UserCreationForm, UserChangeForm, PasswordResetForm
 )
 from django.forms import (
-    ModelForm, ValidationError, ImageField
+    ModelMultipleChoiceField, ModelForm, ValidationError, ImageField
 )
+from django.forms.widgets import CheckboxSelectMultiple
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 from django.utils.translation import ugettext as _
@@ -21,7 +22,7 @@ from main.widgets import (
     BetterFileInput,
     BetterImageInput,
 )
-from .models import User
+from .models import NameOnlyPermission, User
 
 TITLES = (
     'Dr', 'Hon', 'Mrs', 'Ms', 'Mr', 'Prof', 'His Excellency',
@@ -42,24 +43,50 @@ class TitleInput(forms.TextInput):
 # Contacts forms
 #######################################################################
 class UpdatePersonalInfoForm(BetterModelForm):
+    user_permissions = ModelMultipleChoiceField(
+        NameOnlyPermission.objects,
+        widget=CheckboxSelectMultiple,
+        required=False,
+        help_text=(
+            "A user without any permissions will only be able to view the "
+            "logframe. In order for them to be able to edit the logframe or "
+            "manage users, you will need to give them one of the permissions "
+            "below:"
+        ),
+        limit_choices_to={'codename__in': ['edit_logframe', 'add_personal_info']}
+    )
+
     class Meta:
         model = User
         fields = [
-            'business_email', 'first_name', 'last_name'
+            'business_email', 'first_name', 'last_name', 'user_permissions',
         ]
         fieldsets = [('all', {'fields': [
             'business_email', 'first_name',
-            'last_name']})]
+            'last_name', 'user_permissions']})]
 
 
 class AddContactForm(BetterModelForm):
+    user_permissions = ModelMultipleChoiceField(
+        NameOnlyPermission.objects,
+        widget=CheckboxSelectMultiple,
+        required=False,
+        help_text=(
+            "A user without any permissions will only be able to view the "
+            "logframe. In order for them to be able to edit the logframe or "
+            "manage users, you will need to give them one of the permissions "
+            "below:"
+        ),
+        limit_choices_to={'codename__in': ['edit_logframe', 'add_personal_info']}
+    )
+
     class Meta:
         model = User
         fields = [
-            'business_email', 'first_name', 'last_name', 'is_active',
+            'business_email', 'first_name', 'last_name', 'is_active', 'user_permissions',
         ]
         fieldsets = [('all', {'fields': [
-            'business_email', 'first_name', 'last_name', 'is_active', ]})]
+            'business_email', 'first_name', 'last_name', 'is_active', 'user_permissions',]})]
 
 
 class UpdateContactForm(AddContactForm):

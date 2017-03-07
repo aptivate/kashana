@@ -99,6 +99,7 @@ class UpdateContactBase(LoginRequiredMixin, UpdateView):
 class UpdateContact(PermissionRequiredMixin, UpdateContactBase):
     form_class = UpdateContactForm
     permission_required = 'contacts.add_user'
+    context_object_name = 'edited_user'
     raise_exception = True
 
     def form_invalid(self, form):

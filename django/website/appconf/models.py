@@ -1,4 +1,5 @@
 from django.db import models
+from logframe.models import LogFrame
 
 
 class Settings(models.Model):
@@ -18,6 +19,7 @@ class Settings(models.Model):
             "on MIS dashboard."
         )
     )
+    logframe = models.OneToOneField(LogFrame)
 
     def __str__(self):
-        return "Settings"
+        return "Settings for {0}".format(self.logframe.name)

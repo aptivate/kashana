@@ -8,6 +8,8 @@
     <meta charset="UTF-8">
     <meta name="csrf-token" content="{{ csrf_token }}">
     <title>{% settings_value "SITE_NAME" %} MIS {% block title %}{% endblock %}</title>
+    {% block extra_media %}
+    {% endblock %}
     {% assets "css_all" %}
     <link rel="stylesheet" href="{{ ASSET_URL }}">
     {% endassets %}
@@ -28,6 +30,9 @@
 		{% endif %}
 		{% endblock logframe_switching_form %}
         {% if request.user and request.user.is_authenticated %}
+         {% if perms.logframe.add_logframe %}
+            <div class="add-logframe"><a href="{% url "create-logframe" %}">Create Logframe</a></div>
+         {% endif %}
          <div class="account-links-auth"><a href="{% url "logout" %}">Log out</a></div>
          {% if perms.contacts.add_user %}
             <div class="navigation-link"><a href="{% url "contact_list" %}" id="nav-people">People</a></li></div>
@@ -35,7 +40,7 @@
          {% if request.user.preferences.last_viewed_organization and request.user.preferences.last_viewed_logframe %}
             <div class="navigation-link"><a href="{% url "logframe-dashboard" request.user.preferences.last_viewed_organization.slug request.user.preferences.last_viewed_logframe.slug %}" id="nav-dashboard">Dashboard</a></div>
          {% endif %}
-         <div class="account-links-profile"><span>Logged in as: </span><a href="{% url "personal_edit" %}">{{ user.get_full_name|default:user.business_email }}</a></div>
+         <div class="account-links-profile"><span>Logged in as: </span><a href="{% url "personal_edit" %}">{{ request.user.get_full_name|default:request.user.business_email }}</a></div>
         {% else %}
             <div class="account-links-auth"><a href="{% url "login" %}">{% trans "Log in" %}</a></div>
             <div class="account-links-auth"><a href="{% url "registration_register" %}">{% trans "Register" %}</a></div>

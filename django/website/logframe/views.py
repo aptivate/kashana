@@ -1,10 +1,14 @@
-from django.views.generic import DetailView
-from braces.views import LoginRequiredMixin
-from .models import (
-    Result, Assumption, Indicator, SubIndicator, Target, Milestone, RiskRating
-)
+from django.core.urlresolvers import reverse
+from django.views.generic import CreateView, DetailView
+from braces.views import LoginRequiredMixin, PermissionRequiredMixin
+from appconf.models import Settings
 from .api import ResultSerializer
+from .forms import CreateLogFrameForm
 from .mixins import AptivateDataBaseMixin
+from .models import (
+    Assumption, Indicator, LogFrame, Milestone, Result, RiskRating,
+    SubIndicator, Target
+)
 
 
 class ResultEditor(LoginRequiredMixin, AptivateDataBaseMixin, DetailView):
@@ -58,3 +62,20 @@ class ResultMonitor(LoginRequiredMixin, AptivateDataBaseMixin, DetailView):
             'result': ResultSerializer(self.object).data,
         })
         return data
+
+
+class CreateLogframe(PermissionRequiredMixin, CreateView):
+    model = LogFrame
+    form_class = CreateLogFrameForm
+    template_name = 'logframe/create_logframe.html'
+    permission_required = 'logframe.edit_logframe'
+
+    def get_success_url(self):
+        return reverse('logframe-dashboard', kwargs={'slug': self.object.slug})
+
+    def form_valid(self, form):
+        # The logframe needs to exist before we create the settings, so finish
+        # the regular form_valid code.
+        response = CreateView.form_valid(self, form)
+        Settings.objects.create(logframe=form.instance)
+        return response

@@ -2,11 +2,14 @@
     <tbody>
         <tr>
             <td id="result-detail" class="tall">
+                <div class="result-level-name level-{{ level }}">{{ level_name }}</div>
                 <div data-subview="resultName"></div>
+                <div class="description-label">Description</div>
                 <div data-subview="resultDescription"></div>
                 <div data-subview="resultContribution"></div>
             </td>
             <td id="indicator-column">
+                <div class="indicators-label">Indicators</div>
                 <div data-subview="indicatorList"></div>
             </td>
             <td id="result-assumptions" class="tall">
