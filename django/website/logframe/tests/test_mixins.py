@@ -66,6 +66,12 @@ def test_get_logframe_data_contains_users():
     lf = G(LogFrame)
     u1 = G(User)
     u2 = G(User)
+    G(User)
+
+    org = lf.organization
+    org.add_user(u1)
+    org.add_user(u2)
+
     mixin = AptivateDataBaseMixin()
     data = mixin.get_logframe_data(lf)
     user_ids = set([u1.id, u2.id])
