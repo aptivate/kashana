@@ -31,6 +31,16 @@ class SwitchLogframes(LoginRequiredMixin, RedirectView):
         return self.get(request, org_slug=self.object.organization.slug, slug=self.object.slug)
 
 
+class SwitchOrganizations(LoginRequiredMixin, RedirectView):
+    permanent = False
+    pattern_name = 'org-dashboard'
+
+    def post(self, request, *args, **kwargs):
+        self.object = get_object_or_404(Organization, pk=self.request.POST['organization'])
+        update_last_viewed_item(self.request.user, self.object)
+        return self.get(request, org_slug=self.object.slug)
+
+
 class DashboardOrganizationSelection(LoginRequiredMixin, ListView):
     model = Organization
     context_object_name = 'organization_list'
