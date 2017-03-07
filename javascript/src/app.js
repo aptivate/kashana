@@ -9,6 +9,7 @@ define([
         Aptivate.status = {};
     }
     $('#logframes-switch-select').select2({minimumResultsForSearch: 99999});
+    $('#organizations-switch-select').select2({minimumResultsForSearch: 99999});
 
     // Initialize collections
     Aptivate.logframe = new models.Logframe(Aptivate.data.logframe);

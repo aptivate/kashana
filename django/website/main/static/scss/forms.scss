@@ -119,13 +119,13 @@
     }
 }
 
-#logframes-switch {
+#logframes-switch, #organizations-switch {
     display: inline-block;
     padding: 0em;
     border-right: $header-right-border;
 }
 
-#logframes-switch select {
+#logframes-switch select, #organizations-switch select {
     padding-right: 1.5em;
     display: none;
 }

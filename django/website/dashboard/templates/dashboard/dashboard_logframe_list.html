@@ -2,6 +2,9 @@
 
 {% load i18n %}
 {% block logframe_switching_form %}
+{% if perms.logframe.add_logframe %}
+        <div class="add-logframe"><a href="{% url "create-logframe" %}">Create Logframe</a></div>
+{% endif %}
 {% endblock logframe_switching_form %}
 
 {% block content %}

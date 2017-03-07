@@ -20,6 +20,20 @@
 
     <header class="page-header">
         <h1 class="logo"><a href="/">{% settings_value "SITE_NAME" %}</a></h1>
+        
+        {% block organization_switching_form %}
+        {% if request.user and request.user.is_authenticated %}
+		<form id="organizations-switch" action="{% url "switch-organizations" %}" method="post">{% csrf_token %}
+            <select id="organizations-switch-select" name="organization" onchange="this.form.submit();"{% if organization_list|length == 1 %} disabled="disabled"{% endif %}>
+                {% for organization in organization_list %}<option value="{{ organization.id }}"{% if request.user.preferences.last_viewed_organization == organization %} selected="selected"{% endif %}>{{ organization.name }}</option>{% endfor %}
+            </select>
+        </form>
+         {% if perms.organization.add_organization %}
+            <div class="add-organization"><a href="{% url "organization_create" %}">Create Organisation</a></div>
+         {% endif %}
+        {%  endif %}
+        {% endblock organization_switching_form %}
+        
         {% block logframe_switching_form %}
         {% if request.user and request.user.is_authenticated %}
         <form id="logframes-switch" action="{% url "switch-logframes" %}" method="post">{% csrf_token %}
@@ -27,12 +41,13 @@
             	{% for logframe in logframe_list %}<option value="{{ logframe.id }}"{% if request.user.preferences.last_viewed_logframe == logframe %} selected="selected"{% endif %}>{{ logframe.name }}</option>{% endfor %}
 			</select>
 		</form>
-		{% endif %}
-		{% endblock logframe_switching_form %}
-        {% if request.user and request.user.is_authenticated %}
-         {% if perms.logframe.add_logframe %}
+		{% if perms.logframe.add_logframe %}
             <div class="add-logframe"><a href="{% url "create-logframe" %}">Create Logframe</a></div>
          {% endif %}
+		{% endif %}
+		{% endblock logframe_switching_form %}
+		
+		{% if request.user and request.user.is_authenticated %}
          <div class="account-links-auth"><a href="{% url "logout" %}">Log out</a></div>
          {% if perms.contacts.add_user %}
             <div class="navigation-link"><a href="{% url "contact_list" %}" id="nav-people">People</a></li></div>

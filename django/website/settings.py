@@ -119,6 +119,7 @@ TEMPLATES = [{
             'django.template.context_processors.static',
             'django.contrib.messages.context_processors.messages',
             'main.context_processors.logframe_list',
+            'main.context_processors.organization_list',
             'main.context_processors.deploy_env',
         ],
         'debug': DEBUG,
@@ -142,7 +143,7 @@ SITE_HOSTNAME = 'localhost:8000'
 SITE_NAME = 'Kashana'
 INCLUDE_REGISTER_URL = True
 REGISTRATION_FORM = 'contacts.forms.RegistrationForm'
-INVITATION_BACKEND = 'contacts.organization_backends.InvitationBackend'
+INVITATION_BACKEND = 'custom_organizations.backends.InvitationBackend'
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -173,6 +174,7 @@ INSTALLED_APPS = (
     'appconf',
     'export',
     'registration',
+    'custom_organizations',
 )
 
 ACCOUNT_ACTIVATION_DAYS = 7
