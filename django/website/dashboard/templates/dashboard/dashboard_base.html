@@ -10,7 +10,7 @@
 {% block post_footer %}
 <script>
 (function () {
-    Aptivate = { data: {{ data|safe }} };
+    Aptivate = { data: {% if data %}{{ data|safe }}{% else %}{}{% endif %} };
 })();
 </script>
 {% endblock post_footer %}

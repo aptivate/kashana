@@ -1,5 +1,6 @@
+import re
 from django.core.urlresolvers import reverse
-from django.views.generic import CreateView, DetailView
+from django.views.generic import CreateView, DeleteView, DetailView, UpdateView
 from braces.views import LoginRequiredMixin, PermissionRequiredMixin
 from appconf.models import Settings
 from .api import ResultSerializer
@@ -64,14 +65,17 @@ class ResultMonitor(LoginRequiredMixin, AptivateDataBaseMixin, DetailView):
         return data
 
 
-class CreateLogframe(PermissionRequiredMixin, CreateView):
+class ManageLogFrame(PermissionRequiredMixin):
     model = LogFrame
-    form_class = CreateLogFrameForm
-    template_name = 'logframe/create_logframe.html'
     permission_required = 'logframe.edit_logframe'
 
     def get_success_url(self):
         return reverse('logframe-dashboard', kwargs={'slug': self.object.slug})
+
+class CreateLogframe(ManageLogFrame, CreateView):
+    form_class = CreateLogFrameForm
+    template_name = 'logframe/create_logframe.html'
+
 
     def form_valid(self, form):
         # The logframe needs to exist before we create the settings, so finish
@@ -79,3 +83,13 @@ class CreateLogframe(PermissionRequiredMixin, CreateView):
         response = CreateView.form_valid(self, form)
         Settings.objects.create(logframe=form.instance)
         return response
+
+
+class EditLogframe(ManageLogFrame, UpdateView):
+    fields = ['name', 'slug']
+    template_name = 'logframe/edit_logframe.html'
+
+
+class DeleteLogframe(ManageLogFrame, DeleteView):
+    def get_success_url(self):
+        return reverse('dashboard')
