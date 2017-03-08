@@ -73,13 +73,17 @@ define([
                 });
             },
             resultRiskRating: function () {
-                return new Selectable({
-                    className: "at-bottom",
-                    model: this.model,
-                    field_name: 'risk_rating',
-                    options: Aptivate.data.riskratings,
-                    template_selector: "#result-risk-rating"
-                });
+                if (waffle.switch_is_active("enable risk rating")) {
+                    return new Selectable({
+                        className: "at-bottom",
+                        model: this.model,
+                        field_name: 'risk_rating',
+                        options: Aptivate.data.riskratings,
+                        template_selector: "#result-risk-rating"
+                    });
+                }
+
+                return null;
             },
             deleteResult: function () {
                 var object_name = this.model.get('name') || "object";
