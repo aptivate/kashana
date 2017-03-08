@@ -72,12 +72,13 @@ define([
                     }),
                 });
             },
-            "resultRiskRating": function () {
+            resultRiskRating: function () {
                 return new Selectable({
-                    className: "risk-rating-value",
+                    className: "at-bottom",
                     model: this.model,
                     field_name: 'risk_rating',
-                    options: Aptivate.data.riskratings
+                    options: Aptivate.data.riskratings,
+                    template_selector: "#result-risk-rating"
                 });
             },
             deleteResult: function () {
