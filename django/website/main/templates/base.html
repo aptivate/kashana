@@ -25,20 +25,20 @@
         <form id="logframes-switch" action="{% url "switch-logframes" %}" method="post">{% csrf_token %}
             <select id="logframes-switch-select" name="logframe" onchange="this.form.submit();">
             	{% for logframe in logframe_list %}<option value="{{ logframe.id }}"{% if request.user.preferences.last_viewed_logframe == logframe %} selected="selected"{% endif %}>{{ logframe.name }}</option>{% endfor %}
-            	<option value="-1">{% trans "+ Create a new logframe" %}</option>
+            	<option value="-1">{% trans "Create a new Logframe" %}</option>
 			</select>
 		</form>
 		{% endif %}
 		{% endblock logframe_switching_form %}
         {% if request.user and request.user.is_authenticated %}
          {% if perms.contacts.add_user %}
-            <div class="navigation-link"><a href="{% url "contact_list" %}" id="nav-people">People</a></li></div>
+            <div class="navigation-link"><a href="{% url "contact_list" %}" id="nav-people">{% trans "People" %}</a></li></div>
          {% endif %}
-         <div class="account-links-auth"><a href="{% url "logout" %}">Log out</a></div>
+         <div class="account-links-auth"><a href="{% url "logout" %}">{% trans "Log out" %}</a></div>
          {% if request.user.preferences.last_viewed_logframe %}
-            <div class="navigation-link"><a href="{% url "logframe-dashboard" request.user.preferences.last_viewed_logframe.slug %}" id="nav-dashboard">Dashboard</a></div>
+            <div class="navigation-link"><a href="{% url "logframe-dashboard" request.user.preferences.last_viewed_logframe.slug %}" id="nav-dashboard">{% blocktrans with request.user.preferences.last_viewed_logframe.name as logframe_name %}{{ logframe_name }} Overview{% endblocktrans %}</a></div>
          {% endif %}
-         <div class="account-links-profile"><span>Logged in as: </span><a href="{% url "personal_edit" %}">{{ request.user.get_full_name|default:request.user.business_email }}</a></div>
+         <div class="account-links-profile"><span>{% trans "Logged in as:" %} </span><a href="{% url "personal_edit" %}">{{ request.user.get_full_name|default:request.user.business_email }}</a></div>
         {% else %}
             <div class="account-links-auth"><a href="{% url "login" %}">{% trans "Log in" %}</a></div>
             <div class="account-links-auth"><a href="{% url "registration_register" %}">{% trans "Register" %}</a></div>
@@ -46,15 +46,6 @@
     </header>
     <div class="content-box">
         {% block main_menu %}
-        {% if request.user and request.user.is_authenticated %}
-        <div class="section-navigation pure-menu pure-menu-open pure-menu-horizontal">
-            <ul>
-                 
-              
-                
-            </ul>
-        </div>
-        {% endif %}
         {% endblock main_menu %} 
 
         {% if messages %}

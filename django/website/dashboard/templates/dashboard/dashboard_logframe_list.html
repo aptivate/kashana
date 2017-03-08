@@ -15,7 +15,7 @@
 		       </li>
 		    {% endfor %}
 		    </ul>
-		    {% if perms.logframe.add_logframe %}<div class="create-logframe"><a class="pure-button" href="{% url "create-logframe" %}">{% trans "+ Create a new logframe" %}</a></div>{% endif %}
+		    {% if perms.logframe.add_logframe %}<div class="create-logframe"><a class="pure-button" href="{% url "create-logframe" %}">{% trans "Create a new Logframe" %}</a></div>{% endif %}
 	    </div>
     </div>
 {% endblock content %}

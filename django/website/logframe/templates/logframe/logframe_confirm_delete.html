@@ -2,9 +2,9 @@
 {% load i18n %}
 
 {% block content %}
-    <h2>{% trans "Delete the " %}{{ object.name }}{% trans " Logframe" %}</h2>
+    <h2>{% blocktrans with lograme_name=object.name%}Delete the {{ logframe_name }} Logframe{% endblocktrans %}</h2>
     <form method="post" class="pure-form pure-form-stacked" action=".">{% csrf_token %}
-        <p>{% trans "Are you sure you want to delete the " %}{{ object.name }}{% trans " logframe? This will delete everything in that logframe." %}  
+        <p>{% blocktrans with lograme_name=object.name%}Are you sure you want to delete the {{ logframe_name }} Logframe? This will delete everything in that Logframe.{% endblocktrans %}  
         <input class="pure-button" type="submit" name="submit" value="{% trans "Yes" %}" />
         <a class="pure-button" href="{% url "dashboard" %}">{% trans "No" %}</a>
     </form>
