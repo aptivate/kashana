@@ -91,4 +91,5 @@ class EditLogframe(ManageLogFrame, UpdateView):
 
 
 class DeleteLogframe(ManageLogFrame, DeleteView):
-    pass
+    def get_success_url(self):
+        return reverse('dashboard')
