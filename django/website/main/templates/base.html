@@ -1,6 +1,7 @@
 {% load assets %}
 {% load settings_value %}
 {% load i18n %}
+{% load waffle_tags %}
 
 <!DOCTYPE HTML>
 <html lang="en">
@@ -68,6 +69,9 @@
     </footer>
     </div> {# div.body #}
     {% block post_footer %}{% endblock %}
+    <script>
+    {% wafflejs %}
+    </script>
     {% if deploy_env == "staging" or deploy_env == "production" %}
     <script data-main="{{ STATIC_URL }}dist/logframe.min.js" src="{{ STATIC_URL }}js/lib/require.js"></script>
     {% else %}

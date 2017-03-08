@@ -34,11 +34,15 @@ define([
                 });
             },
             resultContribution: function () {
-                return new Editable({
-                    model: this.model,
-                    template_selector: "#result-contribution-weighting",
-                    attributes: { class: "at-bottom negative" }
-                });
+                if (waffle.switch_is_active("enable impact weighting")) {
+                    return new Editable({
+                        model: this.model,
+                        template_selector: "#result-contribution-weighting",
+                        attributes: { class: "at-bottom negative" }
+                    });
+                }
+
+                return null;
             },
             assumptionList: function () {
                 var resultId = this.model.get("id");
@@ -68,13 +72,18 @@ define([
                     }),
                 });
             },
-            "resultRiskRating": function () {
-                return new Selectable({
-                    className: "risk-rating-value",
-                    model: this.model,
-                    field_name: 'risk_rating',
-                    options: Aptivate.data.riskratings
-                });
+            resultRiskRating: function () {
+                if (waffle.switch_is_active("enable risk rating")) {
+                    return new Selectable({
+                        className: "at-bottom",
+                        model: this.model,
+                        field_name: 'risk_rating',
+                        options: Aptivate.data.riskratings,
+                        template_selector: "#result-risk-rating"
+                    });
+                }
+
+                return null;
             },
             deleteResult: function () {
                 var object_name = this.model.get('name') || "object";
