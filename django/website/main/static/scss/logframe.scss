@@ -233,10 +233,11 @@ footer {
 .indicator-detail {
 	display:block;
 	float:left;
-	padding-right:2px;
+	padding-bottom:1em;
 	clear:both;
-	margin-bottom:1em;
+    border: 1px solid $light-gray;
 }
+
 .indicator-detail .inner {
 	padding-top:0.5em;
 }
