@@ -295,6 +295,7 @@ def test_contacts_list_excel_export():
 
 def test_update_contact_view_with_valid_form_saves_object():
     view = UpdateContact()
+    view.request = RequestFactory().post('/', {})
     view.object = mock.Mock(save=mock.Mock())
     view.form_valid(mock.Mock(save=lambda: mock.Mock(id=randint(1, 100))))
 
@@ -304,6 +305,7 @@ def test_update_contact_view_with_valid_form_saves_object():
 def test_update_contact_view_with_valid_form_redirects_to_self():
     CONTACT_ID = 1
     view = UpdateContact()
+    view.request = RequestFactory().post('/', {})
     view.object = mock.Mock(save=mock.Mock())
     response = view.form_valid(mock.Mock(save=lambda: mock.Mock(id=CONTACT_ID)))
 
