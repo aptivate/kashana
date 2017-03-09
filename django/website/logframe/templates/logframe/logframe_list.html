@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load django_tables2 %}
+
+{% block content %}
+    <div class="manage-logframes">
+        <h2>{% trans "Manage Logframes" %}</h2>
+        <div class="new-logframe"><a class="pure-button" href="{% url "create-logframe" %}">{% trans "Create a new Logframe" %}</a></div>
+        {% render_table table %}
+    </div>
+{% endblock %}

@@ -106,9 +106,14 @@ a.pure-button {
 }
 .account-links-profile,
 .account-links-auth,
-.navigation-link {
+{
     float: right;
 }
+
+.navigation-link {
+    float: left;
+}
+
 .account-links-profile,
 .account-links-auth,
 .navigation-link,

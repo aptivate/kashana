@@ -123,6 +123,7 @@
     display: inline-block;
     padding: 0em;
     border-right: $header-right-border;
+    float: left;
 }
 
 #logframes-switch select, #organizations-switch select {
@@ -133,6 +134,25 @@
 .pure-control-group ul {
     list-style: none;
     padding: 0;
+}
+
+.select2-results li {
+    background-color: #2f353f;
+    color: #fff;
+    border-top: 1px  solid #0f120c;
+    border-bottom: 1px  solid #0f120c;
+    border-radius: 0;
+    height: 100%;
+    padding: 0.5em 1em;
+    width: 100%;
+    cursor: pointer;
+    display: block;
+    height: 33px;
+}
+
+.select2-results li:last-child::before {
+	content: "+";
+	padding: 0.25em;
 }
 
 /* Django comments provides a honeypot field to help trick spammers but 

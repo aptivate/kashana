@@ -766,3 +766,97 @@ div.activity-item {
     border: 3px solid $dusk-blue;
     color: $dusk-blue;
 }
+
+/****************************
+ * LOGFRAME MANAGEMENT
+ ****************************/
+.create-logframe {
+    display: inline-block; 
+    margin: 1em;
+}
+
+.logframe-list {
+    display: inline-block;
+    float: left;
+    list-style: outside none none;
+    margin: 1em;
+    padding: 0;
+    width: 40%;
+}
+
+.dashboard {
+    margin-left: 15%;
+}
+
+
+.dashboard h2 {
+    margin-left: 0.5em;
+}
+
+.logframe-list li {
+    border: 1px solid #cbcbcb;
+    display: inline-block;
+    width: 100%;
+}
+
+.edit-link {
+    float: right;
+    width: 15%;
+}
+
+.logframe-link {
+    display: inline-block;
+    float: left;
+    width: 85%;
+}
+
+.edit-link a, .logframe-link a {
+    padding: 1.5em;
+    width: 100%;
+    display: block;
+}
+
+.logframe-edit h2 {
+    margin-bottom: 1.5em;
+    margin-left: 10%;
+    margin-top: 0;
+}
+
+.logframe-edit .pure-form-stacked .help-text {
+    font-size: 0.8em;
+}
+
+.logframe-edit .pure-form {
+    margin-left: 10%;
+}
+
+.logframe-edit .pure-form fieldset {
+    border: 1px solid #cbcbcb;
+    margin-bottom: 1em;
+    padding: 1em;
+    width: 40%;
+    display: inline-block;
+}
+
+.logframe-edit .pure-form fieldset legend {
+    display: none;
+}
+
+.logframe-edit .pure-control-group label {
+    margin-bottom: 1em;
+}
+
+.logframe-edit .pure-control-group span {
+    font-size: 1rem;
+}
+
+.logframe-edit a.pure-button {
+    display: inline-block;
+    margin-left: 1em;
+    vertical-align: top;
+}
+
+.logframe-edit .form-submit {
+    display: block;
+}
+  

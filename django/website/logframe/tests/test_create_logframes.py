@@ -4,14 +4,14 @@ from random import randint
 from django.core.urlresolvers import reverse
 from django.test.client import RequestFactory
 
-import pytest
 from django_dynamic_fixture import N, G
 from mock import Mock, patch
+from organizations.models import Organization
+import pytest
 
 from appconf.models import Settings
 from ..models import LogFrame
 from ..views import CreateLogframe
-from organizations.models import Organization
 
 
 def test_redirects_to_created_logframe_on_success():

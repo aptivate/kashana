@@ -26,9 +26,14 @@ class SwitchLogframes(LoginRequiredMixin, RedirectView):
     pattern_name = 'logframe-dashboard'
 
     def post(self, request, *args, **kwargs):
-        self.object = get_object_or_404(LogFrame, pk=self.request.POST['logframe'])
-        update_last_viewed_item(self.request.user, self.object)
-        return self.get(request, org_slug=self.object.organization.slug, slug=self.object.slug)
+        try:
+            self.object = LogFrame.objects.get(pk=self.request.POST['logframe'])
+            update_last_viewed_item(self.request.user, self.object)
+            response = self.get(request, org_slug=self.object.organization.slug, slug=self.object.slug)
+        except LogFrame.DoesNotExist:
+            self.pattern_name = 'create-logframe'
+            response = self.get(request)
+        return response
 
 
 class SwitchOrganizations(LoginRequiredMixin, RedirectView):
@@ -36,9 +41,14 @@ class SwitchOrganizations(LoginRequiredMixin, RedirectView):
     pattern_name = 'org-dashboard'
 
     def post(self, request, *args, **kwargs):
-        self.object = get_object_or_404(Organization, pk=self.request.POST['organization'])
-        update_last_viewed_item(self.request.user, self.object)
-        return self.get(request, org_slug=self.object.slug)
+        try:
+            self.object = Organization.objects.get(pk=self.request.POST['organization'])
+            update_last_viewed_item(self.request.user, self.object)
+            response = self.get(request, org_slug=self.object.slug)
+        except Organization.DoesNotExist:
+            self.pattern_name = 'organization_create'
+            response = self.get(request)
+        return response
 
 
 class DashboardOrganizationSelection(LoginRequiredMixin, ListView):

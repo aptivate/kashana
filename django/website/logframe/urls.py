@@ -1,6 +1,13 @@
-from django.conf.urls import url
-from .views import CreateLogframe, ResultEditor, ResultMonitor
+from django.conf.urls import include, url
+from .views import (
+    CreateLogframe, DeleteLogframe, EditLogframe, ResultEditor, ResultMonitor
+)
 
+logframe_management_patterns = [
+    url(r'^create/', CreateLogframe.as_view(), name='create-logframe'),
+    url(r'^update/(?P<slug>[-a-zA-Z0-9_]+)/$', EditLogframe.as_view(), name='update-logframe'),
+    url(r'^delete/(?P<slug>[-a-zA-Z0-9_]+)/$', DeleteLogframe.as_view(), name='delete-logframe'),
+]
 
 urlpatterns = [
     url(r'^design/(?P<logframe_id>\d+)/result/(?P<pk>\d+)/$',
@@ -9,5 +16,5 @@ urlpatterns = [
     url(r'^monitor/(?P<logframe_id>\d+)/result/(?P<pk>\d+)/$',
         ResultMonitor.as_view(),
         name="monitor-result"),
-    url(r'^create/', CreateLogframe.as_view(), name='create-logframe'),
+    url('^logframes/', include(logframe_management_patterns))
 ]

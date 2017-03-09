@@ -100,7 +100,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # 'waffle.middleware.WaffleMiddleware',
+    'waffle.middleware.WaffleMiddleware',
 )
 
 
@@ -164,7 +164,7 @@ INSTALLED_APPS = (
     'floppyforms',
     'rest_framework_nested',
     'organizations',
-    # 'waffle',
+    'waffle',
 
     # our apps
     'main',

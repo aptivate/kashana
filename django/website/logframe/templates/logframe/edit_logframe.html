@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+    <div class="logframe-edit">
+	    <h2>{% if form.instance.id %}{% blocktrans with logframe_name=form.instance.name %}Edit {{ logframe_name }} Logframe{% endblocktrans %}{% else %}{% trans "Create a new Logframe" %}{% endif %}</h2>
+	    <form method="post" class="pure-form pure-form-stacked" action=".">{% csrf_token %}
+	       <fieldset>
+	           <legend></legend>
+	        {% include "form_snippet.html" %}
+	       </fieldset>
+	       {% if logframe_list|length > 1 %} 
+	        <a class="pure-button" href="{% url "delete-logframe" form.instance.slug %}">{% trans "Delete" %}</a>
+	       {% endif %}
+	        <input type="submit" class="form-submit pure-button" name="submit" value="{% trans "Save" %}" />
+	    </form>
+    </div>
+{% endblock %}

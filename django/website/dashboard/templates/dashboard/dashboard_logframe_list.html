@@ -8,10 +8,19 @@
 {% endblock logframe_switching_form %}
 
 {% block content %}
-    <h2>{% trans "Logframes available for you to view" %}</h2>
-    <ul>
-    {% for logframe in logframe_list %}
-        <li><a href="{% url "logframe-dashboard" logframe.organization.slug logframe.slug %}">{{ logframe.name }}</a> </li>
-    {% endfor %}
-    </ul>
+    <div class="dashboard">
+	    <h2>{% trans "Dashboard" %}</h2>
+	    <div class="logframe-details">
+		    <ul class="logframe-list">
+		    {% for logframe in logframe_list %}
+		        <li><span class="logframe-link"><a href="{% url "logframe-dashboard" logframe.slug %}">{{ logframe.name }}</a></span>
+		        {% if perms.logframe.add_logframe %}
+		            <span class="edit-link"><a href="{% url "update-logframe" logframe.slug %}">{% trans "Edit" %}</a></span>
+		        {% endif %}
+		       </li>
+		    {% endfor %}
+		    </ul>
+		    {% if perms.logframe.add_logframe %}<div class="create-logframe"><a class="pure-button" href="{% url "create-logframe" %}">{% trans "Create a new Logframe" %}</a></div>{% endif %}
+	    </div>
+    </div>
 {% endblock content %}
