@@ -761,7 +761,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<div class=\"indicator-detail\">\n    <div data-subview=\"indicatorName\"></div>\n    <div data-subview=\"indicatorDescription\"></div>\n</div>\n<div class=\"indicator-data\">\n    <div class=\"scrolling-container\">\n        <div class=\"indicator-data-table scrolling-table\">\n            <div class=\"milestones-label\">Milestones</div>\n            <div data-subview=\"targetsTable\"></div>\n        </div>\n    </div>\n    <div class=\"indicator-source\">\n        <h3>Source</h3>\n        <div data-subview=\"indicatorSource\"></div>\n    </div>\n</div>\n";
+  return "<div class=\"indicator-detail\">\n    <div data-subview=\"indicatorName\"></div>\n    <div data-subview=\"indicatorDescription\"></div>\n</div>\n<div class=\"indicator-data\">\n    <div class=\"scrolling-container\">\n        <div class=\"indicator-data-table scrolling-table\">\n            <div data-subview=\"targetsTable\"></div>\n        </div>\n    </div>\n    <div class=\"indicator-source\">\n        <h3>Source</h3>\n        <div data-subview=\"indicatorSource\"></div>\n    </div>\n</div>\n";
   });;
 this["Aptivate"] = this["Aptivate"] || {};
 this["Aptivate"]["data"] = this["Aptivate"]["data"] || {};
@@ -880,13 +880,13 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   var buffer = "", stack1;
-  buffer += "\n<th data-subview=\"itemView\" \n     data-subview-id=\""
+  buffer += "\n<th data-subview=\"itemView\"\n     data-subview-id=\""
     + escapeExpression(((stack1 = (depth0 && depth0.id)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "\"></th>\n";
   return buffer;
   }
 
-  buffer += "<th class=\"fixed-column\">&nbsp;</th>\n";
+  buffer += "<th class=\"fixed-column milestones-label\">Milestones</th>\n";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.items), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n";
