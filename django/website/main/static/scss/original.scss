@@ -91,7 +91,7 @@ a.pure-button {
         border-right: $header-right-border;
         float: left;
         text-align:center;
-        
+
         a {
             color: $white;
             font-weight: normal;
@@ -99,7 +99,7 @@ a.pure-button {
     }
 
 .account-links {
-    
+
     top: -0.5em;
     padding-right:1.5em;
     padding-left: 300px;
@@ -121,12 +121,12 @@ a.pure-button {
  {
     position: relative;
     display: inline-block;
-    border-right: $header-right-border; 
+    border-right: $header-right-border;
 }
 
     .account-links-profile,
     .account-links-auth,
-    .navigation-link, 
+    .navigation-link,
     .add-logframe {
         padding: 1.5em;
         font-size:0.9em;
@@ -140,10 +140,7 @@ a.pure-button {
         font-size:1.2em;
         color: $white;
     }
-    
-.account-links-auth {
-    margin-right: 2em;
-}
+
 .section-navigation {
     display: block;
     padding-right: 1.8em;
