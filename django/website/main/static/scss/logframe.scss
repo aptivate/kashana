@@ -204,7 +204,6 @@ footer {
   color:#555;
 }
 .ribbon-indicator {
-    background-color: #FFF47F;
     display:block;
 }
 #indicator-column {
@@ -219,6 +218,7 @@ footer {
 }
 
 .indicators-label {
+    background-color: $light-yellow;
     padding: 1em;
 }
 
