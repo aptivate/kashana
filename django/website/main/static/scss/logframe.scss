@@ -236,11 +236,24 @@ footer {
 	padding-bottom:1em;
 	clear:both;
     border: 1px solid $light-gray;
+
+    > .ribbon {
+        padding:0;
+
+        > .heading {
+            padding: 0.67em;
+        }
+    }
+
+    > .inner {
+	    padding-top:0.5em;
+
+        > .editable {
+            padding: 1em;
+        }
+    }
 }
 
-.indicator-detail .inner {
-	padding-top:0.5em;
-}
 .indicator-data {
     background-color: #F8f8f8;
     display: block;
