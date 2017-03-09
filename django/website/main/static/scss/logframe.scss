@@ -233,7 +233,6 @@ footer {
 .indicator-detail {
 	display:block;
 	float:left;
-	width:30%;
 	padding-right:2px;
 	clear:both;
 	margin-bottom:1em;
@@ -246,7 +245,6 @@ footer {
     display: block;
     float: left;
     margin-bottom: 1.5em;
-    width: 70%;
     top: -1px;
 }
 .indicator-data-table > table {
@@ -771,7 +769,7 @@ div.activity-item {
  * LOGFRAME MANAGEMENT
  ****************************/
 .create-logframe {
-    display: inline-block; 
+    display: inline-block;
     margin: 1em;
 }
 
@@ -859,4 +857,3 @@ div.activity-item {
 .logframe-edit .form-submit {
     display: block;
 }
-  
