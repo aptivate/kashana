@@ -204,7 +204,6 @@ footer {
   color:#555;
 }
 .ribbon-indicator {
-    background-color: #FFF47F;
     display:block;
 }
 #indicator-column {
@@ -219,6 +218,7 @@ footer {
 }
 
 .indicators-label {
+    background-color: $light-yellow;
     padding: 1em;
 }
 
@@ -233,20 +233,32 @@ footer {
 .indicator-detail {
 	display:block;
 	float:left;
-	width:30%;
-	padding-right:2px;
+	padding-bottom:1em;
 	clear:both;
-	margin-bottom:1em;
+    border: 1px solid $light-gray;
+
+    > .ribbon {
+        padding:0;
+
+        > .heading {
+            padding: 0.67em;
+        }
+    }
+
+    > .inner {
+	    padding-top:0.5em;
+
+        > .editable {
+            padding: 1em;
+        }
+    }
 }
-.indicator-detail .inner {
-	padding-top:0.5em;
-}
+
 .indicator-data {
     background-color: #F8f8f8;
     display: block;
     float: left;
     margin-bottom: 1.5em;
-    width: 70%;
     top: -1px;
 }
 .indicator-data-table > table {
@@ -266,7 +278,7 @@ footer {
 
 .indicator-data-table td > div {
 	padding-top:1em;
-	text-align:right;
+	text-align:center;
 	overflow:hidden;
 }
 .indicator-data-table .result-input {
@@ -308,16 +320,18 @@ footer {
 }
 
 .milestone-heading-row {
-  background-color: $dark-green;
-  border:none;
-}
-.milestone-heading-row th {
     background-color: $dark-green;
-    font-size: 0.8em;
-    padding: 0.25em 0.5em;
-    text-align:center;
-    vertical-align: top;
+    border:none;
+
+    > th {
+        background-color: $dark-green;
+        font-size: 0.8em;
+        padding: 1em;
+        text-align:center;
+        vertical-align: top;
+    }
 }
+
 .ribbon-assumptions {
     background-color: #FFCC99;
     margin-top: 1px;
@@ -771,7 +785,7 @@ div.activity-item {
  * LOGFRAME MANAGEMENT
  ****************************/
 .create-logframe {
-    display: inline-block; 
+    display: inline-block;
     margin: 1em;
 }
 
@@ -859,4 +873,3 @@ div.activity-item {
 .logframe-edit .form-submit {
     display: block;
 }
-  

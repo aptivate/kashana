@@ -4,11 +4,11 @@
 
 .indicator-data .scrolling-container {
     background-color: $white;
-} 
+}
 
 .scrolling-table {
     margin-left: 6em;
-    overflow-x: scroll;
+    overflow-x: auto;
 
     .scrollable {
         table-layout: auto;
@@ -21,7 +21,7 @@
     }
 
     th:first-child {
-    
+
         position: absolute;
         left: 0;
         top: auto;
@@ -31,5 +31,4 @@
 
 .milestone-heading-row th:first-child {
     width: 7.5em;
-    background-color: #fff;
 }
