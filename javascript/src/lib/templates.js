@@ -401,7 +401,7 @@ function program10(depth0,data) {
   return "&nbsp;";
   }
 
-  buffer += "<div data-name=\"description\" \n     class=\"";
+  buffer += "<div data-name=\"description\"\n     class=\"";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.editable), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   stack1 = helpers.unless.call(depth0, (depth0 && depth0.description), {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
@@ -1148,7 +1148,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   var buffer = "", stack1, helper, functionType="function", escapeExpression=this.escapeExpression;
 
 
-  buffer += "<table class=\"logframe-result\">\n    <tbody>\n        <tr>\n            <td id=\"result-detail\" class=\"tall\">\n                <div class=\"result-level-name level-";
+  buffer += "<table class=\"logframe-result\">\n    <tbody>\n        <tr>\n            <td class=\"tall\">\n                <div id=\"result-detail\">\n                    <div class=\"result-level-name level-";
   if (helper = helpers.level) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.level); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -1156,7 +1156,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (helper = helpers.level_name) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.level_name); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</div>\n                <div data-subview=\"resultName\"></div>\n                <div class=\"description-label\">Description</div>\n                <div data-subview=\"resultDescription\"></div>\n                <div data-subview=\"resultContribution\"></div>\n            </td>\n            <td id=\"indicator-column\">\n                <div class=\"indicators-label\">Indicators</div>\n                <div data-subview=\"indicatorList\"></div>\n            </td>\n            <td id=\"result-assumptions\" class=\"tall\">\n                <div class=\"ribbon ribbon-assumptions\">\n                    <h3 class=\"heading assumptions\">Assumptions</h3>\n                </div>\n                <div>\n                    <div data-subview=\"assumptionList\">No assumptions</div>\n                </div>\n                <div data-subview=\"resultRiskRating\"></div>\n            </td>\n        </tr>\n    </tbody>\n</table>\n<div data-subview=\"deleteResult\"></div>\n";
+    + "</div>\n                    <div data-subview=\"resultName\"></div>\n                    <div class=\"description-label\">Description</div>\n                    <div data-subview=\"resultDescription\"></div>\n                </div>\n                <div data-subview=\"resultContribution\"></div>\n                <div id=\"result-assumptions\">\n                    <div class=\"ribbon ribbon-assumptions\">\n                        <h3 class=\"heading assumptions\">Assumptions</h3>\n                    </div>\n                    <div>\n                        <div data-subview=\"assumptionList\">No assumptions</div>\n                    </div>\n                </div>\n                <div data-subview=\"resultRiskRating\"></div>\n            </td>\n            <td id=\"indicator-column\">\n                <div class=\"indicators-label\">Indicators</div>\n                <div data-subview=\"indicatorList\"></div>\n            </td>\n        </tr>\n    </tbody>\n</table>\n<div data-subview=\"deleteResult\"></div>\n";
   return buffer;
   });;
 this["Aptivate"] = this["Aptivate"] || {};
