@@ -26,7 +26,9 @@
         <form id="logframes-switch" action="{% url "switch-logframes" %}" method="post">{% csrf_token %}
             <select id="logframes-switch-select" name="logframe" onchange="this.form.submit();">
             	{% for logframe in logframe_list %}<option value="{{ logframe.id }}"{% if request.user.preferences.last_viewed_logframe == logframe %} selected="selected"{% endif %}>{{ logframe.name }}</option>{% endfor %}
+            	{% if perms.logframe.edit_logframe %}
             	<option value="-1">{% trans "Create a new Logframe" %}</option>
+            	{% endif %}
 			</select>
 		</form>
 		{% endif %}
