@@ -8,7 +8,7 @@
 
 .scrolling-table {
     margin-left: 6em;
-    overflow-x: scroll;
+    overflow-x: auto;
 
     .scrollable {
         table-layout: auto;
