@@ -30,7 +30,8 @@ define([
             resultDescription: function () {
                 return new EditableText({
                     model: this.model,
-                    template_selector: "#editable-description"
+                    template_selector: "#editable-description",
+                    attributes: { class: "description" }
                 });
             },
             resultContribution: function () {
@@ -38,7 +39,7 @@ define([
                     return new Editable({
                         model: this.model,
                         template_selector: "#result-contribution-weighting",
-                        attributes: { class: "at-bottom negative" }
+                        attributes: { class: "impact-weighting" }
                     });
                 }
 
@@ -75,7 +76,7 @@ define([
             resultRiskRating: function () {
                 if (waffle.switch_is_active("enable risk rating")) {
                     return new Selectable({
-                        className: "at-bottom",
+                        className: "risk-rating",
                         model: this.model,
                         field_name: 'risk_rating',
                         options: Aptivate.data.riskratings,

@@ -1,25 +1,27 @@
 <table class="logframe-result">
     <tbody>
         <tr>
-            <td id="result-detail" class="tall">
-                <div class="result-level-name level-{{ level }}">{{ level_name }}</div>
-                <div data-subview="resultName"></div>
-                <div class="description-label">Description</div>
-                <div data-subview="resultDescription"></div>
+            <td class="tall">
+                <div id="result-detail">
+                    <div class="result-level-name level-{{ level }}">{{ level_name }}</div>
+                    <div data-subview="resultName"></div>
+                    <div class="description-label">Description</div>
+                    <div data-subview="resultDescription"></div>
+                </div>
                 <div data-subview="resultContribution"></div>
+                <div id="result-assumptions">
+                    <div class="ribbon ribbon-assumptions">
+                        <h3 class="heading assumptions">Assumptions</h3>
+                    </div>
+                    <div>
+                        <div data-subview="assumptionList">No assumptions</div>
+                    </div>
+                </div>
+                <div data-subview="resultRiskRating"></div>
             </td>
             <td id="indicator-column">
                 <div class="indicators-label">Indicators</div>
                 <div data-subview="indicatorList"></div>
-            </td>
-            <td id="result-assumptions" class="tall">
-                <div class="ribbon ribbon-assumptions">
-                    <h3 class="heading assumptions">Assumptions</h3>
-                </div>
-                <div>
-                    <div data-subview="assumptionList">No assumptions</div>
-                </div>
-                <div data-subview="resultRiskRating"></div>
             </td>
         </tr>
     </tbody>
