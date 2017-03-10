@@ -20,36 +20,41 @@
     <div class="body"> {# Created because ui.jquery really doesn't like sized <body> #}
 
     <header class="page-header">
-        <h1 class="logo"><a href="/">{% settings_value "SITE_NAME" %}</a></h1>
-        {% block logframe_switching_form %}
-        {% if request.user and request.user.is_authenticated %}
-        <form id="logframes-switch" action="{% url "switch-logframes" %}" method="post">{% csrf_token %}
-            <select id="logframes-switch-select" name="logframe" onchange="this.form.submit();"{% if logframe_list|length == 1 and not perms.logframe.edit_logframe %} disabled="disabled"{% endif %}>
-            	{% for logframe in logframe_list %}<option value="{{ logframe.id }}"{% if request.user.preferences.last_viewed_logframe == logframe %} selected="selected"{% endif %}>{{ logframe.name }}</option>{% endfor %}
-            	{% if perms.logframe.edit_logframe %}
-            	<option value="-1">{% trans "Create a new Logframe" %}</option>
-            	{% endif %}
-			</select>
-		</form>
-		{% endif %}
-		{% endblock logframe_switching_form %}
-        {% if request.user and request.user.is_authenticated %}
-         {% if perms.contacts.add_user %}
-            <div class="navigation-link"><a href="{% url "contact_list" %}" id="nav-people">{% trans "People" %}</a></li></div>
-         {% endif %}
-         <div class="account-links-auth"><a href="{% url "logout" %}">{% trans "Log out" %}</a></div>
-         {% if request.user.preferences.last_viewed_logframe %}
+        <h1 class="logo"><a href="/"><img src="{% settings_value "SITE_LOGO" %}" /><span class="site-name">{% settings_value "SITE_NAME" %}</span></a></h1>
+        <nav class="main-navigation">
+            {% block logframe_switching_form %}
+            {% if request.user and request.user.is_authenticated %}
+            <form id="logframes-switch" action="{% url "switch-logframes" %}" method="post">{% csrf_token %}
+                <select id="logframes-switch-select" name="logframe" onchange="this.form.submit();"{% if logframe_list|length == 1 and not perms.logframe.edit_logframe %} disabled="disabled"{% endif %}>
+                    {% for logframe in logframe_list %}<option value="{{ logframe.id }}"{% if request.user.preferences.last_viewed_logframe == logframe %} selected="selected"{% endif %}>{{ logframe.name }}</option>{% endfor %}
+                    {% if perms.logframe.edit_logframe %}
+                    <option value="-1">{% trans "Create a new Logframe" %}</option>
+                    {% endif %}
+                </select>
+            </form>
+            {% endif %}
+            {% endblock logframe_switching_form %}
+
+            {% if request.user and request.user.is_authenticated %}
+            <div class="account-links-auth"><a href="{% url "logout" %}">{% trans "Log out" %}</a></div>
+                {% if request.user.preferences.last_viewed_logframe %}
             <div class="navigation-link"><a href="{% url "logframe-dashboard" request.user.preferences.last_viewed_logframe.slug %}" id="nav-dashboard">{% blocktrans with request.user.preferences.last_viewed_logframe.name as logframe_name %}{{ logframe_name }} Overview{% endblocktrans %}</a></div>
-         {% endif %}
-         <div class="account-links-profile"><span>{% trans "Logged in as:" %} </span><a href="{% url "personal_edit" %}">{{ request.user.get_full_name|default:request.user.business_email }}</a></div>
-        {% else %}
+                {% endif %}
+            <div class="account-links-profile"><span>{% trans "Logged in as:" %} </span><a href="{% url "personal_edit" %}">{{ request.user.get_full_name|default:request.user.business_email }}</a></div>
+            {% else %}
             <div class="account-links-auth"><a href="{% url "login" %}">{% trans "Log in" %}</a></div>
             <div class="account-links-auth"><a href="{% url "registration_register" %}">{% trans "Register" %}</a></div>
-        {% endif %}
+            {% endif %}
+            {% if request.user and request.user.is_authenticated %}
+                {% if perms.contacts.add_user %}
+            <div class="navigation-link" id="nav-people"><a href="{% url "contact_list" %}">{% trans "People" %}</a></div>
+                {% endif %}
+            {% endif %}
+        </nav>
     </header>
     <div class="content-box">
         {% block main_menu %}
-        {% endblock main_menu %} 
+        {% endblock main_menu %}
 
         {% if messages %}
         <div class="messagelist">
