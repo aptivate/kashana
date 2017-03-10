@@ -151,11 +151,6 @@
     height: 33px;
 }
 
-.select2-results li:last-child::before {
-	content: "+";
-	padding: 0.25em;
-}
-
 /* Django comments provides a honeypot field to help trick spammers but 
 we dont' want to show it to users */
 #id_honeypot {

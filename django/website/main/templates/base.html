@@ -25,20 +25,20 @@
         {% block organization_switching_form %}
         {% if request.user and request.user.is_authenticated %}
 		<form id="organizations-switch" action="{% url "switch-organizations" %}" method="post">{% csrf_token %}
-            <select id="organizations-switch-select" name="organization" onchange="this.form.submit();"{% if organization_list|length == 1 %} disabled="disabled"{% endif %}>
+            <select id="organizations-switch-select" name="organization" onchange="this.form.submit();"{% if organization_list|length == 1 and not perms.organizations.add_organization %} disabled="disabled"{% endif %}>
                 {% for organization in organization_list %}<option value="{{ organization.id }}"{% if request.user.preferences.last_viewed_organization == organization %} selected="selected"{% endif %}>{{ organization.name }}</option>{% endfor %}
+                {% if perms.organizations.add_organization %}
+                    <option value="-1">{% trans "Create a new Organization" %}</option>
+                {% endif %}
             </select>
         </form>
-         {% if perms.organization.add_organization %}
-            <div class="add-organization"><a href="{% url "organization_create" %}">Create Organisation</a></div>
-         {% endif %}
         {%  endif %}
         {% endblock organization_switching_form %}
         
         {% block logframe_switching_form %}
         {% if request.user and request.user.is_authenticated %}
         <form id="logframes-switch" action="{% url "switch-logframes" %}" method="post">{% csrf_token %}
-            <select id="logframes-switch-select" name="logframe" onchange="this.form.submit();"{% if logframe_list|length == 1 and not perms.logframe.edit_logframe %} disabled="disabled"{% endif %}>
+            <select id="logframes-switch-select" name="logframe" onchange="this.form.submit();"{% if logframe_list|length == 1 and not perms.logframe.add_logframe %} disabled="disabled"{% endif %}>
             	{% for logframe in logframe_list %}<option value="{{ logframe.id }}"{% if request.user.preferences.last_viewed_logframe == logframe %} selected="selected"{% endif %}>{{ logframe.name }}</option>{% endfor %}
         {% if perms.logframe.add_logframe %}
             	<option value="-1">{% trans "Create a new Logframe" %}</option>
@@ -53,7 +53,7 @@
          {% endif %}
          <div class="account-links-auth"><a href="{% url "logout" %}">{% trans "Log out" %}</a></div>
          {% if request.user.preferences.last_viewed_logframe %}
-            <div class="navigation-link"><a href="{% url "logframe-dashboard" request.user.preferences.last_viewed_logframe.slug %}" id="nav-dashboard">{% blocktrans with request.user.preferences.last_viewed_logframe.name as logframe_name %}{{ logframe_name }} Overview{% endblocktrans %}</a></div>
+            <div class="navigation-link"><a href="{% url "logframe-dashboard" request.user.preferences.last_viewed_logframe.organization.slug request.user.preferences.last_viewed_logframe.slug %}" id="nav-dashboard">{% blocktrans with request.user.preferences.last_viewed_logframe.name as logframe_name %}{{ logframe_name }} Overview{% endblocktrans %}</a></div>
          {% endif %}
          <div class="account-links-profile"><span>{% trans "Logged in as:" %} </span><a href="{% url "personal_edit" %}">{{ request.user.get_full_name|default:request.user.business_email }}</a></div>
         {% else %}
