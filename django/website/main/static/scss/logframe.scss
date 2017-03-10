@@ -336,6 +336,7 @@ footer {
     font-size: 1em;
     color: $black;
 }
+
 #result-assumptions {
     background-color: $very-light-pink;
 
@@ -346,20 +347,24 @@ footer {
     }
 }
 
-#result-assumptions ul {
+.assumption-list {
     list-style: none outside none;
     margin: 0;
-    padding: 1em;
+    padding: 0;
 
-    > li > .editable {
-        padding-left: 0;
-        padding-right: 0;
+    > li {
+        padding: 1em;
+        border-bottom: 1px solid $light-pink;
+
+        > .editable {
+            padding: 0;
+        }
+
+        &:last-child {
+            border:none;
+        }
     }
 }
-    #result-assumptionsul ul > li {
-      padding:7px;
-      padding-right:15px
-    }
 
 .risk-rating-value {
     display: inline-block;
