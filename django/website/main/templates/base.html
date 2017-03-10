@@ -51,9 +51,8 @@
          {% if perms.contacts.add_user %}
             <div class="navigation-link"><a href="{% url "contact_list" %}" id="nav-people">{% trans "People" %}</a></li></div>
          {% endif %}
-         <div class="account-links-auth"><a href="{% url "logout" %}">{% trans "Log out" %}</a></div>
          {% if request.user.preferences.last_viewed_logframe %}
-            <div class="navigation-link"><a href="{% url "logframe-dashboard" request.user.preferences.last_viewed_logframe.slug %}" id="nav-dashboard">{% blocktrans with request.user.preferences.last_viewed_logframe.name as logframe_name %}{{ logframe_name }} Overview{% endblocktrans %}</a></div>
+            <div class="navigation-link"><a href="{% url "logframe-dashboard" request.user.preferences.last_viewed_organization.slug request.user.preferences.last_viewed_logframe.slug %}" id="nav-dashboard">{% blocktrans with request.user.preferences.last_viewed_logframe.name as logframe_name %}{{ logframe_name }} Overview{% endblocktrans %}</a></div>
 	        <div class="account-links-profile"><span>{% trans "Logged in as:" %} </span><a href="{% url "personal_edit" %}">{{ request.user.get_full_name|default:request.user.business_email }}</a></div>
         {% else %}
             <div class="account-links-auth"><a href="{% url "login" %}">{% trans "Log in" %}</a></div>

@@ -1,16 +1,6 @@
 {% extends "dashboard/dashboard_base.html" %}
 
 {% load i18n %}
-{% block organization_switching_form %}
-    {% if perms.organization.add_organization %}
-        <div class="add-organization"><a href="{% url "organization_create" %}">Create Organisation</a></div>
-    {% endif %}
-{% endblock organization_switching_form %}
-{% block logframe_switching_form %}
-    {% if organization_list and perms.logframe.add_logframe %}
-        <div class="add-logframe"><a href="{% url "create-logframe" %}">Create Logframe</a></div>
-    {% endif %}
-{% endblock logframe_switching_form %}
 
 {% block content %}
     <h2>{% trans "Organizations that you are a member of" %}</h2>
