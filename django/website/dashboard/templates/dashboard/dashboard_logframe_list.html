@@ -1,11 +1,6 @@
 {% extends "dashboard/dashboard_base.html" %}
 
 {% load i18n %}
-{% block logframe_switching_form %}
-{% if perms.logframe.add_logframe %}
-        <div class="add-logframe"><a href="{% url "create-logframe" %}">Create Logframe</a></div>
-{% endif %}
-{% endblock logframe_switching_form %}
 
 {% block content %}
     <div class="dashboard">
@@ -13,7 +8,7 @@
 	    <div class="logframe-details">
 		    <ul class="logframe-list">
 		    {% for logframe in logframe_list %}
-		        <li><span class="logframe-link"><a href="{% url "logframe-dashboard" logframe.slug %}">{{ logframe.name }}</a></span>
+		        <li><span class="logframe-link"><a href="{% url "logframe-dashboard" logframe.organization.slug logframe.slug %}">{{ logframe.name }}</a></span>
 		        {% if perms.logframe.add_logframe %}
 		            <span class="edit-link"><a href="{% url "update-logframe" logframe.slug %}">{% trans "Edit" %}</a></span>
 		        {% endif %}
