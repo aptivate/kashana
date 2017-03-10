@@ -59,6 +59,7 @@ define([
                             return assumption.get("result") === resultId;
                         }
                     }),
+                    attributes: {class: "assumption-list"}
                 });
             },
             indicatorList: function () {

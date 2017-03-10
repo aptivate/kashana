@@ -14870,7 +14870,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (helper = helpers.level_name) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.level_name); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</div>\n                    <div data-subview=\"resultName\"></div>\n                    <div class=\"description-label\">Description</div>\n                    <div data-subview=\"resultDescription\"></div>\n                </div>\n                <div data-subview=\"resultContribution\"></div>\n                <div id=\"result-assumptions\">\n                    <div class=\"ribbon ribbon-assumptions\">\n                        <h3 class=\"heading assumptions\">Assumptions</h3>\n                    </div>\n                    <div>\n                        <div data-subview=\"assumptionList\">No assumptions</div>\n                    </div>\n                </div>\n                <div data-subview=\"resultRiskRating\"></div>\n            </td>\n            <td id=\"indicator-column\">\n                <div class=\"indicators-label\">Indicators</div>\n                <div data-subview=\"indicatorList\"></div>\n            </td>\n        </tr>\n    </tbody>\n</table>\n<div data-subview=\"deleteResult\"></div>\n";
+    + "</div>\n                    <div data-subview=\"resultName\"></div>\n                    <div class=\"description-label\">Description</div>\n                    <div data-subview=\"resultDescription\"></div>\n                </div>\n                <div data-subview=\"resultContribution\"></div>\n                <div id=\"result-assumptions\">\n                    <div class=\"ribbon ribbon-assumptions\">\n                        <h3 class=\"heading assumptions\">Assumptions</h3>\n                    </div>\n                    <div data-subview=\"assumptionList\">No assumptions</div>\n                </div>\n                <div data-subview=\"resultRiskRating\"></div>\n            </td>\n            <td id=\"indicator-column\">\n                <div class=\"indicators-label\">Indicators</div>\n                <div data-subview=\"indicatorList\"></div>\n            </td>\n        </tr>\n    </tbody>\n</table>\n<div data-subview=\"deleteResult\"></div>\n";
   return buffer;
   });;
 this["Aptivate"] = this["Aptivate"] || {};
@@ -17570,6 +17570,7 @@ define('views/result/container',[
                             return assumption.get("result") === resultId;
                         }
                     }),
+                    attributes: {class: "assumption-list"}
                 });
             },
             indicatorList: function () {
