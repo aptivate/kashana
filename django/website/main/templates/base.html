@@ -20,8 +20,8 @@
     <div class="body"> {# Created because ui.jquery really doesn't like sized <body> #}
 
     <header class="page-header">
-        <h1 class="logo"><a href="/">{% settings_value "SITE_NAME" %}</a></h1>
-        
+       <h1 class="logo"><a href="/"><img src="{% settings_value "SITE_LOGO" %}" /><span class="site-name">{% settings_value "SITE_NAME" %}</span></a></h1>
+       <nav class="main-navigation">
         {% block organization_switching_form %}
         {% if request.user and request.user.is_authenticated %}
 		<form id="organizations-switch" action="{% url "switch-organizations" %}" method="post">{% csrf_token %}
@@ -59,11 +59,17 @@
         {% else %}
             <div class="account-links-auth"><a href="{% url "login" %}">{% trans "Log in" %}</a></div>
             <div class="account-links-auth"><a href="{% url "registration_register" %}">{% trans "Register" %}</a></div>
-        {% endif %}
+            {% endif %}
+            {% if request.user and request.user.is_authenticated %}
+                {% if perms.contacts.add_user %}
+            <div class="navigation-link" id="nav-people"><a href="{% url "contact_list" %}">{% trans "People" %}</a></div>
+                {% endif %}
+            {% endif %}
+        </nav>
     </header>
     <div class="content-box">
         {% block main_menu %}
-        {% endblock main_menu %} 
+        {% endblock main_menu %}
 
         {% if messages %}
         <div class="messagelist">
