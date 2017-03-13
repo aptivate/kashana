@@ -46,7 +46,7 @@ class SwitchOrganizations(LoginRequiredMixin, RedirectView):
             update_last_viewed_item(self.request.user, self.object)
             response = self.get(request, org_slug=self.object.slug)
         except Organization.DoesNotExist:
-            self.pattern_name = 'organization_create'
+            self.pattern_name = 'organization_add'
             response = self.get(request)
         return response
 

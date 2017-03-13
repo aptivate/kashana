@@ -41,4 +41,4 @@ def test_switch_organization_with_invalid_id_redirects_to_create_organization():
     request.session = {}
 
     response = SwitchOrganizations.as_view()(request)
-    assert reverse('organization_create') == response['Location']
+    assert reverse('organization_add') == response['Location']
