@@ -1,13 +1,19 @@
 from uuslug import uuslug
 
-from organizations.forms import OrganizationAddForm
+from floppyforms.__future__.models import ModelForm, ModelChoiceField
 from organizations.models import Organization
 from organizations.utils import create_organization
 
 
-class CreateOrganizationForm(OrganizationAddForm):
+class CreateOrganizationForm(ModelForm):
+
     class Meta(object):
-        exclude = ('email', 'slug', 'users', 'is_active')
+        exclude = ('slug', 'users', 'is_active')
+        model = Organization
+
+    def __init__(self, request, *args, **kwargs):
+        self.request = request
+        super(CreateOrganizationForm, self).__init__(*args, **kwargs)
 
     def save(self, **kwargs):
         """

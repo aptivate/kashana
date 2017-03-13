@@ -1,8 +1,31 @@
 {% extends "organizations_base.html" %}
+{% load i18n %}
+{% block organization_switching_form %}
+	{% if request.user and request.user.is_authenticated %}
+	<form id="organizations-switch" action="{% url "switch-organizations" %}" method="post">{% csrf_token %}
+	    <select id="organizations-switch-select" name="organization" onchange="this.form.submit();"{% if organization_list|length == 1 and not perms.organizations.add_organization %} disabled="disabled"{% endif %}>
+	        {% for organization in organization_list %}<option value="{{ organization.id }}">{{ organization.name }}</option>{% endfor %}
+            <option value="-1" selected="selected">{% trans "Create a new Organization" %}</option>
+	    </select>
+	</form>
+	{%  endif %}
+{% endblock organization_switching_form %}
+
+{% block logframe_switching_form %}
+
+{% endblock logframe_switching_form %}
 {% block content %}
-<h1>{{ organization }}</h1>
+<h1>{% if organization %}{{ organization }}{% else %}{% trans "Create a new Organization" %}{% endif %}</h1>
 <form class="pure-form pure-form-stacked" action="." method="post">{% csrf_token %}
-    {{ form }}
-    <input class="pure-button pure-button-primary" type="submit" value="submit">
+    {% include "form_snippet.html" %}
+    <input type="submit" value="{% trans "Create Organization" %}">
 </form>
 {% endblock %}
+
+{% block post_footer %}
+<script>
+(function () {
+    Aptivate = { data: { logframe: {} } };
+})();
+</script>
+{% endblock post_footer %}
