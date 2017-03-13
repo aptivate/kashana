@@ -163,7 +163,6 @@ INSTALLED_APPS = (
     'django_assets',
     'floppyforms',
     'rest_framework_nested',
-    'organizations',
     'waffle',
 
     # our apps
@@ -175,6 +174,9 @@ INSTALLED_APPS = (
     'export',
     'registration',
     'custom_organizations',
+
+    # apps that, for various reasons, need to come last on the list
+    'organizations',
 )
 
 ACCOUNT_ACTIVATION_DAYS = 7
