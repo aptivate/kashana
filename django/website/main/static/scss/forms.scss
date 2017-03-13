@@ -64,13 +64,13 @@
 
 .display-only.form-label {
     padding: 0;
-    font-weight: bold; 
+    font-weight: bold;
 }
 
 .display-only.form-field {
     padding: 0;
     margin-left: 15em;
-    margin-top: -1.2em;   
+    margin-top: -1.2em;
 }
 
 .pure-form-stacked .display-only.form-field {
@@ -122,7 +122,6 @@
 #logframes-switch {
     display: inline-block;
     padding: 0em;
-    border-right: $header-right-border;
     float: left;
 }
 
@@ -156,10 +155,8 @@
 	padding: 0.25em;
 }
 
-/* Django comments provides a honeypot field to help trick spammers but 
+/* Django comments provides a honeypot field to help trick spammers but
 we dont' want to show it to users */
 #id_honeypot {
     display: none;
 }
-
-

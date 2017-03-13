@@ -140,6 +140,7 @@ EMAIL_BOT_ADDRESS = 'blackhole@aptivate.org'
 CONTACT_ADDRESS = 'kashana@aptivate.org'
 SITE_HOSTNAME = 'localhost:8000'
 SITE_NAME = 'Kashana'
+SITE_LOGO = '{0}images/kashana-logo.png'.format(STATIC_URL)
 INCLUDE_REGISTER_URL = True
 REGISTRATION_FORM = 'contacts.forms.RegistrationForm'
 

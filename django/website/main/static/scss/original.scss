@@ -76,11 +76,35 @@ a.pure-button {
     float:left;
     padding:0;
 }
+
+$header-height: 87px;
+
+.main-navigation {
+    margin-top: -$header-height;
+}
+
+.logo,
+#logframes-switch,
+.navigation-link,
+.account-links-auth,
+.account-links-profile
+{
+    height: $header-height;
+
+    &:after {
+    content: "";
+    height: 100%;
+    display: inline-block;
+    vertical-align: middle;
+    }
+}
+
 .page-header {
     color: $dark-grey;
     background-color:$dusk-blue;
     font-size: 0.9em;
 }
+
     .logo {
         display: inline-block;
         font-size:2em;
@@ -88,15 +112,22 @@ a.pure-button {
         padding: 10px;
         margin: 0;
         color: $text-background;
-        border-right: $header-right-border;
-        float: left;
         text-align:center;
+        width:100%;
 
-        a {
+        > a {
             color: $white;
-            font-weight: normal;
+            font-weight: bold;
+
+            > img {
+                vertical-align:middle;
+            }
         }
     }
+
+.site-name {
+    padding-left:0.5em;
+}
 
 .account-links {
 
@@ -106,6 +137,7 @@ a.pure-button {
 }
 .account-links-profile,
 .account-links-auth,
+#nav-people
 {
     float: right;
 }
@@ -121,7 +153,6 @@ a.pure-button {
  {
     position: relative;
     display: inline-block;
-    border-right: $header-right-border;
 }
 
     .account-links-profile,
