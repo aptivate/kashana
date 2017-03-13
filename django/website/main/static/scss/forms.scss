@@ -121,14 +121,28 @@
 
 #logframes-switch, #organizations-switch {
     display: inline-block;
-    padding: 0em;
+    padding: 0;
     float: left;
+    font-size: .9em;
 }
 
 #logframes-switch select, #organizations-switch select {
     padding-right: 1.5em;
     display: none;
-    width: 18em;
+    width: 20em;
+}
+
+#logframes-switch .select2-container--default .select2-selection--single, 
+#organizations-switch .select2-container--default .select2-selection--single {
+	padding: 2.5em 0;
+	height: $header-height;
+}
+
+#logframes-switch .select2-container--default .select2-selection--single 
+.select2-selection__arrow, 
+#organizations-switch .select2-container--default .select2-selection--single 
+.select2-selection__arrow {
+	top: 30px;
 }
 
 .pure-control-group ul {

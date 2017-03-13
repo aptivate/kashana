@@ -20,7 +20,6 @@
     <div class="body"> {# Created because ui.jquery really doesn't like sized <body> #}
 
     <header class="page-header">
-       <h1 class="logo"><a href="/"><img src="{% settings_value "SITE_LOGO" %}" /><span class="site-name">{% settings_value "SITE_NAME" %}</span></a></h1>
        <nav class="main-navigation">
         {% block organization_switching_form %}
         {% if request.user and request.user.is_authenticated %}
@@ -47,10 +46,8 @@
 		</form>
 		{% endif %}
 		{% endblock logframe_switching_form %}
+       <h1 class="logo"><a href="/"><img src="{% settings_value "SITE_LOGO" %}" /><span class="site-name">{% settings_value "SITE_NAME" %}</span></a></h1>
         {% if request.user and request.user.is_authenticated %}
-         {% if perms.contacts.add_user %}
-            <div class="navigation-link"><a href="{% url "contact_list" %}" id="nav-people">{% trans "People" %}</a></li></div>
-         {% endif %}
          <div class="account-links-auth"><a href="{% url "logout" %}">{% trans "Log out" %}</a></div>
          {% if request.user.preferences.last_viewed_logframe %}
             <div class="navigation-link"><a href="{% url "logframe-dashboard" request.user.preferences.last_viewed_logframe.organization.slug request.user.preferences.last_viewed_logframe.slug %}" id="nav-dashboard">{% blocktrans with request.user.preferences.last_viewed_logframe.name as logframe_name %}{{ logframe_name }} Overview{% endblocktrans %}</a></div>

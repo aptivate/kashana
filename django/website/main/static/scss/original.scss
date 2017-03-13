@@ -79,12 +79,9 @@ a.pure-button {
 
 $header-height: 87px;
 
-.main-navigation {
-    margin-top: -$header-height;
-}
-
 .logo,
 #logframes-switch,
+#organizations-switch,
 .navigation-link,
 .account-links-auth,
 .account-links-profile
@@ -113,7 +110,7 @@ $header-height: 87px;
         margin: 0;
         color: $text-background;
         text-align:center;
-        width:100%;
+        width:15%;
 
         > a {
             color: $white;
