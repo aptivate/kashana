@@ -1,0 +1,8 @@
+{% extends "organizations_base.html" %}
+{% block content %}
+<h1>{{ organization }}</h1>
+<form class="pure-form pure-form-stacked" action="." method="post">{% csrf_token %}
+    {{ form }}
+    <input class="pure-button pure-button-primary" type="submit" value="submit">
+</form>
+{% endblock %}
