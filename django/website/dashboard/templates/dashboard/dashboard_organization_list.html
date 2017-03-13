@@ -2,20 +2,41 @@
 
 {% load i18n %}
 
+        <h2>{% trans "Dashboard" %}</h2>
+        
+            }
+        
+
 {% block content %}
-    <h2>{% trans "Organizations that you are a member of" %}</h2>
-    <ul>
-    {% for organization in organization_list %}
-        <li>{{ organization.name }}</li>
-        {% if organization.logframe_set.exists %}
-        <li class="sublist">
-            <ul>
-                {% for logframe in organization.logframe_set.all %}
-                <li><a href="{% url "logframe-dashboard" organization.slug logframe.slug %}">{{ logframe.name }}</a></li>
-                {% endfor %}
-            </ul>
-        </li>
-        {% endif %}
-    {% endfor %}
-    </ul>
+    <div class="dashboard">
+	    <h2>{% trans "Organizations that you are a member of" %}</h2>
+   	    <div class="organization-details">
+	    <ul class="organization-list">
+	    {% for organization in organization_list %}
+	        <li>
+	           <span class="organization-name">{{ organization.name }}</span>
+               {% if perms.organization.add_orgnaization %}
+                   <span class="edit-link"><a href="{% url "organization_edit" organization.pk %}">{% trans "Edit" %}</a></span>
+               {% endif %}
+	        
+	        {% if organization.logframe_set.exists %}
+	            <div class="logframe-details">
+		            <ul class="logframe-list">
+		            {% for logframe in logframe_list %}
+		                <li><span class="logframe-link"><a href="{% url "logframe-dashboard" logframe.organization.slug logframe.slug %}">{{ logframe.name }}</a></span>
+		                {% if perms.logframe.add_logframe %}
+		                    <span class="edit-link"><a href="{% url "update-logframe" logframe.slug %}">{% trans "Edit" %}</a></span>
+		                {% endif %}
+		               </li>
+		            {% endfor %}
+                    </ul>
+	            </div>
+                {% if perms.logframe.add_logframe %}<div class="create-logframe"><a class="pure-button" href="{% url "create-logframe" %}">{% blocktrans with organization.name as org_name %}Create a new Logframe for {{ org_name }}{% endblocktrans %}</a></div>{% endif %}
+	        </li>
+	        {% endif %}
+	    {% endfor %}
+	   </ul>
+	   </div>
+	   {% if perms.logframe.add_logframe %}<div class="create-organization"><a class="pure-button" href="{% url "organization_add" %}">{% trans "Create a new Organization" %}</a></div>{% endif %}
+    </div>
 {% endblock content %}

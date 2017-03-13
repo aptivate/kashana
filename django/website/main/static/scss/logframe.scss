@@ -790,18 +790,32 @@ div.activity-item {
 /****************************
  * LOGFRAME MANAGEMENT
  ****************************/
-.create-logframe {
+.create-logframe, .create-organization {
     display: inline-block;
     margin: 1em;
 }
 
-.logframe-list {
+.organization-list .create-logframe {
+	display: block;
+	clear: both;
+}
+
+.logframe-list, .organization-list {
     display: inline-block;
     float: left;
     list-style: outside none none;
     margin: 1em;
     padding: 0;
     width: 40%;
+}
+
+.organization-list .logframe-details {
+	display: flex;
+	justify-content: space-between;
+}
+
+.organization-list .logframe-list {
+	width: 100%;
 }
 
 .dashboard {
@@ -813,7 +827,7 @@ div.activity-item {
     margin-left: 0.5em;
 }
 
-.logframe-list li {
+.logframe-list li, .organization-list li {
     border: 1px solid #cbcbcb;
     display: inline-block;
     width: 100%;
@@ -830,7 +844,12 @@ div.activity-item {
     width: 85%;
 }
 
-.edit-link a, .logframe-link a {
+span.organization-name {
+	width: 85%;
+	display: inline-block;
+}
+
+.edit-link a, .logframe-link a, .organization-name {
     padding: 1.5em;
     width: 100%;
     display: block;
