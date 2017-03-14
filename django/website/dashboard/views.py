@@ -29,6 +29,7 @@ class SwitchLogframes(LoginRequiredMixin, RedirectView):
         try:
             self.object = LogFrame.objects.get(pk=self.request.POST['logframe'])
             update_last_viewed_item(self.request.user, self.object)
+            update_last_viewed_item(self.request.user, self.object.organization)
             response = self.get(request, org_slug=self.object.organization.slug, slug=self.object.slug)
         except LogFrame.DoesNotExist:
             self.pattern_name = 'create-logframe'
