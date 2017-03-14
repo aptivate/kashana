@@ -23,7 +23,7 @@
        {% include "form_snippet.html" %}
       </fieldset>
       {% if organization_list|length > 1 %} 
-       <a class="pure-button" href="{% url "delete-logframe" form.instance.slug %}">{% trans "Delete" %}</a>
+       <a class="pure-button" href="{% url "organization_delete" form.instance.slug %}">{% trans "Delete" %}</a>
       {% endif %}
        <input type="submit" class="form-submit pure-button" name="submit" value="{% trans "Save" %}" />
    </form>

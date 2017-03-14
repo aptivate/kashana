@@ -11,7 +11,7 @@
 	        <li>
 	           <span class="organization-name">{{ organization.name }}</span>
                {% if perms.organization.add_orgnaization %}
-                   <span class="edit-link"><a href="{% url "organization_edit" organization.pk %}">{% trans "Edit" %}</a></span>
+                   <span class="edit-link"><a href="{% url "organization_edit" organization.slug %}">{% trans "Edit" %}</a></span>
                {% endif %}
 	        
 	        {% if organization.logframe_set.exists %}
