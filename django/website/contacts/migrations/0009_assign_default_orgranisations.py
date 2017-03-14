@@ -13,6 +13,8 @@ def set_default_organisation_owner(apps, schema_editor):
         default_org = Organization.objects.get(name='Default Org')
         user = User.objects.order_by('id')[0]
         org_user = OrganizationUser.objects.get(user=user, organization=default_org)
+        org_user.is_admin = True
+        org_user.save()
         OrganizationOwner.objects.create(organization_user=org_user, organization=default_org)
 
 
