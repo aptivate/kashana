@@ -855,21 +855,21 @@ span.organization-name {
     display: block;
 }
 
-.logframe-edit h2 {
+.logframe-edit h2, .organization-edit h2 {
     margin-bottom: 1.5em;
     margin-left: 10%;
     margin-top: 0;
 }
 
-.logframe-edit .pure-form-stacked .help-text {
+.logframe-edit .pure-form-stacked .help-text, .organization-edit .pure-form-stacked .help-text {
     font-size: 0.8em;
 }
 
-.logframe-edit .pure-form {
+.logframe-edit .pure-form, .organization-edit .pure-form {
     margin-left: 10%;
 }
 
-.logframe-edit .pure-form fieldset {
+.logframe-edit .pure-form fieldset, .organization-edit .pure-form fieldset {
     border: 1px solid #cbcbcb;
     margin-bottom: 1em;
     padding: 1em;
@@ -877,24 +877,24 @@ span.organization-name {
     display: inline-block;
 }
 
-.logframe-edit .pure-form fieldset legend {
+.logframe-edit .pure-form fieldset legend, .organization-edit .pure-form fieldset legend {
     display: none;
 }
 
-.logframe-edit .pure-control-group label {
+.logframe-edit .pure-control-group label, .organization-edit .pure-control-group label {
     margin-bottom: 1em;
 }
 
-.logframe-edit .pure-control-group span {
+.logframe-edit .pure-control-group span, .organization-edit .pure-control-group span  {
     font-size: 1rem;
 }
 
-.logframe-edit a.pure-button {
+.logframe-edit a.pure-button, .organization-edit a.pure-button {
     display: inline-block;
     margin-left: 1em;
     vertical-align: top;
 }
 
-.logframe-edit .form-submit {
+.logframe-edit .form-submit, .organization-edit .form-submit {
     display: block;
 }
