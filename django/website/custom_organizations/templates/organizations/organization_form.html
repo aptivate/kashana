@@ -1,5 +1,6 @@
 {% extends "organizations_base.html" %}
 {% load i18n %}
+{% load org_tags %}
 {% block organization_switching_form %}
 	{% if request.user and request.user.is_authenticated %}
 	<form id="organizations-switch" action="{% url "switch-organizations" %}" method="post">{% csrf_token %}
@@ -22,8 +23,10 @@
           <legend></legend>
        {% include "form_snippet.html" %}
       </fieldset>
-      {% if organization_list|length > 1 %} 
-       <a class="pure-button" href="{% url "organization_delete" form.instance.slug %}">{% trans "Delete" %}</a>
+      {% if organization_list|length > 1 %}
+        {% if form.instance|is_owner:request.user or request.user.is_superuser %} 
+            <a class="pure-button" href="{% url "organization_delete" form.instance.slug %}">{% trans "Delete" %}</a>
+        {% endif %}
       {% endif %}
        <input type="submit" class="form-submit pure-button" name="submit" value="{% trans "Save" %}" />
    </form>

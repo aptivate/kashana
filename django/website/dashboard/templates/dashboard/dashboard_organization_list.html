@@ -1,6 +1,7 @@
 {% extends "dashboard/dashboard_base.html" %}
 
 {% load i18n %}
+{% load org_tags %}
 
 {% block content %}
     <div class="dashboard">
@@ -10,7 +11,7 @@
 	    {% for organization in organization_list %}
 	        <li>
 	           <span class="organization-name">{{ organization.name }}</span>
-               {% if perms.organization.add_orgnaization %}
+               {% if perms.organization.add_orgnaization and organization|is_admin:request.user or request.user.is_superuser %}
                    <span class="edit-link"><a href="{% url "organization_edit" organization.slug %}">{% trans "Edit" %}</a></span>
                {% endif %}
 	        
