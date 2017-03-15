@@ -2,9 +2,10 @@
 from __future__ import unicode_literals
 from datetime import datetime
 
-import factory
-
 from django.contrib.auth.models import Group
+
+import factory
+from organizations.models import Organization, OrganizationUser
 
 from ..group_permissions import GroupPermissions
 from ..models import User
@@ -33,3 +34,17 @@ def ContactsManagerFactory():
     user = UserFactory()
     user.groups.add(group)
     return user
+
+
+class OrganizationFactory(factory.django.DjangoModelFactory):
+    FACTORY_FOR = Organization
+
+    name = factory.Sequence(lambda n: u"Ộrg Ꞑame {0}".format(n))
+    slug = factory.Sequence(lambda n: "org-name-{0}".format(n))
+
+
+class OrganizationUserFactory(factory.django.DjangoModelFactory):
+    FACTORY_FOR = OrganizationUser
+
+    organization = Organization.objects.get() if Organization.objects.exists() else OrganizationFactory()
+    user = ContactsManagerFactory()

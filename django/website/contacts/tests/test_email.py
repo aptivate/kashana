@@ -83,7 +83,7 @@ def test_new_contact_activation_email(rf):
     u = UserFactory()
     view = SendActivationEmailView()
     with mock.patch('contacts.views.activation.messages'):  # bypass messages
-        view.get(rf.get('/'), pk=u.id)
+        view.get(rf.get('/'), org_slug='test', pk=u.id)
         assert len(mail.outbox) == 1
         email = mail.outbox[0]
         assert email.to[0] == u.business_email

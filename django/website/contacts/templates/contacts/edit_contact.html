@@ -30,7 +30,7 @@
 								{% if request.path == '/contacts/personal/' %}
                 <a href="{% url "home" %}" class="pure-button">{% trans "Cancel" %}</a>
 								{% elif perms.contacts.add_user %}
-                <a href="{% url "contact_list" %}" class="pure-button">{% trans "Back to contact list" %}</a>
+                <a href="{% url "contact_list" request.user.preferences.last_viewed_organization.slug %}" class="pure-button">{% trans "Back to contact list" %}</a>
 								{% else %}
                 <a href="{% url "home" %}" class="pure-button">{% trans "Cancel" %}</a>
 								{% endif %}

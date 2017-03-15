@@ -59,7 +59,7 @@
             {% endif %}
             {% if request.user and request.user.is_authenticated %}
                 {% if perms.contacts.add_user %}
-            <div class="navigation-link" id="nav-people"><a href="{% url "contact_list" %}">{% trans "People" %}</a></div>
+            <div class="navigation-link" id="nav-people"><a href="{% url "contact_list" request.user.preferences.last_viewed_organization.slug %}">{% trans "People" %}</a></div>
                 {% endif %}
             {% endif %}
         </nav>

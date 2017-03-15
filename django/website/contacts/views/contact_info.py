@@ -9,12 +9,12 @@ from braces.views import LoginRequiredMixin, PermissionRequiredMixin
 from spreadsheetresponsemixin.views import SpreadsheetResponseMixin
 from django_tables2 import SingleTableMixin
 
-from contacts.models import User
-from contacts.forms import (
+from ..models import User
+from ..forms import (
     AddContactForm, UpdateContactForm, DeleteContactForm,
     UpdatePersonalInfoForm
 )
-from contacts.tables import UserTable
+from ..tables import UserTable
 
 
 class ListContacts(LoginRequiredMixin, PermissionRequiredMixin,
@@ -29,7 +29,7 @@ class ListContacts(LoginRequiredMixin, PermissionRequiredMixin,
     raise_exception = True
 
     def get_success_url(self):
-        return reverse('contact_list')
+        return reverse('contact_list', args=[self.kwargs['org_slug']])
 
     def get_context_data(self, **kwargs):
         context = super(ListContacts, self).get_context_data(**kwargs)
@@ -41,12 +41,12 @@ class ListContacts(LoginRequiredMixin, PermissionRequiredMixin,
     def get_queryset(self):
         if 'q' in self.request.GET:
             query = self.request.GET['q'].lower()
-            qs = self.model.objects
+            qs = self.model.objects.filter(organizations_organization__slug=self.kwargs['org_slug'])
             return qs.filter(Q(first_name__icontains=query) |
                              Q(last_name__icontains=query) |
                              Q(business_email__icontains=query))
         else:
-            return self.model.objects.all()
+            return self.model.objects.filter(organizations_organization__slug=self.kwargs['org_slug'])
 
 
 class ListContactsExport(SpreadsheetResponseMixin, ListContacts):
@@ -75,7 +75,7 @@ class AddContact(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     raise_exception = True
 
     def get_success_url(self):
-        return reverse('contact_update', args=(self.object.id,))
+        return reverse('contact_update', args=(self.kwargs['org_slug'], self.object.id,))
 
     def form_valid(self, form):
         self.object = form.save()
@@ -90,9 +90,9 @@ class UpdateContactBase(LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         if 'save-and-email' in self.request.POST:
-            url = reverse('contact_claim_account', args=(self.object.id,))
+            url = reverse('contact_claim_account', args=(self.kwargs['org_slug'], self.object.id,))
         else:
-            url = reverse('contact_update', args=(self.object.id,))
+            url = reverse('contact_update', args=(self.kwargs['org_slug'], self.object.id,))
         return url
 
 
@@ -133,4 +133,4 @@ class DeleteContact(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     raise_exception = True
 
     def get_success_url(self):
-        return reverse('contact_list')
+        return reverse('contact_list', args=[self.kwargs['org_slug']])

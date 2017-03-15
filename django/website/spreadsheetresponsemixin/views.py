@@ -47,7 +47,7 @@ class SpreadsheetResponseMixin(object):
         return data, headers
 
     def generate_data(self, queryset=None, fields=None):
-        if not queryset:
+        if queryset is None:
             try:
                 queryset = self.queryset
             except AttributeError:
@@ -130,7 +130,7 @@ class SpreadsheetResponseMixin(object):
                 ws.row_dimensions[r + rowoffset].height = max(row_heights) * DEFAULT_ROW_HEIGHT
 
         for c, max_width in max_widths.items():
-            dimension = ws.column_dimensions.values()[c-1]
+            dimension = ws.column_dimensions.values()[c - 1]
             width = max_widths[c]
 
             if width > MAX_WIDTH:

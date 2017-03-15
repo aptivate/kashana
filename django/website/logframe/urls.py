@@ -5,8 +5,8 @@ from .views import (
 
 logframe_management_patterns = [
     url(r'^create/', CreateLogframe.as_view(), name='create-logframe'),
-    url(r'^update/(?P<slug>[-a-zA-Z0-9_]+)/$', EditLogframe.as_view(), name='update-logframe'),
-    url(r'^delete/(?P<slug>[-a-zA-Z0-9_]+)/$', DeleteLogframe.as_view(), name='delete-logframe'),
+    url(r'^update/(?P<slug>[\w\d_-]+)/$', EditLogframe.as_view(), name='update-logframe'),
+    url(r'^delete/(?P<slug>[\w\d_-]+)/$', DeleteLogframe.as_view(), name='delete-logframe'),
 ]
 
 urlpatterns = [

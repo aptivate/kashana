@@ -10,10 +10,10 @@
     <form action="" method="get" class="move-right">
         <input type="search" name="q" {% if query %}value="{{ query }}" {% endif %}placeholder="{% trans "Search by name or email" %}" />
         <button class="pure-button pure-button-xsmall pure-button-primary">{% trans "Search" %}</button>
-        <a href="{% url "contact_list" %}">{% trans "Show all" %}</a>
+        <a href="{% url "contact_list" request.user.preferences.last_viewed_organization.slug %}">{% trans "Show all" %}</a>
     </form>
     <p><a href="{% url "contact_add" %}">{% trans "Add a contact" %}</a></p>
     {% render_table table %}
-		<p>{% trans "Export as" %} <a href="{% url "contact_list_excel" %}">excel (xlsx)</a>, <a href="{% url "contact_list_csv" %}">csv</a></p>
+		<p>{% trans "Export as" %} <a href="{% url "contact_list_excel" request.user.preferences.last_viewed_organization.slug %}">excel (xlsx)</a>, <a href="{% url "contact_list_csv" %}">csv</a></p>
     {% endif %}
 {% endblock %}
