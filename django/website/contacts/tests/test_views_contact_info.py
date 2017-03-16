@@ -32,6 +32,7 @@ from .factories import (
     OrganizationFactory,
 )
 from django_dynamic_fixture import G
+from mock import patch
 
 
 class BracesMixinTests(TestCase):
@@ -158,17 +159,32 @@ class AddContactTests(TestCase):
         self.assertEqual(self.view.permission_required, 'contacts.add_user')
         self.assertTrue(self.view.raise_exception)
 
-    def test_form_valid_calls_save_on_form(self):
+    @patch('contacts.views.contact_info.Organization.objects')
+    def test_form_valid_calls_save_on_form(self, organizations):
         self.view.form_valid(self.form)
         self.form.save.assert_called_with()
 
-    def test_form_valid_calls_save_on_object(self):
+    @patch('contacts.views.contact_info.Organization.objects')
+    def test_form_valid_calls_save_on_object(self, organizations):
         self.view.form_valid(self.form)
         self.view.object.save.assert_called_with()
 
-    def test_form_valid_sets_an_unusable_password(self):
+    @patch('contacts.views.contact_info.Organization.objects')
+    def test_form_valid_sets_an_unusable_password(self, organizations):
         self.view.form_valid(self.form)
         self.view.object.set_unusable_password.assert_called_once_with()
+
+    @patch('contacts.views.contact_info.Organization.objects')
+    def test_organization_added_to_contact_on_saving(self, organizations):
+        user = mock.Mock(id=1)
+        organization = mock.Mock()
+        organizations.get = mock.Mock(return_value=organization)
+        self.view.add_user_to_organization = mock.Mock()
+        self.view.request = RequestFactory().get('/')
+        self.view.request.user = user
+        self.form.save = mock.Mock(return_value=user)
+        self.view.form_valid(self.form)
+        self.view.add_user_to_organization.assert_called_with(user=user, organization=organization)
 
 
 class DeleteContactTests(TestCase):
@@ -245,6 +261,8 @@ def test_no_search_term_results_in_empty_query_in_context(rf):
 
 
 def create_contact_list():
+    # Orgnaizations slugs are set this way because, for some reason, doing it
+    # other ways results in tests failing.
     org = Organization.objects.get() if Organization.objects.exists() else OrganizationFactory()
     org.slug = 'test'
     org.save()

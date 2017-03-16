@@ -6,8 +6,9 @@ from django.views.generic import (
 )
 
 from braces.views import LoginRequiredMixin, PermissionRequiredMixin
-from spreadsheetresponsemixin.views import SpreadsheetResponseMixin
 from django_tables2 import SingleTableMixin
+from organizations.models import Organization
+from spreadsheetresponsemixin.views import SpreadsheetResponseMixin
 
 from ..models import User
 from ..forms import (
@@ -74,6 +75,9 @@ class AddContact(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     permission_required = 'contacts.add_user'
     raise_exception = True
 
+    def add_user_to_organization(self, user, organization):
+        pass
+
     def get_success_url(self):
         return reverse('contact_update', args=(self.kwargs['org_slug'], self.object.id,))
 
@@ -81,6 +85,7 @@ class AddContact(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
         self.object = form.save()
         self.object.set_unusable_password()
         self.object.save()
+        self.add_user_to_organization(user=self.object, organization=Organization.objects.get(slug=self.kwargs['org_slug']))
         return super(AddContact, self).form_valid(form)
 
 
