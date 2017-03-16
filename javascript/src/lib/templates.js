@@ -227,15 +227,10 @@ this["Aptivate"]["data"]["templates"] = this["Aptivate"]["data"]["templates"] ||
 this["Aptivate"]["data"]["templates"]["delete-result"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  var buffer = "", stack1, helper, functionType="function", escapeExpression=this.escapeExpression;
+  
 
 
-  buffer += "<button id=\"delete-result\">Delete ";
-  if (helper = helpers.object_name) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.object_name); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
-  buffer += escapeExpression(stack1)
-    + "</button>\n";
-  return buffer;
+  return "<button id=\"delete-result\">Delete</button>\n";
   });;
 this["Aptivate"] = this["Aptivate"] || {};
 this["Aptivate"]["data"] = this["Aptivate"]["data"] || {};
