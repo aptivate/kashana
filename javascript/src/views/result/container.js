@@ -91,6 +91,7 @@ define([
                 var object_name = this.model.get('name') || "object";
 
                 return new DeleteResult({
+                    model: this.model,
                     className: "delete-button",
                     object_name: object_name
                 });
