@@ -18,7 +18,7 @@
 	        {% if organization.logframe_set.exists %}
 	            <div class="logframe-details">
 		            <ul class="logframe-list">
-		            {% for logframe in logframe_list %}
+		            {% for logframe in organization.logframe_set.all %}
 		                <li><span class="logframe-link"><a href="{% url "logframe-dashboard" logframe.organization.slug logframe.slug %}">{{ logframe.name }}</a></span>
 		                {% if perms.logframe.add_logframe %}
 		                    <span class="edit-link"><a href="{% url "update-logframe" logframe.slug %}">{% trans "Edit" %}</a></span>
@@ -27,9 +27,9 @@
 		            {% endfor %}
                     </ul>
 	            </div>
-                {% if perms.logframe.add_logframe %}<div class="create-logframe"><a class="pure-button" href="{% url "create-logframe" %}">{% blocktrans with organization.name as org_name %}Create a new Logframe for {{ org_name }}{% endblocktrans %}</a></div>{% endif %}
-	        </li>
 	        {% endif %}
+            {% if perms.logframe.add_logframe %}<div class="create-logframe"><a class="pure-button" href="{% url "create-logframe" organization.slug %}">{% blocktrans with organization.name as org_name %}Create a new Logframe for {{ org_name }}{% endblocktrans %}</a></div>{% endif %}
+	        </li>
 	    {% endfor %}
 	   </ul>
 	   </div>

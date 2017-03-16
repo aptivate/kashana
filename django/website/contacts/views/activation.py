@@ -63,7 +63,7 @@ class ActivationEmailsView(RedirectView):
 
 class SendActivationEmailView(ActivationEmailsView):
     def get_redirect_url(self, **kwargs):
-        return reverse("contact_update", args=[self.org_slug, self.pk])
+        return reverse("contact_update", args=[self.pk])
 
     def get_subject(self):
         return "Please activate your {0} account".format(settings.SITE_NAME)
@@ -90,5 +90,4 @@ class SendActivationEmailView(ActivationEmailsView):
 
     def send_emails(self, request, **kwargs):
         self.pk = int(kwargs['pk'])
-        self.org_slug = kwargs['org_slug']
         self.send_email(request, self.pk)

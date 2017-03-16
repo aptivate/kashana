@@ -12,7 +12,9 @@ from ..models import User
 
 
 class UserFactory(factory.django.DjangoModelFactory):
-    FACTORY_FOR = User
+    class Meta:
+        model = User
+        abstract = False
 
     # must be unique so we specify and increase
     business_email = factory.Sequence(lambda n: "email%d@test.com" % n)
@@ -37,14 +39,30 @@ def ContactsManagerFactory():
 
 
 class OrganizationFactory(factory.django.DjangoModelFactory):
-    FACTORY_FOR = Organization
+    class Meta:
+        model = Organization
+        abstract = False
 
     name = factory.Sequence(lambda n: u"Ộrg Ꞑame {0}".format(n))
     slug = factory.Sequence(lambda n: "org-name-{0}".format(n))
 
 
 class OrganizationUserFactory(factory.django.DjangoModelFactory):
-    FACTORY_FOR = OrganizationUser
+    class Meta:
+        model = OrganizationUser
+        abstract = False
 
-    organization = Organization.objects.get() if Organization.objects.exists() else OrganizationFactory()
-    user = ContactsManagerFactory()
+    user = factory.SubFactory(UserFactory)
+
+    @classmethod
+    def _generate(cls, create, attrs):
+        org_slug = attrs.pop('org_slug', False)
+        organization = Organization.objects.first() if Organization.objects.exists() else OrganizationFactory()
+        if org_slug:
+            organization.slug = org_slug
+            organization.save()
+        if attrs is None:
+            attrs = {}
+        if 'organization' not in attrs:
+            attrs['organization'] = organization
+        return super(OrganizationUserFactory, cls)._generate(create, attrs)

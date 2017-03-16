@@ -33,7 +33,7 @@ class SwitchLogframes(LoginRequiredMixin, RedirectView):
             response = self.get(request, org_slug=self.object.organization.slug, slug=self.object.slug)
         except LogFrame.DoesNotExist:
             self.pattern_name = 'create-logframe'
-            response = self.get(request)
+            response = self.get(request, self.kwargs['org_slug'])
         return response
 
 

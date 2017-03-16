@@ -76,10 +76,10 @@ class AddContact(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     raise_exception = True
 
     def add_user_to_organization(self, user, organization):
-        pass
+        organization.add_user(user)
 
     def get_success_url(self):
-        return reverse('contact_update', args=(self.kwargs['org_slug'], self.object.id,))
+        return reverse('contact_update', args=(self.object.id,))
 
     def form_valid(self, form):
         self.object = form.save()
@@ -95,9 +95,9 @@ class UpdateContactBase(LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         if 'save-and-email' in self.request.POST:
-            url = reverse('contact_claim_account', args=(self.kwargs['org_slug'], self.object.id,))
+            url = reverse('contact_claim_account', args=(self.object.id,))
         else:
-            url = reverse('contact_update', args=(self.kwargs['org_slug'], self.object.id,))
+            url = reverse('contact_update', args=(self.object.id,))
         return url
 
 

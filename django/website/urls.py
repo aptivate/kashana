@@ -22,6 +22,7 @@ urlpatterns = [
     url(r'^orgs/invitations/', include(InvitationBackend().get_urls())),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^api/', include(api.urls)),
+    url(r'^contacts/', include('contacts.org_independent_urls')),
     url(r'^(?P<org_slug>[\w\d_-]+)/contacts/', include('contacts.urls')),
     url(r'^export/', include('export.urls')),
     url(r'', include(logframe.urls)),

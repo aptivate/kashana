@@ -30,6 +30,7 @@ def test_instance_slug_set_when_creating_logframe():
     request = RequestFactory().post('/', {'name': 'Test Name'})
     create_logframe_view = CreateLogframe()
     create_logframe_view.request = request
+    create_logframe_view.kwargs = {'org_slug': logframe.organization.slug}
 
     form_class = create_logframe_view.get_form_class()
     form = create_logframe_view.get_form(form_class)
@@ -53,6 +54,7 @@ def test_settings_created_along_with_logframe():
     request = RequestFactory().post('/', {'name': 'Test Name'})
     create_logframe_view = CreateLogframe()
     create_logframe_view.request = request
+    create_logframe_view.kwargs = {'org_slug': logframe.organization.slug}
 
     form_class = create_logframe_view.get_form_class()
     form = create_logframe_view.get_form(form_class)
@@ -65,3 +67,23 @@ def test_settings_created_along_with_logframe():
     except Settings.DoesNotExist:
         pytest.fail("Settings should have been created for this logframe")
 
+
+@pytest.mark.django_db
+def test_logframe_created_with_organization():
+    logframe = LogFrame(name='Test Name', slug='')
+    organization = G(Organization)
+    organization.slug = 'test'
+    organization.save()
+
+    request = RequestFactory().post('/', {'name': 'Test Name'})
+    create_logframe_view = CreateLogframe()
+    create_logframe_view.request = request
+    create_logframe_view.kwargs = {'org_slug': 'test'}
+
+    form_class = create_logframe_view.get_form_class()
+    form = create_logframe_view.get_form(form_class)
+    form.instance = logframe
+
+    create_logframe_view.form_valid(form)
+    logframe = LogFrame.objects.get(name='Test Name')
+    assert logframe.organization.slug == 'test'

@@ -10,6 +10,7 @@ from .models import (
     Assumption, Indicator, LogFrame, Milestone, Result, RiskRating,
     SubIndicator, Target
 )
+from organizations.models import Organization
 
 
 class ResultEditor(LoginRequiredMixin, AptivateDataBaseMixin, DetailView):
@@ -81,6 +82,7 @@ class CreateLogframe(ManageLogFrame, CreateView):
     def form_valid(self, form):
         # The logframe needs to exist before we create the settings, so finish
         # the regular form_valid code.
+        form.instance.organization = Organization.objects.get(slug=self.kwargs['org_slug'])
         response = CreateView.form_valid(self, form)
         Settings.objects.create(logframe=form.instance)
         return response

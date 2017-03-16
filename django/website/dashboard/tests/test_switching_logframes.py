@@ -42,8 +42,8 @@ def test_switch_logframe_with_invalid_id_redirects_to_create_logframe_view():
     request.user = mock.Mock()
     request.session = {}
 
-    response = SwitchLogframes.as_view()(request)
-    assert reverse('create-logframe') == response['Location']
+    response = SwitchLogframes.as_view()(request, org_slug='test')
+    assert reverse('create-logframe', args=['test']) == response['Location']
 
 
 @mock.patch('dashboard.views.LogFrame.objects.get', new=mock.Mock(return_value=mock.Mock(spec=LogFrame, slug='test', organization=mock.Mock(spec=Organization, slug='test-org'))))
