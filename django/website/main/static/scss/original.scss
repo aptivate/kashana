@@ -71,16 +71,20 @@ a.pure-button {
  * HEADER
  *
  *********************************************************************/
+$header-height: 87px;
+
 .body > header {
+    height: $header-height;
     width:100%;
     float:left;
     padding:0;
 }
 
-$header-height: 87px;
-
 .main-navigation {
-    margin-top: -$header-height;
+    top: -$header-height;
+    position: relative;
+    width: 100%;
+    height: $header-height;
 }
 
 .logo,
@@ -105,25 +109,27 @@ $header-height: 87px;
     font-size: 0.9em;
 }
 
-    .logo {
-        display: inline-block;
-        font-size:2em;
+.logo {
+    position: relative;
+    display: inline-block;
+    font-size:2em;
+    padding: 10px;
+    margin: 0;
+    color: $text-background;
+    text-align:center;
+    width:100%;
+
+    > a {
+        position: relative;
         z-index: 2;
-        padding: 10px;
-        margin: 0;
-        color: $text-background;
-        text-align:center;
-        width:100%;
+        color: $white;
+        font-weight: bold;
 
-        > a {
-            color: $white;
-            font-weight: bold;
-
-            > img {
-                vertical-align:middle;
-            }
+        > img {
+            vertical-align:middle;
         }
     }
+}
 
 .site-name {
     padding-left:0.5em;
