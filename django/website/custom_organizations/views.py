@@ -16,7 +16,7 @@ class OrganizationCreate(PermissionRequiredMixin, BaseOrganizationCreate):
     permission_required = 'organizations.add_organization'
 
     def get_success_url(self):
-        reverse('dashboard')
+        return reverse('dashboard')
 
     def form_valid(self, form):
         response = BaseOrganizationCreate.form_valid(self, form)
@@ -30,4 +30,15 @@ class OrganizationEdit(LoginRequiredMixin, GetOrgBySlugMixin, OrganizationUpdate
 
 
 class OrganizationDelete(LoginRequiredMixin, GetOrgBySlugMixin, BaseOrganizationDelete):
-    pass
+    def get_success_url(self):
+        return reverse('dashboard')
+
+    def delete(self, request, *args, **kwargs):
+        response = BaseOrganizationDelete.delete(self, request, *args, **kwargs)
+
+        user_preferences = self.request.user.preferences
+        if self.object == user_preferences.last_viewed_organization:
+            user_preferences.last_viewed_organization = None
+            user_preferences.save()
+
+        return response
