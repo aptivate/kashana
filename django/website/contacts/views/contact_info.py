@@ -6,15 +6,16 @@ from django.views.generic import (
 )
 
 from braces.views import LoginRequiredMixin, PermissionRequiredMixin
-from spreadsheetresponsemixin.views import SpreadsheetResponseMixin
 from django_tables2 import SingleTableMixin
+from organizations.models import Organization
+from spreadsheetresponsemixin.views import SpreadsheetResponseMixin
 
-from contacts.models import User
-from contacts.forms import (
+from ..models import User
+from ..forms import (
     AddContactForm, UpdateContactForm, DeleteContactForm,
     UpdatePersonalInfoForm
 )
-from contacts.tables import UserTable
+from ..tables import UserTable
 
 
 class ListContacts(LoginRequiredMixin, PermissionRequiredMixin,
@@ -29,7 +30,7 @@ class ListContacts(LoginRequiredMixin, PermissionRequiredMixin,
     raise_exception = True
 
     def get_success_url(self):
-        return reverse('contact_list')
+        return reverse('contact_list', args=[self.kwargs['org_slug']])
 
     def get_context_data(self, **kwargs):
         context = super(ListContacts, self).get_context_data(**kwargs)
@@ -41,12 +42,12 @@ class ListContacts(LoginRequiredMixin, PermissionRequiredMixin,
     def get_queryset(self):
         if 'q' in self.request.GET:
             query = self.request.GET['q'].lower()
-            qs = self.model.objects
+            qs = self.model.objects.filter(organizations_organization__slug=self.kwargs['org_slug'])
             return qs.filter(Q(first_name__icontains=query) |
                              Q(last_name__icontains=query) |
                              Q(business_email__icontains=query))
         else:
-            return self.model.objects.all()
+            return self.model.objects.filter(organizations_organization__slug=self.kwargs['org_slug'])
 
 
 class ListContactsExport(SpreadsheetResponseMixin, ListContacts):
@@ -74,6 +75,9 @@ class AddContact(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     permission_required = 'contacts.add_user'
     raise_exception = True
 
+    def add_user_to_organization(self, user, organization):
+        organization.add_user(user)
+
     def get_success_url(self):
         return reverse('contact_update', args=(self.object.id,))
 
@@ -81,6 +85,7 @@ class AddContact(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
         self.object = form.save()
         self.object.set_unusable_password()
         self.object.save()
+        self.add_user_to_organization(user=self.object, organization=Organization.objects.get(slug=self.kwargs['org_slug']))
         return super(AddContact, self).form_valid(form)
 
 
@@ -133,4 +138,4 @@ class DeleteContact(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     raise_exception = True
 
     def get_success_url(self):
-        return reverse('contact_list')
+        return reverse('contact_list', args=[self.kwargs['org_slug']])

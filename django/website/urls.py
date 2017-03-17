@@ -7,6 +7,8 @@ from django.conf import settings
 from django.contrib import admin
 admin.autodiscover()
 
+from custom_organizations.backends.invitation_backend import InvitationBackend
+
 import logframe.urls
 import api.urls
 
@@ -15,9 +17,13 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^accounts/', include('contacts.auth_urls')),
     url(r'^accounts/sign-up/', include('registration.backends.default.urls')),
+    url(r'^orgs/', include('custom_organizations.urls')),
+    url(r'^orgs/', include('organizations.urls')),
+    url(r'^orgs/invitations/', include(InvitationBackend().get_urls())),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^api/', include(api.urls)),
-    url(r'^contacts/', include('contacts.urls')),
+    url(r'^contacts/', include('contacts.org_independent_urls')),
+    url(r'^(?P<org_slug>[\w\d_-]+)/contacts/', include('contacts.urls')),
     url(r'^export/', include('export.urls')),
     url(r'', include(logframe.urls)),
 

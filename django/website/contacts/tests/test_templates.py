@@ -5,6 +5,7 @@ import pytest
 from contacts.views import UpdateContact
 
 from .factories import UserFactory, ContactsManagerFactory
+from organizations.models import Organization
 
 
 @pytest.mark.integration
@@ -14,6 +15,7 @@ def test_activation_email_link_is_rendered_if_contact_has_not_set_password(rf):
     view = UpdateContact.as_view()
     contact_for_editing = UserFactory()
     request_user = ContactsManagerFactory()
+    request_user.preferences.last_viewed_organization = Organization(slug='test')
     request = rf.get('/')
     request.user = request_user
     response = view(request, pk=contact_for_editing.id)
@@ -33,6 +35,7 @@ def test_activation_email_link_is_not_rendered_if_contact_has_set_password(rf):
     contact_for_editing.set_password('åρｒｏｐｅｒρäѕｓɰòｒｄ')
     contact_for_editing.save()
     request_user = ContactsManagerFactory()
+    request_user.preferences.last_viewed_organization = Organization(slug='test')
     request = rf.get('/')
     request.user = request_user
     response = view(request, pk=contact_for_editing.id)

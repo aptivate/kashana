@@ -119,6 +119,7 @@ TEMPLATES = [{
             'django.template.context_processors.static',
             'django.contrib.messages.context_processors.messages',
             'main.context_processors.logframe_list',
+            'main.context_processors.organization_list',
             'main.context_processors.deploy_env',
         ],
         'debug': DEBUG,
@@ -143,6 +144,7 @@ SITE_NAME = 'Kashana'
 SITE_LOGO = '{0}images/kashana-logo.png'.format(STATIC_URL)
 INCLUDE_REGISTER_URL = True
 REGISTRATION_FORM = 'contacts.forms.RegistrationForm'
+INVITATION_BACKEND = 'custom_organizations.backends.InvitationBackend'
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -172,6 +174,10 @@ INSTALLED_APPS = (
     'appconf',
     'export',
     'registration',
+    'custom_organizations',
+
+    # apps that, for various reasons, need to come last on the list
+    'organizations',
 )
 
 ACCOUNT_ACTIVATION_DAYS = 7
@@ -221,6 +227,7 @@ JSTEMPLATE_DIRS = [
 ]
 
 # Project Specific Settings
+DEFAULT_ORGANIZATION_NAME = "Kashana"
 DEFAULT_LOGFRAME_NAME = "Log Frame"
 DEFAULT_LOGFRAME_SLUG = "log_frame"
 

@@ -8,7 +8,7 @@ from .api import (
     SettingsSerializer,
     create_serializer
 )
-from .models import Period, Rating, ResultLevelName 
+from .models import Period, Rating, ResultLevelName
 
 
 class QuerysetSerializer(object):
@@ -71,7 +71,7 @@ class AptivateDataBaseMixin(QuerysetSerializer):
             'results': self._json_object_list(logframe.results,
                                               ResultSerializer),
             'users': [{"id": u.id, "name": u.get_full_name()}
-                      for u in User.objects.all()],
+                      for u in User.objects.filter(organizations_organization=logframe.organization)],
             'periods': self.get_periods(logframe),
             'conf': self.get_settings(logframe),
             'is_editable': self.is_editable()

@@ -110,7 +110,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 class UserPreferences(Model):
     user = OneToOneField(User, related_name='_preferences')
     last_viewed_logframe = ForeignKey('logframe.LogFrame', null=True)
-
+    last_viewed_organization = ForeignKey('organizations.Organization', null=True)
 
 @python_2_unicode_compatible
 class NameOnlyPermission(Permission):

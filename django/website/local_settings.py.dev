@@ -5,13 +5,13 @@ DEBUG = True
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',  # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'kashana',                      # Or path to database file if using sqlite3.
-        'USER': 'kashana',                      # Not used with sqlite3.
-        'PASSWORD': private_settings.DB_PASSWORD,                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+        'NAME': 'kashana',  # Or path to database file if using sqlite3.
+        'USER': 'kashana',  # Not used with sqlite3.
+        'PASSWORD': private_settings.DB_PASSWORD,  # Not used with sqlite3.
+        'HOST': '',  # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '',  # Set to empty string for default. Not used with sqlite3.
         'OPTIONS': {
-            "init_command": "SET storage_engine=INNODB",
+            "init_command": "SET default_storage_engine=INNODB",
         },
         'TEST': {
             'CHARSET': "utf8",
@@ -23,7 +23,7 @@ EMAIL_HOST = 'localhost'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 try:
-    #import debug_toolbar
+    # import debug_toolbar
     # DON'T inttall django debug toolbar' it breaks the javascript app.
     # EXTRA_INSTALLED_APPS = ('debug_toolbar',)
     # EXTRA_MIDDLEWARE_CLASSES = ('debug_toolbar.middleware.DebugToolbarMiddleware',)

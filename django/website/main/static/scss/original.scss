@@ -81,7 +81,6 @@ $header-height: 87px;
 }
 
 .main-navigation {
-    top: -$header-height;
     position: relative;
     width: 100%;
     height: $header-height;
@@ -89,6 +88,7 @@ $header-height: 87px;
 
 .logo,
 #logframes-switch,
+#organizations-switch,
 .navigation-link,
 .account-links-auth,
 .account-links-profile
@@ -117,16 +117,23 @@ $header-height: 87px;
     margin: 0;
     color: $text-background;
     text-align:center;
-    width:100%;
 
     > a {
         position: relative;
         z-index: 2;
-        color: $white;
-        font-weight: bold;
+        padding: 10px;
+        margin: 0;
+        color: $text-background;
+        text-align:center;
+        width:15%;
 
-        > img {
-            vertical-align:middle;
+        > a {
+            color: $white;
+            font-weight: bold;
+
+            > img {
+                vertical-align:middle;
+            }
         }
     }
 }
@@ -155,7 +162,8 @@ $header-height: 87px;
 .account-links-profile,
 .account-links-auth,
 .navigation-link,
-.add-logframe
+.add-logframe,
+.add-organization
  {
     position: relative;
     display: inline-block;
@@ -163,8 +171,9 @@ $header-height: 87px;
 
     .account-links-profile,
     .account-links-auth,
-    .navigation-link,
-    .add-logframe {
+    .navigation-link, 
+    .add-logframe,
+    .add-organization {
         padding: 1.5em;
         font-size:0.9em;
         color: $white;
@@ -173,7 +182,8 @@ $header-height: 87px;
     .account-links-profile > span,
     .account-links-auth > a,
     .navigation-link > a,
-    .add-logframe > a {
+    .add-logframe > a,
+    .add-organization a {
         font-size:1.2em;
         color: $white;
     }

@@ -3,12 +3,16 @@ from random import randint
 
 from django.core.files.base import ContentFile
 from django.core.urlresolvers import reverse
+from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.test.client import RequestFactory
 from django_tables2 import SingleTableMixin
 
 from braces.views import LoginRequiredMixin, PermissionRequiredMixin
+from django_dynamic_fixture import G
 import mock
+from mock import patch
+from organizations.models import OrganizationUser, Organization
 import openpyxl
 import pytest
 
@@ -25,7 +29,14 @@ from ..forms import (
     AddContactForm,
     UpdatePersonalInfoForm,
 )
-from .factories import UserFactory, ContactsManagerFactory
+from .factories import (
+    UserFactory,
+    ContactsManagerFactory,
+    OrganizationFactory,
+    OrganizationUserFactory,
+)
+
+User = get_user_model()
 
 
 class BracesMixinTests(TestCase):
@@ -57,8 +68,8 @@ class SuccessUrlTests(TestCase):
         views_with_contact_list_success_url = [ListContacts,
                                                DeleteContact]
         for view in views_with_contact_list_success_url:
-            self.assertEqual(view().get_success_url(),
-                             reverse('contact_list'),
+            self.assertEqual(view(kwargs={'org_slug': 'test'}).get_success_url(),
+                             reverse('contact_list', args=['test']),
                              "%s does not have contact_list as success_url"
                              % view)
 
@@ -96,6 +107,12 @@ class ListContactsTests(TestCase):
         self.request.user = self.user
         self.view = ListContacts.as_view()
 
+        self.organization = G(Organization)
+        self.organization.slug = 'test'
+        self.organization.save()
+
+        self.view.kwargs = {'org_slug': self.organization.slug}
+
     def test_has_singletablemixin(self):
         self.assertIsInstance(ListContacts(), SingleTableMixin)
 
@@ -105,25 +122,29 @@ class ListContactsTests(TestCase):
         # today - Aug 22)?
         UserFactory(password='bob')
         UserFactory()
-        response = self.view(self.request)
+        response = self.view(self.request, org_slug='test')
         # Expect 2 with no password (one from setup, one from this test)
         self.assertEqual(response.context_data['num_notactive'], 2)
 
     def test_get_queryset_returns_a_subset_from_first_name_search(self):
         searched_user = UserFactory(first_name="searchterm")
-        response = self.view(self.request)
+        G(OrganizationUser, user=searched_user, organization=self.organization)
+        response = self.view(self.request, org_slug='test')
         self.assertListEqual(list(response.context_data['object_list']),
                              [searched_user])
 
     def test_get_queryset_returns_a_subset_from_last_name_search(self):
         searched_user = UserFactory(last_name="searchterm")
-        response = self.view(self.request)
+        G(OrganizationUser, user=searched_user, organization=self.organization)
+        response = self.view(self.request, org_slug='test')
         self.assertListEqual(list(response.context_data['object_list']),
                              [searched_user])
 
     def test_get_queryset_returns_a_subset_from_business_email_search(self):
         searched_user = UserFactory(business_email="searchterm")
-        response = self.view(self.request)
+        OrganizationUserFactory(user=searched_user, organization=self.organization)
+
+        response = self.view(self.request, org_slug='test')
         self.assertListEqual(list(response.context_data['object_list']),
                              [searched_user])
 
@@ -132,6 +153,7 @@ class AddContactTests(TestCase):
 
     def setUp(self):
         self.view = AddContact()
+        self.view.kwargs = {'org_slug': 'test'}
         self.form = mock.Mock(spec=AddContactForm)
         self.form.save = mock.Mock(return_value=mock.Mock(id=1))
         self.form.cleaned_data = {}
@@ -140,17 +162,54 @@ class AddContactTests(TestCase):
         self.assertEqual(self.view.permission_required, 'contacts.add_user')
         self.assertTrue(self.view.raise_exception)
 
-    def test_form_valid_calls_save_on_form(self):
+    @patch('contacts.views.contact_info.Organization.objects')
+    def test_form_valid_calls_save_on_form(self, organizations):
         self.view.form_valid(self.form)
         self.form.save.assert_called_with()
 
-    def test_form_valid_calls_save_on_object(self):
+    @patch('contacts.views.contact_info.Organization.objects')
+    def test_form_valid_calls_save_on_object(self, organizations):
         self.view.form_valid(self.form)
         self.view.object.save.assert_called_with()
 
-    def test_form_valid_sets_an_unusable_password(self):
+    @patch('contacts.views.contact_info.Organization.objects')
+    def test_form_valid_sets_an_unusable_password(self, organizations):
         self.view.form_valid(self.form)
         self.view.object.set_unusable_password.assert_called_once_with()
+
+    @patch('contacts.views.contact_info.Organization.objects')
+    def test_organization_added_to_contact_on_saving(self, organizations):
+        user = mock.Mock(id=1)
+        organization = mock.Mock()
+        organizations.get = mock.Mock(return_value=organization)
+        self.view.add_user_to_organization = mock.Mock()
+        self.view.request = RequestFactory().get('/')
+        self.view.request.user = user
+        self.form.save = mock.Mock(return_value=user)
+        self.view.form_valid(self.form)
+        self.view.add_user_to_organization.assert_called_with(user=user, organization=organization)
+
+    @pytest.mark.integration
+    @pytest.mark.django_db
+    def test_view_adds_new_user_to_organization(self):
+        post_data = {
+            'first_name': 'Atest',
+            'last_name': 'User',
+            'business_email': 'atestuser@example.com'
+        }
+        request = RequestFactory().post('/test/contacts/', post_data)
+        request.user = UserFactory()
+        organization = OrganizationFactory()
+        organization.slug = 'test'
+        organization.save()
+
+        self.view.kwargs = {'org_slug': 'test'}
+        self.view.request = request
+
+        self.view.post(request)
+
+        new_user = User.objects.get(business_email='atestuser@example.com')
+        assert new_user in organization.users.all()
 
 
 class DeleteContactTests(TestCase):
@@ -169,8 +228,7 @@ class UpdateContactTests(TestCase):
 
     def test_form_valid_redirects_to_claim_url_if_save_and_email(self):
         view = UpdateContact()
-        view.request = RequestFactory().post('/')
-        view.request.POST.update({'save-and-email': ''})
+        view.request = RequestFactory().post('/', {'save-and-email': ''})
         view.object = mock.Mock(id=3)
         assert view.get_success_url() == reverse('contact_claim_account', args=(3,))
 
@@ -227,7 +285,9 @@ def test_no_search_term_results_in_empty_query_in_context(rf):
 
 
 def create_contact_list():
-    return [ContactsManagerFactory() for _ in range(3)]
+    # Orgnaizations slugs are set this way because, for some reason, doing it
+    # other ways results in tests failing.
+    return [OrganizationUserFactory(org_slug='test').user for _ in range(3)]
 
 
 @pytest.mark.django_db
@@ -238,6 +298,7 @@ def test_contacts_list_csv_export():
 
     view = ListContactsExport()
     view.request = request
+    view.kwargs = {'org_slug': 'test'}
 
     expected_text_lines = [
         u'Business Email,First Name,Last Name\r\n',
@@ -264,6 +325,7 @@ def test_contacts_list_excel_export():
 
     view = ListContactsExport()
     view.request = request
+    view.kwargs = {'org_slug': 'test'}
 
     expected_text_lines = [
         u'Business Email,First Name,Last Name\r\n',
@@ -295,6 +357,8 @@ def test_contacts_list_excel_export():
 
 def test_update_contact_view_with_valid_form_saves_object():
     view = UpdateContact()
+    view.request = RequestFactory().post('/', {})
+    view.kwargs = {'org_slug': 'test'}
     view.object = mock.Mock(save=mock.Mock())
     view.form_valid(mock.Mock(save=lambda: mock.Mock(id=randint(1, 100))))
 
@@ -304,6 +368,7 @@ def test_update_contact_view_with_valid_form_saves_object():
 def test_update_contact_view_with_valid_form_redirects_to_self():
     CONTACT_ID = 1
     view = UpdateContact()
+    view.request = RequestFactory().post('/', {})
     view.object = mock.Mock(save=mock.Mock())
     response = view.form_valid(mock.Mock(save=lambda: mock.Mock(id=CONTACT_ID)))
 

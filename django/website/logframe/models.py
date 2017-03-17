@@ -2,13 +2,17 @@ from __future__ import unicode_literals
 
 from datetime import date, timedelta
 from django.db import models
-from django.utils.text import slugify
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.functional import cached_property
+from django.utils.text import slugify
+
+from organizations.models import Organization
+from uuslug import uuslug
 
 from contacts.models import User
+
 
 # http://djangosnippets.org/snippets/1054/
 
@@ -57,6 +61,7 @@ class LogFrame(AverageTargetPercentMixin, models.Model):
         "A 'slug' can consist of letters, numbers, underscores or hyphens and "
         "can be up to 50 characters long."
     ))
+    organization = models.ForeignKey(Organization)
 
     def average_target_percent(self):
         return self._calculate_weighted_target_percent(self.output_set.all())
@@ -84,24 +89,10 @@ class LogFrame(AverageTargetPercentMixin, models.Model):
         """
         return Assumption.objects.filter(result__log_frame=self)
 
-    def get_unique_slug_name(self):
-        count = LogFrame.objects.filter(slug__startswith=self.slug[:46]).count()
-
-        max_length = LogFrame._meta.get_field('slug').max_length
-        base_slug = slugify(self.name)
-        slug = base_slug[:max_length]
-
-        while LogFrame.objects.filter(slug=slug).exists():
-            # Based on https://keyerror.com/blog/automatically-generating-unique-slugs-in-django at 03/03/2017
-            count += 1
-            slug = '{0}{1:d}'.format(base_slug[:max_length - len(unicode(count))], count)
-
-        return slug
-
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
         if not self.pk:
-            self.slug = self.get_unique_slug_name()
+            self.slug = uuslug(self.name, self)
         super(LogFrame, self).save(force_insert, force_update, using, update_fields)
 
     def __str__(self):

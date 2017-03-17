@@ -1,0 +1,39 @@
+{% extends "dashboard/dashboard_base.html" %}
+
+{% load i18n %}
+{% load org_tags %}
+
+{% block content %}
+    <div class="dashboard">
+	    <h2>{% trans "Organizations that you are a member of" %}</h2>
+   	    <div class="organization-details">
+	    <ul class="organization-list">
+	    {% for organization in organization_list %}
+	        <li>
+	           <span class="organization-name">{{ organization.name }}</span>
+               {% if perms.organization.add_orgnaization and organization|is_admin:request.user or request.user.is_superuser %}
+                   <span class="edit-link"><a href="{% url "organization_edit" organization.slug %}">{% trans "Edit" %}</a></span>
+               {% endif %}
+	        
+	        {% if organization.logframe_set.exists %}
+	            <div class="logframe-details">
+		            <ul class="logframe-list">
+		            {% for logframe in organization.logframe_set.all %}
+		                <li><span class="logframe-link"><a href="{% url "logframe-dashboard" logframe.organization.slug logframe.slug %}">{{ logframe.name }}</a></span>
+		                {% if perms.logframe.add_logframe %}
+		                    <span class="edit-link"><a href="{% url "update-logframe" logframe.slug %}">{% trans "Edit" %}</a></span>
+		                {% endif %}
+		               </li>
+		            {% endfor %}
+                    </ul>
+	            </div>
+	        {% endif %}
+            {% if perms.logframe.add_logframe %}<div class="create-logframe"><a class="pure-button" href="{% url "create-logframe" organization.slug %}">{% blocktrans with organization.name as org_name %}Create a new Logframe for {{ org_name }}{% endblocktrans %}</a></div>{% endif %}
+	        </li>
+	    {% endfor %}
+	   </ul>
+	   </div>
+	   
+	   {% if perms.organizations.add_organization %}<div class="create-organization"><a class="pure-button" href="{% url "organization_add" %}">{% trans "Create a new Organization" %}</a></div>{% endif %}
+    </div>
+{% endblock content %}
