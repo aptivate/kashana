@@ -20,6 +20,7 @@
     <div class="body"> {# Created because ui.jquery really doesn't like sized <body> #}
 
     <header class="page-header">
+       <h1 class="logo"><a href="/"><img src="{% settings_value "SITE_LOGO" %}" /><span class="site-name">{% settings_value "SITE_NAME" %}</span></a></h1>
        <nav class="main-navigation">
         {% block organization_switching_form %}
         {% if request.user and request.user.is_authenticated and request.user.organizations_organization.exists %}
@@ -33,7 +34,7 @@
         </form>
         {%  endif %}
         {% endblock organization_switching_form %}
-        
+
         {% block logframe_switching_form %}
         {% if request.user and request.user.is_authenticated and request.user.preferences.last_viewed_organization and logframe_list %}
         <form id="logframes-switch" action="{% url "switch-logframes" request.user.preferences.last_viewed_organization.slug %}" method="post">{% csrf_token %}
@@ -46,7 +47,7 @@
 		</form>
 		{% endif %}
 		{% endblock logframe_switching_form %}
-       <h1 class="logo"><a href="/"><img src="{% settings_value "SITE_LOGO" %}" /><span class="site-name">{% settings_value "SITE_NAME" %}</span></a></h1>
+
         {% if request.user and request.user.is_authenticated %}
          <div class="account-links-auth"><a href="{% url "logout" %}">{% trans "Log out" %}</a></div>
          {% if request.user.preferences.last_viewed_logframe %}

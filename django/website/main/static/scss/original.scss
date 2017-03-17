@@ -81,6 +81,7 @@ $header-height: 87px;
 }
 
 .main-navigation {
+    top: -$header-height;
     position: relative;
     width: 100%;
     height: $header-height;
@@ -117,23 +118,16 @@ $header-height: 87px;
     margin: 0;
     color: $text-background;
     text-align:center;
+    width:100%;
 
     > a {
         position: relative;
         z-index: 2;
-        padding: 10px;
-        margin: 0;
-        color: $text-background;
-        text-align:center;
-        width:15%;
+        color: $white;
+        font-weight: bold;
 
-        > a {
-            color: $white;
-            font-weight: bold;
-
-            > img {
-                vertical-align:middle;
-            }
+        > img {
+            vertical-align:middle;
         }
     }
 }
@@ -171,7 +165,7 @@ $header-height: 87px;
 
     .account-links-profile,
     .account-links-auth,
-    .navigation-link, 
+    .navigation-link,
     .add-logframe,
     .add-organization {
         padding: 1.5em;
