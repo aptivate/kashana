@@ -53,9 +53,11 @@ class SwitchOrganizations(LoginRequiredMixin, RedirectView):
 
 
 class DashboardOrganizationSelection(LoginRequiredMixin, ListView):
-    model = Organization
     context_object_name = 'organization_list'
     template_name = 'dashboard/dashboard_organization_list.html'
+
+    def get_queryset(self):
+        return self.request.user.organizations_organization.all()
 
 
 class DashboardLogframeSelection(LoginRequiredMixin, ListView):

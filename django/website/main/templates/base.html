@@ -22,7 +22,7 @@
     <header class="page-header">
        <nav class="main-navigation">
         {% block organization_switching_form %}
-        {% if request.user and request.user.is_authenticated %}
+        {% if request.user and request.user.is_authenticated and request.user.organizations_organization.exists %}
 		<form id="organizations-switch" action="{% url "switch-organizations" %}" method="post">{% csrf_token %}
             <select id="organizations-switch-select" name="organization" onchange="this.form.submit();"{% if organization_list|length == 1 and not perms.organizations.add_organization %} disabled="disabled"{% endif %}>
                 {% for organization in organization_list %}<option value="{{ organization.id }}"{% if request.user.preferences.last_viewed_organization == organization %} selected="selected"{% endif %}>{{ organization.name }}</option>{% endfor %}
@@ -35,7 +35,7 @@
         {% endblock organization_switching_form %}
         
         {% block logframe_switching_form %}
-        {% if request.user and request.user.is_authenticated %}
+        {% if request.user and request.user.is_authenticated and request.user.preferences.last_viewed_organization and logframe_list %}
         <form id="logframes-switch" action="{% url "switch-logframes" request.user.preferences.last_viewed_organization.slug %}" method="post">{% csrf_token %}
             <select id="logframes-switch-select" name="logframe" onchange="this.form.submit();"{% if logframe_list|length == 1 and not perms.logframe.add_logframe %} disabled="disabled"{% endif %}>
             	{% for logframe in logframe_list %}<option value="{{ logframe.id }}"{% if request.user.preferences.last_viewed_logframe == logframe %} selected="selected"{% endif %}>{{ logframe.name }}</option>{% endfor %}
@@ -58,7 +58,7 @@
             <div class="account-links-auth"><a href="{% url "registration_register" %}">{% trans "Register" %}</a></div>
             {% endif %}
             {% if request.user and request.user.is_authenticated %}
-                {% if perms.contacts.add_user %}
+                {% if perms.contacts.add_user and request.user.organizations_organization.exists %}
             <div class="navigation-link" id="nav-people"><a href="{% url "contact_list" request.user.preferences.last_viewed_organization.slug %}">{% trans "People" %}</a></div>
                 {% endif %}
             {% endif %}
