@@ -71,13 +71,20 @@ a.pure-button {
  * HEADER
  *
  *********************************************************************/
+$header-height: 87px;
+
 .body > header {
+    height: $header-height;
     width:100%;
     float:left;
     padding:0;
 }
 
-$header-height: 87px;
+.main-navigation {
+    position: relative;
+    width: 100%;
+    height: $header-height;
+}
 
 .logo,
 #logframes-switch,
@@ -102,9 +109,17 @@ $header-height: 87px;
     font-size: 0.9em;
 }
 
-    .logo {
-        display: inline-block;
-        font-size:2em;
+.logo {
+    position: relative;
+    display: inline-block;
+    font-size:2em;
+    padding: 10px;
+    margin: 0;
+    color: $text-background;
+    text-align:center;
+
+    > a {
+        position: relative;
         z-index: 2;
         padding: 10px;
         margin: 0;
@@ -121,6 +136,7 @@ $header-height: 87px;
             }
         }
     }
+}
 
 .site-name {
     padding-left:0.5em;

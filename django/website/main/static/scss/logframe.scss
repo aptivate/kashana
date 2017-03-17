@@ -189,6 +189,11 @@ footer {
         color: $grey;
     }
 
+    &.delete-button {
+        display: inline-block;
+        width: 100%;
+    }
+
     > .editable {
         padding:0;
     }
@@ -371,6 +376,13 @@ footer {
     font-size: 2em;
 }
 
+#delete-result {
+    background-color: $error-dark-red;
+    color: $white;
+    border: 0 none;
+    padding: 0.5em 1em;
+    float: right;
+}
 
 /* overview page */
 #filter-result {
