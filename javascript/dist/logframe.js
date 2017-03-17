@@ -13155,6 +13155,7 @@ define('app',[
         Aptivate.status = {};
     }
     $('#logframes-switch-select').select2({minimumResultsForSearch: 99999});
+    $('#organizations-switch-select').select2({minimumResultsForSearch: 99999});
 
     // Initialize collections
     Aptivate.logframe = new models.Logframe(Aptivate.data.logframe);
@@ -18111,7 +18112,7 @@ define('router',[
     var Router = Backbone.Router.extend({
         routes: {
             "": "home",
-            "dashboard/:logframe_slug/": "showOverview",
+            "dashboard/:organization_slug/:logframe_slug/": "showOverview",
             "design/:logframe_id/result/:result_id/": "showResult",
             "monitor/:logframe_id/result/:result_id/": "showMonitor",
             "*other": "defaultRouter"
