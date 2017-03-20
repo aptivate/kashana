@@ -17,7 +17,7 @@
 {% endblock logframe_switching_form %}
 {% block content %}
 <div class="organization-edit">
-   <h2>{% if form.instance.id %}{% blocktrans with logframe_name=form.instance.name %}Edit {{ logframe_name }} Organization{% endblocktrans %}{% else %}{% trans "Create a new Logframe" %}{% endif %}</h2>
+   <h2>{% if form.instance.id %}{% blocktrans with logframe_name=form.instance.name %}Edit {{ logframe_name }} Organization{% endblocktrans %}{% else %}{% trans "Create a new Organization" %}{% endif %}</h2>
    <form method="post" class="pure-form pure-form-stacked" action=".">{% csrf_token %}
       <fieldset>
           <legend></legend>
