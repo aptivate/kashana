@@ -168,7 +168,7 @@ def test_data_for_data_for_level_names_is_dict_of_number_to_name():
     logframe = G(LogFrame)
     # Some names are added by migration. We want to start with the table empty
     ResultLevelName.objects.all().delete()
-    level_names = G(ResultLevelName, n=3)
+    level_names = G(ResultLevelName, logframe=logframe, n=3)
 
     mixin = AptivateDataBaseMixin()
 
