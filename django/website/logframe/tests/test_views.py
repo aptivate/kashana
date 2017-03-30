@@ -13,6 +13,8 @@ from ..models import (
     Rating,
 )
 from ..api import ResultSerializer
+from django.test.client import RequestFactory
+from logframe.views import CreateLogframe
 
 
 class ResultEditorTests(TestCase):
@@ -103,3 +105,27 @@ class ResultMonitorTests(TestCase):
 
         assert expected_data == actual_data['result']
 
+
+# py-test style tests
+@pytest.mark.django_db
+def test_result_level_names_added_for_logframe():
+    organization = Organization.objects.create(name='Test Org')
+
+    request = RequestFactory().post('/', {'name': 'Logframe'})
+
+    view = CreateLogframe()
+    view.kwargs = {'org_slug': organization.slug}
+    view.request = request
+    view.post(request)
+
+    logframe = LogFrame.objects.get(name='Logframe')
+
+    expected_results = {
+        1: 'Goal',
+        2: 'Outcome',
+        3: 'Output',
+        4: 'Activity'
+    }
+
+    actual_results = {level_name.level_number: level_name.level_name for level_name in logframe.resultlevelname_set.all()}
+    assert expected_results == actual_results
