@@ -64,7 +64,7 @@ class AptivateDataBaseMixin(QuerysetSerializer):
             'logframe': LogFrameSerializer(logframe).data,
             'levels': {
                 the_level_name.level_number: the_level_name.level_name
-                for the_level_name in ResultLevelName.objects.all()
+                for the_level_name in ResultLevelName.objects.filter(logframe=logframe)
             },
             'ratings': self.get_related_model_data(
                 {'log_frame': logframe}, Rating),
