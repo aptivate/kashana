@@ -9,12 +9,12 @@ Installation
 
 System requirements:
 
-POSIX-compliant system (tested on Linux)
-Python 2.7
-Node JavaScript platform
-Apache + WSGI
-MySQL
-Recommended at least 1GB of RAM
+- POSIX-compliant system (tested on Linux)
+- Python 2.7
+- Node JavaScript platform
+- Apache + WSGI
+- MySQL
+- Recommended at least 1GB of RAM
 
 In the deploy directory, run:
 
