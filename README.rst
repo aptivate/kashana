@@ -7,6 +7,15 @@ projects, used and written by `Aptivate <http://aptivate.org/>`_.
 Installation
 ------------
 
+System requirements:
+
+POSIX-compliant system (tested on Linux)
+Python 2.7
+Node JavaScript platform
+Apache + WSGI
+MySQL
+Recommended at least 1GB of RAM
+
 In the deploy directory, run:
 
     ./bootstrap.py
