@@ -16,7 +16,7 @@ System requirements:
 - MySQL
 - Recommended at least 1GB of RAM
 
-In the deploy directory, run:
+In the deploy directory, run: ::
 
     ./bootstrap.py
     ./tasks.py deploy:<environment name>
