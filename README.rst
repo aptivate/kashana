@@ -1,7 +1,7 @@
 Kashana
 =======
 
-Kashana is an open source logframe manangement tool for planning and evaluating 
+Kashana is an open source logframe manangement tool for planning and evaluating
 projects, used and written by `Aptivate <http://aptivate.org/>`_.
 
 Installation
@@ -19,7 +19,13 @@ System requirements:
 In the deploy directory, run:
 
     ./bootstrap.py
-    ./tasks.py deploy:<enviroment name>
+    ./tasks.py deploy:<environment name>
+
+``<environment name>`` refers to one of the ``local_settings.py.*`` files under ``django/website`` directory.
+These contain, amongst other things the details for the MySQL database. So to deploy the ``dev`` environment
+you would enter: ::
+
+    ./tasks.py deploy:dev
 
 
 Usecases
