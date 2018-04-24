@@ -1,7 +1,7 @@
 Kashana
 =======
 
-Kashana is an open source logframe manangement tool for planning and evaluating
+Kashana is an open source logframe management tool for planning and evaluating
 projects, used and written by `Aptivate <http://aptivate.org/>`_.
 
 Installation
