@@ -7,10 +7,25 @@ projects, used and written by `Aptivate <http://aptivate.org/>`_.
 Installation
 ------------
 
-In the deploy directory, run:
+System requirements:
+
+- POSIX-compliant system (tested on Linux)
+- Python 2.7
+- Node JavaScript platform
+- Apache + WSGI
+- MySQL
+- Recommended at least 1GB of RAM
+
+In the deploy directory, run: ::
 
     ./bootstrap.py
     ./tasks.py deploy:<environment name>
+
+``<environment name>`` refers to one of the ``local_settings.py.*`` files under ``django/website`` directory.
+These contain, amongst other things the details for the MySQL database. So to deploy the ``dev`` environment
+you would enter: ::
+
+    ./tasks.py deploy:dev
 
 
 Use cases
