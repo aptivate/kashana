@@ -49,7 +49,7 @@ A bug prevents these being created in the admin interface but you can update the
     $ cd django/website
     $ ./manage.py dbshell
 
-    mysql> INSERT INTO logframe_rating VALUES(NULL,1,'On track','green');
+    mysql> INSERT INTO logframe_rating (name, color, log_frame_id) VALUES('On track','green',1);
 
 etc
 
