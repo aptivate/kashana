@@ -19,6 +19,13 @@ System requirements
 - MySQL
 - Recommended at least 1GB of RAM
 
+Prerequisites (Ubuntu)
+~~~~~~~~~~~~~~~~~~~~~~
+::
+
+   sudo apt-get install python-virtualenv
+
+
 Setting up a development environment
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -38,16 +45,16 @@ Setting up data
 
 You'll need to create a superuser to access the Django admin interface at ``/admin/`` ::
 
-    $ cd django/website
-    $ ./manage.py createsuperuser
+    cd django/website
+    ./manage.py createsuperuser
 
 You'll need to create a **Log frame**.
 
 You'll need to add some entries to the **Ratings** table.
 A bug prevents these being created in the admin interface but you can update the table with MySQL: ::
 
-    $ cd django/website
-    $ ./manage.py dbshell
+    cd django/website
+    ./manage.py dbshell
 
     mysql> INSERT INTO logframe_rating (name, color, log_frame_id) VALUES('On track','green',1);
 
@@ -74,7 +81,7 @@ and a config file under the apache directory (see ``apache/production.conf``)
 
 Then under the deploy directory you would do: ::
 
-    $ ./fab.py production deploy
+    ./fab.py production deploy
 
 replacing ``production`` with the name you specified previously
 
