@@ -40,33 +40,70 @@ you would enter: ::
 
     ./tasks.py deploy:dev
 
+This script wants to create a MySql database.  DYE_'s `MySql database
+manager`__ assumes your MySQL root password is in
+``/root/mysql_root_password``; this task will ask for a sudo password in order
+to access this file.
+
+.. _DYE: https://github.com/aptivate/dye
+.. __: https://github.com/aptivate/dye/blob/develop/dye/tasklib/database.py#L157
+
+
+Running a local development server
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Run local development server with ``./manage.py runserver``
+
 Setting up data
 ~~~~~~~~~~~~~~~
 
-You'll need to create a superuser to access the Django admin interface at ``/admin/`` ::
+1. You'll need to create a superuser to access the Django admin interface at eg http://127.0.0.1:8000/admin/ ::
 
     cd django/website
     ./manage.py createsuperuser
 
-You'll need to create a **Log frame**.
+2. You'll need to create a **Log frame** (eg http://127.0.0.1:8000/admin/logframe/logframe/add/).
 
-You'll need to add some entries to the **Ratings** table.
-A bug prevents these being created in the admin interface but you can update the table with MySQL: ::
+3. You'll need to add some entries to the (RAG) **Ratings** table.
+   A bug prevents these being created in the admin interface but you can update the table with MySQL: ::
 
     cd django/website
     ./manage.py dbshell
 
     mysql> INSERT INTO logframe_rating (name, color, log_frame_id) VALUES('On track','green',1);
 
-etc
+   etc
 
-where the ``1`` is the ID of your logframe
+   where the ``1`` is the ID of your logframe
 
-You can add **Risk ratings** eg ``Low``, ``Medium``, ``High`` through the admin interface.
+   You can rate results and indicators
 
-For setting the reporting intervals, add **Milestones** eg ``Baseline, Y1, Y2,
-Y3`` or ``Baseline``, ``2017``, ``2018``, ``2019``. You are not tied to years
-though - you can specify any kind of time period
+4. You can add **Risk ratings** through the admin
+   interface (eg http://127.0.0.1:8000/admin/logframe/riskrating/add/).
+   These have a name like ``Low``, ``Medium``, ``High``
+
+5. For setting the reporting intervals, add **Milestones** for your LogFrame (eg  http://127.0.0.1:8000/admin/logframe/milestone/add/).
+
+   These have a name eg ``Baseline, Y1, Y2, Y3`` or ``Baseline``, ``2017``, ``2018``, ``2019`` and a date.
+
+   You are not tied to years - you can specify any kind of time period. Now you can add targets for Indicators.
+
+
+6. Now you can add Results via the dashboard.  (e.g.  http://127.0.0.1:8000/dashboard/)
+   The first couple of levels of the results hierarchy have only one entry. These are usually:
+
+   1. Impact/Goal
+   2. Outcome
+
+   The next two levels can have many items:
+
+   3. Output
+   4. Sub-output level
+
+   If you expand the tree beyond this level, you're adding Activities.
+
+7. You can add TA (Technical Assistance) Types (e.g.  http://127.0.0.1:8000/admin/logframe/tatype/add/)
+   and Activity Status codes (e.g. http://127.0.0.1:8000/admin/logframe/statuscode/add/)
 
 
 Deployment with fabric
