@@ -23,7 +23,7 @@ Prerequisites (Ubuntu)
 ~~~~~~~~~~~~~~~~~~~~~~
 ::
 
-   sudo apt-get install python-virtualenv
+   sudo apt-get install python-virtualenv nodejs npm
 
 
 Setting up a development environment
