@@ -202,6 +202,35 @@ def test_get_period_returns_correct_periods_also_for_start_of_the_year():
     assert periods == expected
 
 
+def test_get_period_returns_correct_periods_starting_late_in_year():
+    period = Period(log_frame_id=1, start_month=10, num_periods=4)
+    start_date = date(2018, 10, 1)
+    end_date = date(2020, 9, 30)
+
+    periods = period.get_periods(start_date, end_date)
+    expected = [
+        {'start': date(2018, 7, 1),
+         'name': 'July 2018'},
+        {'start': date(2018, 10, 1),
+         'name': 'October 2018'},
+        {'start': date(2019, 1, 1),
+         'name': 'January 2019'},
+        {'start': date(2019, 4, 1),
+         'name': 'April 2019'},
+        {'start': date(2019, 7, 1),
+         'name': 'July 2019'},
+        {'start': date(2019, 10, 1),
+         'name': 'October 2019'},
+        {'start': date(2020, 1, 1),
+         'name': 'January 2020'},
+        {'start': date(2020, 4, 1),
+         'name': 'April 2020'},
+        {'start': date(2020, 7, 1),
+         'name': 'July 2020'}
+    ]
+    assert periods == expected
+
+
 def test_get_period_returns_periods_interval():
     period = Period(log_frame_id=1, start_month=2, num_periods=4)
     p = period.get_period("2014-05-01")

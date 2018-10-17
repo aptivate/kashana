@@ -424,11 +424,16 @@ class Period(models.Model):
         periods = []
         # Start year earlier to catch also start: 1.1. End is always covered by
         # the last period of the year
+
         for year in range(start_date.year - 1, end_date.year + 1):
             for month in periods_begin:
+                new_year = year + month / 12
+                new_month = month % 12
+
                 periods.append({
-                    'start': date(year, month, 1),
-                    'name': "{0} {1}".format(MONTH_CHOICES[month - 1][1], year)
+                    'start': date(new_year, new_month, 1),
+                    'name': "{0} {1}".format(MONTH_CHOICES[new_month - 1][1],
+                                             new_year)
                 })
         start = end = 0
         for i, period in enumerate(periods):
