@@ -99,6 +99,9 @@ class RiskRating(models.Model):
 @python_2_unicode_compatible
 class Result(models.Model):
     """ abstract class to be used by Impact(/Goal), Outcome and Output """
+    class Meta:
+        ordering = ['order']
+
     log_frame = models.ForeignKey(LogFrame, related_name='results')
     parent = models.ForeignKey("self", related_name="children",
                                null=True, blank=True)
