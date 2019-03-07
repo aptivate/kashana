@@ -23,8 +23,13 @@ Prerequisites (Ubuntu)
 ~~~~~~~~~~~~~~~~~~~~~~
 ::
 
-   sudo apt-get install python-virtualenv nodejs npm
+   sudo apt-get install python-virtualenv nodejs npm python-git python-pip mysql-client libmysqlclient-dev
 
+Downloading the source code
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+::
+
+   git clone https://github.com/aptivate/kashana.git
 
 Setting up a development environment
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
